@@ -10,12 +10,12 @@ type Props = {
 };
 
 const WithToken: React.FC<Props> = ({ component: Component, ...rest }) => {
-  const { user } = useSelector((state: RootState) => state);
+  const { token } = useSelector((state: RootState) => state);
 
   return (
     <Route
       {...rest}
-      render={(props) => (user.id ? <Component {...props} /> : <Redirect to="/auth" />)}
+      render={(props) => (token ? <Component {...props} /> : <Redirect to="/auth" />)}
     />
   );
 };

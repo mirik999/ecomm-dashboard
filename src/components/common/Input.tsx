@@ -1,15 +1,24 @@
 import React, { FormEvent } from 'react';
 
 type Props = {
-  type?: string;
-  label?: string;
-  value: any;
-  getValue: (val: string) => void;
+  type?: string
+  label?: string
+  value: any
+  cls?: string
+  getValue: (val: any) => void
+  [key: string]: any
 };
 
-const Input: React.FC<Props> = ({ type, label, value, getValue }) => {
+const Input: React.FC<Props> = ({
+  type,
+  label,
+  value,
+  cls,
+  getValue,
+  ...props
+}) => {
   return (
-    <label htmlFor={type + '-' + Date.now()} className="flex flex-col m-4">
+    <label htmlFor={type + '-' + Date.now()} className={`flex flex-col flex-1 ${cls}`}>
       <span>{label}</span>
       <input
         type={type}
@@ -17,11 +26,17 @@ const Input: React.FC<Props> = ({ type, label, value, getValue }) => {
         name="email"
         autoComplete="off"
         className="shadow-ml outline-none border-b-2 border-gray-200 p-3 text-black
-            rounded-md text-base focus:border-blue-400"
+           border-r-4 rounded-md text-base focus:border-blue-400"
         value={value}
-        onChange={({ currentTarget }: FormEvent<HTMLInputElement>) =>
-          getValue(currentTarget.value)
+        onChange={({ currentTarget }: FormEvent<HTMLInputElement>) => {
+            if (type === "file") {
+              getValue(currentTarget.files)
+            } else {
+              getValue(currentTarget.value)
+            }
+          }
         }
+        {...props}
       />
     </label>
   );
@@ -30,6 +45,7 @@ const Input: React.FC<Props> = ({ type, label, value, getValue }) => {
 Input.defaultProps = {
   type: 'text',
   label: 'Label',
+  cls: 'm-4',
   value: '',
 };
 

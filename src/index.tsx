@@ -3,20 +3,26 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { BrowserRouter, Route } from 'react-router-dom';
 import reportWebVitals from './reportWebVitals';
-import App from './components/App';
+import App from './App';
 //store
 import store from './redux/store';
+//actions
+import { loadFromCookies } from './redux/slices/token.slice';
+import { saveUser } from './redux/slices/user.slice';
 //styles [tailwind css]
 import './index.css';
 
+//save token in redux
+store.dispatch(loadFromCookies());
+// if token exists decode and save user in redux
+store.dispatch(saveUser());
+
 ReactDOM.render(
-  <React.StrictMode>
-    <BrowserRouter>
-      <Provider store={store}>
-        <Route component={App} />
-      </Provider>
-    </BrowserRouter>
-  </React.StrictMode>,
+  <BrowserRouter>
+    <Provider store={store}>
+      <Route component={App} />
+    </Provider>
+  </BrowserRouter>,
   document.getElementById('root')
 );
 

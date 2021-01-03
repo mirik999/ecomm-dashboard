@@ -1,1 +1,4 @@
-export type UserType = any;
+export type UserType = {
+  id: string
+  email: string
+};

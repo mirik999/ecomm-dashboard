@@ -1,20 +1,33 @@
+import { createSlice } from '@reduxjs/toolkit';
+import jwt_decode from "jwt-decode";
+//types
 import { UserType } from '../types/user.types';
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+//utils
+import {getFromCookies} from "../../utils/storage.utils";
 
-const initialState: UserType = {};
+const initialState: UserType = {
+  id: '',
+  email: '',
+};
 
 const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    login(state, action: PayloadAction<UserType>) {
-      return action.payload;
+    saveUser() {
+      const token = getFromCookies("token");
+      if (token) {
+        const { id, email }: UserType = jwt_decode(token);
+        return { id, email };
+      } else {
+        return initialState;
+      }
     },
-    logout() {
+    removeUser() {
       return initialState;
     },
   },
 });
 
-export const { login, logout } = userSlice.actions;
+export const { saveUser, removeUser } = userSlice.actions;
 export default userSlice.reducer;
