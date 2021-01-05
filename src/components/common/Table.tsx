@@ -4,9 +4,10 @@ import { useHistory } from 'react-router-dom';
 import { format } from 'date-fns';
 //components
 import Button from '../common/Button';
-import Input from "./Input";
+import Input from "@components/Input";
 import Select, {OptionsType} from "./Select";
 import LoadingBox from "./LoadingBox";
+import FakeTable from "./FakeTable";
 
 const options = [
   { value: 10, label: '10 rows'},
@@ -26,6 +27,7 @@ type Props = {
   allCount: number
   exclude?: string[]
   path: string,
+  error: boolean,
   getPage: (val: number) => void
   getRowCount: (val: number) => void
   getDeepSearch: (val: string) => void
@@ -38,6 +40,7 @@ const Table: React.FC<Props> = ({
   allCount,
   exclude,
   path,
+  error,
   getPage,
   getRowCount,
   getDeepSearch,
@@ -104,8 +107,12 @@ const Table: React.FC<Props> = ({
     })
   }
 
-  if (!state.length) {
+  if (!state.length && !error) {
     return <LoadingBox />
+  }
+
+  if (!state.length && error) {
+    return <FakeTable onCreate={_onRouteChange} />
   }
 
   function handleTableBody(val: any, key: string): any {
@@ -270,7 +277,8 @@ Table.defaultProps = {
   data: [],
   allCount: 0,
   exclude: ['id'],
-  path: ''
+  path: '',
+  error: false
 }
 
 export default Table;

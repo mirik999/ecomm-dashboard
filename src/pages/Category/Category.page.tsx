@@ -127,6 +127,7 @@ const CategoryPage: React.FC<Props> = (props) => {
         getIdAndDisable={getIdAndDisable}
         getIdAndActivate={getIdAndActivate}
         path="category"
+        error={!!getResponse.error}
       />
       { getResponse.loading ? <ProcessBox /> : null }
       { getResponse.error ? <ErrorBox message={getResponse.error.message} /> : null }

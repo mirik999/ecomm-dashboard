@@ -113,6 +113,8 @@ const ProductPage: React.FC<Props> = (props) => {
     setProducts(updatedProducts)
   }
 
+  console.log(getResponse.loading)
+
   return (
     <Layout>
       <h2 className="font-medium uppercase mx-4">
@@ -129,6 +131,7 @@ const ProductPage: React.FC<Props> = (props) => {
         getIdAndActivate={getIdAndActivate}
         path="product"
         exclude={['id', 'category', 'cover', 'description', 'images']}
+        error={!!getResponse.error}
       />
       { getResponse.loading ? <ProcessBox /> : null }
       { getResponse.error ? <ErrorBox message={getResponse.error.message} /> : null }

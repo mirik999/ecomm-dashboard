@@ -26,6 +26,7 @@
     "graphql": "^15.4.0",
     "js-cookie": "^2.2.1",
     "jwt-decode": "^3.1.2",
+    "link-module-alias": "^1.2.0",
     "material-table": "^1.69.2",
     "postcss": "^7",
     "react": "^17.0.1",
@@ -45,7 +46,12 @@
     "start": "craco start",
     "build": "craco build",
     "test": "craco test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "postinstall": "link-module-alias"
+  },
+  "_moduleAliases": {
+    "@components": "src/components/common",
+    "@redux": "redux"
   },
   "eslintConfig": {
     "extends": [
