@@ -1,7 +1,7 @@
 import React, { FormEvent } from 'react';
 
 type Props = {
-  type?: string
+  type?: 'text' | 'number' | 'email' | 'password' | 'phone'
   label?: string
   value: any
   cls?: string
@@ -28,13 +28,8 @@ const Input: React.FC<Props> = ({
         className="shadow-ml outline-none border-b-2 border-gray-200 p-3 text-black
            border-r-4 rounded-md text-base focus:border-blue-400"
         value={value}
-        onChange={({ currentTarget }: FormEvent<HTMLInputElement>) => {
-            if (type === "file") {
-              getValue(currentTarget.files)
-            } else {
-              getValue(currentTarget.value)
-            }
-          }
+        onChange={({ currentTarget }: FormEvent<HTMLInputElement>) =>
+          getValue(currentTarget.value)
         }
         {...props}
       />

@@ -3,11 +3,11 @@ import ReactPagination from 'react-paginate';
 import { useHistory } from 'react-router-dom';
 import { format } from 'date-fns';
 //components
-import Button from '../common/Button';
+import Button from '@components/Button';
 import Input from "@components/Input";
-import Select, {OptionsType} from "./Select";
-import LoadingBox from "./LoadingBox";
-import FakeTable from "./FakeTable";
+import Select, { OptionsType } from "@components/Select";
+import LoadingBox from "@components/LoadingBox";
+import FakeTable from "@components/FakeTable";
 
 const options = [
   { value: 10, label: '10 rows'},

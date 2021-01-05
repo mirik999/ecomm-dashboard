@@ -20,14 +20,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e021988f-3eda-4fed-af49-63e1e5ec9f51" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/components/common/FakeTable.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/common/UploadZone.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.eslintcache" beforeDir="false" afterPath="$PROJECT_DIR$/.eslintcache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/common/Input.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/Input.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/common/Table.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/Table.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Category/Category.page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Category/Category.page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Product/CreateProduct.page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Product/CreateProduct.page.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/Product/Product.page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Product/Product.page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -126,6 +126,10 @@
       <screen x="0" y="0" width="2048" height="1280" />
     </state>
     <state x="533" y="276" key="SettingsEditor/0.0.2048.1280@0.0.2048.1280" timestamp="1609834017081" />
+    <state x="725" y="395" width="597" height="490" key="find.popup" timestamp="1609834864869">
+      <screen x="0" y="0" width="2048" height="1280" />
+    </state>
+    <state x="725" y="395" width="597" height="490" key="find.popup/0.0.2048.1280@0.0.2048.1280" timestamp="1609834864869" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

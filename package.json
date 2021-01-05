@@ -51,7 +51,7 @@
   },
   "_moduleAliases": {
     "@components": "src/components/common",
-    "@redux": "redux"
+    "@redux": "src/redux"
   },
   "eslintConfig": {
     "extends": [

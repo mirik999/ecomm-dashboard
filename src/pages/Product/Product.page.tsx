@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { useLazyQuery, useMutation } from "@apollo/client";
 //components
-import Layout from "../../components/common/Layout";
-import Table from "../../components/common/Table";
-import ProcessBox from "../../components/common/ProcessBox";
-import ErrorBox from "../../components/common/ErrorBox";
+import Layout from "@components/Layout";
+import Table from "@components/Table";
+import ProcessBox from "@components/ProcessBox";
+import ErrorBox from "@components/ErrorBox";
 //types
-import { ProductType } from "../../redux/types/product.type";
+import { ProductType } from "@redux/types/product.type";
 //request
 import {
   GET_PRODUCTS,
   DISABLE_PRODUCTS,
   ACTIVATE_PRODUCTS
-} from "../../redux/requests/product.request";
+} from "@redux/requests/product.request";
 
 type Props = {};
 

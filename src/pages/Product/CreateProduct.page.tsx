@@ -1,16 +1,17 @@
-import React, {FormEvent, useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useMutation } from "@apollo/client";
 //components
-import Layout from "../../components/common/Layout";
-import Input from "../../components/common/Input";
-import Button from "../../components/common/Button";
-import ProcessBox from "../../components/common/ProcessBox";
-import ErrorBox from "../../components/common/ErrorBox";
+import Layout from "@components/Layout";
+import Input from "@components/Input";
+import Button from "@components/Button";
+import ProcessBox from "@components/ProcessBox";
+import ErrorBox from "@components/ErrorBox";
+import UploadZone from "@components/UploadZone";
 //types
-import { ProductType } from "../../redux/types/product.type";
+import { ProductType } from "@redux/types/product.type";
 //request
-import { CREATE_PRODUCT, UPDATE_PRODUCT } from "../../redux/requests/product.request";
+import { CREATE_PRODUCT, UPDATE_PRODUCT } from "@redux/requests/product.request";
 
 
 const initialState = {
@@ -113,7 +114,7 @@ const CreateProduct: React.FC<Props> = (props) => {
       </div>
       <div className="flex items-center">
         <Input
-          type="name"
+          type="text"
           label="Product name"
           value={state.name}
           getValue={(val: string) => setState({...state, name: val})}
@@ -126,20 +127,23 @@ const CreateProduct: React.FC<Props> = (props) => {
         />
         <Input
           type="number"
-          label="saleCount"
+          label="Sale percent"
           value={state.saleCount}
           getValue={(val: string) => setState({...state, saleCount: +val})}
           cls="my-4 ml-4 mr-0"
         />
       </div>
       <div className="flex items-center">
-        {/* new input for image upload */}
-        {/*<Input*/}
-        {/*  type="file"*/}
-        {/*  label="Product cover image"*/}
-        {/*  value={state.cover}*/}
-        {/*  getValue={handleImageUpload}*/}
-        {/*/>*/}
+        <UploadZone
+          multiple={false}
+          placeholder="Upload cover image"
+          getValue={handleImageUpload}
+        />
+        <UploadZone
+          multiple={true}
+          placeholder="Upload product images"
+          getValue={handleImageUpload}
+        />
       </div>
 
       <div className="flex items-center mx-4 py-3">
