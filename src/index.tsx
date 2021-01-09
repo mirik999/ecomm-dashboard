@@ -11,6 +11,7 @@ import { loadFromCookies } from './redux/slices/token.slice';
 import { saveUser } from './redux/slices/user.slice';
 //styles [tailwind css]
 import './index.css';
+import 'react-image-lightbox/style.css';
 
 //save token in redux
 store.dispatch(loadFromCookies());

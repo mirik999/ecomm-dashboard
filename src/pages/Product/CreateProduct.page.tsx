@@ -124,12 +124,12 @@ const CreateProduct: React.FC<Props> = (props) => {
       <div className="flex items-start">
         <UploadZone
           multiple={false}
-          placeholder="Click here to select"
+          label="Maximum 1 image and Size less than 500KB"
           getValue={getCoverImage}
         />
         <UploadZone
           multiple={true}
-          placeholder="Click here to select"
+          label="Maximum 5 images and Each size less than 500KB"
           getValue={getImages}
         />
       </div>
