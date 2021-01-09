@@ -12,8 +12,6 @@ import UploadZone from "@components/UploadZone";
 import { ProductType } from "@redux/types/product.type";
 //request
 import { CREATE_PRODUCT, UPDATE_PRODUCT } from "@redux/requests/product.request";
-//utils
-import { imageUploadAndGetUrl } from "../../utils/cloudinary.utils";
 
 
 const initialState = {
@@ -35,8 +33,7 @@ const CreateProduct: React.FC<Props> = (props) => {
   const [UpdateProduct, updateResponse] = useMutation(UPDATE_PRODUCT);
   const [state, setState] = useState<any>(initialState);
   const [mode, setMode] = useState<string>('create');
-  const [upLoading, setUpLoading] = useState<boolean>(false);
-  const [waring, setWarning] = useState<string>('');
+
 
   useEffect(() => {
     const { mode, selected }: any = history.location.state;
@@ -82,25 +79,12 @@ const CreateProduct: React.FC<Props> = (props) => {
     }
   }
 
-  async function handleImageUpload(files: FileList, multiple: boolean): Promise<void> {
-    setUpLoading(true);
-    for (let i = 0; i < files.length; i++) {
-      const file = files[i];
-      const formData = new FormData();
-      formData.append("file", file);
-      formData.append("upload_preset", "pjegjzge");
+  function getCoverImage(val: string[]): void {
+    console.log(val)
+  }
 
-      fetch('https://api.cloudinary.com/v1_1/electroshop-commerce-app/upload', {
-        method: "POST",
-        body: formData
-      })
-        .then((response) => {
-          return response.json();
-        })
-        .then((data) => {
-          console.log(data)
-        });
-    }
+  function getImages(val: string[]): void {
+    console.log(val)
   }
 
   return (
@@ -137,16 +121,16 @@ const CreateProduct: React.FC<Props> = (props) => {
           cls="my-4 mx-4"
         />
       </div>
-      <div className="flex items-center">
+      <div className="flex items-start">
         <UploadZone
           multiple={false}
           placeholder="Click here to select"
-          getValue={handleImageUpload}
+          getValue={getCoverImage}
         />
         <UploadZone
           multiple={true}
           placeholder="Click here to select"
-          getValue={handleImageUpload}
+          getValue={getImages}
         />
       </div>
 

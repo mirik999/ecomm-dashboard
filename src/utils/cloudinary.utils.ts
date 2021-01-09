@@ -1,27 +1,31 @@
+import axios from "axios";
+
 export async function imageUploadAndGetUrl(
-  base64: string,
-  format: string,
+  file: File,
+  onEvent: (percent: number, error: string, file: any) => void,
 ) {
   const NAME = "electroshop-commerce-app";
   const PRESET = "pjegjzge";
   const CLOUDINARY_URL = `https://api.cloudinary.com/v1_1/${NAME}/upload`;
-  const BASE64 = `data:image/${format};base64,${base64}`;
-
-  let data = {
-    "file": BASE64,
-    "upload_preset": PRESET,
-  }
 
   try {
-    const payload = await fetch(CLOUDINARY_URL, {
-      body: JSON.stringify(data),
-      headers: {
-        'content-type': 'application/json'
-      },
-      method: 'POST',
-    }).then(res => res.json())
-    return payload.secure_url;
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset", PRESET);
+
+    const payload = await axios.post(CLOUDINARY_URL, formData,{
+      onUploadProgress: (event) => {
+        const percent = Math.round((100 * event.loaded) / event.total);
+        console.log('percent', percent)
+        onEvent(percent, '', null);
+      }
+    });
+
+    console.log('payload', payload)
+    onEvent(0, '', payload)
+
   } catch(err) {
-    console.log('err upload image to cloudinary', err)
+    console.log('onError => ', err)
+    onEvent(0, 'Error upload image', null)
   }
 }
