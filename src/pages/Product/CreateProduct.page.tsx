@@ -12,6 +12,8 @@ import UploadZone from "@components/UploadZone";
 import { ProductType } from "@redux/types/product.type";
 //request
 import { CREATE_PRODUCT, UPDATE_PRODUCT } from "@redux/requests/product.request";
+//utils
+import { imageUploadAndGetUrl } from "../../utils/cloudinary.utils";
 
 
 const initialState = {
@@ -33,6 +35,8 @@ const CreateProduct: React.FC<Props> = (props) => {
   const [UpdateProduct, updateResponse] = useMutation(UPDATE_PRODUCT);
   const [state, setState] = useState<any>(initialState);
   const [mode, setMode] = useState<string>('create');
+  const [upLoading, setUpLoading] = useState<boolean>(false);
+  const [waring, setWarning] = useState<string>('');
 
   useEffect(() => {
     const { mode, selected }: any = history.location.state;
@@ -78,25 +82,25 @@ const CreateProduct: React.FC<Props> = (props) => {
     }
   }
 
-  async function handleImageUpload(files: FileList) {
-    const file = files[0];
-    console.log(file)
-    // const indexOfLastFot = result.uri.lastIndexOf('.');
-    // const format = result.uri.slice(indexOfLastFot + 1);
-    // try {
-    //   getValue('open');
-    //   const url = await imageUploadAndGetUrl(result.base64!, format);
-    //   await updateImage({
-    //     variables: {
-    //       updateProfileCredentials: {
-    //         picture: url,
-    //       },
-    //     },
-    //   });
-    //   getValue(url);
-    // } catch (err) {
-    //   getValue('close');
-    // }
+  async function handleImageUpload(files: FileList, multiple: boolean): Promise<void> {
+    setUpLoading(true);
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("upload_preset", "pjegjzge");
+
+      fetch('https://api.cloudinary.com/v1_1/electroshop-commerce-app/upload', {
+        method: "POST",
+        body: formData
+      })
+        .then((response) => {
+          return response.json();
+        })
+        .then((data) => {
+          console.log(data)
+        });
+    }
   }
 
   return (
@@ -130,18 +134,18 @@ const CreateProduct: React.FC<Props> = (props) => {
           label="Sale percent"
           value={state.saleCount}
           getValue={(val: string) => setState({...state, saleCount: +val})}
-          cls="my-4 ml-4 mr-0"
+          cls="my-4 mx-4"
         />
       </div>
       <div className="flex items-center">
         <UploadZone
           multiple={false}
-          placeholder="Upload cover image"
+          placeholder="Click here to select"
           getValue={handleImageUpload}
         />
         <UploadZone
           multiple={true}
-          placeholder="Upload product images"
+          placeholder="Click here to select"
           getValue={handleImageUpload}
         />
       </div>
