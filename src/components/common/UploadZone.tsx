@@ -1,18 +1,18 @@
-import React, {FormEvent, useEffect, useState} from 'react';
+import React, { FormEvent, useEffect, useState, memo } from 'react';
 import Lightbox from 'react-image-lightbox';
 //utils
 import { imageUploadAndGetUrl } from "../../utils/cloudinary.utils";
 
 type Props = {
   label?: string
-  value?: any
+  value: string[] | string
   multiple: boolean
   cls?: string
   getValue: (val: string[]) => void
   [key: string]: any
 };
 
-const UploadZone: React.FC<Props> = ({
+const UploadZone: React.FC<Props> = memo(({
  label,
  value,
  multiple,
@@ -28,8 +28,21 @@ const UploadZone: React.FC<Props> = ({
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   useEffect(() => {
+    if (multiple && typeof value === "object") {
+      setPreview(value)
+    }
+
+    if (!multiple && typeof value === "string") {
+      const val = [value] || [];
+      setPreview(val)
+    }
+  }, [value])
+
+  console.log(preview)
+
+  useEffect(() => {
     getValue(preview)
-  }, [preview])
+  }, [preview]);
 
   async function handleImage({ currentTarget }: FormEvent<HTMLInputElement>) {
     const files = currentTarget.files!;
@@ -155,12 +168,12 @@ const UploadZone: React.FC<Props> = ({
       )}
     </div>
   );
-};
+});
 
 UploadZone.defaultProps = {
   label: 'Upload an image',
   cls: 'm-4',
-  value: '',
+  value: [],
   multiple: false
 };
 

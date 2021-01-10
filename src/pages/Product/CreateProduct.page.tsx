@@ -123,11 +123,12 @@ const CreateProduct: React.FC<Props> = (props) => {
   }
 
   function getCoverImage(val: string[]): void {
-    console.log(val)
+    const cover = val[0] ? val[0] : '';
+    setState({...state, cover })
   }
 
-  function getImages(val: string[]): void {
-    console.log(val)
+  function getImages(images: string[]): void {
+    setState({ ...state, images })
   }
 
   function getDescriptionHtml(val: string): void {
@@ -171,11 +172,13 @@ const CreateProduct: React.FC<Props> = (props) => {
       <div className="flex items-start">
         <UploadZone
           multiple={false}
+          value={state.cover}
           label="Maximum 1 image and Size less than 500KB"
           getValue={getCoverImage}
         />
         <UploadZone
           multiple={true}
+          value={state.images}
           label="Maximum 5 images and Each size less than 500KB"
           getValue={getImages}
         />
