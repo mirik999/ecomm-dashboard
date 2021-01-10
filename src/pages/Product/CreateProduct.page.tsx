@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { useMutation } from "@apollo/client";
+import { useLazyQuery, useMutation } from "@apollo/client";
 //components
 import Layout from "@components/Layout";
 import Input from "@components/Input";
@@ -8,10 +8,14 @@ import Button from "@components/Button";
 import ProcessBox from "@components/ProcessBox";
 import ErrorBox from "@components/ErrorBox";
 import UploadZone from "@components/UploadZone";
+import TextEditor from "@components/TextEditor";
+import Select from "@components/Select";
 //types
-import { ProductType } from "@redux/types/product.type";
+import { OptionType } from "@redux/types/common.type";
+import { CategoryType } from "@redux/types/category.type";
 //request
 import { CREATE_PRODUCT, UPDATE_PRODUCT } from "@redux/requests/product.request";
+import { GET_CATEGORIES } from "@redux/requests/category.request";
 
 
 const initialState = {
@@ -22,7 +26,10 @@ const initialState = {
   price: 0,
   saleCount: 0,
   sale: false,
-  category: []
+  category: {
+    label: 'No selected category',
+    value: ''
+  }
 }
 
 type Props = {}
@@ -31,9 +38,16 @@ const CreateProduct: React.FC<Props> = (props) => {
   const history = useHistory();
   const [CreateProduct, createResponse] = useMutation(CREATE_PRODUCT);
   const [UpdateProduct, updateResponse] = useMutation(UPDATE_PRODUCT);
+  const [GetCategories, categoriesResponse] = useLazyQuery(GET_CATEGORIES);
   const [state, setState] = useState<any>(initialState);
   const [mode, setMode] = useState<string>('create');
+  const [categories, setCategories] = useState<OptionType[]>([]);
 
+  useEffect(() => {
+    (async function() {
+      await getCategories()
+    })()
+  }, [])
 
   useEffect(() => {
     const { mode, selected }: any = history.location.state;
@@ -42,6 +56,14 @@ const CreateProduct: React.FC<Props> = (props) => {
       setMode(mode);
     }
   }, []);
+
+  useEffect(() => {
+    if (categoriesResponse.data) {
+      const options = categoriesResponse.data.getCategories.payload.map((cat: CategoryType) =>
+        ({ label: cat.name, value: cat.id}))
+      setCategories(options)
+    }
+  }, [categoriesResponse])
 
   useEffect(() => {
     if (createResponse.data) {
@@ -54,6 +76,22 @@ const CreateProduct: React.FC<Props> = (props) => {
       history.push("/product")
     }
   }, [updateResponse])
+
+  async function getCategories(): Promise<void> {
+    try {
+      await GetCategories({
+        variables: {
+          controls: {
+            offset: 0,
+            limit: 1000,
+            keyword: ''
+          }
+        }
+      })
+    } catch(err) {
+      console.log(err)
+    }
+  }
 
   async function _onSave(): Promise<void> {
     try {
@@ -79,11 +117,20 @@ const CreateProduct: React.FC<Props> = (props) => {
     }
   }
 
+  function _onCategorySelected(val: string): void {
+    const selectedCategory = categories.find((cat) => cat.value === val);
+    setState({ ...state, category: selectedCategory })
+  }
+
   function getCoverImage(val: string[]): void {
     console.log(val)
   }
 
   function getImages(val: string[]): void {
+    console.log(val)
+  }
+
+  function getDescriptionHtml(val: string): void {
     console.log(val)
   }
 
@@ -131,6 +178,23 @@ const CreateProduct: React.FC<Props> = (props) => {
           multiple={true}
           label="Maximum 5 images and Each size less than 500KB"
           getValue={getImages}
+        />
+      </div>
+      <div className="flex items-start">
+        <Select
+          label="Category"
+          name="category"
+          returnType="string"
+          value={state.category.value}
+          options={categories}
+          getValue={(val: string) => _onCategorySelected(val)}
+          cls="mx-4"
+        />
+        <TextEditor
+          label="Description"
+          value={state.description}
+          getValue={getDescriptionHtml}
+          cls="md:flex-2"
         />
       </div>
 

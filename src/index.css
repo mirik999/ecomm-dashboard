@@ -9,3 +9,18 @@
 html, body, #root, .site-container {
   height: 100%;
 }
+
+/* restyle react-quill rich text editor */
+
+.ql-toolbar {
+  padding: 15px 5px !important;
+  border-color: rgba(229, 231, 235, 1) !important;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+.ql-container {
+  border-color: rgba(229, 231, 235, 1) !important;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+}

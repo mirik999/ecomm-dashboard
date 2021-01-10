@@ -27,6 +27,9 @@ const UploadZone: React.FC<Props> = ({
   const [photoIndex, setPhotoIndex] = useState<number>(0);
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
+  useEffect(() => {
+    getValue(preview)
+  }, [preview])
 
   async function handleImage({ currentTarget }: FormEvent<HTMLInputElement>) {
     const files = currentTarget.files!;

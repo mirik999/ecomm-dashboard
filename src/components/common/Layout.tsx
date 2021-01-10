@@ -15,7 +15,7 @@ const Layout: React.FC<Props> = ({ children }) => {
         <Header />
         <div
           className="bg-gray-100 h-content p-5 overflow-auto"
-          style={{ maxWidth: 'calc(100vw - 300px)' }}
+          style={{ maxWidth: 'calc(100vw - 238px)' }}
         >
           {children}
         </div>

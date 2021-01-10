@@ -5,9 +5,11 @@ import { format } from 'date-fns';
 //components
 import Button from '@components/Button';
 import Input from "@components/Input";
-import Select, { OptionsType } from "@components/Select";
+import Select from "@components/Select";
 import LoadingBox from "@components/LoadingBox";
 import FakeTable from "@components/FakeTable";
+//types
+import { OptionType } from "@redux/types/common.type";
 
 const options = [
   { value: 10, label: '10 rows'},
@@ -52,7 +54,7 @@ const Table: React.FC<Props> = ({
   const [selected, setSelected] = useState<any[]>([]);
   const [quickSearch, setQuickSearch] = useState<string>('');
   const [deepSearch, setDeepSearch] = useState<string>('');
-  const [rowCount, setRowCount] = useState<OptionsType>(initialRowCountState);
+  const [rowCount, setRowCount] = useState<OptionType>(initialRowCountState);
 
   useEffect(() => {
     setState(data)

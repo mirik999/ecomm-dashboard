@@ -16,14 +16,11 @@ export async function imageUploadAndGetUrl(
     const payload = await axios.post(CLOUDINARY_URL, formData,{
       onUploadProgress: (event) => {
         const percent = Math.round((100 * event.loaded) / event.total);
-        console.log('percent', percent)
         onEvent(percent, '', null);
       }
     });
 
-    console.log('payload', payload)
     onEvent(0, '', payload)
-
   } catch(err) {
     console.log('onError => ', err)
     onEvent(0, 'Error upload image', null)

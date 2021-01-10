@@ -12,6 +12,7 @@ import { saveUser } from './redux/slices/user.slice';
 //styles [tailwind css]
 import './index.css';
 import 'react-image-lightbox/style.css';
+import 'react-quill/dist/quill.snow.css';
 
 //save token in redux
 store.dispatch(loadFromCookies());

@@ -1,9 +1,6 @@
 import React, { FormEvent, memo } from 'react';
-
-export type OptionsType = {
-  value: any,
-  label: string
-}
+//types
+import { OptionType } from "@redux/types/common.type";
 
 type Props = {
   type?: string
@@ -12,7 +9,7 @@ type Props = {
   returnType?: 'string' | 'boolean' | 'number'
   value: any
   cls?: string
-  options: OptionsType[],
+  options: OptionType[],
   getValue: (val: any) => void
 };
 
@@ -59,7 +56,7 @@ const Select: React.FC<Props> = memo(({
     </label>
   );
 }, (prevProps, nextProps) => {
-  return prevProps.value === nextProps.value;
+  return prevProps.value === nextProps.value && prevProps.options.length === nextProps.options.length;
 });
 
 Select.defaultProps = {
