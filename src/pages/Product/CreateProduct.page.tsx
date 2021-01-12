@@ -10,6 +10,7 @@ import ErrorBox from "@components/ErrorBox";
 import UploadZone from "@components/UploadZone";
 import TextEditor from "@components/TextEditor";
 import Select from "@components/Select";
+import ColorPicker from "@components/ColorPicker";
 //types
 import { OptionType } from "@redux/types/common.type";
 import { CategoryType } from "@redux/types/category.type";
@@ -23,6 +24,7 @@ const initialState = {
   images: [],
   cover: '',
   description: '',
+  color: '',
   price: 0,
   saleCount: 0,
   sale: false,
@@ -91,6 +93,10 @@ const CreateProduct: React.FC<Props> = (props) => {
     } catch(err) {
       console.log(err)
     }
+  }
+
+  function _onChange(val: string, name: string): void {
+    setState({ ...state, [name]: val })
   }
 
   async function _onSave(): Promise<void> {
@@ -169,60 +175,67 @@ const CreateProduct: React.FC<Props> = (props) => {
           cls="my-4 mx-4"
         />
       </div>
-      <div className="flex items-start">
-        <UploadZone
-          multiple={false}
-          value={state.cover}
-          label="Maximum 1 image and Size less than 500KB"
-          getValue={getCoverImage}
-        />
-        <UploadZone
-          multiple={true}
-          value={state.images}
-          label="Maximum 5 images and Each size less than 500KB"
-          getValue={getImages}
-        />
-      </div>
-      <div className="flex items-start">
-        <Select
-          label="Category"
-          name="category"
-          returnType="string"
-          value={state.category.value}
-          options={categories}
-          getValue={(val: string) => _onCategorySelected(val)}
-          cls="mx-4"
-        />
-        <TextEditor
-          label="Description"
-          value={state.description}
-          getValue={getDescriptionHtml}
-          cls="md:flex-2"
-        />
+      <div className="flex">
+        <div className="flex-1">
+          <Select
+            label="Category"
+            name="category"
+            returnType="string"
+            value={state.category.value}
+            options={categories}
+            getValue={(val: string) => _onCategorySelected(val)}
+            cls="mx-4"
+          />
+          <ColorPicker
+            value={state.color}
+            getValue={(val: string) => _onChange(val, 'color')}
+            editable={true}
+          />
+          <div className="flex items-center mx-4 py-3">
+            {
+              mode === "create" ? (
+                <Button
+                  label="Create"
+                  onAction={_onSave}
+                  cls="m-0 mr-3"
+                />
+              ) : (
+                <Button
+                  label="Update"
+                  onAction={_onUpdate}
+                  cls="m-0 mr-3"
+                />
+              )
+            }
+            <Button
+              label="Reset fields"
+              onAction={() => setState(initialState)}
+              cls="m-0 mr-3"
+            />
+          </div>
+        </div>
+        <div className="flex-1">
+          <UploadZone
+            multiple={false}
+            value={state.cover}
+            label="Maximum 1 image and Size less than 500KB"
+            getValue={getCoverImage}
+          />
+          <UploadZone
+            multiple={true}
+            value={state.images}
+            label="Maximum 5 images and Each size less than 500KB"
+            getValue={getImages}
+          />
+          <TextEditor
+            label="Description"
+            value={state.description}
+            getValue={getDescriptionHtml}
+            cls="md:flex-2"
+          />
+        </div>
       </div>
 
-      <div className="flex items-center mx-4 py-3">
-        {
-          mode === "create" ? (
-            <Button
-              label="Create"
-              onAction={_onSave}
-              cls="m-0 mr-3"
-            />
-          ) : (
-            <Button
-              label="Update"
-              onAction={_onUpdate}
-              cls="m-0 mr-3"
-            />
-          )
-        }
-        <Button
-          label="Reset fields"
-          onAction={() => setState(initialState)}
-          cls="m-0 mr-3"
-        />
-      </div>
       { createResponse.loading ? <ProcessBox /> : null }
       { createResponse.error ? <ErrorBox message={createResponse.error.message} /> : null }
 
