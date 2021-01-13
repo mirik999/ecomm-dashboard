@@ -17,6 +17,7 @@ import { CategoryType } from "@redux/types/category.type";
 //request
 import { CREATE_PRODUCT, UPDATE_PRODUCT } from "@redux/requests/product.request";
 import { GET_CATEGORIES } from "@redux/requests/category.request";
+import Checkbox from "../../components/common/Checkbox";
 
 
 const initialState = {
@@ -28,6 +29,7 @@ const initialState = {
   price: 0,
   saleCount: 0,
   sale: false,
+  new: true,
   category: {
     label: 'No selected category',
     value: ''
@@ -95,7 +97,7 @@ const CreateProduct: React.FC<Props> = (props) => {
     }
   }
 
-  function _onChange(val: string, name: string): void {
+  function _onChange(val: any, name: string): void {
     setState({ ...state, [name]: val })
   }
 
@@ -141,6 +143,8 @@ const CreateProduct: React.FC<Props> = (props) => {
     console.log(val)
   }
 
+  console.log(state)
+
   return (
     <Layout>
       <div className="flex justify-between items-center">
@@ -159,38 +163,52 @@ const CreateProduct: React.FC<Props> = (props) => {
           type="text"
           label="Product name"
           value={state.name}
-          getValue={(val: string) => setState({...state, name: val})}
+          getValue={(val: string) => _onChange(val, 'name')}
         />
         <Input
           type="number"
           label="Price"
           value={state.price}
-          getValue={(val: string) => setState({...state, price: +val})}
+          getValue={(val: string) =>_onChange(+val, 'price')}
         />
-        <Input
-          type="number"
-          label="Sale percent"
-          value={state.saleCount}
-          getValue={(val: string) => setState({...state, saleCount: +val})}
-          cls="my-4 mx-4"
+        <Select
+          label="Category"
+          name="category"
+          returnType="string"
+          value={state.category.value}
+          options={categories}
+          getValue={(val: string) => _onCategorySelected(val)}
+          cls="m-4"
         />
       </div>
       <div className="flex">
         <div className="flex-1">
-          <Select
-            label="Category"
-            name="category"
-            returnType="string"
-            value={state.category.value}
-            options={categories}
-            getValue={(val: string) => _onCategorySelected(val)}
-            cls="mx-4"
-          />
           <ColorPicker
             value={state.color}
             getValue={(val: string) => _onChange(val, 'color')}
             editable={true}
           />
+          <Input
+            type="number"
+            label="Sale percent"
+            value={state.saleCount}
+            getValue={(val: string) => _onChange(+val, 'saleCount')}
+            cls="mx-4"
+          />
+          <div className="flex">
+            <Checkbox
+              label="Sale"
+              name="sale"
+              value={state.sale}
+              getValue={(val: boolean) => _onChange(val, 'sale')}
+            />
+            <Checkbox
+              label="New"
+              name="new"
+              value={state.new}
+              getValue={(val: boolean) => _onChange(val, 'new')}
+            />
+          </div>
           <div className="flex items-center mx-4 py-3">
             {
               mode === "create" ? (

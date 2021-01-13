@@ -40,13 +40,15 @@ const ColorPicker: React.FC<Props> = memo(({value, getValue}) => {
   }
 
   return(
-    <div className="m-4">
+    <div className="my-3 mx-4">
       <span>Color of the product</span>
       <div
-        className="h-52 flex justify-center items-center"
-        style={{ backgroundColor: color }}
+        className="h-52 flex justify-center items-center rounded-md"
+        style={{
+          backgroundColor: color
+        }}
       >
-        <div className="p-3 bg-gray-100 shadow-md">
+        <div className="p-3 bg-gray-100 rounded shadow-md">
           <CirclePicker
             colors={colors}
             onChange={_onChange}
