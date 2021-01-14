@@ -29,6 +29,7 @@ const UploadZone: React.FC<Props> = memo(({
 
   useEffect(() => {
     if (multiple && typeof value === "object") {
+      console.log('value', value)
       setPreview(value)
     }
 
@@ -187,5 +188,8 @@ export default UploadZone;
 
 
 function compareDeeper(prev: string[], next: string[]): boolean {
-  return prev.every((p, i) => p === next[i]);
+  if (prev.length !== next.length) {
+    return next.every((n, i) => n === prev[i]);
+  }
+  return true;
 }

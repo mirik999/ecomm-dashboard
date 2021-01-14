@@ -39,7 +39,7 @@ const Select: React.FC<Props> = memo(({
     <label htmlFor={type + '-' + Date.now()} className={`flex flex-col flex-1 ${cls}`}>
       <span>{label}</span>
       <select
-        value={value}
+        value={value.id}
         name={name}
         id={name + '-' + Date.now()}
         autoComplete="off"
@@ -47,9 +47,10 @@ const Select: React.FC<Props> = memo(({
         className="shadow-ml outline-none border-b-2 border-gray-200 p-3 text-black
            border-r-4 rounded-md text-base focus:border-blue-400 appearance-none"
       >
+        <option value="not-selected">Not selected</option>
         {
           options.map((opt, i) => (
-            <option key={i} value={opt.value}>{opt.label}</option>
+            <option key={i} value={opt.id}>{opt.name}</option>
           ))
         }
       </select>
@@ -62,10 +63,10 @@ const Select: React.FC<Props> = memo(({
 Select.defaultProps = {
   type: 'text',
   label: 'Label',
-  name: 'email',
+  name: 'selectable',
   returnType: 'string',
   cls: 'm-4',
-  options: [{ value: '', label: 'No options' }],
+  options: [{ id: '', name: 'No options' }],
   value: '',
 };
 

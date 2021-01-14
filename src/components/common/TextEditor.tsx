@@ -1,9 +1,9 @@
-import React, {memo, useEffect, useState} from 'react';
+import React, { memo } from 'react';
 import ReactQuill from 'react-quill';
 
 type Props = {
   label?: string
-  value: string,
+  value: string
   cls?: string
   getValue: (val: string) => void
 }
@@ -14,14 +14,9 @@ const TextEditor: React.FC<Props> = memo(({
  cls,
  getValue
 }) => {
-  const [state, setState] = useState<string>('');
-
-  useEffect(() => {
-    setState(value);
-  }, [value])
 
   function _onChange(val: string): void {
-    setState(val);
+    getValue(val);
   }
 
   return(
@@ -29,7 +24,7 @@ const TextEditor: React.FC<Props> = memo(({
       <span>{ label }</span>
       <ReactQuill
         className="bg-white"
-        value={state}
+        value={value}
         onChange={_onChange}
         formats={formats}
         modules={{

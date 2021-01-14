@@ -11,13 +11,14 @@ import UploadZone from "@components/UploadZone";
 import TextEditor from "@components/TextEditor";
 import Select from "@components/Select";
 import ColorPicker from "@components/ColorPicker";
+import Checkbox from "../../components/common/Checkbox";
 //types
 import { OptionType } from "@redux/types/common.type";
 import { CategoryType } from "@redux/types/category.type";
+import { CreateProductType } from "@redux/types/product.type";
 //request
 import { CREATE_PRODUCT, UPDATE_PRODUCT } from "@redux/requests/product.request";
 import { GET_CATEGORIES } from "@redux/requests/category.request";
-import Checkbox from "../../components/common/Checkbox";
 
 
 const initialState = {
@@ -30,10 +31,7 @@ const initialState = {
   saleCount: 0,
   sale: false,
   new: true,
-  category: {
-    label: 'No selected category',
-    value: ''
-  }
+  category: []
 }
 
 type Props = {}
@@ -63,8 +61,7 @@ const CreateProduct: React.FC<Props> = (props) => {
 
   useEffect(() => {
     if (categoriesResponse.data) {
-      const options = categoriesResponse.data.getCategories.payload.map((cat: CategoryType) =>
-        ({ label: cat.name, value: cat.id}))
+      const options = categoriesResponse.data.getCategories.payload;
       setCategories(options)
     }
   }, [categoriesResponse])
@@ -98,7 +95,7 @@ const CreateProduct: React.FC<Props> = (props) => {
   }
 
   function _onChange(val: any, name: string): void {
-    setState({ ...state, [name]: val })
+    setState((prevState: any) => ({ ...prevState, [name]: val }))
   }
 
   async function _onSave(): Promise<void> {
@@ -117,7 +114,11 @@ const CreateProduct: React.FC<Props> = (props) => {
     try {
       await UpdateProduct({
         variables: {
-          updatedProduct: state
+          updatedProduct: {
+            ...state,
+            category: state.category.map((cat: CategoryType) =>
+              typeof cat === "object" ? cat.id : cat)
+          }
         }
       })
     } catch(err) {
@@ -126,24 +127,27 @@ const CreateProduct: React.FC<Props> = (props) => {
   }
 
   function _onCategorySelected(val: string): void {
-    const selectedCategory = categories.find((cat) => cat.value === val);
-    setState({ ...state, category: selectedCategory })
+    if (val === "not-selected") {
+      setState((prevState: any) => ({ ...prevState, category: initialState.category }));
+      return;
+    }
+    setState((prevState: any) => ({ ...prevState, category: [val] }))
   }
 
   function getCoverImage(val: string[]): void {
     const cover = val[0] ? val[0] : '';
-    setState({...state, cover })
+    setState((prevState: any) => ({...prevState, cover }))
   }
 
   function getImages(images: string[]): void {
-    setState({ ...state, images })
+    setState((prevState: any) => ({ ...prevState, images }))
   }
 
   function getDescriptionHtml(val: string): void {
-    console.log(val)
+    setState((prevState: any) => ({ ...prevState, description: val }));
   }
 
-  console.log(state)
+  console.log('state', state)
 
   return (
     <Layout>
@@ -175,7 +179,7 @@ const CreateProduct: React.FC<Props> = (props) => {
           label="Category"
           name="category"
           returnType="string"
-          value={state.category.value}
+          value={state.category[0]} // { id, name }
           options={categories}
           getValue={(val: string) => _onCategorySelected(val)}
           cls="m-4"

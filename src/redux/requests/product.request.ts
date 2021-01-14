@@ -67,7 +67,10 @@ export const GET_PRODUCTS = gql`
         cover
         color
         description
-        createdAt
+        category {
+          id
+          name
+        }
         stars
         price
         viewCount
@@ -77,11 +80,7 @@ export const GET_PRODUCTS = gql`
         new
         best
         isDisabled
-        category {
-          id
-          name
-          tabName
-        }
+        createdAt
       }
     }
   }

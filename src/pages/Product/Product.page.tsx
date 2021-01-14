@@ -130,7 +130,7 @@ const ProductPage: React.FC<Props> = (props) => {
         getIdAndDisable={getIdAndDisable}
         getIdAndActivate={getIdAndActivate}
         path="product"
-        exclude={['id', 'category', 'cover', 'description', 'images']}
+        exclude={['id', 'cover', 'description', 'images']}
         error={!!getResponse.error}
       />
       { getResponse.loading ? <ProcessBox /> : null }

@@ -19,3 +19,16 @@ export type ProductType = {
   isDisabled: boolean
   category: Partial<CategoryType[]>
 };
+
+export type CreateProductType = {
+  name: string
+  images: string[]
+  cover: string
+  description: string
+  color: string
+  price: number
+  saleCount: number
+  sale: boolean
+  new: boolean
+  category: CategoryType[]
+}

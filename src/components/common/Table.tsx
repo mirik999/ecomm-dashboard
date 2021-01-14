@@ -12,16 +12,16 @@ import FakeTable from "@components/FakeTable";
 import { OptionType } from "@redux/types/common.type";
 
 const options = [
-  { value: 10, label: '10 rows'},
-  { value: 20, label: '20 rows'},
-  { value: 50, label: '50 rows'},
-  { value: 75, label: '75 rows'},
-  { value: 100, label: '100 rows'},
+  { id: 10, name: '10 rows'},
+  { id: 20, name: '20 rows'},
+  { id: 50, name: '50 rows'},
+  { id: 75, name: '75 rows'},
+  { id: 100, name: '100 rows'},
 ]
 
 const initialRowCountState = {
-  value: 10,
-  label: '10 rows'
+  id: 10,
+  name: '10 rows'
 }
 
 type Props = {
@@ -74,9 +74,9 @@ const Table: React.FC<Props> = ({
   }
 
   function _onRowCountChange(val: number): void {
-    const rowCount = options.find(o => o.value === val) || initialRowCountState;
+    const rowCount = options.find(o => o.id === val) || initialRowCountState;
     setRowCount(rowCount)
-    getRowCount(rowCount.value)
+    getRowCount(rowCount.id)
   }
 
   function _onDeepSearch(val: string): void {
@@ -123,13 +123,17 @@ const Table: React.FC<Props> = ({
     }
 
     if (typeof val === "boolean") {
-      return val ? '❌ No' : '✅ Yes'
+      return val ? '✅ Yes' : '❌ No'
+    }
+
+    if (typeof val === "object") {
+      return val[0]?.name
     }
 
     return val;
   }
 
-  const totalCount = allCount / rowCount.value;
+  const totalCount = allCount / rowCount.id;
   const keys = state
     .map((d) => Object.keys(d))[0]
     .filter((k, i) => ![...exclude!].includes(k));
@@ -157,7 +161,7 @@ const Table: React.FC<Props> = ({
         <Select
           label="Select row count"
           name="select-row-size"
-          value={rowCount.value}
+          value={rowCount}
           options={options}
           getValue={_onRowCountChange}
           returnType="number"
