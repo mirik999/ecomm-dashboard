@@ -5,20 +5,18 @@ import { useLazyQuery, useMutation } from "@apollo/client";
 import Layout from "@components/Layout";
 import Input from "@components/Input";
 import Button from "@components/Button";
-import ProcessBox from "@components/ProcessBox";
-import ErrorBox from "@components/ErrorBox";
 import UploadZone from "@components/UploadZone";
 import TextEditor from "@components/TextEditor";
-import Select from "@components/Select";
+import Selectable from "@components/Select";
 import ColorPicker from "@components/ColorPicker";
-import Checkbox from "../../components/common/Checkbox";
+import Checkbox from "@components/Checkbox";
+import NotificationBox from "@components/notificationBox";
 //types
 import { OptionType } from "@redux/types/common.type";
 import { CategoryType } from "@redux/types/category.type";
-import { CreateProductType } from "@redux/types/product.type";
 //request
 import { CREATE_PRODUCT, UPDATE_PRODUCT } from "@redux/requests/product.request";
-import { GET_CATEGORIES } from "@redux/requests/category.request";
+import { GET_CATEGORIES_FOR_SELECT } from "@redux/requests/category.request";
 
 
 const initialState = {
@@ -40,7 +38,7 @@ const CreateProduct: React.FC<Props> = (props) => {
   const history = useHistory();
   const [CreateProduct, createResponse] = useMutation(CREATE_PRODUCT);
   const [UpdateProduct, updateResponse] = useMutation(UPDATE_PRODUCT);
-  const [GetCategories, categoriesResponse] = useLazyQuery(GET_CATEGORIES);
+  const [GetCategories, categoriesResponse] = useLazyQuery(GET_CATEGORIES_FOR_SELECT);
   const [state, setState] = useState<any>(initialState);
   const [mode, setMode] = useState<string>('create');
   const [categories, setCategories] = useState<OptionType[]>([]);
@@ -147,8 +145,6 @@ const CreateProduct: React.FC<Props> = (props) => {
     setState((prevState: any) => ({ ...prevState, description: val }));
   }
 
-  console.log('state', state)
-
   return (
     <Layout>
       <div className="flex justify-between items-center">
@@ -175,11 +171,11 @@ const CreateProduct: React.FC<Props> = (props) => {
           value={state.price}
           getValue={(val: string) =>_onChange(+val, 'price')}
         />
-        <Select
+        <Selectable
           label="Category"
           name="category"
           returnType="string"
-          value={state.category[0]} // { id, name }
+          value={state.category[0]} // { id, name } or 'id-string'
           options={categories}
           getValue={(val: string) => _onCategorySelected(val)}
           cls="m-4"
@@ -257,12 +253,12 @@ const CreateProduct: React.FC<Props> = (props) => {
           />
         </div>
       </div>
-
-      { createResponse.loading ? <ProcessBox /> : null }
-      { createResponse.error ? <ErrorBox message={createResponse.error.message} /> : null }
-
-      { updateResponse.loading ? <ProcessBox /> : null }
-      { updateResponse.error ? <ErrorBox message={updateResponse.error.message} /> : null }
+      <NotificationBox
+        list={[
+          createResponse,
+          updateResponse,
+        ]}
+      />
     </Layout>
   );
 }

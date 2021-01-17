@@ -1,6 +1,44 @@
-import React, { FormEvent, memo } from 'react';
+import React, {FormEvent, memo, useEffect, useState} from 'react';
+import Select from 'react-select';
 //types
 import { OptionType } from "@redux/types/common.type";
+
+// styles
+const mainColor = 'rgba(59, 130, 246, 0.8)';
+const mainColorHover = 'rgba(59, 130, 246, 0.2)';
+const borderColor = 'rgba(229, 231, 235, 1)';
+
+const customStyles = {
+  control: (provided: any, state: any) => ({
+    ...provided,
+    padding: '6px 0',
+    outline: '2px solid transparent',
+    outlineOffset: '2px',
+    fontSize: '1rem',
+    lineHeight: '1.5rem',
+    boxShadow: 'none',
+    borderLeftWidth: '0',
+    borderTopWidth: '0',
+    borderRightWidth: '4px',
+    borderBottomWidth: '2px',
+    borderColor: state.isFocused ? mainColor : borderColor,
+    borderRadius: '0.375rem',
+    cursor: 'pointer',
+
+    '&:hover': {
+      borderColor: state.isFocused ? mainColor : borderColor,
+    }
+  }),
+  option: (provided: any, state: any) => ({
+    ...provided,
+    backgroundColor: state.isSelected ? mainColor : 'white',
+    cursor: 'pointer',
+
+    '&:hover': {
+      backgroundColor: state.isSelected ? mainColor : mainColorHover,
+    }
+  }),
+}
 
 type Props = {
   type?: string
@@ -13,54 +51,53 @@ type Props = {
   getValue: (val: any) => void
 };
 
-const Select: React.FC<Props> = memo(({
+const Selectable: React.FC<Props> = memo(({
   type,
   label,
   name,
-  returnType,
   value,
   cls,
   options,
   getValue
 }) => {
+  const [innerState, setInnerState] = useState<OptionType>({
+    id: '',
+    name: ''
+  });
 
-  function _onChange({ currentTarget }: FormEvent<HTMLSelectElement>): any {
-    switch (returnType) {
-      case "number":
-        return getValue(Number(currentTarget.value))
-      case "boolean":
-        return getValue(Boolean(currentTarget.value))
-      default:
-        return getValue(currentTarget.value)
+  useEffect(() => {
+    if (typeof value === "string") {
+      const initialValue = options.find(opt => opt.id === value)!
+      setInnerState(initialValue)
+    } else {
+      setInnerState(value);
     }
+  }, [value])
+
+  function _onChange(selectedOption: any): void {
+     getValue(selectedOption.id)
   }
 
   return (
-    <label htmlFor={type + '-' + Date.now()} className={`flex flex-col flex-1 ${cls}`}>
+    <label htmlFor={type + name} className={`flex flex-col flex-1 ${cls}`}>
       <span>{label}</span>
-      <select
-        value={value.id}
+      <Select
+        id={name}
         name={name}
-        id={name + '-' + Date.now()}
-        autoComplete="off"
+        value={innerState}
+        getOptionLabel={(option: any) => option.name}
+        getOptionValue={(option: any) => option.id}
         onChange={_onChange}
-        className="shadow-ml outline-none border-b-2 border-gray-200 p-3 text-black
-           border-r-4 rounded-md text-base focus:border-blue-400 appearance-none"
-      >
-        <option value="not-selected">Not selected</option>
-        {
-          options.map((opt, i) => (
-            <option key={i} value={opt.id}>{opt.name}</option>
-          ))
-        }
-      </select>
+        options={options}
+        styles={customStyles}
+      />
     </label>
   );
 }, (prevProps, nextProps) => {
   return prevProps.value === nextProps.value && prevProps.options.length === nextProps.options.length;
 });
 
-Select.defaultProps = {
+Selectable.defaultProps = {
   type: 'text',
   label: 'Label',
   name: 'selectable',
@@ -70,4 +107,4 @@ Select.defaultProps = {
   value: '',
 };
 
-export default Select;
+export default Selectable;

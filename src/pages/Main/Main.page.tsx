@@ -7,8 +7,11 @@ type Props = {};
 const MainPage: React.FC<Props> = (props) => {
   return (
     <Layout>
-      <div className="">
-        Hello i'm main page
+      <h2 className="font-medium uppercase mx-4">
+        Common Statistics
+      </h2>
+      <div className="flex">
+
       </div>
     </Layout>
   );

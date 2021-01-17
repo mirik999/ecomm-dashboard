@@ -2,15 +2,14 @@ import React, {useEffect, useState} from 'react';
 import { useHistory } from 'react-router-dom';
 import { useMutation } from "@apollo/client";
 //components
-import Layout from "../../components/common/Layout";
-import Input from "../../components/common/Input";
-import Button from "../../components/common/Button";
-import ProcessBox from "../../components/common/ProcessBox";
-import ErrorBox from "../../components/common/ErrorBox";
+import Layout from "@components/Layout";
+import Input from "@components/Input";
+import Button from "@components/Button";
+import NotificationBox from "@components/notificationBox";
 //types
-import { CategoryType } from "../../redux/types/category.type";
+import { CategoryType } from "@redux/types/category.type";
 //request
-import { CREATE_CATEGORY, UPDATE_CATEGORY } from "../../redux/requests/category.request";
+import { CREATE_CATEGORY, UPDATE_CATEGORY } from "@redux/requests/category.request";
 
 const initialState = {
   name: '',
@@ -22,7 +21,7 @@ type Props = {}
 const CreateCategory: React.FC<Props> = (props) => {
   const history = useHistory();
   const [CreateCategory, createResponse] = useMutation(CREATE_CATEGORY);
-  const [UpdateCategory, updateResponse] = useMutation(UPDATE_CATEGORY);
+  const [UpdateCategory, updateResponse] = useMutation(UPDATE_CATEGORY, { errorPolicy: "all" });
   const [state, setState] = useState<Partial<CategoryType>>(initialState);
   const [mode, setMode] = useState<string>('create');
 
@@ -119,11 +118,12 @@ const CreateCategory: React.FC<Props> = (props) => {
           cls="m-0 mr-3"
         />
       </div>
-      { createResponse.loading ? <ProcessBox /> : null }
-      { createResponse.error ? <ErrorBox message={createResponse.error.message} /> : null }
-
-      { updateResponse.loading ? <ProcessBox /> : null }
-      { updateResponse.error ? <ErrorBox message={updateResponse.error.message} /> : null }
+      <NotificationBox
+        list={[
+          createResponse,
+          updateResponse,
+        ]}
+      />
     </Layout>
   );
 }

@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client';
 
 export const CREATE_CATEGORY = gql`
-  mutation CreateCategory($newCategory: UpdateCategoryInput!) {
+  mutation CreateCategory($newCategory: CreateCategoryInput!) {
     createCategory(newCategory: $newCategory) {
       id
       name
@@ -51,6 +51,18 @@ export const ACTIVATE_CATEGORIES = gql`
   mutation ActivateCategories($activateCategories: GetByIdsInput!) {
     activateCategories(activateCategories: $activateCategories) {
       id
+    }
+  }
+`;
+
+export const GET_CATEGORIES_FOR_SELECT = gql`
+  query GetCategories($controls: GetElementsInput!) {
+    getCategories(controls: $controls) {
+      count
+      payload {
+        id
+        name
+      }
     }
   }
 `;

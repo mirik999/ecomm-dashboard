@@ -5,8 +5,8 @@ import { useDispatch } from 'react-redux';
 import Input from '../../components/common/Input';
 import Button from '../../components/common/Button';
 import Divider from '../../components/common/Divider';
-import ErrorBox from '../../components/common/ErrorBox';
-import ProcessBox from "../../components/common/ProcessBox";
+import ErrorBox from '../../components/common/notificationBox/ErrorBox';
+import ProcessBox from "../../components/common/notificationBox/ProcessBox";
 //requests
 import {CREATE_USER} from "../../redux/requests/user.request";
 //actions

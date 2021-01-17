@@ -3,8 +3,7 @@ import { useLazyQuery, useMutation } from "@apollo/client";
 //components
 import Layout from "@components/Layout";
 import Table from "@components/Table";
-import ProcessBox from "@components/ProcessBox";
-import ErrorBox from "@components/ErrorBox";
+import NotificationBox from "@components/notificationBox";
 //types
 import { ProductType } from "@redux/types/product.type";
 //request
@@ -31,7 +30,6 @@ const ProductPage: React.FC<Props> = (props) => {
   useEffect(() => {
     if (getResponse.data) {
       const { count, payload } = getResponse.data.getProducts;
-      console.log(payload)
       setProducts(payload);
       setAllCount(count);
     }
@@ -113,8 +111,6 @@ const ProductPage: React.FC<Props> = (props) => {
     setProducts(updatedProducts)
   }
 
-  console.log(getResponse.loading)
-
   return (
     <Layout>
       <h2 className="font-medium uppercase mx-4">
@@ -133,14 +129,13 @@ const ProductPage: React.FC<Props> = (props) => {
         exclude={['id', 'cover', 'description', 'images']}
         error={!!getResponse.error}
       />
-      { getResponse.loading ? <ProcessBox /> : null }
-      { getResponse.error ? <ErrorBox message={getResponse.error.message} /> : null }
-
-      { activateResponse.loading ? <ProcessBox /> : null }
-      { activateResponse.error ? <ErrorBox message={activateResponse.error.message} /> : null }
-
-      { disableResponse.loading ? <ProcessBox /> : null }
-      { disableResponse.error ? <ErrorBox message={disableResponse.error.message} /> : null }
+      <NotificationBox
+        list={[
+          getResponse,
+          activateResponse,
+          disableResponse
+        ]}
+      />
     </Layout>
   );
 };

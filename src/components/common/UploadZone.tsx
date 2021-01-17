@@ -29,7 +29,6 @@ const UploadZone: React.FC<Props> = memo(({
 
   useEffect(() => {
     if (multiple && typeof value === "object") {
-      console.log('value', value)
       setPreview(value)
     }
 

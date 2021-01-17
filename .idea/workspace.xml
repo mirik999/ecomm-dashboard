@@ -20,18 +20,27 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e021988f-3eda-4fed-af49-63e1e5ec9f51" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/components/common/notificationBox/index.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.eslintcache" beforeDir="false" afterPath="$PROJECT_DIR$/.eslintcache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/common/ErrorBox.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/ErrorBox.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/common/ErrorBox.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/notificationBox/ErrorBox.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/common/LoadingBox.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/LoadingBox.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/common/ProcessBox.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/notificationBox/ProcessBox.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/common/Select.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/Select.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/common/Table.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/Table.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/common/TextEditor.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/TextEditor.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/common/UploadZone.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/UploadZone.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/common/WarningBox.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/notificationBox/WarningBox.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Auth/Login.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Auth/Login.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Auth/Register.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Auth/Register.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Category/Category.page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Category/Category.page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Category/CreateCategory.page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Category/CreateCategory.page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Main/Main.page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Main/Main.page.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/Product/CreateProduct.page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Product/CreateProduct.page.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/Product/Product.page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Product/Product.page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/redux/requests/product.request.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/requests/product.request.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/redux/types/common.type.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/types/common.type.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/redux/types/product.type.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/types/product.type.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/requests/category.request.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/requests/category.request.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -71,7 +80,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../ecomm-api" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -86,11 +95,11 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\mirik\WebstormProjects\ecomm-dashboard\src\components\common" />
+      <recent name="C:\Users\mirik\WebstormProjects\ecomm-dashboard\src\components\common\NotificationBox" />
       <recent name="C:\Users\mirik\WebstormProjects\ecomm-dashboard\src\pages\Main" />
       <recent name="C:\Users\mirik\WebstormProjects\ecomm-dashboard\src\pages\Auth" />
       <recent name="C:\Users\mirik\WebstormProjects\ecomm-dashboard\src\pages\Category" />
-      <recent name="C:\Users\mirik\WebstormProjects\ecomm-dashboard\src" />
-      <recent name="C:\Users\Mirik\Documents\Projects\ecomm-dashboard\src\components" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -106,7 +115,8 @@
       <workItem from="1609498291245" duration="20142000" />
       <workItem from="1610467620121" duration="5637000" />
       <workItem from="1610556257794" duration="5356000" />
-      <workItem from="1610645461741" duration="9226000" />
+      <workItem from="1610645461741" duration="9404000" />
+      <workItem from="1610790236204" duration="21998000" />
     </task>
     <servers />
   </component>

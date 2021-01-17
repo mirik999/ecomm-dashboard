@@ -130,6 +130,16 @@ const Table: React.FC<Props> = ({
       return val[0]?.name
     }
 
+    if (key === "color") {
+      return <div
+        className="w-full rounded"
+        style={{
+          height: '30px',
+          backgroundColor: val
+        }}
+      />
+    }
+
     return val;
   }
 
