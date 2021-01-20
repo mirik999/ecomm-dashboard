@@ -1,8 +1,7 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, memo} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { MdExitToApp } from 'react-icons/md';
 import { useHistory } from 'react-router-dom';
-import io from 'socket.io-client';
 //types
 import {RootState} from "../../redux/store";
 //actions
@@ -11,16 +10,10 @@ import { removeUser } from '../../redux/slices/user.slice';
 
 type Props = {};
 
-const Header: React.FC<Props> = (props) => {
+const Header: React.FC<Props> = memo((props) => {
   const dispatch = useDispatch();
   const history = useHistory();
   const { user } = useSelector((state: RootState) => state);
-  const socket = io.connect('http://localhost:4004');
-
-  useEffect(() => {
-    console.log('socket => ', socket)
-    socket.emit('msgToServer', 'Hellooooo')
-  }, [])
 
   function _onLogout(): void {
     dispatch(removeToken())
@@ -48,7 +41,9 @@ const Header: React.FC<Props> = (props) => {
       </div>
     </div>
   );
-};
+}, () => {
+  return true;
+});
 
 Header.defaultProps = {};
 
