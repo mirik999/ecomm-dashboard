@@ -2,21 +2,21 @@ import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useLazyQuery, useMutation } from "@apollo/client";
 //components
-import Layout from "@components/Layout";
-import Input from "@components/Input";
-import Button from "@components/Button";
-import UploadZone from "@components/UploadZone";
-import TextEditor from "@components/TextEditor";
-import Selectable from "@components/Select";
-import ColorPicker from "@components/ColorPicker";
-import Checkbox from "@components/Checkbox";
-import NotificationBox from "@components/notificationBox";
+import Layout from "../../components/common/Layout";
+import Input from "../../components/common/Input";
+import Button from "../../components/common/Button";
+import UploadZone from "../../components/common/UploadZone";
+import TextEditor from "../../components/common/TextEditor";
+import Selectable from "../../components/common/Select";
+import ColorPicker from "../../components/common/ColorPicker";
+import Checkbox from "../../components/common/Checkbox";
+import NotificationBox from "../../components/common/notificationBox";
 //types
-import { OptionType } from "@redux/types/common.type";
-import { CategoryType } from "@redux/types/category.type";
+import { OptionType } from "../../redux/types/common.type";
+import { CategoryType } from "../../redux/types/category.type";
 //request
-import { CREATE_PRODUCT, UPDATE_PRODUCT } from "@redux/requests/product.request";
-import { GET_CATEGORIES_FOR_SELECT } from "@redux/requests/category.request";
+import { CREATE_PRODUCT, UPDATE_PRODUCT } from "../../redux/requests/product.request";
+import { GET_CATEGORIES_FOR_SELECT } from "../../redux/requests/category.request";
 
 
 const initialState = {

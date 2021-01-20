@@ -3,13 +3,13 @@ import ReactPagination from 'react-paginate';
 import { useHistory } from 'react-router-dom';
 import { format } from 'date-fns';
 //components
-import Button from '@components/Button';
-import Input from "@components/Input";
-import Select from "@components/Select";
-import LoadingBox from "@components/LoadingBox";
-import FakeTable from "@components/FakeTable";
+import Button from '../../components/common/Button';
+import Input from "../../components/common/Input";
+import Select from "../../components/common/Select";
+import LoadingBox from "../../components/common/LoadingBox";
+import FakeTable from "../../components/common/FakeTable";
 //types
-import { OptionType } from "@redux/types/common.type";
+import { OptionType } from "../../redux/types/common.type";
 
 const options = [
   { id: 10, name: '10 rows'},

@@ -2,14 +2,14 @@ import React, {useEffect, useState} from 'react';
 import { useHistory } from 'react-router-dom';
 import { useMutation } from "@apollo/client";
 //components
-import Layout from "@components/Layout";
-import Input from "@components/Input";
-import Button from "@components/Button";
-import NotificationBox from "@components/notificationBox";
+import Layout from "../../components/common/Layout";
+import Input from "../../components/common/Input";
+import Button from "../../components/common/Button";
+import NotificationBox from "../../components/common/notificationBox";
 //types
-import { CategoryType } from "@redux/types/category.type";
+import { CategoryType } from "../../redux/types/category.type";
 //request
-import { CREATE_CATEGORY, UPDATE_CATEGORY } from "@redux/requests/category.request";
+import { CREATE_CATEGORY, UPDATE_CATEGORY } from "../../redux/requests/category.request";
 
 const initialState = {
   name: '',

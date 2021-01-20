@@ -22,6 +22,7 @@
     "@types/react-redux": "^7.1.12",
     "@types/react-router-dom": "^5.1.6",
     "@types/react-select": "^3.1.2",
+    "@types/socket.io-client": "^1.4.35",
     "@types/styled-components": "^5.1.7",
     "autoprefixer": "^9",
     "axios": "^0.21.1",
@@ -29,7 +30,6 @@
     "graphql": "^15.4.0",
     "js-cookie": "^2.2.1",
     "jwt-decode": "^3.1.2",
-    "link-module-alias": "^1.2.0",
     "material-table": "^1.69.2",
     "postcss": "^7",
     "react": "^17.0.1",
@@ -45,8 +45,8 @@
     "react-select": "^3.2.0",
     "recharts": "^1.8.5",
     "simple-react-lightbox": "^3.5.2",
+    "socket.io-client": "^2.3.1",
     "styled-components": "^5.2.1",
-    "subscriptions-transport-ws": "^0.9.18",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat",
     "typescript": "^4.0.3",
     "web-vitals": "^0.2.4"
@@ -55,13 +55,7 @@
     "start": "craco start",
     "build": "craco build",
     "test": "craco test",
-    "eject": "react-scripts eject",
-    "preinstall": "which link-module-alias && link-module-alias clean || echo",
-    "postinstall": "link-module-alias"
-  },
-  "_moduleAliases": {
-    "@components": "src/components/common",
-    "@redux": "src/redux"
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [

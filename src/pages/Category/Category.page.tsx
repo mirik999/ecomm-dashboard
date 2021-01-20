@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useLazyQuery, useMutation } from "@apollo/client";
 //components
-import Layout from "@components/Layout";
-import Table from "@components/Table";
-import NotificationBox from "@components/notificationBox";
+import Layout from "../../components/common/Layout";
+import Table from "../../components/common/Table";
+import NotificationBox from "../../components/common/notificationBox";
 //types
 import { CategoryType } from "../../redux/types/category.type";
 //request
@@ -11,7 +11,7 @@ import {
   GET_CATEGORIES,
   DISABLE_CATEGORIES,
   ACTIVATE_CATEGORIES
-} from "@redux/requests/category.request";
+} from "../../redux/requests/category.request";
 
 type Props = {};
 

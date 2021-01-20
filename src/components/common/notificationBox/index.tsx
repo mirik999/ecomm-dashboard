@@ -1,7 +1,7 @@
 import React, { memo, useRef } from 'react';
 //components
-import ErrorBox from "@components/notificationBox/ErrorBox";
-import ProcessBox from "@components/notificationBox/ProcessBox";
+import ErrorBox from "./ErrorBox";
+import ProcessBox from "./ProcessBox";
 
 type Props = {
   list: any

@@ -1,7 +1,7 @@
-import React, {FormEvent, memo, useEffect, useState} from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import Select from 'react-select';
 //types
-import { OptionType } from "@redux/types/common.type";
+import { OptionType } from "../../redux/types/common.type";
 
 // styles
 const mainColor = 'rgba(59, 130, 246, 0.8)';

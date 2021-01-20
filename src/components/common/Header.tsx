@@ -1,7 +1,8 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { MdExitToApp } from 'react-icons/md';
 import { useHistory } from 'react-router-dom';
+import io from 'socket.io-client';
 //types
 import {RootState} from "../../redux/store";
 //actions
@@ -14,6 +15,12 @@ const Header: React.FC<Props> = (props) => {
   const dispatch = useDispatch();
   const history = useHistory();
   const { user } = useSelector((state: RootState) => state);
+  const socket = io.connect('http://localhost:4004');
+
+  useEffect(() => {
+    console.log('socket => ', socket)
+    socket.emit('msgToServer', 'Hellooooo')
+  }, [])
 
   function _onLogout(): void {
     dispatch(removeToken())
