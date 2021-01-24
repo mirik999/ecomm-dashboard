@@ -8,12 +8,13 @@ export const CREATE_PRODUCT = gql`
       images
       cover
       color
+      group
+      sold
       description
       createdAt
       stars
       price
       viewCount
-      wishlistCount
       sale
       saleCount
       new
@@ -36,12 +37,13 @@ export const UPDATE_PRODUCT = gql`
       images
       cover
       color
+      group
+      sold
       description
       createdAt
       stars
       price
       viewCount
-      wishlistCount
       sale
       saleCount
       new
@@ -66,6 +68,8 @@ export const GET_PRODUCTS = gql`
         images
         cover
         color
+        group
+        sold
         description
         category {
           id
@@ -74,7 +78,6 @@ export const GET_PRODUCTS = gql`
         stars
         price
         viewCount
-        wishlistCount
         sale
         saleCount
         new

@@ -1,28 +1,36 @@
-import React, { useState, useRef, useEffect } from 'react';
-import io from "socket.io-client";
+import React, { useState, useEffect } from 'react';
 import { formatDistance } from 'date-fns';
+//components
+import LoadingCard from "./LoadingCard";
 //types
-import { SystemInfo } from '../../redux/types/systemInfo.type'
+import { SystemInfo } from '../../redux/types/systemInfo.type';
+//utils
+import io from '../../utils/socket.utils';
+//socket connection
+const socket = io('statistic');
 
 type Props = {};
 
 
 const SystemUsage: React.FC<Props> = (props) => {
-  const [systemInfo, setSystemInfo] = useState<Partial<SystemInfo>>({
-    upTime: 0
-  });
-  const socket = useRef(io.connect('http://localhost:4004/statistic')).current;
+  const [systemInfo, setSystemInfo] = useState<Partial<SystemInfo>>({});
 
   useEffect(() => {
+    socket.connect();
     const interval = setInterval(() => {
       socket.emit('getSystemInfo');
-    }, 5000);
+    }, 2000);
     socket.on('sendSystemInfo', handleSystemInfo)
 
     return () => {
+      socket.disconnect();
       clearInterval(interval);
     }
-  }, []);
+  }, [socket]);
+
+  if (!Object.keys(systemInfo).length) {
+    return <LoadingCard ms={2000} />
+  }
 
   function handleSystemInfo(data: SystemInfo): void {
     setSystemInfo(data);
@@ -33,14 +41,14 @@ const SystemUsage: React.FC<Props> = (props) => {
   }
 
   return (
-    <div className="flex bg-white rounded shadow-md p-4">
+    <div className="flex bg-white rounded shadow-md p-4 w-520 h-230">
       <div className="relative h-full w-14 mr-4 flex flex-col-reverse">
         <div className="h-5 transition-all" style={{
           height: `${systemInfo.memUsage! * 100}%`,
           backgroundColor: handleBackColor(systemInfo.memUsage! * 100)
         }}>
-          <div className="absolute top-2 left-2">
-            MEM
+          <div className="absolute top-0 left-3">
+            <small>MEM</small>
           </div>
         </div>
       </div>
@@ -87,7 +95,7 @@ const SystemUsage: React.FC<Props> = (props) => {
               <span>{ systemInfo.cpuSpeed! / 1000 }GHz</span>
             </li>
             <li className="flex">
-              <strong className="w-28 black">CPU load:</strong>
+              <strong className="w-28 black">CPU usage:</strong>
               <span>{ systemInfo.cpuLoad }%</span>
             </li>
           </ul>
@@ -98,8 +106,8 @@ const SystemUsage: React.FC<Props> = (props) => {
           height: `${systemInfo.cpuLoad}%`,
           backgroundColor: handleBackColor(systemInfo.cpuLoad)
         }}>
-          <div className="absolute top-2 left-3">
-            CPU
+          <div className="absolute top-0 left-4">
+            <small>CPU</small>
           </div>
         </div>
       </div>

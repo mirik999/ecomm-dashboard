@@ -2,6 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer utilities {
+  .w-520 {
+    width: 520px;
+  }
+
+  .h-230 {
+    height: 230px;
+  }
+}
+
 /*.site-container {*/
 /*  min-height: 100vh;*/
 /*}*/
