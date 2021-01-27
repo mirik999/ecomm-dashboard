@@ -123,7 +123,7 @@ const Table: React.FC<Props> = ({
     }
 
     if (typeof val === "boolean") {
-      return val ? '✅ Yes' : '❌ No'
+      return val ? '✅ Yes' : ''
     }
 
     if (typeof val === "object") {

@@ -16,7 +16,7 @@ const ErrorBox: React.FC<Props> = ({message, details}) => {
         details.map((d: any, i: number) => (
           <span key={i} className="ml-4">
             {
-              typeof d.extensions.exception.response.message === "object" ?
+              typeof d.extensions?.exception?.response?.message === "object" ?
               d.extensions.exception.response.message
                 .map((dm: string, idx: number) => (
                   <strong key={i + idx} className="mr-3">[ {dm} ]</strong>

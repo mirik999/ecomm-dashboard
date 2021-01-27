@@ -20,17 +20,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e021988f-3eda-4fed-af49-63e1e5ec9f51" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/pages/Main/LoadingCard.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/Main/StatisticCard.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/redux/requests/main.request.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/utils/custom-fetch.utils.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/utils/socket.utils.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.eslintcache" beforeDir="false" afterPath="$PROJECT_DIR$/.eslintcache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/ecomm-dashboard.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/ecomm-dashboard.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Main/Main.page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Main/Main.page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Main/SystemUsage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Main/SystemUsage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/redux/requests/product.request.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/requests/product.request.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/common/Table.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/Table.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/common/notificationBox/ErrorBox.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/notificationBox/ErrorBox.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -70,7 +65,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../ecomm-api" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -110,6 +105,8 @@
       <workItem from="1611252518733" duration="603000" />
       <workItem from="1611391405218" duration="8059000" />
       <workItem from="1611480805575" duration="3385000" />
+      <workItem from="1611752776017" duration="404000" />
+      <workItem from="1611753409751" duration="1186000" />
     </task>
     <servers />
   </component>
