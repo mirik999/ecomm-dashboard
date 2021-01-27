@@ -125,7 +125,7 @@ const ProductPage: React.FC<Props> = (props) => {
         getDeepSearch={getDeepSearchFromTable}
         getIdAndDisable={getIdAndDisable}
         getIdAndActivate={getIdAndActivate}
-        path="product"
+        path="products"
         exclude={['id', 'cover', 'description', 'images']}
         error={!!getResponse.error}
       />

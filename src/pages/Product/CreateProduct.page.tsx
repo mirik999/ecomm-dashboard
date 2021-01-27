@@ -18,7 +18,6 @@ import { CategoryType } from "../../redux/types/category.type";
 import { CREATE_PRODUCT, UPDATE_PRODUCT } from "../../redux/requests/product.request";
 import { GET_CATEGORIES_FOR_SELECT } from "../../redux/requests/category.request";
 
-
 const initialState = {
   name: '',
   images: [],

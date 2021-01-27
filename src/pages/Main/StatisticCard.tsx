@@ -15,7 +15,7 @@ const StatisticCard: React.FC<Props> = memo(({header, stats}) => {
 
   return (
     <div
-      className="bg-white rounded shadow-md p-4 w-520 h-230"
+      className="bg-white rounded shadow-md p-4 w-520 h-230 flex-1"
     >
       <h3 className="text-center mb-4">
         <strong>{ header }</strong>

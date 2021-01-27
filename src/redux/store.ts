@@ -1,10 +1,14 @@
 import { combineReducers, configureStore, Action } from '@reduxjs/toolkit';
 import { ThunkAction } from 'redux-thunk';
 //reducers
+import navSlice from './slices/nav.slice';
+import rolesSlice from './slices/roles.slice';
 import userSlice from './slices/user.slice';
 import tokenSlice from './slices/token.slice';
 
 const rootReducer = combineReducers({
+  nav: navSlice,
+  roles: rolesSlice,
   user: userSlice,
   token: tokenSlice
 });

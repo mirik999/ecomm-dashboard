@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import { formatDistance } from 'date-fns';
 //components
 import LoadingCard from "./LoadingCard";
@@ -6,6 +6,8 @@ import LoadingCard from "./LoadingCard";
 import { SystemInfo } from '../../redux/types/systemInfo.type';
 //utils
 import io from '../../utils/socket.utils';
+//hooks
+import { useInterval } from "../../hooks/useInterval";
 //socket connection
 const socket = io('statistic');
 
@@ -17,16 +19,15 @@ const SystemUsage: React.FC<Props> = (props) => {
 
   useEffect(() => {
     socket.connect();
-    const interval = setInterval(() => {
-      socket.emit('getSystemInfo');
-    }, 2000);
     socket.on('sendSystemInfo', handleSystemInfo)
-
     return () => {
       socket.disconnect();
-      clearInterval(interval);
     }
   }, [socket]);
+
+  useInterval(() => {
+    socket.emit('getSystemInfo');
+  }, 2000)
 
   if (!Object.keys(systemInfo).length) {
     return <LoadingCard ms={2000} />
@@ -41,7 +42,7 @@ const SystemUsage: React.FC<Props> = (props) => {
   }
 
   return (
-    <div className="flex bg-white rounded shadow-md p-4 w-520 h-230">
+    <div className="flex bg-white rounded shadow-md p-4 w-520 h-230 flex-1">
       <div className="relative h-full w-14 mr-4 flex flex-col-reverse">
         <div className="h-5 transition-all" style={{
           height: `${systemInfo.memUsage! * 100}%`,
@@ -52,7 +53,7 @@ const SystemUsage: React.FC<Props> = (props) => {
           </div>
         </div>
       </div>
-      <div>
+      <div className="flex-1">
         <h3 className="text-center mb-4">
           <strong>System Information</strong>
         </h3>

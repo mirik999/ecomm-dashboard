@@ -8,6 +8,7 @@ import {getFromCookies} from "../../utils/storage.utils";
 const initialState: UserType = {
   id: '',
   email: '',
+  roles: []
 };
 
 const userSlice = createSlice({
@@ -17,8 +18,8 @@ const userSlice = createSlice({
     saveUser() {
       const token = getFromCookies("token");
       if (token) {
-        const { id, email }: UserType = jwt_decode(token);
-        return { id, email };
+        const { id, email, roles }: UserType = jwt_decode(token);
+        return { id, email, roles };
       } else {
         return initialState;
       }

@@ -1,7 +1,7 @@
 import React from 'react';
 //components
 import Header from "./Header";
-import SideMenu from "./SideMenu";
+import Navigation from "./Navigation";
 
 type Props = {
   children: React.ReactNode
@@ -10,7 +10,7 @@ type Props = {
 const Layout: React.FC<Props> = ({ children }) => {
   return (
     <div className="w-full h-full bg-gray-200 flex">
-      <SideMenu />
+      <Navigation />
       <div className="flex-col flex-1">
         <Header />
         <div

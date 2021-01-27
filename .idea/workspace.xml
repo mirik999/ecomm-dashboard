@@ -20,12 +20,28 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e021988f-3eda-4fed-af49-63e1e5ec9f51" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/hooks/useInterval.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/redux/slices/nav.slice.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/redux/slices/roles.slice.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/redux/types/nav.type.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.eslintcache" beforeDir="false" afterPath="$PROJECT_DIR$/.eslintcache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/ecomm-dashboard.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/ecomm-dashboard.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/common/Table.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/Table.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/common/notificationBox/ErrorBox.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/notificationBox/ErrorBox.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/common/Layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/Layout.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/common/SideMenu.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/Navigation.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/common/WithToken.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/WithToken.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Category/Category.page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Category/Category.page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Main/StatisticCard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Main/StatisticCard.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Main/SystemUsage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Main/SystemUsage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Product/CreateProduct.page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Product/CreateProduct.page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Product/Product.page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Product/Product.page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/requests/user.request.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/requests/user.request.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/slices/user.slice.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/slices/user.slice.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/store.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/store.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/types/user.types.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/types/user.types.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/tsconfig.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -80,11 +96,11 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\mirik\WebstormProjects\ecomm-dashboard\src\pages\Main" />
+      <recent name="C:\Users\mirik\WebstormProjects\ecomm-dashboard" />
       <recent name="C:\Users\mirik\WebstormProjects\ecomm-dashboard\src\components\common" />
       <recent name="C:\Users\mirik\WebstormProjects\ecomm-dashboard\src\components\common\NotificationBox" />
-      <recent name="C:\Users\mirik\WebstormProjects\ecomm-dashboard\src\pages\Main" />
       <recent name="C:\Users\mirik\WebstormProjects\ecomm-dashboard\src\pages\Auth" />
-      <recent name="C:\Users\mirik\WebstormProjects\ecomm-dashboard\src\pages\Category" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -107,6 +123,7 @@
       <workItem from="1611480805575" duration="3385000" />
       <workItem from="1611752776017" duration="404000" />
       <workItem from="1611753409751" duration="1186000" />
+      <workItem from="1611772407942" duration="4404000" />
     </task>
     <servers />
   </component>

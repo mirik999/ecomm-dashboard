@@ -125,7 +125,7 @@ const CategoryPage: React.FC<Props> = (props) => {
         getDeepSearch={getDeepSearchFromTable}
         getIdAndDisable={getIdAndDisable}
         getIdAndActivate={getIdAndActivate}
-        path="category"
+        path="categories"
         error={!!getResponse.error}
       />
       <NotificationBox

@@ -34,10 +34,10 @@ function App() {
         <Switch>
           <WithoutToken exact path="/auth" component={AuthPage} />
           <WithToken exact path="/" component={MainPage} />
-          <WithToken exact path="/category" component={CategoryPage} />
-          <WithToken path="/category/create" component={CreateCategory} />
-          <WithToken exact path="/product" component={ProductPage} />
-          <WithToken path="/product/create" component={CreateProduct} />
+          <WithToken exact path="/categories" component={CategoryPage} />
+          <WithToken path="/categories/create" component={CreateCategory} />
+          <WithToken exact path="/products" component={ProductPage} />
+          <WithToken path="/products/create" component={CreateProduct} />
         </Switch>
       </ApolloProvider>
     </div>
