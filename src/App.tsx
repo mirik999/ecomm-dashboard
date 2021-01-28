@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
 import { useSelector } from 'react-redux';
 //components
@@ -7,6 +7,7 @@ import WithToken from './components/common/WithToken';
 import WithoutToken from './components/common/WithoutToken';
 //pages
 import AuthPage from './pages/Auth/Auth.page';
+import NotFoundPage from "./pages/Rest/NotFound.page";
 import MainPage from './pages/Main/Main.page';
 import CategoryPage from './pages/Category/Category.page';
 import CreateCategory from './pages/Category/CreateCategory.page';
@@ -38,6 +39,7 @@ function App() {
           <WithToken path="/categories/create" component={CreateCategory} />
           <WithToken exact path="/products" component={ProductPage} />
           <WithToken path="/products/create" component={CreateProduct} />
+          <Route exact path="*" component={NotFoundPage} />
         </Switch>
       </ApolloProvider>
     </div>

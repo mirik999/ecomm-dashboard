@@ -3,4 +3,5 @@ export type NavType = {
   name: string
   path: string
   accessRoles: string[]
+  visible: boolean
 }

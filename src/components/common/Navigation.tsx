@@ -32,7 +32,7 @@ const Navigation: React.FC<Props> = (props) => {
         <ul className="text-white">
           {
             nav.map((n: NavType, i: number) => {
-              if (true) {
+              if (n.visible && n.accessRoles.some((acr, i) => user.roles.includes(acr))) {
                 return (
                   <li
                     key={i}

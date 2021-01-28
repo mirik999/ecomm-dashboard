@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
 import { Route, Redirect } from 'react-router-dom';
 //types
@@ -14,9 +14,11 @@ const WithToken: React.FC<Props> = ({ component: Component, ...rest }) => {
 
   const findNav = nav.find(n => n.path === rest.path)!;
   if (Object.keys(findNav).length) {
-    const noAccess = findNav.accessRoles.some((acr: string, i: number) => acr === user.roles[i]);
-    if (!noAccess) {
-      return <Redirect to="/no-access" />
+    const noAccess = findNav.accessRoles.some((acr: string) => {
+      return user.roles.length ? user.roles.includes(acr) : "guest"
+    });
+    if (!noAccess && token) {
+      return <Redirect to="/404" />
     }
   }
 
