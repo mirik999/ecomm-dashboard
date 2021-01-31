@@ -12,7 +12,18 @@ type Props = {
 const WithToken: React.FC<Props> = ({ component: Component, ...rest }) => {
   const { token, user, nav } = useSelector((state: RootState) => state);
 
-  const findNav = nav.find(n => n.path === rest.path)!;
+  const findNav = nav.find(n => {
+    if (n.path === rest.path) {
+      return n;
+    }
+    if (n.subPaths) {
+      const checkSubPath = n.subPaths.some(p => rest.path.includes(p))
+      if (checkSubPath) {
+        return n;
+      }
+    }
+    return n;
+  })!;
   if (Object.keys(findNav).length) {
     const noAccess = findNav.accessRoles.some((acr: string) => {
       return user.roles.length ? user.roles.includes(acr) : "guest"

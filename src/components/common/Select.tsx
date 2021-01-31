@@ -47,8 +47,9 @@ type Props = {
   returnType?: 'string' | 'boolean' | 'number'
   value: any
   cls?: string
-  options: OptionType[],
+  options: OptionType[]
   getValue: (val: any) => void
+  [key: string]: any
 };
 
 const Selectable: React.FC<Props> = memo(({
@@ -58,7 +59,8 @@ const Selectable: React.FC<Props> = memo(({
   value,
   cls,
   options,
-  getValue
+  getValue,
+  ...rest
 }) => {
   const [innerState, setInnerState] = useState<OptionType>({
     id: '',
@@ -75,6 +77,7 @@ const Selectable: React.FC<Props> = memo(({
   }, [value])
 
   function _onChange(selectedOption: any): void {
+    console.log(selectedOption)
      getValue(selectedOption.id)
   }
 
@@ -90,6 +93,7 @@ const Selectable: React.FC<Props> = memo(({
         onChange={_onChange}
         options={options}
         styles={customStyles}
+        {...rest}
       />
     </label>
   );

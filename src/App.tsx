@@ -13,6 +13,8 @@ import CategoryPage from './pages/Category/Category.page';
 import CreateCategory from './pages/Category/CreateCategory.page';
 import ProductPage from './pages/Product/Product.page';
 import CreateProduct from "./pages/Product/CreateProduct.page";
+import UserPage from "./pages/User/User.page";
+import CreateUser from "./pages/User/CreateUser.page";
 //types
 import { RootState } from './redux/store';
 
@@ -39,6 +41,8 @@ function App() {
           <WithToken path="/categories/create" component={CreateCategory} />
           <WithToken exact path="/products" component={ProductPage} />
           <WithToken path="/products/create" component={CreateProduct} />
+          <WithToken exact path="/users-and-roles" component={UserPage} />
+          <WithToken path="/users-and-roles/create" component={CreateUser} />
           <Route exact path="*" component={NotFoundPage} />
         </Switch>
       </ApolloProvider>

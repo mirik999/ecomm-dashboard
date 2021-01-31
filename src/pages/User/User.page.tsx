@@ -8,18 +8,18 @@ import NotificationBox from "../../components/common/notificationBox";
 import { ProductType } from "../../redux/types/product.type";
 //request
 import {
-  GET_PRODUCTS,
-  DISABLE_PRODUCTS,
-  ACTIVATE_PRODUCTS
-} from "../../redux/requests/product.request";
+  GET_USERS,
+  DISABLE_USERS,
+  ACTIVATE_USERS
+} from "../../redux/requests/user.request";
 
 type Props = {};
 
-const ProductPage: React.FC<Props> = (props) => {
-  const [GetProducts, getResponse] = useLazyQuery(GET_PRODUCTS);
-  const [DisableProducts, disableResponse] = useMutation(DISABLE_PRODUCTS);
-  const [ActivateProducts, activateResponse] = useMutation(ACTIVATE_PRODUCTS);
-  const [products, setProducts] = useState<ProductType[]>([]);
+const UserPage: React.FC<Props> = (props) => {
+  const [GetUsers, getResponse] = useLazyQuery(GET_USERS);
+  const [DisableUsers, disableResponse] = useMutation(DISABLE_USERS);
+  const [ActivateUsers, activateResponse] = useMutation(ACTIVATE_USERS);
+  const [users, setUsers] = useState<ProductType[]>([]);
   //pagination
   const [allCount, setAllCount] = useState<number>(0);
   const [rowCount, setRowCount] = useState<number>(10);
@@ -29,21 +29,21 @@ const ProductPage: React.FC<Props> = (props) => {
 
   useEffect(() => {
     if (getResponse.data) {
-      const { count, payload } = getResponse.data.getProducts;
-      setProducts(payload);
+      const { count, payload } = getResponse.data.getUsers;
+      setUsers(payload);
       setAllCount(count);
     }
   }, [getResponse.data])
 
   useEffect(() => {
     (async function() {
-      await getProducts(currentPage, rowCount, deepSearch)
+      await getUsers(currentPage, rowCount, deepSearch)
     })()
   }, [])
 
-  async function getProducts(pg: number, rc: number, kw: string): Promise<void> {
+  async function getUsers(pg: number, rc: number, kw: string): Promise<void> {
     try {
-      await GetProducts({
+      await GetUsers({
         variables: {
           controls: {
             offset: (pg - 1) * rc,
@@ -59,22 +59,22 @@ const ProductPage: React.FC<Props> = (props) => {
 
   async function getPageFromTable(pageNumber: number): Promise<void> {
     setCurrentPage(pageNumber)
-    await getProducts(pageNumber, rowCount, deepSearch);
+    await getUsers(pageNumber, rowCount, deepSearch);
   }
 
   async function getRowCountFromTable(rc: number): Promise<void> {
     setRowCount(rc);
-    await getProducts(currentPage, rc, deepSearch);
+    await getUsers(currentPage, rc, deepSearch);
   }
 
   async function getDeepSearchFromTable(keyword: string): Promise<void> {
     setDeepSearch(keyword);
-    await getProducts(currentPage, rowCount, keyword);
+    await getUsers(currentPage, rowCount, keyword);
   }
 
   async function getIdAndDisable(ids: string[]): Promise<void> {
     try {
-      await DisableProducts({
+      await DisableUsers({
         variables: {
           disabledProducts: { ids }
         }
@@ -87,7 +87,7 @@ const ProductPage: React.FC<Props> = (props) => {
 
   async function getIdAndActivate(ids: string[]): Promise<void> {
     try {
-      await ActivateProducts({
+      await ActivateUsers({
         variables: {
           activateProducts: { ids }
         }
@@ -99,7 +99,7 @@ const ProductPage: React.FC<Props> = (props) => {
   }
 
   function handleProductsState(ids: string[], isDisabled: boolean) {
-    const updatedProducts = products.map(product => {
+    const updatedProducts = users.map(product => {
       if (ids.includes(product.id)) {
         return {
           ...product,
@@ -108,26 +108,27 @@ const ProductPage: React.FC<Props> = (props) => {
       }
       return product;
     })
-    setProducts(updatedProducts)
+    setUsers(updatedProducts)
   }
 
   return (
     <Layout>
       <h2 className="font-medium uppercase mx-4">
-        Products
+        Users and roles
       </h2>
       {/*  table */}
       <Table
-        data={products}
+        data={users}
         allCount={allCount}
+        exclude={['id']}
+        hiddenButtons={['create']}
+        error={!!getResponse.error}
+        path="users-and-roles"
         getPage={getPageFromTable}
         getRowCount={getRowCountFromTable}
         getDeepSearch={getDeepSearchFromTable}
         getIdAndDisable={getIdAndDisable}
         getIdAndActivate={getIdAndActivate}
-        path="products"
-        exclude={['id', 'cover', 'description', 'images']}
-        error={!!getResponse.error}
       />
       <NotificationBox
         list={[
@@ -140,4 +141,4 @@ const ProductPage: React.FC<Props> = (props) => {
   );
 };
 
-export default ProductPage;
+export default UserPage;

@@ -29,21 +29,24 @@ const initialState: NavType[] = [
     name: 'Categories',
     path: '/categories',
     accessRoles: ['admin', 'sudo'],
-    visible: true
+    visible: true,
+    subPaths: ['/create']
   },
   {
     id: 5,
     name: 'Products',
     path: '/products',
     accessRoles: ['admin', 'sudo'],
-    visible: true
+    visible: true,
+    subPaths: ['/create']
   },
   {
     id: 6,
     name: 'Users and roles',
     path: '/users-and-roles',
     accessRoles: ['sudo'],
-    visible: true
+    visible: true,
+    subPaths: ['/create']
   }
 ];
 

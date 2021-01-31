@@ -1,9 +1,9 @@
-import React, {useEffect, memo} from 'react';
+import React, { memo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { MdExitToApp } from 'react-icons/md';
 import { useHistory } from 'react-router-dom';
 //types
-import {RootState} from "../../redux/store";
+import { RootState } from "../../redux/store";
 //actions
 import { removeToken } from '../../redux/slices/token.slice';
 import { removeUser } from '../../redux/slices/user.slice';

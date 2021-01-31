@@ -3,13 +3,14 @@ import ReactPagination from 'react-paginate';
 import { useHistory } from 'react-router-dom';
 import { format } from 'date-fns';
 //components
-import Button from '../../components/common/Button';
-import Input from "../../components/common/Input";
-import Select from "../../components/common/Select";
-import LoadingBox from "../../components/common/LoadingBox";
-import FakeTable from "../../components/common/FakeTable";
+import Button from '../Button';
+import Input from "../Input";
+import Select from "../Select";
+import LoadingBox from "../LoadingBox";
+import FakeTable from "../FakeTable";
 //types
-import { OptionType } from "../../redux/types/common.type";
+import { OptionType } from "../../../redux/types/common.type";
+import Buttons from "./Buttons";
 
 const options = [
   { id: 10, name: '10 rows'},
@@ -30,6 +31,7 @@ type Props = {
   exclude?: string[]
   path: string,
   error: boolean,
+  hiddenButtons?: string[],
   getPage: (val: number) => void
   getRowCount: (val: number) => void
   getDeepSearch: (val: string) => void
@@ -43,6 +45,7 @@ const Table: React.FC<Props> = ({
   exclude,
   path,
   error,
+  hiddenButtons,
   getPage,
   getRowCount,
   getDeepSearch,
@@ -89,6 +92,10 @@ const Table: React.FC<Props> = ({
 
   function _onFilter(search: string) {
     return function(elem: any) {
+      if (elem.email) {
+        return elem.email.toLowerCase().includes(search.toLowerCase());
+      }
+
       return elem.name.toLowerCase().includes(search.toLowerCase());
     }
   }
@@ -122,14 +129,6 @@ const Table: React.FC<Props> = ({
       return format(new Date(val), 'dd MMMM yyyy')
     }
 
-    if (typeof val === "boolean") {
-      return val ? '✅ Yes' : ''
-    }
-
-    if (typeof val === "object") {
-      return val[0]?.name
-    }
-
     if (key === "color") {
       return <div
         className="w-full rounded"
@@ -138,6 +137,18 @@ const Table: React.FC<Props> = ({
           backgroundColor: val
         }}
       />
+    }
+
+    if (key === "roles") {
+      return val[0]
+    }
+
+    if (typeof val === "boolean") {
+      return val ? '✅ Yes' : ''
+    }
+
+    if (typeof val === "object") {
+      return val[0]?.name
     }
 
     return val;
@@ -240,37 +251,13 @@ const Table: React.FC<Props> = ({
         </table>
       </div>
       <div className="flex justify-between items-center">
-        <div className="flex py-3">
-          <Button
-            label="Create"
-            onAction={() => _onRouteChange('create')}
-            cls="m-0 mr-3"
-          />
-          <Button
-            label="Edit"
-            onAction={() => _onRouteChange('update')}
-            cls="m-0 mr-3"
-            disabled={selected.length !== 1}
-          />
-          <Button
-            label="Disable"
-            onAction={() => getIdAndDisable(selected.map(s => s.id))}
-            cls="m-0 mr-3"
-            disabled={selected.length === 0}
-          />
-          <Button
-            label="Activate"
-            onAction={() => getIdAndActivate(selected.map(s => s.id))}
-            cls="m-0 mr-3"
-            disabled={selected.length === 0}
-          />
-          <Button
-            label="Properties"
-            onAction={() => false}
-            cls="m-0 mr-3"
-            disabled={selected.length === 0}
-          />
-        </div>
+        <Buttons
+          selected={selected}
+          hiddenButtons={hiddenButtons}
+          getIdAndDisable={getIdAndDisable}
+          getIdAndActivate={getIdAndActivate}
+          onRouteChange={_onRouteChange}
+        />
         <ReactPagination
           onPageChange={_onPageChange}
           pageRangeDisplayed={5}
@@ -293,6 +280,7 @@ Table.defaultProps = {
   data: [],
   allCount: 0,
   exclude: ['id'],
+  hiddenButtons: [],
   path: '',
   error: false
 }

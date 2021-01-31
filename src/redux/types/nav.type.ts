@@ -4,4 +4,5 @@ export type NavType = {
   path: string
   accessRoles: string[]
   visible: boolean
+  subPaths?: string[]
 }
