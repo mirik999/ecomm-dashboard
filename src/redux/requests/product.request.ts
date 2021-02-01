@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client';
 
 export const CREATE_PRODUCT = gql`
-  mutation CreateCategory($newProduct: CreateProductRes!) {
+  mutation CreateCategory($newProduct: CreateProductReq!) {
     createProduct(newProduct: $newProduct) {
       id
       name
@@ -30,7 +30,7 @@ export const CREATE_PRODUCT = gql`
 `;
 
 export const UPDATE_PRODUCT = gql`
-  mutation UpdateProduct($updatedProduct: UpdateProductRes!) {
+  mutation UpdateProduct($updatedProduct: UpdateProductReq!) {
     updateProduct(updatedProduct: $updatedProduct) {
       id
       name

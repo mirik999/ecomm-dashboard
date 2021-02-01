@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import { useHistory } from 'react-router-dom';
+import { useLocation, useHistory, RouteComponentProps } from 'react-router-dom';
 import { useMutation } from "@apollo/client";
 import { useSelector } from "react-redux";
 //components
@@ -21,22 +21,33 @@ const initialState = {
   roles: [],
 }
 
+interface QueryState extends RouteComponentProps<
+  { myParamProp?: string }, //params
+  any, //history
+  { selected?: any } //state
+  > {
+  selected: any;
+}
+
 type Props = {}
 
 const CreatUser: React.FC<Props> = (props) => {
+  const location = useLocation<QueryState>();
   const history = useHistory();
   const { roles } = useSelector((state: RootState) => state);
   const [UpdateUser, updateResponse] = useMutation(UPDATE_USER, { errorPolicy: "all" });
   const [state, setState] = useState<Partial<UserType>>(initialState);
 
   useEffect(() => {
-    const { selected }: any = history.location.state;
-    setState(selected[0]);
+    const selected: any = location.state?.selected;
+    if (selected) {
+      setState(selected[0]);
+    }
   }, []);
 
   useEffect(() => {
     if (updateResponse.data) {
-      history.push("/category")
+      history.push("/users")
     }
   }, [updateResponse])
 
@@ -53,15 +64,19 @@ const CreatUser: React.FC<Props> = (props) => {
     }
   }
 
-  function _onRoleSelect(role: string): void {
-    console.log(role);
-    // const isExists = state.roles?.includes(role);
-    // if (!isExists) {
-    //   setState(prevState => ({...prevState, roles: [role, ...prevState.roles!]}))
-    // }
+  function _onRoleSelect(role: string | string[], action: string): void {
+    if (action === "remove-value") {
+      if (Array.isArray(role)) {
+        setState(prevState => ({...prevState, roles: role }))
+      }
+    } else {
+      if (Array.isArray(role)) {
+        setState(prevState => ({...prevState, roles: Array.from(new Set([...role, ...prevState.roles!])) }))
+      } else {
+        setState(prevState => ({...prevState, roles: Array.from(new Set([role, ...prevState.roles!])) }))
+      }
+    }
   }
-
-  console.log(state)
 
   return (
     <Layout>
@@ -97,7 +112,7 @@ const CreatUser: React.FC<Props> = (props) => {
           returnType="string"
           value={state.roles!.map((r, i) => ({id: r, name: r}))}
           options={roles.map((r, i) => ({id: r, name: r}))}
-          getValue={(val: string) => _onRoleSelect(val)}
+          getValue={(val: string | string[], action = "") => _onRoleSelect(val, action)}
           cls="m-4"
           isMulti
         />

@@ -123,7 +123,7 @@ const UserPage: React.FC<Props> = (props) => {
         exclude={['id']}
         hiddenButtons={['create']}
         error={!!getResponse.error}
-        path="users-and-roles"
+        path="users"
         getPage={getPageFromTable}
         getRowCount={getRowCountFromTable}
         getDeepSearch={getDeepSearchFromTable}

@@ -42,8 +42,8 @@ const initialState: NavType[] = [
   },
   {
     id: 6,
-    name: 'Users and roles',
-    path: '/users-and-roles',
+    name: 'Users',
+    path: '/users',
     accessRoles: ['sudo'],
     visible: true,
     subPaths: ['/create']

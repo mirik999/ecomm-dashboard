@@ -20,23 +20,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e021988f-3eda-4fed-af49-63e1e5ec9f51" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/components/common/table/Buttons.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/User/CreateUser.page.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/User/User.page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.eslintcache" beforeDir="false" afterPath="$PROJECT_DIR$/.eslintcache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/common/Header.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/Header.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/common/Select.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/Select.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/common/Table.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/table/Table.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/common/WithToken.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/WithToken.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Category/Category.page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Category/Category.page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Product/Product.page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Product/Product.page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/common/UploadZone.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/UploadZone.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/common/table/Buttons.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/table/Buttons.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/common/table/Table.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/table/Table.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Category/CreateCategory.page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Category/CreateCategory.page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Product/CreateProduct.page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Product/CreateProduct.page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/User/CreateUser.page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/User/CreateUser.page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/User/User.page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/User/User.page.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/redux/requests/product.request.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/requests/product.request.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/redux/requests/user.request.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/requests/user.request.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/redux/slices/nav.slice.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/slices/nav.slice.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/redux/types/nav.type.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/types/nav.type.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/redux/types/user.types.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/types/user.types.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,6 +40,11 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="grid_view_with_table" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitSEFilterConfiguration">
@@ -53,6 +54,32 @@
       <filtered-out-file-type name="TAG" />
       <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
     </file-type-list>
+  </component>
+  <component name="GitToolBoxStore">
+    <option name="projectConfigVersion" value="2" />
+    <option name="recentBranches">
+      <RecentBranches>
+        <option name="branchesForRepo">
+          <list>
+            <RecentBranchesForRepo>
+              <option name="branches">
+                <list>
+                  <RecentBranch>
+                    <option name="branchName" value="master" />
+                    <option name="lastUsedInstant" value="1612213004" />
+                  </RecentBranch>
+                  <RecentBranch>
+                    <option name="branchName" value="grid_view_with_table" />
+                    <option name="lastUsedInstant" value="1612213000" />
+                  </RecentBranch>
+                </list>
+              </option>
+              <option name="repositoryRootUrl" value="file://$PROJECT_DIR$" />
+            </RecentBranchesForRepo>
+          </list>
+        </option>
+      </RecentBranches>
+    </option>
   </component>
   <component name="JsBowerSettings">
     <node-interpreter value="project" />
@@ -85,7 +112,7 @@
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="yarn" />
     <property name="prettierjs.PrettierConfiguration.Package" value="C:\Users\Mirik\AppData\Roaming\npm\node_modules\prettier" />
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.General" />
     <property name="ts.external.directory.path" value="$PROJECT_DIR$/node_modules/typescript/lib" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
@@ -120,6 +147,7 @@
       <workItem from="1611753409751" duration="1186000" />
       <workItem from="1611772407942" duration="4404000" />
       <workItem from="1612083068344" duration="10628000" />
+      <workItem from="1612199752146" duration="10693000" />
     </task>
     <servers />
   </component>

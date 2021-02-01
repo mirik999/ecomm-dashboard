@@ -48,7 +48,7 @@ type Props = {
   value: any
   cls?: string
   options: OptionType[]
-  getValue: (val: any) => void
+  getValue: (val: any, action?: string) => void
   [key: string]: any
 };
 
@@ -76,9 +76,23 @@ const Selectable: React.FC<Props> = memo(({
     }
   }, [value])
 
-  function _onChange(selectedOption: any): void {
-    console.log(selectedOption)
-     getValue(selectedOption.id)
+  function _onChange(selectedOption: any, { action }: any): void {
+    try {
+      if (action === "remove-value") {
+        const options = selectedOption || [{ id: 'guest', name: 'guest' }];
+        const restAfterRemoving = options.map((s: OptionType) => s.id);
+        getValue(restAfterRemoving, action);
+      }
+      if (rest.isMulti) {
+        const options = selectedOption || [];
+        const multiple = options.map((s: OptionType) => s.id);
+        getValue(multiple)
+      } else {
+        getValue(selectedOption.id)
+      }
+    } catch(err) {
+      console.log(err);
+    }
   }
 
   return (

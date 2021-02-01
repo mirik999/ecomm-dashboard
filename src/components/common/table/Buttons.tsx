@@ -22,7 +22,7 @@ const buttons = [
   {
     id: 5,
     name: 'properties',
-  }
+  },
 ]
 
 type Props = {

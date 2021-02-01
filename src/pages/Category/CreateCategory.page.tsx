@@ -35,13 +35,13 @@ const CreateCategory: React.FC<Props> = (props) => {
 
   useEffect(() => {
     if (createResponse.data) {
-      history.push("/category")
+      history.push("/categories")
     }
   }, [createResponse])
 
   useEffect(() => {
     if (updateResponse.data) {
-      history.push("/category")
+      history.push("/categories")
     }
   }, [updateResponse])
 

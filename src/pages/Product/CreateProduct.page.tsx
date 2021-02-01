@@ -65,13 +65,13 @@ const CreateProduct: React.FC<Props> = (props) => {
 
   useEffect(() => {
     if (createResponse.data) {
-      history.push("/product")
+      history.push("/products")
     }
   }, [createResponse])
 
   useEffect(() => {
     if (updateResponse.data) {
-      history.push("/product")
+      history.push("/products")
     }
   }, [updateResponse])
 

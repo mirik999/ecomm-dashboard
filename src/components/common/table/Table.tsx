@@ -3,14 +3,13 @@ import ReactPagination from 'react-paginate';
 import { useHistory } from 'react-router-dom';
 import { format } from 'date-fns';
 //components
-import Button from '../Button';
 import Input from "../Input";
 import Select from "../Select";
 import LoadingBox from "../LoadingBox";
 import FakeTable from "../FakeTable";
+import Buttons from "./Buttons";
 //types
 import { OptionType } from "../../../redux/types/common.type";
-import Buttons from "./Buttons";
 
 const options = [
   { id: 10, name: '10 rows'},
@@ -140,7 +139,7 @@ const Table: React.FC<Props> = ({
     }
 
     if (key === "roles") {
-      return val[0]
+      return val.map((v: string, i: number) => <span key={i} className="mr-2">{v}</span>)
     }
 
     if (typeof val === "boolean") {
@@ -207,9 +206,9 @@ const Table: React.FC<Props> = ({
               >
                 {
                   key
-                  .replace(/([A-Z])/g, ' $1')
-                  .trim()
-                  .toUpperCase()
+                    .replace(/([A-Z])/g, ' $1')
+                    .trim()
+                    .toUpperCase()
                 }
               </th>
             ))}

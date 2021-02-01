@@ -41,8 +41,8 @@ function App() {
           <WithToken path="/categories/create" component={CreateCategory} />
           <WithToken exact path="/products" component={ProductPage} />
           <WithToken path="/products/create" component={CreateProduct} />
-          <WithToken exact path="/users-and-roles" component={UserPage} />
-          <WithToken path="/users-and-roles/create" component={CreateUser} />
+          <WithToken exact path="/users" component={UserPage} />
+          <WithToken path="/users/create" component={CreateUser} />
           <Route exact path="*" component={NotFoundPage} />
         </Switch>
       </ApolloProvider>
