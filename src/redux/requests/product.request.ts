@@ -4,28 +4,7 @@ export const CREATE_PRODUCT = gql`
   mutation CreateCategory($newProduct: CreateProductReq!) {
     createProduct(newProduct: $newProduct) {
       id
-      name
-      images
-      cover
-      color
-      group
-      sold
-      description
-      createdAt
-      stars
-      price
-      viewCount
-      sale
-      saleCount
-      new
-      best
-      isDisabled
-      category {
-        id
-        name
-        tabName
-      }
-     }
+    }
   }
 `;
 
@@ -33,27 +12,6 @@ export const UPDATE_PRODUCT = gql`
   mutation UpdateProduct($updatedProduct: UpdateProductReq!) {
     updateProduct(updatedProduct: $updatedProduct) {
       id
-      name
-      images
-      cover
-      color
-      group
-      sold
-      description
-      createdAt
-      stars
-      price
-      viewCount
-      sale
-      saleCount
-      new
-      best
-      isDisabled
-      category {
-        id
-        name
-        tabName
-      }
     }
   }
 `;
@@ -65,6 +23,7 @@ export const GET_PRODUCTS = gql`
       payload {
         id
         name
+        articul
         images
         cover
         color
@@ -81,6 +40,8 @@ export const GET_PRODUCTS = gql`
         sale
         saleCount
         new
+        freeDelivery
+        guarantee
         best
         isDisabled
         createdAt

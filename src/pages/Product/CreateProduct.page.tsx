@@ -11,6 +11,7 @@ import Selectable from "../../components/common/Select";
 import ColorPicker from "../../components/common/ColorPicker";
 import Checkbox from "../../components/common/Checkbox";
 import NotificationBox from "../../components/common/notificationBox";
+import TinyEditor from "../../components/TinyEditor";
 //types
 import { OptionType } from "../../redux/types/common.type";
 import { CategoryType } from "../../redux/types/category.type";
@@ -20,6 +21,7 @@ import { GET_CATEGORIES_FOR_SELECT } from "../../redux/requests/category.request
 
 const initialState = {
   name: '',
+  articul: '',
   images: [],
   cover: '',
   description: '',
@@ -28,6 +30,8 @@ const initialState = {
   saleCount: 0,
   sale: false,
   new: true,
+  freeDelivery: true,
+  guarantee: true,
   category: []
 }
 
@@ -165,6 +169,12 @@ const CreateProduct: React.FC<Props> = (props) => {
           getValue={(val: string) => _onChange(val, 'name')}
         />
         <Input
+          type="text"
+          label="Articul"
+          value={state.articul}
+          getValue={(val: string) => _onChange(val, 'articul')}
+        />
+        <Input
           type="number"
           label="Price"
           value={state.price}
@@ -206,6 +216,18 @@ const CreateProduct: React.FC<Props> = (props) => {
               name="new"
               value={state.new}
               getValue={(val: boolean) => _onChange(val, 'new')}
+            />
+            <Checkbox
+              label="Free Delivery"
+              name="freeDelivery"
+              value={state.freeDelivery}
+              getValue={(val: boolean) => _onChange(val, 'freeDelivery')}
+            />
+            <Checkbox
+              label="Guarantee"
+              name="guarantee"
+              value={state.guarantee}
+              getValue={(val: boolean) => _onChange(val, 'guarantee')}
             />
           </div>
           <div className="flex items-center mx-4 py-3">
@@ -250,6 +272,7 @@ const CreateProduct: React.FC<Props> = (props) => {
             getValue={getDescriptionHtml}
             cls="md:flex-2"
           />
+          <TinyEditor />
         </div>
       </div>
       <NotificationBox

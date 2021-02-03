@@ -126,7 +126,7 @@ const ProductPage: React.FC<Props> = (props) => {
         getIdAndDisable={getIdAndDisable}
         getIdAndActivate={getIdAndActivate}
         path="products"
-        exclude={['id', 'cover', 'description', 'images']}
+        exclude={excludeList}
         error={!!getResponse.error}
       />
       <NotificationBox
@@ -141,3 +141,16 @@ const ProductPage: React.FC<Props> = (props) => {
 };
 
 export default ProductPage;
+
+const excludeList = [
+  'id',
+  'cover',
+  'description',
+  'images',
+  'freeDelivery',
+  'guarantee',
+  'stars',
+  'group',
+  'best',
+  'viewCount'
+]
