@@ -34,3 +34,10 @@ html, body, #root, .site-container {
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
 }
+
+/* tinymce */
+.tox-tinymce {
+  border-color: rgba(229, 231, 235, 1) !important;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+}

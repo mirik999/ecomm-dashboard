@@ -61,7 +61,7 @@ const UploadZone: React.FC<Props> = memo(({
         continue;
       }
 
-      await imageUploadAndGetUrl(file, (percent, error, file) => {
+      await imageUploadAndGetUrl(file, "product_images",(percent, error, file) => {
         if (percent) {
           setUploadPercent(percent);
         }

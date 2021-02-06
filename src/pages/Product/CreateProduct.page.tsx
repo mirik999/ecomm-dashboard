@@ -6,12 +6,11 @@ import Layout from "../../components/common/Layout";
 import Input from "../../components/common/Input";
 import Button from "../../components/common/Button";
 import UploadZone from "../../components/common/UploadZone";
-import TextEditor from "../../components/common/TextEditor";
 import Selectable from "../../components/common/Select";
 import ColorPicker from "../../components/common/ColorPicker";
 import Checkbox from "../../components/common/Checkbox";
 import NotificationBox from "../../components/common/notificationBox";
-import TinyEditor from "../../components/TinyEditor";
+import TinyEditor from "../../components/common/richTextEditor/TinyEditor";
 //types
 import { OptionType } from "../../redux/types/common.type";
 import { CategoryType } from "../../redux/types/category.type";
@@ -266,13 +265,18 @@ const CreateProduct: React.FC<Props> = (props) => {
             label="Maximum 5 images and Each size less than 500KB"
             getValue={getImages}
           />
-          <TextEditor
+          {/*<TextEditor*/}
+          {/*  label="Description"*/}
+          {/*  value={state.description}*/}
+          {/*  getValue={getDescriptionHtml}*/}
+          {/*  cls="md:flex-2"*/}
+          {/*/>*/}
+          <TinyEditor
             label="Description"
             value={state.description}
             getValue={getDescriptionHtml}
             cls="md:flex-2"
           />
-          <TinyEditor />
         </div>
       </div>
       <NotificationBox

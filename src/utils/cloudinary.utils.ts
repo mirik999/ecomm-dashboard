@@ -2,16 +2,16 @@ import axios from "axios";
 
 export async function imageUploadAndGetUrl(
   file: File,
+  preset: string = "product_images",
   onEvent: (percent: number, error: string, file: any) => void,
 ) {
-  const NAME = "electroshop-commerce-app";
-  const PRESET = "pjegjzge";
+  const NAME = "electroshop-cmrs-project";
   const CLOUDINARY_URL = `https://api.cloudinary.com/v1_1/${NAME}/upload`;
 
   try {
     const formData = new FormData();
     formData.append("file", file);
-    formData.append("upload_preset", PRESET);
+    formData.append("upload_preset", preset);
 
     const payload = await axios.post(CLOUDINARY_URL, formData,{
       onUploadProgress: (event) => {
