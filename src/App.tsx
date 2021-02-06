@@ -28,7 +28,7 @@ function App() {
     },
     cache: new InMemoryCache({
       addTypename: false
-    }),
+    })
   })
 
   return (

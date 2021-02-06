@@ -28,7 +28,8 @@ const initialState: NavType[] = [
     id: 4,
     name: 'Categories',
     path: '/categories',
-    accessRoles: ['admin', 'sudo'],
+    accessRoles: ['guest', 'admin', 'sudo'],
+    editableRoles: ['admin', 'sudo'],
     visible: true,
     subPaths: ['/create']
   },
@@ -36,7 +37,8 @@ const initialState: NavType[] = [
     id: 5,
     name: 'Products',
     path: '/products',
-    accessRoles: ['admin', 'sudo'],
+    accessRoles: ['guest', 'admin', 'sudo'],
+    editableRoles: ['admin', 'sudo'],
     visible: true,
     subPaths: ['/create']
   },
@@ -44,7 +46,8 @@ const initialState: NavType[] = [
     id: 6,
     name: 'Users',
     path: '/users',
-    accessRoles: ['sudo'],
+    accessRoles: ['guest', 'admin', 'sudo'],
+    editableRoles: ['sudo'],
     visible: true,
     subPaths: ['/create']
   }

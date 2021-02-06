@@ -55,6 +55,14 @@ export const ACTIVATE_CATEGORIES = gql`
   }
 `;
 
+export const DELETE_CATEGORIES = gql`
+  mutation DeleteCategories($deleteCategories: GetByIdsInput!) {
+    deleteCategories(deleteCategories: $deleteCategories) {
+      ids
+    }
+  }
+`;
+
 export const GET_CATEGORIES_FOR_SELECT = gql`
   query GetCategories($controls: GetElementsInput!) {
     getCategories(controls: $controls) {

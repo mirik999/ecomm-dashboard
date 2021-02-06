@@ -3,13 +3,18 @@ import { Link } from 'react-router-dom';
 import { useSelector } from "react-redux";
 import { HiMenuAlt1 } from 'react-icons/hi';
 //types
-import {RootState} from "../../redux/store";
-import {NavType} from "../../redux/types/nav.type";
+import { RootState } from "../../redux/store";
+import { NavType } from "../../redux/types/nav.type";
+//utils
+import { checkTokenExp } from "../../utils/token.utils";
 
 type Props = {};
 
 const Navigation: React.FC<Props> = (props) => {
   const { nav, user } = useSelector((state: RootState) => state);
+
+  const isTokenExpired = checkTokenExp();
+
   return (
     <div
       className="min-w-min w-60 h-full bg-gradient-to-b from-blue-800 to-blue-700 border-blue-900
@@ -31,7 +36,9 @@ const Navigation: React.FC<Props> = (props) => {
       <nav className="mt-5">
         <ul className="text-white">
           {
-            nav.map((n: NavType, i: number) => {
+            nav
+              .filter((n: NavType) => isTokenExpired ? n.path === "/" : n)
+              .map((n: NavType, i: number) => {
               if (n.visible && n.accessRoles.some((acr, i) => user.roles.includes(acr))) {
                 return (
                   <li

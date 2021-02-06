@@ -10,7 +10,8 @@ import { ProductType } from "../../redux/types/product.type";
 import {
   GET_PRODUCTS,
   DISABLE_PRODUCTS,
-  ACTIVATE_PRODUCTS
+  ACTIVATE_PRODUCTS,
+  DELETE_PRODUCTS
 } from "../../redux/requests/product.request";
 
 type Props = {};
@@ -19,6 +20,7 @@ const ProductPage: React.FC<Props> = (props) => {
   const [GetProducts, getResponse] = useLazyQuery(GET_PRODUCTS);
   const [DisableProducts, disableResponse] = useMutation(DISABLE_PRODUCTS);
   const [ActivateProducts, activateResponse] = useMutation(ACTIVATE_PRODUCTS);
+  const [DeleteProducts, deleteResponse] = useMutation(DELETE_PRODUCTS);
   const [products, setProducts] = useState<ProductType[]>([]);
   //pagination
   const [allCount, setAllCount] = useState<number>(0);
@@ -98,6 +100,19 @@ const ProductPage: React.FC<Props> = (props) => {
     }
   }
 
+  async function getIdsToDelete(ids: string[]): Promise<void> {
+    try {
+      await DeleteProducts({
+        variables: {
+          deleteProducts: { ids }
+        }
+      })
+      handleProductsList(ids)
+    } catch(err) {
+      console.log(err.message)
+    }
+  }
+
   function handleProductsState(ids: string[], isDisabled: boolean) {
     const updatedProducts = products.map(product => {
       if (ids.includes(product.id)) {
@@ -109,6 +124,11 @@ const ProductPage: React.FC<Props> = (props) => {
       return product;
     })
     setProducts(updatedProducts)
+  }
+
+  function handleProductsList(ids: string[]) {
+    const deletedProducts = products.filter(product => !ids.includes(product.id))
+    setProducts(deletedProducts)
   }
 
   return (
@@ -125,6 +145,7 @@ const ProductPage: React.FC<Props> = (props) => {
         getDeepSearch={getDeepSearchFromTable}
         getIdAndDisable={getIdAndDisable}
         getIdAndActivate={getIdAndActivate}
+        getIdsToDelete={getIdsToDelete}
         path="products"
         exclude={excludeList}
         error={!!getResponse.error}
@@ -133,7 +154,8 @@ const ProductPage: React.FC<Props> = (props) => {
         list={[
           getResponse,
           activateResponse,
-          disableResponse
+          disableResponse,
+          deleteResponse
         ]}
       />
     </Layout>

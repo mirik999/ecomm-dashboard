@@ -3,7 +3,7 @@ import jwt_decode from "jwt-decode";
 //types
 import { UserType } from '../types/user.types';
 //utils
-import {getFromCookies} from "../../utils/storage.utils";
+import { getFromCookies } from "../../utils/storage.utils";
 
 const initialState: UserType = {
   id: '',

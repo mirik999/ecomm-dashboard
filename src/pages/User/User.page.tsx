@@ -10,7 +10,8 @@ import { ProductType } from "../../redux/types/product.type";
 import {
   GET_USERS,
   DISABLE_USERS,
-  ACTIVATE_USERS
+  ACTIVATE_USERS,
+  DELETE_USERS
 } from "../../redux/requests/user.request";
 
 type Props = {};
@@ -19,6 +20,7 @@ const UserPage: React.FC<Props> = (props) => {
   const [GetUsers, getResponse] = useLazyQuery(GET_USERS);
   const [DisableUsers, disableResponse] = useMutation(DISABLE_USERS);
   const [ActivateUsers, activateResponse] = useMutation(ACTIVATE_USERS);
+  const [DeleteUsers, deleteResponse] = useMutation(DELETE_USERS);
   const [users, setUsers] = useState<ProductType[]>([]);
   //pagination
   const [allCount, setAllCount] = useState<number>(0);
@@ -76,10 +78,10 @@ const UserPage: React.FC<Props> = (props) => {
     try {
       await DisableUsers({
         variables: {
-          disabledProducts: { ids }
+          disabledUsers: { ids }
         }
       })
-      handleProductsState(ids, true)
+      handleUsersState(ids, true)
     } catch(err) {
       console.log(err.message)
     }
@@ -89,17 +91,30 @@ const UserPage: React.FC<Props> = (props) => {
     try {
       await ActivateUsers({
         variables: {
-          activateProducts: { ids }
+          activateUsers: { ids }
         }
       })
-      handleProductsState(ids, false)
+      handleUsersState(ids, false)
     } catch(err) {
       console.log(err.message)
     }
   }
 
-  function handleProductsState(ids: string[], isDisabled: boolean) {
-    const updatedProducts = users.map(product => {
+  async function getIdsToDelete(ids: string[]): Promise<void> {
+    try {
+      await DeleteUsers({
+        variables: {
+          deleteUsers: { ids }
+        }
+      })
+      handleUsersList(ids)
+    } catch(err) {
+      console.log(err.message)
+    }
+  }
+
+  function handleUsersState(ids: string[], isDisabled: boolean) {
+    const updatedUsers = users.map(product => {
       if (ids.includes(product.id)) {
         return {
           ...product,
@@ -108,7 +123,12 @@ const UserPage: React.FC<Props> = (props) => {
       }
       return product;
     })
-    setUsers(updatedProducts)
+    setUsers(updatedUsers)
+  }
+
+  function handleUsersList(ids: string[]) {
+    const deletedUsers = users.filter(user => !ids.includes(user.id))
+    setUsers(deletedUsers)
   }
 
   return (
@@ -121,7 +141,6 @@ const UserPage: React.FC<Props> = (props) => {
         data={users}
         allCount={allCount}
         exclude={['id']}
-        hiddenButtons={['create']}
         error={!!getResponse.error}
         path="users"
         getPage={getPageFromTable}
@@ -129,12 +148,14 @@ const UserPage: React.FC<Props> = (props) => {
         getDeepSearch={getDeepSearchFromTable}
         getIdAndDisable={getIdAndDisable}
         getIdAndActivate={getIdAndActivate}
+        getIdsToDelete={getIdsToDelete}
       />
       <NotificationBox
         list={[
           getResponse,
           activateResponse,
-          disableResponse
+          disableResponse,
+          deleteResponse
         ]}
       />
     </Layout>

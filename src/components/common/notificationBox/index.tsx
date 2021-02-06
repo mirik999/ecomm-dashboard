@@ -2,6 +2,9 @@ import React, { memo, useRef } from 'react';
 //components
 import ErrorBox from "./ErrorBox";
 import ProcessBox from "./ProcessBox";
+//utils
+import {checkTokenExp} from "../../../utils/token.utils";
+import WarningBox from "./WarningBox";
 
 type Props = {
   list: any
@@ -9,6 +12,14 @@ type Props = {
 
 const NotificationBox: React.FC<Props> = memo(({ list }) => {
   const prevErrorState = useRef('');
+  const isTokenExp = checkTokenExp();
+
+  if (isTokenExp) {
+    return (
+      <WarningBox message="Unauthorized" />
+    )
+  }
+
   return (
     <div>
       {

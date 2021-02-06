@@ -2,14 +2,18 @@ import React, { useEffect, useState } from 'react';
 import ReactPagination from 'react-paginate';
 import { useHistory } from 'react-router-dom';
 import { format } from 'date-fns';
+import {useSelector} from "react-redux";
 //components
 import Input from "../Input";
 import Select from "../Select";
 import LoadingBox from "../LoadingBox";
-import FakeTable from "../FakeTable";
+import FakeTable from "./FakeTable";
 import Buttons from "./Buttons";
 //types
 import { OptionType } from "../../../redux/types/common.type";
+import { RootState } from "../../../redux/store";
+import {getUserRole} from "../../../utils/user.utils";
+import {NavType} from "../../../redux/types/nav.type";
 
 const options = [
   { id: 10, name: '10 rows'},
@@ -36,6 +40,7 @@ type Props = {
   getDeepSearch: (val: string) => void
   getIdAndDisable: (id: string[]) => void
   getIdAndActivate: (id: string[]) => void
+  getIdsToDelete: (id: string[]) => void
 };
 
 const Table: React.FC<Props> = ({
@@ -50,13 +55,24 @@ const Table: React.FC<Props> = ({
   getDeepSearch,
   getIdAndDisable,
   getIdAndActivate,
+  getIdsToDelete
 }) => {
   const history = useHistory();
+  const { user, nav } = useSelector((state: RootState) => state);
   const [state, setState] = useState<any[]>([]);
   const [selected, setSelected] = useState<any[]>([]);
   const [quickSearch, setQuickSearch] = useState<string>('');
   const [deepSearch, setDeepSearch] = useState<string>('');
   const [rowCount, setRowCount] = useState<OptionType>(initialRowCountState);
+
+  const currentNav = nav.find((n: NavType) => n.path === history.location.pathname)
+  const isEditable = currentNav?.editableRoles ? currentNav.editableRoles.some(n => user.roles.includes(n)) : false
+
+  const roles = {
+    isSudo: getUserRole(user.roles, 'sudo'),
+    isAdmin: getUserRole(user.roles, 'admin'),
+    isGuest: getUserRole(user.roles, 'guest'),
+  }
 
   useEffect(() => {
     setState(data)
@@ -120,7 +136,13 @@ const Table: React.FC<Props> = ({
   }
 
   if (!state.length && error) {
-    return <FakeTable onCreate={_onRouteChange} />
+    return (
+      <FakeTable
+        onCreate={_onRouteChange}
+        hiddenButtons={hiddenButtons}
+        roles={roles}
+      />
+    )
   }
 
   function handleTableBody(val: any, key: string): any {
@@ -193,7 +215,7 @@ const Table: React.FC<Props> = ({
         style={{ height: 'calc(100vh - 416px)' }}
       >
         <table
-          className="w-full border-separate bg-gray-100 w-full overflow-auto whitespace-nowrap"
+          className="w-full border-separate bg-gray-100 w-full overflow-auto whitespace-nwrap"
         >
           {/* TABLE HEAD */}
           <thead>
@@ -230,6 +252,7 @@ const Table: React.FC<Props> = ({
                       type="checkbox"
                       className="w-5 h-5"
                       onChange={() => _onSelected(st)}
+                      disabled={st?.email === user?.email}
                     />
                   </td>
                   {
@@ -255,7 +278,10 @@ const Table: React.FC<Props> = ({
           hiddenButtons={hiddenButtons}
           getIdAndDisable={getIdAndDisable}
           getIdAndActivate={getIdAndActivate}
+          getIdsToDelete={getIdsToDelete}
           onRouteChange={_onRouteChange}
+          roles={roles}
+          isEditable={isEditable}
         />
         <ReactPagination
           onPageChange={_onPageChange}

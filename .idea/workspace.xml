@@ -20,15 +20,32 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e021988f-3eda-4fed-af49-63e1e5ec9f51" name="Default Changelist" comment="users done">
-      <change afterPath="$PROJECT_DIR$/src/components/common/richTextEditor/templates.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/common/table/FakeTable.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/utils/token.utils.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/utils/user.utils.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.eslintcache" beforeDir="false" afterPath="$PROJECT_DIR$/.eslintcache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/settings.txt" beforeDir="false" afterPath="$PROJECT_DIR$/settings.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/TinyEditor.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/richTextEditor/TinyEditor.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/common/UploadZone.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/UploadZone.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/common/FakeTable.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/common/Navigation.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/Navigation.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/common/WithToken.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/WithToken.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/common/notificationBox/ErrorBox.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/notificationBox/ErrorBox.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/common/notificationBox/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/notificationBox/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/common/richTextEditor/TinyEditor.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/richTextEditor/TinyEditor.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/common/table/Buttons.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/table/Buttons.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/common/table/Table.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/table/Table.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Auth/Login.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Auth/Login.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Category/Category.page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Category/Category.page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Main/Main.page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Main/Main.page.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/Product/CreateProduct.page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Product/CreateProduct.page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/cloudinary.utils.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/cloudinary.utils.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Product/Product.page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Product/Product.page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/User/User.page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/User/User.page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/requests/category.request.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/requests/category.request.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/requests/product.request.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/requests/product.request.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/requests/user.request.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/requests/user.request.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/slices/nav.slice.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/slices/nav.slice.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/slices/user.slice.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/slices/user.slice.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/types/nav.type.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/types/nav.type.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -99,7 +116,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$USER_HOME$/Desktop/ferman" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -114,11 +131,11 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\miral\WebstormProjects\ecomm-dashboard\src\components\common\table" />
       <recent name="C:\Users\miral\WebstormProjects\ecomm-dashboard\src\components\common\richTextEditor" />
       <recent name="C:\Users\miral\WebstormProjects\ecomm-dashboard\src\components\common" />
       <recent name="C:\Users\mirik\WebstormProjects\ecomm-dashboard\src\components\common\table" />
       <recent name="C:\Users\mirik\WebstormProjects\ecomm-dashboard\src\pages\Main" />
-      <recent name="C:\Users\mirik\WebstormProjects\ecomm-dashboard" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -146,7 +163,7 @@
       <workItem from="1612199752146" duration="10868000" />
       <workItem from="1612378756060" duration="3568000" />
       <workItem from="1612467634269" duration="47000" />
-      <workItem from="1612539389105" duration="13345000" />
+      <workItem from="1612539389105" duration="33613000" />
     </task>
     <task id="LOCAL-00001" summary="users done">
       <created>1612213179093</created>

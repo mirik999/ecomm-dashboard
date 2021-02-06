@@ -6,11 +6,13 @@ type Props = {
 }
 
 const ErrorBox: React.FC<Props> = ({message, details}) => {
+  const statusCode = details[0]?.extensions?.exception?.response?.statusCode;
   return (
     <div
       className="m-4 p-2 border-2 border-pink-500 bg-pink-200 text-red-700
         border-r-4 rounded-md"
     >
+      <span className="mr-2">{statusCode}</span>
       <span>{message}</span>
       {
         details.map((d: any, i: number) => (

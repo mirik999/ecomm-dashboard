@@ -3,6 +3,9 @@ import { useSelector } from 'react-redux';
 import { Route, Redirect } from 'react-router-dom';
 //types
 import { RootState } from '../../redux/store';
+//utils
+import { checkTokenExp } from "../../utils/token.utils";
+
 
 type Props = {
   component: React.FunctionComponent<any>;
@@ -11,6 +14,11 @@ type Props = {
 
 const WithToken: React.FC<Props> = ({ component: Component, ...rest }) => {
   const { token, user, nav } = useSelector((state: RootState) => state);
+
+  const isTokenExpired = checkTokenExp();
+  if (rest.path !== "/" && isTokenExpired) {
+    return <Redirect to="/" />
+  }
 
   const findNav = nav.find(n => {
     if (n.path === rest.path) {
@@ -24,6 +32,7 @@ const WithToken: React.FC<Props> = ({ component: Component, ...rest }) => {
     }
     return n;
   })!;
+
   if (Object.keys(findNav).length) {
     const noAccess = findNav.accessRoles.some((acr: string) => {
       return user.roles.length ? user.roles.includes(acr) : "guest"

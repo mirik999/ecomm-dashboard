@@ -55,7 +55,7 @@ const TinyEditor: React.FC<Props> = ({
       <span>{ label }</span>
       <Editor
         apiKey="ujhxkgc5qcu6syhl2b7qv1n2ydnqwtl1vwyy8ndwnl650f0t"
-        initialValue=""
+        initialValue={value}
         init={{
           height: 500,
           menubar: true,
@@ -70,8 +70,10 @@ const TinyEditor: React.FC<Props> = ({
           ],
           toolbar:
             `undo redo | fontsizeselect backcolor | alignleft aligncenter alignright alignjustify
-            | bullist numlist outdent indent | template | help`,
-          quickbars_insert_toolbar: 'template'
+            | bullist numlist outdent indent | template restoredraft | help`,
+          autosave_interval: '10s',
+          quickbars_insert_toolbar: 'template',
+          autosave_prefix: 'tinymce-autosave'
         }}
         onEditorChange={handleEditorChange}
       />

@@ -12,6 +12,7 @@ import {LOGIN_USER} from "../../redux/requests/user.request";
 //actions
 import { saveToken } from '../../redux/slices/token.slice';
 import { saveUser } from '../../redux/slices/user.slice';
+import NotificationBox from "../../components/common/notificationBox";
 
 type userData = {
   email: string
@@ -27,7 +28,7 @@ const initialState = {
 
 const Login: React.FC<Props> = (props) => {
   const dispatch = useDispatch();
-  const [CreateUser, { data, loading, error }] = useMutation(LOGIN_USER);
+  const [CreateUser, createResponse] = useMutation(LOGIN_USER);
   const [state, setState] = useState<userData>(initialState);
 
   async function _onClick(): Promise<void> {
@@ -69,8 +70,12 @@ const Login: React.FC<Props> = (props) => {
       />
       <Divider label="Action" />
       <Button label="ENTER" onAction={_onClick} />
-      { loading ? <ProcessBox /> : null }
-      { error ? <ErrorBox message={error.message} /> : null }
+
+      <NotificationBox
+        list={[
+          createResponse
+        ]}
+      />
     </div>
   );
 };

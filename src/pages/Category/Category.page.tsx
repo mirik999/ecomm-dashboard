@@ -10,7 +10,8 @@ import { CategoryType } from "../../redux/types/category.type";
 import {
   GET_CATEGORIES,
   DISABLE_CATEGORIES,
-  ACTIVATE_CATEGORIES
+  ACTIVATE_CATEGORIES,
+  DELETE_CATEGORIES
 } from "../../redux/requests/category.request";
 
 type Props = {};
@@ -19,6 +20,7 @@ const CategoryPage: React.FC<Props> = (props) => {
   const [GetCategories, getResponse] = useLazyQuery(GET_CATEGORIES);
   const [DisableCategories, disableResponse] = useMutation(DISABLE_CATEGORIES);
   const [ActivateCategories, activateResponse] = useMutation(ACTIVATE_CATEGORIES);
+  const [DeleteCategories, deleteResponse] = useMutation(DELETE_CATEGORIES);
   const [categories, setCategories] = useState<CategoryType[]>([]);
   //pagination
   const [allCount, setAllCount] = useState<number>(0);
@@ -98,6 +100,19 @@ const CategoryPage: React.FC<Props> = (props) => {
     }
   }
 
+  async function getIdsToDelete(ids: string[]): Promise<void> {
+    try {
+      await DeleteCategories({
+        variables: {
+          deleteCategories: { ids }
+        }
+      })
+      handleCategoriesList(ids)
+    } catch(err) {
+      console.log(err.message)
+    }
+  }
+
   function handleCategoriesState(ids: string[], isDisabled: boolean) {
     const updatedCategories = categories.map(cat => {
       if (ids.includes(cat.id)) {
@@ -109,6 +124,11 @@ const CategoryPage: React.FC<Props> = (props) => {
       return cat;
     })
     setCategories(updatedCategories)
+  }
+
+  function handleCategoriesList(ids: string[]) {
+    const deletedCategories = categories.filter(category => !ids.includes(category.id))
+    setCategories(deletedCategories)
   }
 
   return (
@@ -125,6 +145,7 @@ const CategoryPage: React.FC<Props> = (props) => {
         getDeepSearch={getDeepSearchFromTable}
         getIdAndDisable={getIdAndDisable}
         getIdAndActivate={getIdAndActivate}
+        getIdsToDelete={getIdsToDelete}
         path="categories"
         error={!!getResponse.error}
       />
@@ -132,7 +153,8 @@ const CategoryPage: React.FC<Props> = (props) => {
         list={[
           getResponse,
           activateResponse,
-          disableResponse
+          disableResponse,
+          deleteResponse
         ]}
       />
     </Layout>

@@ -45,6 +45,8 @@ export const GET_PRODUCTS = gql`
         best
         isDisabled
         createdAt
+        createdBy
+        modifiedBy
       }
     }
   }
@@ -61,6 +63,14 @@ export const DISABLE_PRODUCTS = gql`
 export const ACTIVATE_PRODUCTS = gql`
   mutation ActivateProducts($activateProducts: GetByIdsInput!) {
     activateProducts(activateProducts: $activateProducts) {
+      ids
+    }
+  }
+`;
+
+export const DELETE_PRODUCTS = gql`
+  mutation DeleteProducts($deleteProducts: GetByIdsInput!) {
+    deleteProducts(deleteProducts: $deleteProducts) {
       ids
     }
   }

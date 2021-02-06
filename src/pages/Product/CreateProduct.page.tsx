@@ -265,12 +265,6 @@ const CreateProduct: React.FC<Props> = (props) => {
             label="Maximum 5 images and Each size less than 500KB"
             getValue={getImages}
           />
-          {/*<TextEditor*/}
-          {/*  label="Description"*/}
-          {/*  value={state.description}*/}
-          {/*  getValue={getDescriptionHtml}*/}
-          {/*  cls="md:flex-2"*/}
-          {/*/>*/}
           <TinyEditor
             label="Description"
             value={state.description}

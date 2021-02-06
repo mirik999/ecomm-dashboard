@@ -48,6 +48,14 @@ export const ACTIVATE_USERS = gql`
   }
 `;
 
+export const DELETE_USERS = gql`
+  mutation DeleteUsers($deleteUsers: GetByIdsInput!) {
+    deleteUsers(deleteUsers: $deleteUsers) {
+      ids
+    }
+  }
+`;
+
 export const UPDATE_USER = gql`
   mutation UpdateUser($updatedUser: UpdateUserReq!) {
     updateUser(updatedUser: $updatedUser) {

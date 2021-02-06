@@ -23,28 +23,42 @@ const buttons = [
     id: 5,
     name: 'properties',
   },
+  {
+    id: 6,
+    name: 'delete',
+  },
 ]
 
 type Props = {
   selected: any[]
   hiddenButtons?: string[]
+  roles: {
+    isSudo: boolean, isAdmin: boolean, isGuest: boolean
+  },
+  isEditable?: boolean
   getIdAndDisable: (id: string[]) => void
   getIdAndActivate: (id: string[]) => void
+  getIdsToDelete: (id: string[]) => void
   onRouteChange: (route: string) => void
 }
 
 const Buttons: React.FC<Props> = ({
   selected,
   hiddenButtons,
+  roles,
+  isEditable,
   getIdAndDisable,
   getIdAndActivate,
+  getIdsToDelete,
   onRouteChange
 }) => {
+
+
   return (
     <div className="flex py-3">
       {
         buttons.map((btn, i) => {
-          if (!hiddenButtons!.includes(btn.name) && btn.name === "create") {
+          if (isEditable && !hiddenButtons!.includes(btn.name) && btn.name === "create") {
             return (
               <Button
                 key={i}
@@ -54,7 +68,7 @@ const Buttons: React.FC<Props> = ({
               />
             )
           }
-          if (!hiddenButtons!.includes(btn.name) && btn.name === "edit") {
+          if (isEditable && !hiddenButtons!.includes(btn.name) && btn.name === "edit") {
             return (
               <Button
                 key={i}
@@ -65,7 +79,7 @@ const Buttons: React.FC<Props> = ({
               />
             )
           }
-          if (!hiddenButtons!.includes(btn.name) && btn.name === "disable") {
+          if (isEditable && !hiddenButtons!.includes(btn.name) && btn.name === "disable") {
             return (
               <Button
                 key={i}
@@ -76,7 +90,7 @@ const Buttons: React.FC<Props> = ({
               />
             )
           }
-          if (!hiddenButtons!.includes(btn.name) && btn.name === "activate") {
+          if (isEditable && !hiddenButtons!.includes(btn.name) && btn.name === "activate") {
             return (
               <Button
                 key={i}
@@ -87,12 +101,23 @@ const Buttons: React.FC<Props> = ({
               />
             )
           }
-          if (!hiddenButtons!.includes(btn.name) && btn.name === "properties") {
+          if (isEditable && !hiddenButtons!.includes(btn.name) && btn.name === "properties") {
             return (
               <Button
                 key={i}
                 label="Properties"
                 onAction={() => false}
+                cls="m-0 mr-3"
+                disabled={selected.length === 0}
+              />
+            )
+          }
+          if (isEditable && !hiddenButtons!.includes(btn.name) && btn.name === "delete") {
+            return (
+              <Button
+                key={i}
+                label="Delete"
+                onAction={() => getIdsToDelete(selected.map(s => s.id))}
                 cls="m-0 mr-3"
                 disabled={selected.length === 0}
               />
@@ -104,6 +129,16 @@ const Buttons: React.FC<Props> = ({
       }
     </div>
   );
+}
+
+Buttons.defaultProps = {
+  selected: [],
+  hiddenButtons: [],
+  roles: {
+    isSudo: false,
+    isAdmin: false,
+    isGuest: true
+  }
 }
 
 export default Buttons;
