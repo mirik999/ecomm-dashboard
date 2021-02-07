@@ -115,7 +115,7 @@ const CategoryPage: React.FC<Props> = (props) => {
 
   function handleCategoriesState(ids: string[], isDisabled: boolean) {
     const updatedCategories = categories.map(cat => {
-      if (ids.includes(cat.id)) {
+      if (ids.includes(cat.id!)) {
         return {
           ...cat,
           isDisabled
@@ -127,7 +127,7 @@ const CategoryPage: React.FC<Props> = (props) => {
   }
 
   function handleCategoriesList(ids: string[]) {
-    const deletedCategories = categories.filter(category => !ids.includes(category.id))
+    const deletedCategories = categories.filter(category => !ids.includes(category.id!))
     setCategories(deletedCategories)
   }
 
@@ -148,6 +148,7 @@ const CategoryPage: React.FC<Props> = (props) => {
         getIdsToDelete={getIdsToDelete}
         path="categories"
         error={!!getResponse.error}
+        exclude={['id', 'subCategories']}
       />
       <NotificationBox
         list={[

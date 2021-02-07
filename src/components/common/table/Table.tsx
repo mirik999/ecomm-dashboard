@@ -266,6 +266,14 @@ const Table: React.FC<Props> = ({
                       </td>
                     ))
                   }
+                  <table>
+                    <tbody>
+                    <tr>
+                      <td>aloo</td>
+                      <td>aloo 2</td>
+                    </tr>
+                    </tbody>
+                  </table>
                 </tr>
               ))
           }

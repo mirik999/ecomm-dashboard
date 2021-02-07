@@ -1,25 +1,17 @@
 import { gql } from '@apollo/client';
 
 export const CREATE_CATEGORY = gql`
-  mutation CreateCategory($newCategory: CreateCategoryInput!) {
+  mutation CreateCategory($newCategory: CreateCategoryReq!) {
     createCategory(newCategory: $newCategory) {
       id
-      name
-      tabName
-      createdAt
-      isDisabled
     }
   }
 `;
 
 export const UPDATE_CATEGORY = gql`
-  mutation UpdateCategory($updatedCategory: UpdateCategoryInput!) {
+  mutation UpdateCategory($updatedCategory: UpdateCategoryReq!) {
     updateCategory(updatedCategory: $updatedCategory) {
       id
-      name
-      tabName
-      isDisabled
-      createdAt
     }
   }
 `;
@@ -34,6 +26,10 @@ export const GET_CATEGORIES = gql`
         tabName
         createdAt
         isDisabled
+        subCategories {
+          name
+          tabName
+        }
       }
     }
   }

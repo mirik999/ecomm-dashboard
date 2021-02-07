@@ -6,14 +6,16 @@ import Layout from "../../components/common/Layout";
 import Input from "../../components/common/Input";
 import Button from "../../components/common/Button";
 import NotificationBox from "../../components/common/notificationBox";
+import SubCategories from "./SubCategories";
 //types
-import { CategoryType } from "../../redux/types/category.type";
+import {CategoryType, SubCategoryType} from "../../redux/types/category.type";
 //request
 import { CREATE_CATEGORY, UPDATE_CATEGORY } from "../../redux/requests/category.request";
 
 const initialState = {
   name: '',
   tabName: '',
+  subCategories: []
 }
 
 type Props = {}
@@ -96,6 +98,10 @@ const CreateCategory: React.FC<Props> = (props) => {
           getValue={(val: string) => setState({...state, tabName: val})}
         />
       </div>
+      <SubCategories
+        subCategories={state.subCategories!}
+        getValue={(val: SubCategoryType[]) => setState({ ...state, subCategories: val })}
+      />
       <div className="flex items-center mx-4 py-3">
         {
           mode === "create" ? (
