@@ -61,7 +61,15 @@ const CreateProduct: React.FC<Props> = (props) => {
 
   useEffect(() => {
     if (categoriesResponse.data) {
-      const options = categoriesResponse.data.getCategories.payload;
+      const payload = categoriesResponse.data.getCategories.payload;
+      let options = [];
+      for (let i = 0; i < payload.length; i++) {
+        options.push(payload[i])
+        for (let j = 0; j < payload[i].subCategories.length; j++) {
+          options.push(payload[i].subCategories[j])
+        }
+      }
+
       setCategories(options)
     }
   }, [categoriesResponse])

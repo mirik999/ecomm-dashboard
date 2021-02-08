@@ -27,6 +27,8 @@ export const GET_CATEGORIES = gql`
         createdAt
         isDisabled
         subCategories {
+          id
+          parentId
           name
           tabName
         }
@@ -66,6 +68,11 @@ export const GET_CATEGORIES_FOR_SELECT = gql`
       payload {
         id
         name
+        subCategories {
+          id
+          parentId
+          name
+        }
       }
     }
   }

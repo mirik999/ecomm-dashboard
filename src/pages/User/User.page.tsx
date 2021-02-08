@@ -28,6 +28,8 @@ const UserPage: React.FC<Props> = (props) => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   //deep search
   const [deepSearch, setDeepSearch] = useState<string>('');
+  //side effects
+  const [unSelect, setUnSelect] = useState<boolean>(false);
 
   useEffect(() => {
     if (getResponse.data) {
@@ -129,6 +131,7 @@ const UserPage: React.FC<Props> = (props) => {
   function handleUsersList(ids: string[]) {
     const deletedUsers = users.filter(user => !ids.includes(user.id))
     setUsers(deletedUsers)
+    setUnSelect(true);
   }
 
   return (
@@ -140,15 +143,16 @@ const UserPage: React.FC<Props> = (props) => {
       <Table
         data={users}
         allCount={allCount}
-        exclude={['id']}
-        error={!!getResponse.error}
-        path="users"
         getPage={getPageFromTable}
         getRowCount={getRowCountFromTable}
         getDeepSearch={getDeepSearchFromTable}
         getIdAndDisable={getIdAndDisable}
         getIdAndActivate={getIdAndActivate}
         getIdsToDelete={getIdsToDelete}
+        exclude={['id']}
+        error={!!getResponse.error}
+        path="users"
+        unSelect={unSelect}
       />
       <NotificationBox
         list={[

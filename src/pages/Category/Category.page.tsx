@@ -28,6 +28,8 @@ const CategoryPage: React.FC<Props> = (props) => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   //deep search
   const [deepSearch, setDeepSearch] = useState<string>('');
+  //side effects
+  const [unSelect, setUnSelect] = useState<boolean>(false);
 
   useEffect(() => {
     if (getResponse.data) {
@@ -129,6 +131,7 @@ const CategoryPage: React.FC<Props> = (props) => {
   function handleCategoriesList(ids: string[]) {
     const deletedCategories = categories.filter(category => !ids.includes(category.id!))
     setCategories(deletedCategories)
+    setUnSelect(true);
   }
 
   return (
@@ -148,7 +151,8 @@ const CategoryPage: React.FC<Props> = (props) => {
         getIdsToDelete={getIdsToDelete}
         path="categories"
         error={!!getResponse.error}
-        exclude={['id', 'subCategories']}
+        exclude={['id']}
+        unSelect={unSelect}
       />
       <NotificationBox
         list={[

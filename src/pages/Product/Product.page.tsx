@@ -28,6 +28,8 @@ const ProductPage: React.FC<Props> = (props) => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   //deep search
   const [deepSearch, setDeepSearch] = useState<string>('');
+  //side effects
+  const [unSelect, setUnSelect] = useState<boolean>(false);
 
   useEffect(() => {
     if (getResponse.data) {
@@ -129,6 +131,7 @@ const ProductPage: React.FC<Props> = (props) => {
   function handleProductsList(ids: string[]) {
     const deletedProducts = products.filter(product => !ids.includes(product.id))
     setProducts(deletedProducts)
+    setUnSelect(true);
   }
 
   return (
@@ -149,6 +152,7 @@ const ProductPage: React.FC<Props> = (props) => {
         path="products"
         exclude={excludeList}
         error={!!getResponse.error}
+        unSelect={unSelect}
       />
       <NotificationBox
         list={[

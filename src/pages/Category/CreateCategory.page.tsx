@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import { useHistory } from 'react-router-dom';
 import { useMutation } from "@apollo/client";
+import { v4 as uuid } from 'uuid';
 //components
 import Layout from "../../components/common/Layout";
 import Input from "../../components/common/Input";
@@ -13,6 +14,7 @@ import {CategoryType, SubCategoryType} from "../../redux/types/category.type";
 import { CREATE_CATEGORY, UPDATE_CATEGORY } from "../../redux/requests/category.request";
 
 const initialState = {
+  id: uuid(),
   name: '',
   tabName: '',
   subCategories: []
@@ -46,6 +48,10 @@ const CreateCategory: React.FC<Props> = (props) => {
       history.push("/categories")
     }
   }, [updateResponse])
+
+  function _onSubCategoryChange(val: SubCategoryType[]): void {
+    setState({ ...state, subCategories: val })
+  }
 
   async function _onSave(): Promise<void> {
     try {
@@ -99,8 +105,9 @@ const CreateCategory: React.FC<Props> = (props) => {
         />
       </div>
       <SubCategories
+        parentId={state.id!}
         subCategories={state.subCategories!}
-        getValue={(val: SubCategoryType[]) => setState({ ...state, subCategories: val })}
+        getValue={_onSubCategoryChange}
       />
       <div className="flex items-center mx-4 py-3">
         {

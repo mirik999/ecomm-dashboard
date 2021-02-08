@@ -8,7 +8,8 @@ export type CategoryType = {
 };
 
 export type SubCategoryType = {
-  id?: string
+  id: string
+  parentId: string,
   name: string
   tabName: string
 }

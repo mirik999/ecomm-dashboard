@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import ReactPagination from 'react-paginate';
 import { useHistory } from 'react-router-dom';
-import { format } from 'date-fns';
-import {useSelector} from "react-redux";
+import { useSelector } from "react-redux";
 //components
 import Input from "../Input";
 import Select from "../Select";
@@ -10,10 +9,14 @@ import LoadingBox from "../LoadingBox";
 import FakeTable from "./FakeTable";
 import Buttons from "./Buttons";
 //types
+import { Props } from './props';
 import { OptionType } from "../../../redux/types/common.type";
 import { RootState } from "../../../redux/store";
-import {getUserRole} from "../../../utils/user.utils";
-import {NavType} from "../../../redux/types/nav.type";
+import { NavType } from "../../../redux/types/nav.type";
+//utils
+import { getUserRole } from "../../../utils/user.utils";
+//handler
+import { tableBodyHandler } from "./body.handler.";
 
 const options = [
   { id: 10, name: '10 rows'},
@@ -28,27 +31,13 @@ const initialRowCountState = {
   name: '10 rows'
 }
 
-type Props = {
-  data: any[]
-  allCount: number
-  exclude?: string[]
-  path: string,
-  error: boolean,
-  hiddenButtons?: string[],
-  getPage: (val: number) => void
-  getRowCount: (val: number) => void
-  getDeepSearch: (val: string) => void
-  getIdAndDisable: (id: string[]) => void
-  getIdAndActivate: (id: string[]) => void
-  getIdsToDelete: (id: string[]) => void
-};
-
 const Table: React.FC<Props> = ({
   data,
   allCount,
   exclude,
   path,
   error,
+  unSelect,
   hiddenButtons,
   getPage,
   getRowCount,
@@ -73,6 +62,12 @@ const Table: React.FC<Props> = ({
     isAdmin: getUserRole(user.roles, 'admin'),
     isGuest: getUserRole(user.roles, 'guest'),
   }
+
+  useEffect(() => {
+    if (unSelect) {
+      setSelected([])
+    }
+  }, [unSelect])
 
   useEffect(() => {
     setState(data)
@@ -146,33 +141,7 @@ const Table: React.FC<Props> = ({
   }
 
   function handleTableBody(val: any, key: string): any {
-    if (key === "createdAt") {
-      return format(new Date(val), 'dd MMMM yyyy')
-    }
-
-    if (key === "color") {
-      return <div
-        className="w-full rounded"
-        style={{
-          height: '30px',
-          backgroundColor: val
-        }}
-      />
-    }
-
-    if (key === "roles") {
-      return val.map((v: string, i: number) => <span key={i} className="mr-2">{v}</span>)
-    }
-
-    if (typeof val === "boolean") {
-      return val ? '✅ Yes' : ''
-    }
-
-    if (typeof val === "object") {
-      return val[0]?.name
-    }
-
-    return val;
+    return tableBodyHandler(val, key)
   }
 
   const totalCount = allCount / rowCount.id;
@@ -261,19 +230,14 @@ const Table: React.FC<Props> = ({
                         key={id}
                         className="border-2 border-gray-200 py-1 px-3"
                       >
-                        {/*@ts-ignore*/}
-                        { handleTableBody(st[k], k) }
+                        <div
+                          dangerouslySetInnerHTML={{
+                            __html: handleTableBody(st[k], k)
+                          }}
+                        />
                       </td>
                     ))
                   }
-                  <table>
-                    <tbody>
-                    <tr>
-                      <td>aloo</td>
-                      <td>aloo 2</td>
-                    </tr>
-                    </tbody>
-                  </table>
                 </tr>
               ))
           }
@@ -315,7 +279,8 @@ Table.defaultProps = {
   exclude: ['id'],
   hiddenButtons: [],
   path: '',
-  error: false
+  error: false,
+  unSelect: false
 }
 
 export default Table;

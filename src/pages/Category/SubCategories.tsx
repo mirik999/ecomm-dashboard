@@ -1,24 +1,29 @@
-import React, {memo, useEffect, useState} from 'react';
+import React, {memo, useEffect, useState, useRef} from 'react';
+import { v4 as uuid } from 'uuid';
 //components
 import Input from "../../components/common/Input";
 //types
 import { SubCategoryType } from "../../redux/types/category.type";
 
-const initialState = {
-  name: '',
-  tabName: ''
-}
-
 type Props = {
+  parentId: string
   subCategories: SubCategoryType[]
   getValue: (val: SubCategoryType[]) => void
 }
 
 const SubCategories: React.FC<Props> = memo(({
+  parentId,
   subCategories,
   getValue
 }) => {
-  const [list, setList] = useState<SubCategoryType[]>([initialState]);
+  const [list, setList] = useState<SubCategoryType[]>([]);
+
+  const emptySubCategory = {
+    id: uuid(),
+    parentId,
+    name: '',
+    tabName: ''
+  }
 
   useEffect(() => {
     if (subCategories.length) {
@@ -36,13 +41,14 @@ const SubCategories: React.FC<Props> = memo(({
 
   function _onAddSubCategory(): void {
     if (list.length < 10) {
-      setList(prevState => [initialState, ...prevState]);
+      setList(prevState => [emptySubCategory, ...prevState]);
     }
   }
 
   function _onRemoveSubCategory(index: number): void {
     const filteredList = list.filter((l, i) => i !== index);
     setList(filteredList);
+    getValue(filteredList)
   }
 
   return (
