@@ -4,6 +4,9 @@ export const CREATE_USER = gql`
   mutation CreateUser($newUser: AuthReq!) {
     createUser(newUser: $newUser) {
       accessToken
+      refreshToken
+      clientId
+      createdAt
     }
   }
 `;
@@ -12,6 +15,9 @@ export const LOGIN_USER = gql`
   mutation LoginUser($user: AuthReq!) {
     loginUser(user: $user) {
       accessToken
+      refreshToken
+      clientId
+      createdAt
     }
   }
 `;

@@ -1,18 +1,17 @@
 import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { useDispatch } from 'react-redux';
+import { v4 as uuid } from 'uuid';
 //components
 import Input from '../../components/common/Input';
 import Button from '../../components/common/Button';
 import Divider from '../../components/common/Divider';
-import ErrorBox from '../../components/common/notificationBox/ErrorBox';
-import ProcessBox from "../../components/common/notificationBox/ProcessBox";
-//requests
-import {LOGIN_USER} from "../../redux/requests/user.request";
-//actions
-import { saveToken } from '../../redux/slices/token.slice';
-import { saveUser } from '../../redux/slices/user.slice';
 import NotificationBox from "../../components/common/notificationBox";
+//requests
+import { LOGIN_USER } from "../../redux/requests/user.request";
+//actions
+import { saveToken } from '../../redux/slices/auth-credentials.slice';
+import { saveUser } from '../../redux/slices/user.slice';
 
 type userData = {
   email: string
@@ -24,22 +23,24 @@ type Props = {};
 const initialState = {
   email: 'xose@bk.ru',
   password: 'qweqwe',
+  clientId: uuid(),
+  grantType: 'password'
 };
 
 const Login: React.FC<Props> = (props) => {
   const dispatch = useDispatch();
-  const [CreateUser, createResponse] = useMutation(LOGIN_USER);
+  const [LoginUser, loginResponse] = useMutation(LOGIN_USER);
   const [state, setState] = useState<userData>(initialState);
 
   async function _onClick(): Promise<void> {
     try {
-      const payload = await CreateUser({
+      const payload = await LoginUser({
         variables: {
           user: state
         }
       });
-      const { accessToken } = payload.data.loginUser;
-      dispatch(saveToken(accessToken));
+      const data = payload.data.loginUser;
+      dispatch(saveToken(data));
       dispatch(saveUser());
     } catch(err) {
       console.log(err.message);
@@ -73,7 +74,7 @@ const Login: React.FC<Props> = (props) => {
 
       <NotificationBox
         list={[
-          createResponse
+          loginResponse
         ]}
       />
     </div>

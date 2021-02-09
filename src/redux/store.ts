@@ -4,13 +4,13 @@ import { ThunkAction } from 'redux-thunk';
 import navSlice from './slices/nav.slice';
 import rolesSlice from './slices/roles.slice';
 import userSlice from './slices/user.slice';
-import tokenSlice from './slices/token.slice';
+import authCredentialsSlice from './slices/auth-credentials.slice';
 
 const rootReducer = combineReducers({
   nav: navSlice,
   roles: rolesSlice,
   user: userSlice,
-  token: tokenSlice
+  authCredentials: authCredentialsSlice
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

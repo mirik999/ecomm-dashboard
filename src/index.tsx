@@ -7,7 +7,7 @@ import App from './App';
 //store
 import store from './redux/store';
 //actions
-import { loadFromCookies } from './redux/slices/token.slice';
+import { loadFromCookies } from './redux/slices/auth-credentials.slice';
 import { saveUser } from './redux/slices/user.slice';
 //styles [tailwind css]
 import './index.css';

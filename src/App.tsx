@@ -19,12 +19,12 @@ import CreateUser from "./pages/User/CreateUser.page";
 import { RootState } from './redux/store';
 
 function App() {
-  const { token } = useSelector((state: RootState) => state);
+  const { authCredentials } = useSelector((state: RootState) => state);
 
   const client = new ApolloClient({
     uri: 'http://localhost:4004/graphql',
     headers: {
-      Authorization: 'Bearer ' + token,
+      Authorization: 'Bearer ' + authCredentials.accessToken,
     },
     cache: new InMemoryCache({
       addTypename: false

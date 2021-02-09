@@ -10,8 +10,9 @@ import ProcessBox from "../../components/common/notificationBox/ProcessBox";
 //requests
 import {CREATE_USER} from "../../redux/requests/user.request";
 //actions
-import { saveToken } from '../../redux/slices/token.slice';
+import { saveToken } from '../../redux/slices/auth-credentials.slice';
 import { saveUser } from '../../redux/slices/user.slice';
+import NotificationBox from "../../components/common/notificationBox";
 
 type userData = {
   email: string
@@ -27,7 +28,7 @@ const initialState = {
 
 const Register: React.FC<Props> = (props) => {
   const dispatch = useDispatch();
-  const [CreateUser, { data, loading, error }] = useMutation(CREATE_USER);
+  const [CreateUser, createResponse] = useMutation(CREATE_USER);
   const [state, setState] = useState<userData>(initialState);
 
   async function _onClick(): Promise<void> {
@@ -37,9 +38,9 @@ const Register: React.FC<Props> = (props) => {
           newUser: state
         }
       });
-      const { accessToken } = payload.data.createUser;
-      dispatch(saveToken(accessToken))
-      dispatch(saveUser())
+      const data = payload.data.createUser;
+      dispatch(saveToken(data));
+      dispatch(saveUser());
     } catch(err) {
       console.log(err.message);
     }
@@ -67,8 +68,12 @@ const Register: React.FC<Props> = (props) => {
       />
       <Divider label="Action" />
       <Button label="SUBMIT" onAction={_onClick} />
-      { loading ? <ProcessBox /> : null }
-      { error ? <ErrorBox message={error.message} /> : null }
+
+      <NotificationBox
+        list={[
+          createResponse
+        ]}
+      />
     </div>
   );
 };

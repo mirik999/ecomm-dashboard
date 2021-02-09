@@ -5,6 +5,7 @@ import { Route, Redirect } from 'react-router-dom';
 import { RootState } from '../../redux/store';
 //utils
 import { checkTokenExp } from "../../utils/token.utils";
+import { removeFromCookies } from "../../utils/storage.utils";
 
 
 type Props = {
@@ -13,11 +14,12 @@ type Props = {
 };
 
 const WithToken: React.FC<Props> = ({ component: Component, ...rest }) => {
-  const { token, user, nav } = useSelector((state: RootState) => state);
+  const { authCredentials, user, nav } = useSelector((state: RootState) => state);
 
   const isTokenExpired = checkTokenExp();
   if (rest.path !== "/" && isTokenExpired) {
-    return <Redirect to="/" />
+    removeFromCookies('authCredentials');
+    return <Redirect to="/auth" />
   }
 
   const findNav = nav.find(n => {
@@ -37,7 +39,7 @@ const WithToken: React.FC<Props> = ({ component: Component, ...rest }) => {
     const noAccess = findNav.accessRoles.some((acr: string) => {
       return user.roles.length ? user.roles.includes(acr) : "guest"
     });
-    if (!noAccess && token) {
+    if (!noAccess && authCredentials.accessToken) {
       return <Redirect to="/404" />
     }
   }
@@ -45,7 +47,7 @@ const WithToken: React.FC<Props> = ({ component: Component, ...rest }) => {
   return (
     <Route
       {...rest}
-      render={(props) => (token ? <Component {...props} /> :
+      render={(props) => (authCredentials.accessToken ? <Component {...props} /> :
         <Redirect to="/auth" />)}
     />
   );

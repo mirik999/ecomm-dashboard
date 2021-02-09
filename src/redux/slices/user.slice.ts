@@ -16,9 +16,9 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     saveUser() {
-      const token = getFromCookies("token");
-      if (token) {
-        const { id, email, roles }: UserType = jwt_decode(token);
+      const authCredentials = getFromCookies("authCredentials");
+      if (authCredentials.accessToken) {
+        const { id, email, roles }: UserType = jwt_decode(authCredentials.accessToken);
         return { id, email, roles };
       } else {
         return initialState;

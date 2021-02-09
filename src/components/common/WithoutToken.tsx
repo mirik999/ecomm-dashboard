@@ -10,12 +10,12 @@ type Props = {
 };
 
 const WithoutToken: React.FC<Props> = ({ component: Component, ...rest }) => {
-  const { token } = useSelector((state: RootState) => state);
+  const { authCredentials } = useSelector((state: RootState) => state);
 
   return (
     <Route
       {...rest}
-      render={(props) => (!token ? <Component {...props} /> : <Redirect to="/" />)}
+      render={(props) => (!authCredentials.accessToken ? <Component {...props} /> : <Redirect to="/" />)}
     />
   );
 };
