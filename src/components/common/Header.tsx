@@ -2,22 +2,35 @@ import React, { memo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { MdExitToApp } from 'react-icons/md';
 import { useHistory } from 'react-router-dom';
+import { useLazyQuery } from "@apollo/client";
 //types
 import { RootState } from "../../redux/store";
 //actions
 import { removeToken } from '../../redux/slices/auth-credentials.slice';
 import { removeUser } from '../../redux/slices/user.slice';
+//request
+import { LOGOUT_USER } from "../../redux/requests/user.request";
 
 type Props = {};
 
 const Header: React.FC<Props> = memo((props) => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const { user } = useSelector((state: RootState) => state);
+  const { user, authCredentials } = useSelector((state: RootState) => state);
+  const [Logout, logoutResponse] = useLazyQuery(LOGOUT_USER);
 
-  function _onLogout(): void {
-    dispatch(removeToken())
-    dispatch(removeUser())
+  async function _onLogout(): Promise<void> {
+    try {
+      await Logout({
+        variables: {
+          clientId: authCredentials.clientId
+        }
+      });
+      dispatch(removeToken())
+      dispatch(removeUser())
+    } catch(err) {
+      console.log('Logout error => ', err.message)
+    }
   }
 
   const path = history.location.pathname;

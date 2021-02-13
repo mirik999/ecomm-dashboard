@@ -24,8 +24,8 @@ export const LOGIN_USER = gql`
 
 
 export const LOGOUT_USER = gql`
-  query {
-    logoutUser {
+  query LogoutUser($clientId: String!) {
+    logoutUser(clientId: $clientId) {
       clientId
     }
   }
