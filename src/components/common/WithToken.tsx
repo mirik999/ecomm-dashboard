@@ -16,11 +16,11 @@ type Props = {
 const WithToken: React.FC<Props> = ({ component: Component, ...rest }) => {
   const { authCredentials, user, nav } = useSelector((state: RootState) => state);
 
-  const isTokenExpired = checkTokenExp();
-  if (rest.path !== "/" && isTokenExpired) {
-    removeFromCookies('authCredentials');
-    return <Redirect to="/auth" />
-  }
+  // const isTokenExpired = checkTokenExp();
+  // if (rest.path !== "/" && isTokenExpired) {
+  //   removeFromCookies('authCredentials');
+  //   return <Redirect to="/auth" />
+  // }
 
   const findNav = nav.find(n => {
     if (n.path === rest.path) {

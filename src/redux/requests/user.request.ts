@@ -22,6 +22,26 @@ export const LOGIN_USER = gql`
   }
 `;
 
+
+export const LOGOUT_USER = gql`
+  query {
+    logoutUser {
+      clientId
+    }
+  }
+`;
+
+export const REFRESH_TOKEN = gql`
+  query {
+    refreshToken {
+      accessToken
+      refreshToken
+      clientId
+      createdAt
+    }
+  }
+`;
+
 export const GET_USERS = gql`
   query GetUsers($controls: GetElementsInput!) {
     getUsers(controls: $controls) {

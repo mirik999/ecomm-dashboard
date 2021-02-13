@@ -1,7 +1,14 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
-import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
-import { useSelector } from 'react-redux';
+import {
+  ApolloClient,
+  ApolloProvider,
+  InMemoryCache,
+  HttpLink,
+} from '@apollo/client';
+import { onError } from "@apollo/client/link/error";
+import {setContext} from "@apollo/client/link/context";
+import { useDispatch, useSelector } from 'react-redux';
 //components
 import WithToken from './components/common/WithToken';
 import WithoutToken from './components/common/WithoutToken';
@@ -17,18 +24,59 @@ import UserPage from "./pages/User/User.page";
 import CreateUser from "./pages/User/CreateUser.page";
 //types
 import { RootState } from './redux/store';
+//request
+import { REFRESH_TOKEN } from "./redux/requests/user.request";
+//slicer
+import { saveToken } from "./redux/slices/auth-credentials.slice";
 
 function App() {
+  const dispatch = useDispatch();
   const { authCredentials } = useSelector((state: RootState) => state);
 
+  const httpLink = new HttpLink({ uri: 'http://localhost:4004/graphql' });
+
+  const authLink = setContext((_, { headers }) => {
+    return {
+      headers: {
+        ...headers,
+        authorization: 'Bearer ' + authCredentials.accessToken
+      }
+    }
+  });
+
+  const errorLink = onError(
+    ({ graphQLErrors, networkError, operation, forward }) => {
+      if (graphQLErrors) {
+        for (let err of graphQLErrors) {
+          const statusCode = err.extensions!.exception?.response?.statusCode;
+          if (statusCode === 401) {
+            client.query({
+              query: REFRESH_TOKEN,
+              context: {
+                headers: {
+                  authorization: 'Bearer ' + authCredentials.accessToken,
+                  refresh_token: 'Refresh ' + authCredentials.refreshToken,
+                  client_id: 'Client ' + authCredentials.clientId,
+                }
+              }
+            })
+              .then(res => {
+                dispatch(saveToken(res.data.refreshToken));
+              })
+              .catch(err => console.log('err', err))
+          } else {
+            return forward(operation);
+          }
+        }
+      }
+    }
+  );
+
   const client = new ApolloClient({
-    uri: 'http://localhost:4004/graphql',
-    headers: {
-      Authorization: 'Bearer ' + authCredentials.accessToken,
-    },
+    link: errorLink.concat(authLink.concat(httpLink)),
     cache: new InMemoryCache({
       addTypename: false
-    })
+    }),
   })
 
   return (

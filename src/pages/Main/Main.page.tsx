@@ -7,9 +7,6 @@ import StatisticCard from "./StatisticCard";
 import NotificationBox from "../../components/common/notificationBox";
 //request
 import { GET_STATISTICS } from "../../redux/requests/main.request";
-//utils
-import {checkTokenExp} from "../../utils/token.utils";
-import WarningBox from "../../components/common/notificationBox/WarningBox";
 
 
 type Props = {};

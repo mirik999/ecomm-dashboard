@@ -37,7 +37,7 @@ const Navigation: React.FC<Props> = (props) => {
         <ul className="text-white">
           {
             nav
-              .filter((n: NavType) => isTokenExpired ? n.path === "/" : n)
+              // .filter((n: NavType) => isTokenExpired ? n.path === "/" : n)
               .map((n: NavType, i: number) => {
               if (n.visible && n.accessRoles.some((acr, i) => user.roles.includes(acr))) {
                 return (
