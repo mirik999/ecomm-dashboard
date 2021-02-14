@@ -5,15 +5,11 @@ import { HiMenuAlt1 } from 'react-icons/hi';
 //types
 import { RootState } from "../../redux/store";
 import { NavType } from "../../redux/types/nav.type";
-//utils
-import { checkTokenExp } from "../../utils/token.utils";
 
 type Props = {};
 
 const Navigation: React.FC<Props> = (props) => {
   const { nav, user } = useSelector((state: RootState) => state);
-
-  const isTokenExpired = checkTokenExp();
 
   return (
     <div
@@ -36,9 +32,7 @@ const Navigation: React.FC<Props> = (props) => {
       <nav className="mt-5">
         <ul className="text-white">
           {
-            nav
-              // .filter((n: NavType) => isTokenExpired ? n.path === "/" : n)
-              .map((n: NavType, i: number) => {
+            nav.map((n: NavType, i: number) => {
               if (n.visible && n.accessRoles.some((acr, i) => user.roles.includes(acr))) {
                 return (
                   <li

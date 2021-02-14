@@ -76,7 +76,7 @@ const ProductPage: React.FC<Props> = (props) => {
     await getProducts(currentPage, rowCount, keyword);
   }
 
-  async function getIdAndDisable(ids: string[]): Promise<void> {
+  async function getIdsAndDisable(ids: string[]): Promise<void> {
     try {
       await DisableProducts({
         variables: {
@@ -89,7 +89,7 @@ const ProductPage: React.FC<Props> = (props) => {
     }
   }
 
-  async function getIdAndActivate(ids: string[]): Promise<void> {
+  async function getIdsAndActivate(ids: string[]): Promise<void> {
     try {
       await ActivateProducts({
         variables: {
@@ -102,7 +102,7 @@ const ProductPage: React.FC<Props> = (props) => {
     }
   }
 
-  async function getIdsToDelete(ids: string[]): Promise<void> {
+  async function getIdsAndDelete(ids: string[]): Promise<void> {
     try {
       await DeleteProducts({
         variables: {
@@ -146,9 +146,9 @@ const ProductPage: React.FC<Props> = (props) => {
         getPage={getPageFromTable}
         getRowCount={getRowCountFromTable}
         getDeepSearch={getDeepSearchFromTable}
-        getIdAndDisable={getIdAndDisable}
-        getIdAndActivate={getIdAndActivate}
-        getIdsToDelete={getIdsToDelete}
+        getIdsAndDisable={getIdsAndDisable}
+        getIdsAndActivate={getIdsAndActivate}
+        getIdsAndDelete={getIdsAndDelete}
         path="products"
         exclude={excludeList}
         error={!!getResponse.error}

@@ -5,18 +5,18 @@ const buttons = [
   {
     id: 1,
     name: 'create',
+    type: 'link',
+    disable: "never",
+    roles: ["admin", "sudo"]
   }
 ]
 
 type Props = {
-  hiddenButtons?: string[]
-  roles?: {
-    isSudo: boolean, isAdmin: boolean, isGuest: boolean
-  },
+  roles: string[]
   onCreate: (mode: string) => any
 }
 
-const FakeTable: React.FC<Props> = ({ onCreate, hiddenButtons, roles }) => {
+const FakeTable: React.FC<Props> = ({ onCreate, roles }) => {
   return (
     <div>
       <div
@@ -27,18 +27,16 @@ const FakeTable: React.FC<Props> = ({ onCreate, hiddenButtons, roles }) => {
       </div>
       <div className="mx-4 my-3 flex justify-start">
         {
-          buttons.map((btn, i) => {
-            if (!roles!.isGuest && !hiddenButtons!.includes(btn.name) && btn.name === "create") {
-              return (
-                <Button
-                  key={i}
-                  label="Create"
-                  onAction={() => onCreate('create')}
-                  cls="m-0 mr-3"
-                />
-              )
-            }
-          })
+          buttons
+            .filter(btn => btn.roles.some(b => roles.includes(b)))
+            .map((btn, i) => (
+            <Button
+              key={i}
+              label="Create"
+              onAction={() => onCreate('create')}
+              cls="m-0 mr-3"
+            />
+          ))
         }
       </div>
     </div>
@@ -47,12 +45,7 @@ const FakeTable: React.FC<Props> = ({ onCreate, hiddenButtons, roles }) => {
 }
 
 FakeTable.defaultProps = {
-  hiddenButtons: [],
-  roles: {
-    isSudo: false,
-    isAdmin: false,
-    isGuest: true
-  }
+  roles: []
 }
 
 export default FakeTable;

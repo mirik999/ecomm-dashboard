@@ -12,9 +12,6 @@ import Buttons from "./Buttons";
 import { Props } from './props';
 import { OptionType } from "../../../redux/types/common.type";
 import { RootState } from "../../../redux/store";
-import { NavType } from "../../../redux/types/nav.type";
-//utils
-import { getUserRole } from "../../../utils/user.utils";
 //handler
 import { tableBodyHandler } from "./body.handler.";
 
@@ -38,30 +35,20 @@ const Table: React.FC<Props> = ({
   path,
   error,
   unSelect,
-  hiddenButtons,
   getPage,
   getRowCount,
   getDeepSearch,
-  getIdAndDisable,
-  getIdAndActivate,
-  getIdsToDelete
+  getIdsAndDisable,
+  getIdsAndActivate,
+  getIdsAndDelete
 }) => {
   const history = useHistory();
-  const { user, nav } = useSelector((state: RootState) => state);
+  const { user } = useSelector((state: RootState) => state);
   const [state, setState] = useState<any[]>([]);
   const [selected, setSelected] = useState<any[]>([]);
   const [quickSearch, setQuickSearch] = useState<string>('');
   const [deepSearch, setDeepSearch] = useState<string>('');
   const [rowCount, setRowCount] = useState<OptionType>(initialRowCountState);
-
-  const currentNav = nav.find((n: NavType) => n.path === history.location.pathname)
-  const isEditable = currentNav?.editableRoles ? currentNav.editableRoles.some(n => user.roles.includes(n)) : false
-
-  const roles = {
-    isSudo: getUserRole(user.roles, 'sudo'),
-    isAdmin: getUserRole(user.roles, 'admin'),
-    isGuest: getUserRole(user.roles, 'guest'),
-  }
 
   useEffect(() => {
     if (unSelect) {
@@ -126,6 +113,16 @@ const Table: React.FC<Props> = ({
     })
   }
 
+  function getIds(ids: string[], action: string): void {
+    if (action === "disable") {
+      getIdsAndDisable(ids)
+    } else if (action === "activate") {
+      getIdsAndActivate(ids)
+    } else if (action === "delete") {
+      getIdsAndDelete(ids)
+    }
+  }
+
   if (!state.length && !error) {
     return <LoadingBox />
   }
@@ -134,8 +131,7 @@ const Table: React.FC<Props> = ({
     return (
       <FakeTable
         onCreate={_onRouteChange}
-        hiddenButtons={hiddenButtons}
-        roles={roles}
+        roles={user.roles}
       />
     )
   }
@@ -221,7 +217,7 @@ const Table: React.FC<Props> = ({
                       type="checkbox"
                       className="w-5 h-5"
                       onChange={() => _onSelected(st)}
-                      disabled={st?.email === user?.email}
+                      disabled={st?.email === user?.email || user.roles.every(r => r === "guest")}
                     />
                   </td>
                   {
@@ -247,13 +243,9 @@ const Table: React.FC<Props> = ({
       <div className="flex justify-between items-center">
         <Buttons
           selected={selected}
-          hiddenButtons={hiddenButtons}
-          getIdAndDisable={getIdAndDisable}
-          getIdAndActivate={getIdAndActivate}
-          getIdsToDelete={getIdsToDelete}
+          getIds={getIds}
+          roles={user.roles}
           onRouteChange={_onRouteChange}
-          roles={roles}
-          isEditable={isEditable}
         />
         <ReactPagination
           onPageChange={_onPageChange}
@@ -277,7 +269,6 @@ Table.defaultProps = {
   data: [],
   allCount: 0,
   exclude: ['id'],
-  hiddenButtons: [],
   path: '',
   error: false,
   unSelect: false

@@ -7,6 +7,9 @@ type Props = {
 
 const ErrorBox: React.FC<Props> = ({message, details}) => {
   const statusCode = details[0]?.extensions?.exception?.response?.statusCode;
+
+  if (statusCode === 401) return null;
+
   return (
     <div
       className="m-4 p-2 border-2 border-pink-500 bg-pink-200 text-red-700

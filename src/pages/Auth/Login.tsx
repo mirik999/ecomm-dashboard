@@ -23,8 +23,7 @@ type Props = {};
 const initialState = {
   email: 'xose@bk.ru',
   password: 'qweqwe',
-  clientId: uuid(),
-  grantType: 'password'
+  clientId: uuid()
 };
 
 const Login: React.FC<Props> = (props) => {

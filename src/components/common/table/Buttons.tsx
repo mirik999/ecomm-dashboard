@@ -6,126 +6,85 @@ const buttons = [
   {
     id: 1,
     name: 'create',
+    type: 'link',
+    disable: "never",
+    roles: ["admin", "sudo"]
   },
   {
     id: 2,
     name: 'edit',
+    type: 'link',
+    disable: "non-multiple",
+    roles: ["admin", "sudo"]
   },
   {
     id: 3,
     name: 'disable',
+    type: 'action',
+    disable: "non-zero",
+    roles: ["admin", "sudo"]
   },
   {
     id: 4,
     name: 'activate',
+    type: 'action',
+    disable: "non-zero",
+    roles: ["admin", "sudo"]
   },
   {
     id: 5,
     name: 'properties',
+    type: 'action',
+    disable: "non-zero",
+    roles: ["admin", "sudo"]
   },
   {
     id: 6,
     name: 'delete',
+    type: 'action',
+    disable: "non-zero",
+    roles: ["sudo"]
   },
 ]
 
 type Props = {
   selected: any[]
-  hiddenButtons?: string[]
-  roles: {
-    isSudo: boolean, isAdmin: boolean, isGuest: boolean
-  },
-  isEditable?: boolean
-  getIdAndDisable: (id: string[]) => void
-  getIdAndActivate: (id: string[]) => void
-  getIdsToDelete: (id: string[]) => void
+  roles: string[],
+  getIds: (id: string[], action: string) => void
   onRouteChange: (route: string) => void
 }
 
 const Buttons: React.FC<Props> = ({
   selected,
-  hiddenButtons,
+  getIds,
   roles,
-  isEditable,
-  getIdAndDisable,
-  getIdAndActivate,
-  getIdsToDelete,
   onRouteChange
 }) => {
-
 
   return (
     <div className="flex py-3">
       {
-        buttons.map((btn, i) => {
-          if (isEditable && !hiddenButtons!.includes(btn.name) && btn.name === "create") {
-            return (
-              <Button
-                key={i}
-                label="Create"
-                onAction={() => onRouteChange('create')}
-                cls="m-0 mr-3"
-              />
-            )
-          }
-          if (isEditable && !hiddenButtons!.includes(btn.name) && btn.name === "edit") {
-            return (
-              <Button
-                key={i}
-                label="Edit"
-                onAction={() => onRouteChange('update')}
-                cls="m-0 mr-3"
-                disabled={selected.length !== 1}
-              />
-            )
-          }
-          if (isEditable && !hiddenButtons!.includes(btn.name) && btn.name === "disable") {
-            return (
-              <Button
-                key={i}
-                label="Disable"
-                onAction={() => getIdAndDisable(selected.map(s => s.id))}
-                cls="m-0 mr-3"
-                disabled={selected.length === 0}
-              />
-            )
-          }
-          if (isEditable && !hiddenButtons!.includes(btn.name) && btn.name === "activate") {
-            return (
-              <Button
-                key={i}
-                label="Activate"
-                onAction={() => getIdAndActivate(selected.map(s => s.id))}
-                cls="m-0 mr-3"
-                disabled={selected.length === 0}
-              />
-            )
-          }
-          if (isEditable && !hiddenButtons!.includes(btn.name) && btn.name === "properties") {
-            return (
-              <Button
-                key={i}
-                label="Properties"
-                onAction={() => false}
-                cls="m-0 mr-3"
-                disabled={selected.length === 0}
-              />
-            )
-          }
-          if (isEditable && !hiddenButtons!.includes(btn.name) && btn.name === "delete") {
-            return (
-              <Button
-                key={i}
-                label="Delete"
-                onAction={() => getIdsToDelete(selected.map(s => s.id))}
-                cls="m-0 mr-3"
-                disabled={selected.length === 0}
-              />
-            )
-          }
-
-          return null;
-        })
+        buttons
+          .filter(btn => btn.roles.some(b => roles.includes(b)))
+          .map((btn, i) => (
+            <Button
+              key={i}
+              label={btn.name}
+              onAction={() => {
+                btn.type === "link" ?
+                  onRouteChange(btn.name) :
+                    getIds(selected.map(s => s.id), btn.name)
+              }}
+              cls="m-0 mr-3"
+              disabled={
+                btn.disable === "non-multiple" ?
+                  selected.length !== 1 :
+                    (btn.disable === "non-zero"
+                      ? selected.length === 0 :
+                        false)
+              }
+            />
+        ))
       }
     </div>
   );
@@ -133,12 +92,6 @@ const Buttons: React.FC<Props> = ({
 
 Buttons.defaultProps = {
   selected: [],
-  hiddenButtons: [],
-  roles: {
-    isSudo: false,
-    isAdmin: false,
-    isGuest: true
-  }
 }
 
 export default Buttons;

@@ -44,15 +44,12 @@ function App() {
     }
   });
 
-  console.log('in app', authCredentials.clientId)
-
   const errorLink = onError(
     ({ graphQLErrors, networkError, operation, forward }) => {
       if (graphQLErrors) {
         for (let err of graphQLErrors) {
           const statusCode = err.extensions!.exception?.response?.statusCode;
           if (statusCode === 401) {
-            console.log('in 401', authCredentials.clientId)
             client.query({
               query: REFRESH_TOKEN,
               context: {
@@ -64,7 +61,6 @@ function App() {
               }
             })
               .then(res => {
-                console.log('after 401 to dispatch ', res.data.refreshToken)
                 dispatch(saveToken(res.data.refreshToken));
               })
               .catch(err => console.log('err', err))

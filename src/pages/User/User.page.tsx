@@ -76,7 +76,7 @@ const UserPage: React.FC<Props> = (props) => {
     await getUsers(currentPage, rowCount, keyword);
   }
 
-  async function getIdAndDisable(ids: string[]): Promise<void> {
+  async function getIdsAndDisable(ids: string[]): Promise<void> {
     try {
       await DisableUsers({
         variables: {
@@ -89,7 +89,7 @@ const UserPage: React.FC<Props> = (props) => {
     }
   }
 
-  async function getIdAndActivate(ids: string[]): Promise<void> {
+  async function getIdsAndActivate(ids: string[]): Promise<void> {
     try {
       await ActivateUsers({
         variables: {
@@ -102,7 +102,7 @@ const UserPage: React.FC<Props> = (props) => {
     }
   }
 
-  async function getIdsToDelete(ids: string[]): Promise<void> {
+  async function getIdsAndDelete(ids: string[]): Promise<void> {
     try {
       await DeleteUsers({
         variables: {
@@ -146,9 +146,9 @@ const UserPage: React.FC<Props> = (props) => {
         getPage={getPageFromTable}
         getRowCount={getRowCountFromTable}
         getDeepSearch={getDeepSearchFromTable}
-        getIdAndDisable={getIdAndDisable}
-        getIdAndActivate={getIdAndActivate}
-        getIdsToDelete={getIdsToDelete}
+        getIdsAndDisable={getIdsAndDisable}
+        getIdsAndActivate={getIdsAndActivate}
+        getIdsAndDelete={getIdsAndDelete}
         exclude={['id']}
         error={!!getResponse.error}
         path="users"
