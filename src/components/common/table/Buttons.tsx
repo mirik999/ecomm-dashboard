@@ -12,7 +12,7 @@ const buttons = [
   },
   {
     id: 2,
-    name: 'edit',
+    name: 'update',
     type: 'link',
     disable: "non-multiple",
     roles: ["admin", "sudo"]

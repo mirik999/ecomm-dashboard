@@ -20,8 +20,8 @@ const FakeTable: React.FC<Props> = ({ onCreate, roles }) => {
   return (
     <div>
       <div
-        className="overflow-auto max-w-full mx-4 my-3 border-2 border-gray-200 flex justify-center items-center"
-        style={{ height: 'calc(100vh - 416px)' }}
+        className="f-data-height overflow-auto max-w-full mx-4 my-3
+          flex justify-center items-center"
       >
         No data in table
       </div>

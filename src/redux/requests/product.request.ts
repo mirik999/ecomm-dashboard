@@ -33,6 +33,10 @@ export const GET_PRODUCTS = gql`
         category {
           id
           name
+          subCategories {
+            id
+            name
+          }
         }
         stars
         price

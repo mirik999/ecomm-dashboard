@@ -34,6 +34,7 @@ const ProductPage: React.FC<Props> = (props) => {
   useEffect(() => {
     if (getResponse.data) {
       const { count, payload } = getResponse.data.getProducts;
+      console.log(payload)
       setProducts(payload);
       setAllCount(count);
     }

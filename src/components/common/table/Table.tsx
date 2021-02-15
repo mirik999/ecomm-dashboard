@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 //components
 import Input from "../Input";
 import Select from "../Select";
-import LoadingBox from "../LoadingBox";
+import LoadingBox from "./LoadingBox";
 import FakeTable from "./FakeTable";
 import Buttons from "./Buttons";
 //types
@@ -176,8 +176,7 @@ const Table: React.FC<Props> = ({
         />
       </div>
       <div
-        className="overflow-auto max-w-full"
-        style={{ height: 'calc(100vh - 416px)' }}
+        className="data-height overflow-auto max-w-full"
       >
         <table
           className="w-full border-separate bg-gray-100 w-full overflow-auto whitespace-nwrap"

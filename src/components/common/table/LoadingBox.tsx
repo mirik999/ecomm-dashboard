@@ -7,10 +7,10 @@ type Props = {
 const LoadingBox: React.FC<Props> = ({message}) => {
   return (
     <div
-      className="m-4"
-      style={{ height: 'calc(100vh - 250px)' }}
+      className="loading-height overflow-auto max-w-full mx-4 my-3
+          flex justify-center items-center"
     >
-     <strong>Loading...</strong>
+      <strong>Loading...</strong>
     </div>
   );
 }

@@ -3,6 +3,18 @@
 @tailwind utilities;
 
 @layer utilities {
+  .data-height {
+    height: calc(100vh - 416px);
+  }
+
+  .f-data-height {
+    height: calc(100vh - 314px);
+  }
+
+  .loading-height {
+    height: calc(100vh - 255px);
+  }
+
   .w-520 {
     width: 520px;
   }
