@@ -82,6 +82,7 @@ const CreateProduct: React.FC<Props> = (props) => {
 
   useEffect(() => {
     if (updateResponse.data) {
+      console.log('success updateds')
       history.push("/products")
     }
   }, [updateResponse])
