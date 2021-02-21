@@ -5,10 +5,12 @@ import {
   ApolloProvider,
   InMemoryCache,
   HttpLink,
+  fromPromise,
+  ApolloLink
 } from '@apollo/client';
 import { onError } from "@apollo/client/link/error";
-import {setContext} from "@apollo/client/link/context";
-import { useDispatch, useSelector } from 'react-redux';
+import { setContext } from "@apollo/client/link/context";
+import { useDispatch } from 'react-redux';
 //components
 import WithToken from './components/common/WithToken';
 import WithoutToken from './components/common/WithoutToken';
@@ -22,24 +24,46 @@ import ProductPage from './pages/Product/Product.page';
 import CreateProduct from "./pages/Product/CreateProduct.page";
 import UserPage from "./pages/User/User.page";
 import CreateUser from "./pages/User/CreateUser.page";
-//types
-import { RootState } from './redux/store';
 //request
 import { REFRESH_TOKEN } from "./redux/requests/user.request";
 //slicer
 import { saveToken } from "./redux/slices/auth-credentials.slice";
+//utils
+import { getFromCookies, removeFromCookies } from "./utils/storage.utils";
 
 function App() {
   const dispatch = useDispatch();
-  const { authCredentials } = useSelector((state: RootState) => state);
+
+  const getNewToken = async () => {
+    return new Promise(async (resolve, reject) => {
+      const authCredentials = getFromCookies('authCredentials');
+      try {
+        const response = await client.query({
+          query: REFRESH_TOKEN,
+          context: {
+            headers: {
+              authorization: 'Bearer ' + authCredentials.accessToken,
+              refresh_token: 'Refresh ' + authCredentials.refreshToken,
+              client_id: 'Client ' + authCredentials.clientId,
+            }
+          }
+        })
+        dispatch(saveToken(response.data.refreshToken));
+        resolve(response.data.refreshToken.accessToken);
+      } catch(err) {
+        reject(err.message)
+      }
+    })
+  };
 
   const httpLink = new HttpLink({ uri: 'http://localhost:4004/graphql' });
 
   const authLink = setContext((_, { headers }) => {
+    const { accessToken } = getFromCookies('authCredentials');
     return {
       headers: {
         ...headers,
-        authorization: 'Bearer ' + authCredentials.accessToken
+        authorization: 'Bearer ' + accessToken
       }
     }
   });
@@ -49,31 +73,47 @@ function App() {
       if (graphQLErrors) {
         for (let err of graphQLErrors) {
           const statusCode = err.extensions!.exception?.response?.statusCode;
-          if (statusCode === 401) {
-            client.query({
-              query: REFRESH_TOKEN,
-              context: {
-                headers: {
-                  authorization: 'Bearer ' + authCredentials.accessToken,
-                  refresh_token: 'Refresh ' + authCredentials.refreshToken,
-                  client_id: 'Client ' + authCredentials.clientId,
-                }
-              }
-            })
-              .then(res => {
-                dispatch(saveToken(res.data.refreshToken));
-              })
-              .catch(err => console.log('err', err))
-          } else {
-            return forward(operation);
+          switch (statusCode) {
+            case 401:
+              return fromPromise(
+                getNewToken().catch((error) => {
+                  removeFromCookies('authCredentials');
+                  return;
+                })
+              )
+                .filter((value) => Boolean(value))
+                .flatMap((accessToken) => {
+                  console.log('accessToken', accessToken)
+                  const oldHeaders = operation.getContext().headers;
+                  // modify the operation context with a new token
+                  operation.setContext({
+                    headers: {
+                      ...oldHeaders,
+                      authorization: `Bearer ${accessToken}`,
+                    },
+                  });
+
+                  // retry the request, returning the new observable
+                    console.log('get context after set', operation.getContext())
+                  return forward(operation).map(res => {
+                    console.log('after forwards', res)
+                    return res;
+                  });
+                });
           }
         }
+      }
+      if (networkError) {
+        console.log(`[Network error]: ${networkError}`);
+        // if you would also like to retry automatically on
+        // network errors, we recommend that you use
+        // apollo-link-retry
       }
     }
   );
 
   const client = new ApolloClient({
-    link: errorLink.concat(authLink.concat(httpLink)),
+    link: ApolloLink.from([errorLink, authLink, httpLink]),
     cache: new InMemoryCache({
       addTypename: false
     }),

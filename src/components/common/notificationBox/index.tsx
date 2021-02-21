@@ -14,7 +14,7 @@ const NotificationBox: React.FC<Props> = memo(({ list }) => {
     <div>
       {
         list.map((l: any, i: number) => {
-          if (l.loading) return <ProcessBox key={i} />
+          // if (l.loading) return <ProcessBox key={i} />
           if (prevErrorState.current === l?.error?.message) {
             return null;
           }
