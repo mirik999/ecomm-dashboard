@@ -121,6 +121,7 @@ const Table: React.FC<Props> = ({
     } else if (action === "delete") {
       getIdsAndDelete(ids)
     }
+    setSelected([]);
   }
 
   if (!state.length && !error) {
@@ -217,6 +218,7 @@ const Table: React.FC<Props> = ({
                       className="w-5 h-5"
                       onChange={() => _onSelected(st)}
                       disabled={st?.email === user?.email || user.roles.every(r => r === "guest")}
+                      checked={selected.some(slt => slt.id === st.id)}
                     />
                   </td>
                   {

@@ -6,12 +6,15 @@ export const GET_STATISTICS = gql`
       product {
         count
         isDisabled
-        comment
         price
         sold
         sale
       }
       category {
+        count
+        isDisabled
+      }
+      brand {
         count
         isDisabled
       }

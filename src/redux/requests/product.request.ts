@@ -38,6 +38,10 @@ export const GET_PRODUCTS = gql`
             name
           }
         }
+        brand {
+          id
+          name
+        }
         stars
         price
         viewCount

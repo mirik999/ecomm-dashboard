@@ -79,7 +79,7 @@ const Selectable: React.FC<Props> = memo(({
   function _onChange(selectedOption: any, { action }: any): void {
     try {
       if (action === "remove-value") {
-        const options = selectedOption || [{ id: 'guest', name: 'guest' }];
+        const options = selectedOption || [{ id: '', name: '' }];
         const restAfterRemoving = options.map((s: OptionType) => s.id);
         getValue(restAfterRemoving, action);
       }

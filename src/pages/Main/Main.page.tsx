@@ -16,7 +16,8 @@ const MainPage: React.FC<Props> = (props) => {
   const statsResponse = useQuery(GET_STATISTICS);
   const [stats, setStats] = useState({
     product: {},
-    category: {}
+    category: {},
+    brand: {},
   });
 
   useEffect(() => {
@@ -33,12 +34,12 @@ const MainPage: React.FC<Props> = (props) => {
       <div className="flex flex-wrap gap-4 m-4">
         <SystemUsage />
         <StatisticCard
-          header="Product total statistics"
-          stats={stats.product}
+          header={["Product"]}
+          stats={[ stats.product ]}
         />
         <StatisticCard
-          header="Category total statistics"
-          stats={stats.category}
+          header={["Category", "Brand"]}
+          stats={[ stats.category, stats.brand ]}
         />
       </div>
 

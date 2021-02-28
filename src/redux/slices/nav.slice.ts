@@ -35,6 +35,15 @@ const initialState: NavType[] = [
   },
   {
     id: 5,
+    name: 'Brands',
+    path: '/brands',
+    accessRoles: ['guest', 'admin', 'sudo'],
+    editableRoles: ['admin', 'sudo'],
+    visible: true,
+    subPaths: ['/create']
+  },
+  {
+    id: 6,
     name: 'Products',
     path: '/products',
     accessRoles: ['guest', 'admin', 'sudo'],
@@ -43,7 +52,7 @@ const initialState: NavType[] = [
     subPaths: ['/create']
   },
   {
-    id: 6,
+    id: 7,
     name: 'Users',
     path: '/users',
     accessRoles: ['guest', 'admin', 'sudo'],

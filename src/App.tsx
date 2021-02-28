@@ -20,6 +20,8 @@ import NotFoundPage from "./pages/Rest/NotFound.page";
 import MainPage from './pages/Main/Main.page';
 import CategoryPage from './pages/Category/Category.page';
 import CreateCategory from './pages/Category/CreateCategory.page';
+import BrandPage from './pages/Brand/Brand.page';
+import CreateBrand from './pages/Brand/CreateBrand.page';
 import ProductPage from './pages/Product/Product.page';
 import CreateProduct from "./pages/Product/CreateProduct.page";
 import UserPage from "./pages/User/User.page";
@@ -127,6 +129,8 @@ function App() {
           <WithToken exact path="/" component={MainPage} />
           <WithToken exact path="/categories" component={CategoryPage} />
           <WithToken path="/categories/create" component={CreateCategory} />
+          <WithToken exact path="/brands" component={BrandPage} />
+          <WithToken path="/brands/create" component={CreateBrand} />
           <WithToken exact path="/products" component={ProductPage} />
           <WithToken path="/products/create" component={CreateProduct} />
           <WithToken exact path="/users" component={UserPage} />

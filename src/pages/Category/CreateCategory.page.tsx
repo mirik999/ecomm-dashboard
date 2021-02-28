@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import { useHistory } from 'react-router-dom';
-import { useMutation } from "@apollo/client";
+import { useMutation} from "@apollo/client";
 import { v4 as uuid } from 'uuid';
 //components
 import Layout from "../../components/common/Layout";
@@ -8,13 +8,14 @@ import Input from "../../components/common/Input";
 import Button from "../../components/common/Button";
 import NotificationBox from "../../components/common/notificationBox";
 import SubCategories from "./SubCategories";
+import Brands from '../Brand/Brands';
 //types
 import {CategoryType, SubCategoryType} from "../../redux/types/category.type";
 //request
-import { CREATE_CATEGORY, UPDATE_CATEGORY } from "../../redux/requests/category.request";
+import {CREATE_CATEGORY, UPDATE_CATEGORY} from "../../redux/requests/category.request";
+import Divider from "../../components/common/Divider";
 
 const initialState = {
-  id: uuid(),
   name: '',
   tabName: '',
   subCategories: []
@@ -24,9 +25,14 @@ type Props = {}
 
 const CreateCategory: React.FC<Props> = (props) => {
   const history = useHistory();
+  //requests
   const [CreateCategory, createResponse] = useMutation(CREATE_CATEGORY);
   const [UpdateCategory, updateResponse] = useMutation(UPDATE_CATEGORY, { errorPolicy: "all" });
-  const [state, setState] = useState<Partial<CategoryType>>(initialState);
+  //state
+  const [state, setState] = useState<Partial<CategoryType>>({
+    id: uuid(),
+    ...initialState
+  });
   const [mode, setMode] = useState<string>('create');
 
   useEffect(() => {
@@ -131,6 +137,16 @@ const CreateCategory: React.FC<Props> = (props) => {
           cls="m-0 mr-3"
         />
       </div>
+
+      {
+        mode === "update" ? (
+          <>
+            <Divider label="Additional Information" />
+            <Brands id={state.id!} />
+          </>
+        ) : null
+      }
+
       <NotificationBox
         list={[
           createResponse,

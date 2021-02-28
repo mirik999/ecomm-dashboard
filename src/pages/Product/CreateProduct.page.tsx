@@ -17,6 +17,7 @@ import { CategoryType } from "../../redux/types/category.type";
 //request
 import { CREATE_PRODUCT, UPDATE_PRODUCT } from "../../redux/requests/product.request";
 import { GET_CATEGORIES_FOR_SELECT } from "../../redux/requests/category.request";
+import { GET_BRANDS_FOR_SELECT } from "../../redux/requests/brand.request";
 
 const initialState = {
   name: '',
@@ -31,7 +32,8 @@ const initialState = {
   new: true,
   freeDelivery: true,
   guarantee: true,
-  category: []
+  category: [],
+  brand: '',
 }
 
 type Props = {}
@@ -41,19 +43,23 @@ const CreateProduct: React.FC<Props> = (props) => {
   const [CreateProduct, createResponse] = useMutation(CREATE_PRODUCT);
   const [UpdateProduct, updateResponse] = useMutation(UPDATE_PRODUCT);
   const [GetCategories, categoriesResponse] = useLazyQuery(GET_CATEGORIES_FOR_SELECT);
+  const [GetBrands, brandsResponse] = useLazyQuery(GET_BRANDS_FOR_SELECT);
   const [state, setState] = useState<any>(initialState);
   const [mode, setMode] = useState<string>('create');
   const [categories, setCategories] = useState<OptionType[]>([]);
+  const [brands, setBrands] = useState<OptionType[]>([]);
 
   useEffect(() => {
     (async function() {
       await getCategories()
+      await getBrands()
     })()
   }, [])
 
   useEffect(() => {
     const { mode, selected }: any = history.location.state;
     if (mode === "update") {
+      console.log(selected[0])
       setState(selected[0]);
       setMode(mode);
     }
@@ -75,6 +81,18 @@ const CreateProduct: React.FC<Props> = (props) => {
   }, [categoriesResponse])
 
   useEffect(() => {
+    if (brandsResponse.data) {
+      const payload = brandsResponse.data.getBrands.payload;
+      let options = [];
+      for (let i = 0; i < payload.length; i++) {
+        options.push(payload[i])
+      }
+
+      setBrands(options)
+    }
+  }, [brandsResponse])
+
+  useEffect(() => {
     if (createResponse.data) {
       history.push("/products")
     }
@@ -90,6 +108,22 @@ const CreateProduct: React.FC<Props> = (props) => {
   async function getCategories(): Promise<void> {
     try {
       await GetCategories({
+        variables: {
+          controls: {
+            offset: 0,
+            limit: 1000,
+            keyword: ''
+          }
+        }
+      })
+    } catch(err) {
+      console.log(err)
+    }
+  }
+
+  async function getBrands(): Promise<void> {
+    try {
+      await GetBrands({
         variables: {
           controls: {
             offset: 0,
@@ -141,6 +175,14 @@ const CreateProduct: React.FC<Props> = (props) => {
       return;
     }
     setState((prevState: any) => ({ ...prevState, category: [val] }))
+  }
+
+  function _onBrandSelected(val: string): void {
+    if (val === "not-selected") {
+      setState((prevState: any) => ({ ...prevState, brand: initialState.brand }));
+      return;
+    }
+    setState((prevState: any) => ({ ...prevState, brand: val }))
   }
 
   function getCoverImage(val: string[]): void {
@@ -195,6 +237,15 @@ const CreateProduct: React.FC<Props> = (props) => {
           value={state.category[0]} // { id, name } or 'id-string'
           options={categories}
           getValue={(val: string) => _onCategorySelected(val)}
+          cls="m-4"
+        />
+        <Selectable
+          label="Brand"
+          name="brand"
+          returnType="string"
+          value={state.brand} // { id, name } or 'id-string'
+          options={brands}
+          getValue={(val: string) => _onBrandSelected(val)}
           cls="m-4"
         />
       </div>

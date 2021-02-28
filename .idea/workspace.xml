@@ -20,14 +20,26 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e021988f-3eda-4fed-af49-63e1e5ec9f51" name="Default Changelist" comment="users done">
+      <change afterPath="$PROJECT_DIR$/src/pages/Brand/Brand.page.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/Brand/Brands.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/Brand/CreateBrand.page.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/redux/requests/brand.request.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/redux/types/brand.type.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.eslintcache" beforeDir="false" afterPath="$PROJECT_DIR$/.eslintcache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/common/notificationBox/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/notificationBox/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/apollo-interceptor/authLink.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/apollo-interceptor/cache.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/apollo-interceptor/client.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/apollo-interceptor/errorLink.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/common/Divider.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/Divider.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/common/Select.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/Select.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/common/table/Table.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/table/Table.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/common/table/body.handler..ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/table/body.handler..ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Category/CreateCategory.page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Category/CreateCategory.page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Main/Main.page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Main/Main.page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Main/StatisticCard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Main/StatisticCard.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Product/CreateProduct.page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Product/CreateProduct.page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Product/Product.page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Product/Product.page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/requests/main.request.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/requests/main.request.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/requests/product.request.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/requests/product.request.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/slices/nav.slice.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/slices/nav.slice.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -98,7 +110,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../ecomm-api" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -113,11 +125,11 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\miral\WebstormProjects\@electroshop\ecomm-dashboard\src\pages\Brand" />
       <recent name="C:\Users\miral\WebstormProjects\ecomm-dashboard\src\components\common\table" />
       <recent name="C:\Users\miral\WebstormProjects\ecomm-dashboard\src\components\common\richTextEditor" />
       <recent name="C:\Users\miral\WebstormProjects\ecomm-dashboard\src\components\common" />
       <recent name="C:\Users\mirik\WebstormProjects\ecomm-dashboard\src\components\common\table" />
-      <recent name="C:\Users\mirik\WebstormProjects\ecomm-dashboard\src\pages\Main" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -154,7 +166,9 @@
       <workItem from="1613207467186" duration="11615000" />
       <workItem from="1613319987422" duration="6262000" />
       <workItem from="1613415283455" duration="3776000" />
-      <workItem from="1613812846764" duration="12632000" />
+      <workItem from="1613812846764" duration="13280000" />
+      <workItem from="1614160345189" duration="285000" />
+      <workItem from="1614505543213" duration="18295000" />
     </task>
     <task id="LOCAL-00001" summary="users done">
       <created>1612213179093</created>

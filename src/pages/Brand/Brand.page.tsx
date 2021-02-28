@@ -5,23 +5,23 @@ import Layout from "../../components/common/Layout";
 import Table from "../../components/common/table/Table";
 import NotificationBox from "../../components/common/notificationBox";
 //types
-import { ProductType } from "../../redux/types/product.type";
+import { BrandType } from "../../redux/types/brand.type";
 //request
 import {
-  GET_PRODUCTS,
-  DISABLE_PRODUCTS,
-  ACTIVATE_PRODUCTS,
-  DELETE_PRODUCTS
-} from "../../redux/requests/product.request";
+  GET_BRANDS,
+  DISABLE_BRANDS,
+  ACTIVATE_BRANDS,
+  DELETE_BRANDS
+} from "../../redux/requests/brand.request";
 
 type Props = {};
 
-const ProductPage: React.FC<Props> = (props) => {
-  const [GetProducts, getResponse] = useLazyQuery(GET_PRODUCTS);
-  const [DisableProducts, disableResponse] = useMutation(DISABLE_PRODUCTS);
-  const [ActivateProducts, activateResponse] = useMutation(ACTIVATE_PRODUCTS);
-  const [DeleteProducts, deleteResponse] = useMutation(DELETE_PRODUCTS);
-  const [products, setProducts] = useState<ProductType[]>([]);
+const BrandPage: React.FC<Props> = (props) => {
+  const [GetBrands, getResponse] = useLazyQuery(GET_BRANDS);
+  const [DisableBrands, disableResponse] = useMutation(DISABLE_BRANDS);
+  const [ActivateBrands, activateResponse] = useMutation(ACTIVATE_BRANDS);
+  const [DeleteBrands, deleteResponse] = useMutation(DELETE_BRANDS);
+  const [brands, setBrands] = useState<BrandType[]>([]);
   //pagination
   const [allCount, setAllCount] = useState<number>(0);
   const [rowCount, setRowCount] = useState<number>(10);
@@ -33,21 +33,21 @@ const ProductPage: React.FC<Props> = (props) => {
 
   useEffect(() => {
     if (getResponse.data) {
-      const { count, payload } = getResponse.data.getProducts;
-      setProducts(payload);
+      const { count, payload } = getResponse.data.getBrands;
+      setBrands(payload);
       setAllCount(count);
     }
   }, [getResponse.data])
 
   useEffect(() => {
     (async function() {
-      await getProducts(currentPage, rowCount, deepSearch)
+      await getBrands(currentPage, rowCount, deepSearch)
     })()
   }, [])
 
-  async function getProducts(pg: number, rc: number, kw: string): Promise<void> {
+  async function getBrands(pg: number, rc: number, kw: string): Promise<void> {
     try {
-      await GetProducts({
+      await GetBrands({
         variables: {
           controls: {
             offset: (pg - 1) * rc,
@@ -63,27 +63,27 @@ const ProductPage: React.FC<Props> = (props) => {
 
   async function getPageFromTable(pageNumber: number): Promise<void> {
     setCurrentPage(pageNumber)
-    await getProducts(pageNumber, rowCount, deepSearch);
+    await getBrands(pageNumber, rowCount, deepSearch);
   }
 
   async function getRowCountFromTable(rc: number): Promise<void> {
     setRowCount(rc);
-    await getProducts(currentPage, rc, deepSearch);
+    await getBrands(currentPage, rc, deepSearch);
   }
 
-  async function getDeepSearchFromTable(keyword: string): Promise<void> {
-    setDeepSearch(keyword);
-    await getProducts(currentPage, rowCount, keyword);
+  async function getDeepSearchFromTable(kw: string): Promise<void> {
+    setDeepSearch(kw);
+    await getBrands(currentPage, rowCount, kw);
   }
 
   async function getIdsAndDisable(ids: string[]): Promise<void> {
     try {
-      await DisableProducts({
+      await DisableBrands({
         variables: {
-          disabledProducts: { ids }
+          disabledBrands: { ids }
         }
       })
-      handleProductsState(ids, true)
+      handleBrandsState(ids, true)
     } catch(err) {
       console.log(err.message)
     }
@@ -91,12 +91,12 @@ const ProductPage: React.FC<Props> = (props) => {
 
   async function getIdsAndActivate(ids: string[]): Promise<void> {
     try {
-      await ActivateProducts({
+      await ActivateBrands({
         variables: {
-          activateProducts: { ids }
+          activateBrands: { ids }
         }
       })
-      handleProductsState(ids, false)
+      handleBrandsState(ids, false)
     } catch(err) {
       console.log(err.message)
     }
@@ -104,44 +104,44 @@ const ProductPage: React.FC<Props> = (props) => {
 
   async function getIdsAndDelete(ids: string[]): Promise<void> {
     try {
-      await DeleteProducts({
+      await DeleteBrands({
         variables: {
-          deleteProducts: { ids }
+          deleteBrands: { ids }
         }
       })
-      handleProductsList(ids)
+      handleBrandsList(ids)
     } catch(err) {
       console.log(err.message)
     }
   }
 
-  function handleProductsState(ids: string[], isDisabled: boolean) {
-    const updatedProducts = products.map(product => {
-      if (ids.includes(product.id)) {
+  function handleBrandsState(ids: string[], isDisabled: boolean) {
+    const updatedBrands = brands.map(cat => {
+      if (ids.includes(cat.id!)) {
         return {
-          ...product,
+          ...cat,
           isDisabled
         }
       }
-      return product;
+      return cat;
     })
-    setProducts(updatedProducts)
+    setBrands(updatedBrands)
   }
 
-  function handleProductsList(ids: string[]) {
-    const deletedProducts = products.filter(product => !ids.includes(product.id))
-    setProducts(deletedProducts)
+  function handleBrandsList(ids: string[]) {
+    const deletedBrands = brands.filter(brand => !ids.includes(brand.id!))
+    setBrands(deletedBrands)
     setUnSelect(true);
   }
 
   return (
     <Layout>
       <h2 className="font-medium uppercase mx-4">
-        Products
+        Brands
       </h2>
       {/*  table */}
       <Table
-        data={products}
+        data={brands}
         allCount={allCount}
         getPage={getPageFromTable}
         getRowCount={getRowCountFromTable}
@@ -149,9 +149,9 @@ const ProductPage: React.FC<Props> = (props) => {
         getIdsAndDisable={getIdsAndDisable}
         getIdsAndActivate={getIdsAndActivate}
         getIdsAndDelete={getIdsAndDelete}
-        path="products"
-        exclude={excludeList}
+        path="brands"
         error={!!getResponse.error}
+        exclude={['id']}
         unSelect={unSelect}
       />
       <NotificationBox
@@ -166,17 +166,4 @@ const ProductPage: React.FC<Props> = (props) => {
   );
 };
 
-export default ProductPage;
-
-const excludeList = [
-  'id',
-  'cover',
-  'description',
-  'images',
-  'freeDelivery',
-  'guarantee',
-  'stars',
-  'group',
-  'best',
-  'viewCount'
-]
+export default BrandPage;
