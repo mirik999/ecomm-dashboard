@@ -1,4 +1,5 @@
 import {CategoryType} from "./category.type";
+import {BrandType} from "./brand.type";
 
 export type ProductType = {
   id: string
@@ -18,6 +19,7 @@ export type ProductType = {
   sale: boolean
   isDisabled: boolean
   category: Partial<CategoryType[]>
+  brand: BrandType
 };
 
 export type CreateProductType = {

@@ -6,14 +6,15 @@ import { v4 as uuid } from 'uuid';
 import Layout from "../../components/common/Layout";
 import Input from "../../components/common/Input";
 import Button from "../../components/common/Button";
+import Divider from "../../components/common/Divider";
 import NotificationBox from "../../components/common/notificationBox";
 import SubCategories from "./SubCategories";
 import Brands from '../Brand/Brands';
+import Products from "../Product/Products";
 //types
 import {CategoryType, SubCategoryType} from "../../redux/types/category.type";
 //request
 import {CREATE_CATEGORY, UPDATE_CATEGORY} from "../../redux/requests/category.request";
-import Divider from "../../components/common/Divider";
 
 const initialState = {
   name: '',
@@ -142,7 +143,10 @@ const CreateCategory: React.FC<Props> = (props) => {
         mode === "update" ? (
           <>
             <Divider label="Additional Information" />
-            <Brands id={state.id!} />
+            <div className="flex">
+              <Brands id={state.id!} />
+              <Products id={state.id!} />
+            </div>
           </>
         ) : null
       }

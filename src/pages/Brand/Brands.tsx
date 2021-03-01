@@ -56,11 +56,11 @@ const Brands: React.FC<Props> = memo(({ id }) => {
       <ul className="flex flex-wrap gap-5">
         {
           brands.map((brand, i) => (
-            <li key={i} className="flex-col flex-1 min-w-full">
-              <strong>{brand.name}</strong>
-              <ul className="my-2">
+            <li key={i} className="flex-col flex-1">
+              <strong className="">{brand.name}</strong>
+              <ul className="my-1">
                 <li>
-                  <small className="text-gray-500">other categories</small>
+                  <p className="text-xs text-gray-500 whitespace-nowrap">other categories</p>
                 </li>
                 {
                   brand.category.map((cat: any, idx) => {

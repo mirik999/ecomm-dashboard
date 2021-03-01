@@ -34,7 +34,8 @@ export function tableBodyHandler(val: any, key: string): any {
   }
 
   if (val instanceof Array) {
-    return val.map(v => `<span class="mx-2">${v.name}</span>`)
+    const brands = val.map(v => v.name).join(" - ")
+    return `<span class="mx-2">${brands}</span>`
   }
 
   if (typeof val === "object") {

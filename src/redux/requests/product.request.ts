@@ -83,3 +83,18 @@ export const DELETE_PRODUCTS = gql`
     }
   }
 `;
+
+export const GET_PRODUCTS_BY_CATEGORY_ID = gql`
+  query GetProductsByCategoryId($id: String!) {
+    getProductsByCategoryId(id: $id) {
+      id
+      name
+      isDisabled
+      brand {
+        id
+        name
+      }
+    }
+  }
+`;
+
