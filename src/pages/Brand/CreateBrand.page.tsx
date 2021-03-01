@@ -41,27 +41,6 @@ const CreateBrand: React.FC<Props> = (props) => {
   }, [])
 
   useEffect(() => {
-    const { mode, selected }: any = history.location.state;
-    if (mode === "update") {
-      let options = [];
-      console.log(selected[0])
-      for (let i = 0; i < selected[0].category.length; i++) {
-        options.push(selected[0].category[i].id)
-        if (selected[0].category[i].subCategories) {
-          for (let j = 0; j < selected[0].category[i].subCategories.length; j++) {
-            options.push(selected[0].category[i].subCategories[j].id)
-          }
-        }
-      }
-      setState({
-        ...selected[0],
-        category: options
-      });
-      setMode(mode);
-    }
-  }, []);
-
-  useEffect(() => {
     if (categoriesResponse.data) {
       const payload = categoriesResponse.data.getCategories.payload;
       let options = [];
@@ -77,10 +56,29 @@ const CreateBrand: React.FC<Props> = (props) => {
           })
         }
       }
-
       setCategories(options)
     }
   }, [categoriesResponse])
+
+  useEffect(() => {
+    const { mode, selected }: any = history.location.state;
+    if (mode === "update") {
+      let categoryIds = [];
+      for (let i = 0; i < selected[0].category.length; i++) {
+        categoryIds.push(selected[0].category[i].id)
+        if (selected[0].category[i].subCategories) {
+          for (let j = 0; j < selected[0].category[i].subCategories.length; j++) {
+            categoryIds.push(selected[0].category[i].subCategories[j].id)
+          }
+        }
+      }
+      setState({
+        ...selected[0],
+        category: categoryIds
+      });
+      setMode(mode);
+    }
+  }, []);
 
   useEffect(() => {
     if (createResponse.data) {
@@ -123,7 +121,6 @@ const CreateBrand: React.FC<Props> = (props) => {
   }
 
   async function _onUpdate(): Promise<void> {
-    console.log(state)
     try {
       await UpdateBrand({
         variables: {
@@ -151,10 +148,7 @@ const CreateBrand: React.FC<Props> = (props) => {
 
   function handleSelectableValue() {
     if (state.category.length) {
-      const a = categories.filter(cat => state.category.includes(cat.id))
-      console.log(a)
-      console.log(state.category)
-      return a;
+      return categories.filter(cat => state.category.includes(cat.id))
     } else {
       return null
     }

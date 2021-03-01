@@ -18,6 +18,7 @@ import { CategoryType } from "../../redux/types/category.type";
 import { CREATE_PRODUCT, UPDATE_PRODUCT } from "../../redux/requests/product.request";
 import { GET_CATEGORIES_FOR_SELECT } from "../../redux/requests/category.request";
 import { GET_BRANDS_FOR_SELECT } from "../../redux/requests/brand.request";
+import {BrandType} from "../../redux/types/brand.type";
 
 const initialState = {
   name: '',
@@ -59,7 +60,6 @@ const CreateProduct: React.FC<Props> = (props) => {
   useEffect(() => {
     const { mode, selected }: any = history.location.state;
     if (mode === "update") {
-      console.log(selected[0])
       setState(selected[0]);
       setMode(mode);
     }
@@ -100,7 +100,6 @@ const CreateProduct: React.FC<Props> = (props) => {
 
   useEffect(() => {
     if (updateResponse.data) {
-      console.log('success updateds')
       history.push("/products")
     }
   }, [updateResponse])
@@ -157,11 +156,7 @@ const CreateProduct: React.FC<Props> = (props) => {
     try {
       await UpdateProduct({
         variables: {
-          updatedProduct: {
-            ...state,
-            category: state.category.map((cat: CategoryType) =>
-              typeof cat === "object" ? cat.id : cat)
-          }
+          updatedProduct: handleState(state)
         }
       })
     } catch(err) {
@@ -196,6 +191,16 @@ const CreateProduct: React.FC<Props> = (props) => {
 
   function getDescriptionHtml(val: string): void {
     setState((prevState: any) => ({ ...prevState, description: val }));
+  }
+
+  function handleState(st: any): any {
+    const category = st.category.map((cat: CategoryType) => cat?.id || cat);
+    const brand = st.brand?.id || st.brand;
+    return {
+      ...st,
+      category,
+      brand
+    }
   }
 
   return (

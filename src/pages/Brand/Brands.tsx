@@ -1,6 +1,5 @@
 import React, { memo, useEffect, useState } from 'react';
 import { useLazyQuery } from "@apollo/client";
-import { useLocation } from 'react-router-dom';
 //request
 import {GET_BRANDS_BY_CATEGORY_ID} from "../../redux/requests/brand.request";
 //types
@@ -11,7 +10,6 @@ type Props = {
 }
 
 const Brands: React.FC<Props> = memo(({ id }) => {
-  const location = useLocation();
   //requests
   const [GetBrandsByCategoryId, brandsResponse] = useLazyQuery(GET_BRANDS_BY_CATEGORY_ID);
   //state
@@ -42,30 +40,39 @@ const Brands: React.FC<Props> = memo(({ id }) => {
     }
   }
 
-  console.log(brands)
-
   return (
     <div
       className="flex-col bg-white rounded shadow-md p-4 w-96 m-4"
     >
       <div className="flex justify-center">
-        <h3 className="font-bold">Brands</h3>
+        <h3 className="font-bold mb-3">Brands</h3>
+        <div
+          className="bg-red-500 text-white flex justify-center items-center rounded-full w-8 h-5 ml-3
+          transform translate-y-0.5 text-center"
+        >
+          <small className="font-bold text-xs mr-0.5 mb-0.5">{brands.length}</small>
+        </div>
       </div>
-      <ul>
+      <ul className="flex flex-wrap gap-5">
         {
           brands.map((brand, i) => (
-            <li key={i} className="flex-col">
+            <li key={i} className="flex-col flex-1 min-w-full">
               <strong>{brand.name}</strong>
-              <ul className="transform translate-x-4 my-2">
+              <ul className="my-2">
                 <li>
-                  <small className="text-gray-500">categories</small>
+                  <small className="text-gray-500">other categories</small>
                 </li>
                 {
-                  brand.category.map((cat: any, idx) => (
-                    <li key={idx}>
-                      {cat.name}
-                    </li>
-                  ))
+                  brand.category.map((cat: any, idx) => {
+                    if (cat.id !== id) {
+                      return (
+                        <li key={idx}>
+                          <small>{cat.name}</small>
+                        </li>
+                      )
+                    }
+                    return '';
+                  })
                 }
               </ul>
             </li>
