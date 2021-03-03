@@ -42,7 +42,7 @@ const Brands: React.FC<Props> = memo(({ id }) => {
 
   return (
     <div
-      className="flex-col bg-white rounded shadow-md p-4 w-96 m-4"
+      className="flex-col flex-auto bg-white rounded shadow-md p-4 min-w-96 m-4"
     >
       <div className="flex justify-center">
         <h3 className="font-bold mb-3">Brands</h3>

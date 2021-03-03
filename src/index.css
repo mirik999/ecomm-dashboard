@@ -15,8 +15,16 @@
     height: calc(100vh - 255px);
   }
 
+  .max-w-520 {
+    max-width: 520px;
+  }
+
   .w-520 {
     width: 520px;
+  }
+
+  .min-w-300 {
+    min-width: 300px;
   }
 
   .h-230 {

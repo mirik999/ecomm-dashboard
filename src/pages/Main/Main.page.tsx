@@ -8,7 +8,6 @@ import NotificationBox from "../../components/common/notificationBox";
 //request
 import { GET_STATISTICS } from "../../redux/requests/main.request";
 
-
 type Props = {};
 
 

@@ -143,7 +143,7 @@ const CreateCategory: React.FC<Props> = (props) => {
         mode === "update" ? (
           <>
             <Divider label="Additional Information" />
-            <div className="flex">
+            <div className="flex flex-wrap">
               <Brands id={state.id!} />
               <Products id={state.id!} />
             </div>
