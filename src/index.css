@@ -1,42 +1,10 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-@layer utilities {
-  .data-height {
-    height: calc(100vh - 416px);
-  }
-
-  .f-data-height {
-    height: calc(100vh - 314px);
-  }
-
-  .loading-height {
-    height: calc(100vh - 255px);
-  }
-
-  .max-w-520 {
-    max-width: 520px;
-  }
-
-  .w-520 {
-    width: 520px;
-  }
-
-  .min-w-300 {
-    min-width: 300px;
-  }
-
-  .h-230 {
-    height: 230px;
-  }
+* {
+  box-sizing: border-box;
+  font-family: 'Roboto', sans-serif;
 }
 
-/*.site-container {*/
-/*  min-height: 100vh;*/
-/*}*/
-
 html, body, #root, .site-container {
+  margin: 0;
   height: 100%;
 }
 

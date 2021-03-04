@@ -1,4 +1,5 @@
 import React, { FormEvent } from 'react';
+import styled from 'styled-components';
 
 type Props = {
   type?: 'text' | 'number' | 'email' | 'password' | 'phone'
@@ -25,8 +26,6 @@ const Input: React.FC<Props> = ({
         id={type + '-' + Date.now()}
         name="email"
         autoComplete="off"
-        className="shadow-ml outline-none border-b-2 border-gray-200 p-3 text-black
-           border-r-4 rounded-md text-base focus:border-blue-400"
         value={value}
         onChange={({ currentTarget }: FormEvent<HTMLInputElement>) =>
           getValue(currentTarget.value)

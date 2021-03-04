@@ -7,18 +7,24 @@ import Input from '../../components/common/Input';
 import Button from '../../components/common/Button';
 import Divider from '../../components/common/Divider';
 import NotificationBox from "../../components/common/notificationBox";
+//styled
+import {LoginWrap, RegisterWrap} from './styled-components';
 //requests
 import { LOGIN_USER } from "../../redux/requests/user.request";
 //actions
 import { saveToken } from '../../redux/slices/auth-credentials.slice';
 import { saveUser } from '../../redux/slices/user.slice';
+//types
+import { Theme } from "../../redux/types/theme.type";
 
 type userData = {
   email: string
   password: string
 };
 
-type Props = {};
+type Props = {
+  theme: Theme
+};
 
 const initialState = {
   email: 'xose@bk.ru',
@@ -26,7 +32,7 @@ const initialState = {
   clientId: uuid()
 };
 
-const Login: React.FC<Props> = (props) => {
+const Login: React.FC<Props> = ({ theme}) => {
   const dispatch = useDispatch();
   const [LoginUser, loginResponse] = useMutation(LOGIN_USER);
   const [state, setState] = useState<userData>(initialState);
@@ -47,12 +53,9 @@ const Login: React.FC<Props> = (props) => {
   }
 
   return (
-    <div
-      className="w-full h-full border border-blue-400 border-r-4 rounded-md w-1/4 bg-gray-100
-        relative z-10"
-    >
-      <header className="p-4 bg-blue-400">
-        <h3 className="uppercase text-white font-bold">
+    <LoginWrap theme={theme} flex="column" justify="start" align="start">
+      <header>
+        <h3>
           Authorization
         </h3>
       </header>
@@ -76,7 +79,7 @@ const Login: React.FC<Props> = (props) => {
           loginResponse
         ]}
       />
-    </div>
+    </LoginWrap>
   );
 };
 

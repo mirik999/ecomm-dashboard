@@ -7,18 +7,24 @@ import Input from '../../components/common/Input';
 import Button from '../../components/common/Button';
 import Divider from '../../components/common/Divider';
 import NotificationBox from "../../components/common/notificationBox";
+//styled
+import { RegisterWrap } from './styled-components';
 //requests
 import { CREATE_USER } from "../../redux/requests/user.request";
 //actions
 import { saveToken } from '../../redux/slices/auth-credentials.slice';
 import { saveUser } from '../../redux/slices/user.slice';
+//types
+import { Theme } from "../../redux/types/theme.type";
 
 type userData = {
   email: string
   password: string
 };
 
-type Props = {};
+type Props = {
+  theme: Theme
+};
 
 const initialState = {
   email: '',
@@ -26,7 +32,7 @@ const initialState = {
   clientId: uuid()
 };
 
-const Register: React.FC<Props> = (props) => {
+const Register: React.FC<Props> = ({ theme }) => {
   const dispatch = useDispatch();
   const [CreateUser, createResponse] = useMutation(CREATE_USER);
   const [state, setState] = useState<userData>(initialState);
@@ -47,12 +53,9 @@ const Register: React.FC<Props> = (props) => {
   }
 
   return (
-    <div
-      className="w-full h-full border border-blue-400 border-r-4 rounded-md w-1/4 bg-gray-100
-        relative z-10"
-    >
-      <header className="p-4 bg-blue-400">
-        <h3 className="uppercase text-white font-bold">Create an account</h3>
+    <RegisterWrap theme={theme} flex="column" justify="start" align="start">
+      <header>
+        <h3>Create an account</h3>
       </header>
       <Input
         type="email"
@@ -74,7 +77,7 @@ const Register: React.FC<Props> = (props) => {
           createResponse
         ]}
       />
-    </div>
+    </RegisterWrap>
   );
 };
 
