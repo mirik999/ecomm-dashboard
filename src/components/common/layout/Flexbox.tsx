@@ -2,15 +2,15 @@ import React, { FC } from 'react';
 import styled from 'styled-components';
 
 interface Props {
-  children: React.ReactNode;
-  flex?: 'row' | 'row-reverse' | 'column' | 'column-reverse';
-  justify?: 'start' | 'end' | 'center' | 'between' | 'evenly' | 'around';
-  align?: 'start' | 'end' | 'center' | 'between' | 'evenly' | 'around';
-  wrap?: 'wrap' | 'no-wrap' | 'wrap-reverse';
-  content?: 'start' | 'end' | 'center' | 'between' | 'evenly' | 'around' | 'auto';
-  col?: '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' ;
-  cls?: string;
-  [key: string]: any;
+  children: React.ReactNode
+  flex?: 'row' | 'row-reverse' | 'column' | 'column-reverse'
+  justify?: 'start' | 'end' | 'center' | 'between' | 'evenly' | 'around'
+  align?: 'start' | 'end' | 'center' | 'between' | 'evenly' | 'around'
+  wrap?: 'wrap' | 'no-wrap' | 'wrap-reverse'
+  content?: 'start' | 'end' | 'center' | 'between' | 'evenly' | 'around' | 'auto'
+  col?: '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9'
+  cls?: string
+  [key: string]: any
 }
 
 const Flexbox: FC<Props> = ({

@@ -71,12 +71,14 @@ const SubCategories: React.FC<Props> = memo(({
               <Input
                 type="text"
                 label="Name"
+                name="name"
                 value={scat.name}
                 getValue={(val: string) => _onChange(i, 'name', val)}
               />
               <Input
                 type="text"
                 label="Tab Name"
+                name="tabName"
                 value={scat.tabName}
                 getValue={(val: string) => _onChange(i, 'tabName', val)}
               />

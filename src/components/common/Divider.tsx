@@ -1,4 +1,7 @@
 import React from 'react';
+import styled from 'styled-components';
+//components
+import Flexbox from "./layout/Flexbox";
 
 type Props = {
   label?: string;
@@ -6,11 +9,11 @@ type Props = {
 
 const Divider: React.FC<Props> = ({ label }) => {
   return (
-    <div className="m-4 text-center relative flex items-center">
-      <div className="h-0.5 bg-gray-200 flex-1" />
-      <span className="px-4 text-gray-300 uppercase font-bold">{label}</span>
-      <div className="h-0.5 bg-gray-200 flex-1" />
-    </div>
+    <Container align="center">
+      <div className="left-line" />
+      <span>{label}</span>
+      <div className="right-line" />
+    </Container>
   );
 };
 
@@ -19,3 +22,25 @@ Divider.defaultProps = {
 };
 
 export default Divider;
+
+
+const Container = styled(Flexbox)`
+  text-align: center;
+  position: relative;
+  margin: 20px 0;
+  padding: 0;
+
+  .left-line, .right-line {
+    height: 2px;
+    background-color: ${({theme}) => theme.colors.secondColor};
+    flex: 1;
+  }
+
+  span {
+    padding: 0 10px;
+    color:  ${({theme}) => theme.colors.secondColor};
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: ${({theme}) => theme.fontSize.xs + "px"};
+  }
+`;

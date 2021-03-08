@@ -171,6 +171,7 @@ const CreateBrand: React.FC<Props> = (props) => {
         <Input
           type="text"
           label="Name"
+          name="name"
           value={state.name}
           getValue={(val: string) => setState({...state, name: val})}
         />
@@ -189,12 +190,14 @@ const CreateBrand: React.FC<Props> = (props) => {
         {
           mode === "create" ? (
             <Button
+              type="success"
               label="Create"
               onAction={_onSave}
               cls="m-0 mr-3"
             />
           ) : (
             <Button
+              type="success"
               label="Update"
               onAction={_onUpdate}
               cls="m-0 mr-3"
@@ -202,17 +205,18 @@ const CreateBrand: React.FC<Props> = (props) => {
           )
         }
         <Button
+          type="success"
           label="Reset fields"
           onAction={() => setState(initialState)}
           cls="m-0 mr-3"
         />
       </div>
-      <NotificationBox
-        list={[
-          createResponse,
-          updateResponse,
-        ]}
-      />
+      {/*<NotificationBox*/}
+      {/*  list={[*/}
+      {/*    createResponse,*/}
+      {/*    updateResponse,*/}
+      {/*  ]}*/}
+      {/*/>*/}
     </Layout>
   );
 }

@@ -5,6 +5,7 @@ type Props = {
   type?: 'text' | 'number' | 'email' | 'password' | 'phone'
   label?: string
   value: any
+  name: string
   cls?: string
   getValue: (val: any) => void
   [key: string]: any
@@ -14,12 +15,17 @@ const Input: React.FC<Props> = ({
   type,
   label,
   value,
+  name,
   cls,
   getValue,
   ...props
 }) => {
+
   return (
-    <label htmlFor={type + '-' + Date.now()} className={`flex flex-col flex-1 ${cls}`}>
+    <Label
+      htmlFor={type + '-' + Date.now()}
+      className={`flex flex-col flex-1 ${cls}`}
+    >
       <span>{label}</span>
       <input
         type={type}
@@ -32,15 +38,34 @@ const Input: React.FC<Props> = ({
         }
         {...props}
       />
-    </label>
+    </Label>
   );
 };
 
 Input.defaultProps = {
   type: 'text',
   label: 'Label',
-  cls: 'm-4',
+  name: 'input-name',
+  cls: '',
   value: '',
 };
 
 export default Input;
+
+
+const Label = styled.label`
+  display: flex;
+  flex-direction: column;
+
+  span {
+    font-size: ${({theme}) => theme.fontSize.sm + "px"};
+    font-weight: 600;
+    margin-bottom: 5px;
+  }
+
+  input {
+    padding: 8px 12px;
+    border: ${({ theme }) => ` 1px solid ${theme.colors.border}`};
+    border-radius: 4px;
+  }
+`;

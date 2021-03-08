@@ -154,14 +154,14 @@ const CategoryPage: React.FC<Props> = (props) => {
         exclude={['id']}
         unSelect={unSelect}
       />
-      <NotificationBox
-        list={[
-          getResponse,
-          activateResponse,
-          disableResponse,
-          deleteResponse
-        ]}
-      />
+      {/*<NotificationBox*/}
+      {/*  list={[*/}
+      {/*    getResponse,*/}
+      {/*    activateResponse,*/}
+      {/*    disableResponse,*/}
+      {/*    deleteResponse*/}
+      {/*  ]}*/}
+      {/*/>*/}
     </Layout>
   );
 };

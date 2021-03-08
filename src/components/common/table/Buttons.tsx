@@ -68,6 +68,7 @@ const Buttons: React.FC<Props> = ({
           .filter(btn => btn.roles.some(b => roles.includes(b)))
           .map((btn, i) => (
             <Button
+              type="success"
               key={i}
               label={btn.name}
               onAction={() => {

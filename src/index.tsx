@@ -10,6 +10,7 @@ import store from './redux/store';
 import { loadFromCookies } from './redux/slices/auth-credentials.slice';
 import { saveUser } from './redux/slices/user.slice';
 //styles [tailwind css]
+import 'normalize.css';
 import './index.css';
 import 'react-image-lightbox/style.css';
 import 'react-quill/dist/quill.snow.css';

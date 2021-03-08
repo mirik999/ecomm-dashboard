@@ -154,14 +154,14 @@ const UserPage: React.FC<Props> = (props) => {
         path="users"
         unSelect={unSelect}
       />
-      <NotificationBox
-        list={[
-          getResponse,
-          activateResponse,
-          disableResponse,
-          deleteResponse
-        ]}
-      />
+      {/*<NotificationBox*/}
+      {/*  list={[*/}
+      {/*    getResponse,*/}
+      {/*    activateResponse,*/}
+      {/*    disableResponse,*/}
+      {/*    deleteResponse*/}
+      {/*  ]}*/}
+      {/*/>*/}
     </Layout>
   );
 };

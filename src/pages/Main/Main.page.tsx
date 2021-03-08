@@ -42,11 +42,11 @@ const MainPage: React.FC<Props> = (props) => {
         />
       </div>
 
-      <NotificationBox
-        list={[
-          statsResponse,
-        ]}
-      />
+      {/*<NotificationBox*/}
+      {/*  list={[*/}
+      {/*    statsResponse,*/}
+      {/*  ]}*/}
+      {/*/>*/}
     </Layout>
   );
 };

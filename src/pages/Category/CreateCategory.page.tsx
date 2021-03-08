@@ -101,12 +101,14 @@ const CreateCategory: React.FC<Props> = (props) => {
         <Input
           type="text"
           label="Name"
+          name="name"
           value={state.name}
           getValue={(val: string) => setState({...state, name: val})}
         />
         <Input
           type="text"
           label="Tab Name"
+          name="tabName"
           value={state.tabName}
           getValue={(val: string) => setState({...state, tabName: val})}
         />
@@ -120,12 +122,14 @@ const CreateCategory: React.FC<Props> = (props) => {
         {
           mode === "create" ? (
             <Button
+              type="success"
               label="Create"
               onAction={_onSave}
               cls="m-0 mr-3"
             />
           ) : (
             <Button
+              type="success"
               label="Update"
               onAction={_onUpdate}
               cls="m-0 mr-3"
@@ -133,6 +137,7 @@ const CreateCategory: React.FC<Props> = (props) => {
           )
         }
         <Button
+          type="success"
           label="Reset fields"
           onAction={() => setState(initialState)}
           cls="m-0 mr-3"
@@ -151,12 +156,12 @@ const CreateCategory: React.FC<Props> = (props) => {
         ) : null
       }
 
-      <NotificationBox
-        list={[
-          createResponse,
-          updateResponse,
-        ]}
-      />
+      {/*<NotificationBox*/}
+      {/*  list={[*/}
+      {/*    createResponse,*/}
+      {/*    updateResponse,*/}
+      {/*  ]}*/}
+      {/*/>*/}
     </Layout>
   );
 }

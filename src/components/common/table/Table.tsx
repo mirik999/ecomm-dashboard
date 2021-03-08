@@ -155,12 +155,14 @@ const Table: React.FC<Props> = ({
       >
         <Input
           label="Quick search"
+          name="search"
           value={quickSearch}
           getValue={_onQuickSearch}
           cls="mr-4"
         />
         <Input
           label="Deep search"
+          name="deepSearch"
           value={deepSearch}
           getValue={_onDeepSearch}
           onKeyDown={_onFilterDeep}

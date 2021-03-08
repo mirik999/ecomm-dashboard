@@ -31,6 +31,7 @@ const FakeTable: React.FC<Props> = ({ onCreate, roles }) => {
             .filter(btn => btn.roles.some(b => roles.includes(b)))
             .map((btn, i) => (
             <Button
+              type="success"
               key={i}
               label="Create"
               onAction={() => onCreate('create')}

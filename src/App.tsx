@@ -10,10 +10,13 @@ import {
 } from '@apollo/client';
 import { onError } from "@apollo/client/link/error";
 import { setContext } from "@apollo/client/link/context";
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { ThemeProvider } from "styled-components";
+import { useMediaLayout } from 'use-media';
 //components
 import WithToken from './components/common/WithToken';
 import WithoutToken from './components/common/WithoutToken';
+import NotificationBox from "./components/common/notificationBox";
 //pages
 import AuthPage from './pages/Auth/Auth.page';
 import NotFoundPage from "./pages/Rest/NotFound.page";
@@ -32,9 +35,15 @@ import { REFRESH_TOKEN } from "./redux/requests/user.request";
 import { saveToken } from "./redux/slices/auth-credentials.slice";
 //utils
 import { getFromCookies, removeFromCookies } from "./utils/storage.utils";
+//types
+import { RootState } from "./redux/store";
 
 function App() {
+  const small = useMediaLayout({maxWidth: '360px'});
+  const medium = useMediaLayout({maxWidth: '767px'});
+  const hd = useMediaLayout({maxWidth: '1376px'});
   const dispatch = useDispatch();
+  const { theme } = useSelector((state: RootState) => state)
 
   const getNewToken = async () => {
     return new Promise(async (resolve, reject) => {
@@ -119,25 +128,31 @@ function App() {
     cache: new InMemoryCache({
       addTypename: false
     }),
-  })
+  });
+
+  const setResponsiveFontSize = small ? 'small' : (medium ? 'medium' : (hd ? 'hd' : 'fhd'));
 
   return (
     <div className="site-container">
       <ApolloProvider client={client}>
-        <Switch>
-          <WithoutToken exact path="/auth" component={AuthPage} />
-          <WithToken exact path="/" component={MainPage} />
-          <WithToken exact path="/categories" component={CategoryPage} />
-          <WithToken path="/categories/create" component={CreateCategory} />
-          <WithToken exact path="/brands" component={BrandPage} />
-          <WithToken path="/brands/create" component={CreateBrand} />
-          <WithToken exact path="/products" component={ProductPage} />
-          <WithToken path="/products/create" component={CreateProduct} />
-          <WithToken exact path="/users" component={UserPage} />
-          <WithToken path="/users/create" component={CreateUser} />
-          <Route exact path="*" component={NotFoundPage} />
-        </Switch>
+        <ThemeProvider theme={{ ...theme, fontSize: theme.fontSize[setResponsiveFontSize] }}>
+          <Switch>
+            <WithoutToken exact path="/auth" component={AuthPage} />
+            <WithToken exact path="/" component={MainPage} />
+            <WithToken exact path="/categories" component={CategoryPage} />
+            <WithToken path="/categories/create" component={CreateCategory} />
+            <WithToken exact path="/brands" component={BrandPage} />
+            <WithToken path="/brands/create" component={CreateBrand} />
+            <WithToken exact path="/products" component={ProductPage} />
+            <WithToken path="/products/create" component={CreateProduct} />
+            <WithToken exact path="/users" component={UserPage} />
+            <WithToken path="/users/create" component={CreateUser} />
+            <Route exact path="*" component={NotFoundPage} />
+          </Switch>
+          <NotificationBox />
+        </ThemeProvider>
       </ApolloProvider>
+
     </div>
   );
 }

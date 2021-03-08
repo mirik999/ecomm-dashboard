@@ -220,18 +220,21 @@ const CreateProduct: React.FC<Props> = (props) => {
         <Input
           type="text"
           label="Product name"
+          name="productName"
           value={state.name}
           getValue={(val: string) => _onChange(val, 'name')}
         />
         <Input
           type="text"
           label="Articul"
+          name="articul"
           value={state.articul}
           getValue={(val: string) => _onChange(val, 'articul')}
         />
         <Input
           type="number"
           label="Price"
+          name="price"
           value={state.price}
           getValue={(val: string) =>_onChange(+val, 'price')}
         />
@@ -264,6 +267,7 @@ const CreateProduct: React.FC<Props> = (props) => {
           <Input
             type="number"
             label="Sale percent"
+            name="salePercent"
             value={state.saleCount}
             getValue={(val: string) => _onChange(+val, 'saleCount')}
             cls="mx-4"
@@ -298,12 +302,14 @@ const CreateProduct: React.FC<Props> = (props) => {
             {
               mode === "create" ? (
                 <Button
+                  type="success"
                   label="Create"
                   onAction={_onSave}
                   cls="m-0 mr-3"
                 />
               ) : (
                 <Button
+                  type="success"
                   label="Update"
                   onAction={_onUpdate}
                   cls="m-0 mr-3"
@@ -311,6 +317,7 @@ const CreateProduct: React.FC<Props> = (props) => {
               )
             }
             <Button
+              type="success"
               label="Reset fields"
               onAction={() => setState(initialState)}
               cls="m-0 mr-3"
@@ -338,12 +345,12 @@ const CreateProduct: React.FC<Props> = (props) => {
           />
         </div>
       </div>
-      <NotificationBox
-        list={[
-          createResponse,
-          updateResponse,
-        ]}
-      />
+      {/*<NotificationBox*/}
+      {/*  list={[*/}
+      {/*    createResponse,*/}
+      {/*    updateResponse,*/}
+      {/*  ]}*/}
+      {/*/>*/}
     </Layout>
   );
 }

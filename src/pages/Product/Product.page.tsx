@@ -154,14 +154,14 @@ const ProductPage: React.FC<Props> = (props) => {
         error={!!getResponse.error}
         unSelect={unSelect}
       />
-      <NotificationBox
-        list={[
-          getResponse,
-          activateResponse,
-          disableResponse,
-          deleteResponse
-        ]}
-      />
+      {/*<NotificationBox*/}
+      {/*  list={[*/}
+      {/*    getResponse,*/}
+      {/*    activateResponse,*/}
+      {/*    disableResponse,*/}
+      {/*    deleteResponse*/}
+      {/*  ]}*/}
+      {/*/>*/}
     </Layout>
   );
 };

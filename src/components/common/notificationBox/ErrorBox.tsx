@@ -1,42 +1,71 @@
 import React from 'react';
+import styled from 'styled-components';
+//components
+import Flexbox from "../layout/Flexbox";
+import {FaRegWindowClose} from "react-icons/fa";
 
 type Props = {
   message?: string
   details?: any
+  getEvent: () => void
 }
 
-const ErrorBox: React.FC<Props> = ({message, details}) => {
-  const statusCode = details[0]?.extensions?.exception?.response?.statusCode;
-
-  if (statusCode === 401) return null;
+const ErrorBox: React.FC<Props> = ({message, details, getEvent}) => {
+  const statusCode = details?.extensions?.exception?.response?.statusCode;
 
   return (
-    <div
-      className="m-4 p-2 border-2 border-pink-500 bg-pink-200 text-red-700
-        border-r-4 rounded-md"
-    >
-      <span className="mr-2">{statusCode}</span>
-      <span>{message}</span>
-      {
-        details.map((d: any, i: number) => (
-          <span key={i} className="ml-4">
-            {
-              typeof d.extensions?.exception?.response?.message === "object" ?
-              d.extensions.exception.response.message
-                .map((dm: string, idx: number) => (
-                  <strong key={i + idx} className="mr-3">[ {dm} ]</strong>
-                )) : null
-            }
-          </span>
-        ))
-      }
-    </div>
+    <Container>
+      <div>
+        <span>{statusCode}</span>
+        <span>{message}</span>
+        <span>
+        {
+          typeof details?.extensions?.exception?.response?.message === "object" ?
+            details?.extensions.exception.response.message
+              .map((dm: string, idx: number) => (
+                <strong key={idx}>[ {dm} ]</strong>
+              )) : null
+        }
+      </span>
+      </div>
+
+      <FaRegWindowClose size={20} color="white" onClick={getEvent} />
+
+    </Container>
   );
 }
 
 ErrorBox.defaultProps = {
   message: 'Something went wrong',
-  details: []
+  details: [],
+  getEvent: () => false
 }
 
 export default ErrorBox;
+
+const Container = styled(Flexbox)`
+  padding: 20px;
+  border-radius: 10px;
+  border-width: 4px 8px 4px 4px;
+  border-style: solid;
+  border-color: ${({theme}) => theme.colors.error};
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  width: calc(100% - 40px);
+  min-width: calc(100% - 40px);
+  height: 80px;
+  background-color: ${({theme}) => theme.colors.errorLight};
+
+  & > div {
+    flex: 1;
+
+    span, strong {
+      margin-right: 5px;
+      color: ${({theme}) => theme.colors.white};
+      font-size: ${({theme}) => theme.fontSize.md + "px"};
+    }
+  }
+
+
+`;

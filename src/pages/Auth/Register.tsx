@@ -14,17 +14,14 @@ import { CREATE_USER } from "../../redux/requests/user.request";
 //actions
 import { saveToken } from '../../redux/slices/auth-credentials.slice';
 import { saveUser } from '../../redux/slices/user.slice';
-//types
-import { Theme } from "../../redux/types/theme.type";
+import { saveNetStatus } from '../../redux/slices/net-status.slice';
 
 type userData = {
   email: string
   password: string
 };
 
-type Props = {
-  theme: Theme
-};
+type Props = {};
 
 const initialState = {
   email: '',
@@ -32,7 +29,7 @@ const initialState = {
   clientId: uuid()
 };
 
-const Register: React.FC<Props> = ({ theme }) => {
+const Register: React.FC<Props> = () => {
   const dispatch = useDispatch();
   const [CreateUser, createResponse] = useMutation(CREATE_USER);
   const [state, setState] = useState<userData>(initialState);
@@ -48,35 +45,37 @@ const Register: React.FC<Props> = ({ theme }) => {
       dispatch(saveToken(data));
       dispatch(saveUser());
     } catch(err) {
-      console.log(err.message);
+      dispatch(saveNetStatus(err.graphQLErrors))
     }
   }
 
   return (
-    <RegisterWrap theme={theme} flex="column" justify="start" align="start">
+    <RegisterWrap flex="column" justify="start" align="start">
       <header>
         <h3>Create an account</h3>
       </header>
       <Input
         type="email"
         label="E-mail"
+        name="email"
         value={state.email}
         getValue={(val: string) => setState({ ...state, email: val })}
       />
       <Input
         type="password"
         label="Password"
+        name="password"
         value={state.password}
         getValue={(val: string) => setState({ ...state, password: val })}
       />
       <Divider label="Action" />
-      <Button label="SUBMIT" onAction={_onClick} />
+      <Button type="success" label="SUBMIT" onAction={_onClick} />
 
-      <NotificationBox
-        list={[
-          createResponse
-        ]}
-      />
+      {/*<NotificationBox*/}
+      {/*  list={[*/}
+      {/*    createResponse*/}
+      {/*  ]}*/}
+      {/*/>*/}
     </RegisterWrap>
   );
 };

@@ -95,6 +95,7 @@ const CreatUser: React.FC<Props> = (props) => {
         <Input
           type="text"
           label="ID"
+          name="id"
           value={state.id}
           getValue={(val: string) => false}
           readOnly
@@ -102,6 +103,7 @@ const CreatUser: React.FC<Props> = (props) => {
         <Input
           type="text"
           label="Email"
+          name="email"
           value={state.email}
           getValue={(val: string) => false}
           readOnly
@@ -119,21 +121,23 @@ const CreatUser: React.FC<Props> = (props) => {
       </div>
       <div className="flex items-center mx-4 py-3">
         <Button
+          type="success"
           label="Update"
           onAction={_onUpdate}
           cls="m-0 mr-3"
         />
         <Button
+          type="success"
           label="Reset fields"
           onAction={() => setState(initialState)}
           cls="m-0 mr-3"
         />
       </div>
-      <NotificationBox
-        list={[
-          updateResponse
-        ]}
-      />
+      {/*<NotificationBox*/}
+      {/*  list={[*/}
+      {/*    updateResponse*/}
+      {/*  ]}*/}
+      {/*/>*/}
     </Layout>
   );
 }
