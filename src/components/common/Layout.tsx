@@ -1,29 +1,43 @@
 import React from 'react';
+import styled from 'styled-components';
 //components
-import Header from "./Header";
-import Navigation from "./Navigation";
+import Header from './Header';
+import Navigation from './Navigation';
+import Flexbox from './layout/Flexbox';
 
 type Props = {
-  children: React.ReactNode
+  children: React.ReactNode;
 };
 
 const Layout: React.FC<Props> = ({ children }) => {
   return (
-    <div className="w-full h-full bg-gray-200 flex">
+    <Container>
       <Navigation />
-      <div className="flex-col flex-1">
+      <Flexbox cls="np" justify="start" align="start" flex="column" col="1">
         <Header />
-        <div
-          className="bg-gray-100 h-content p-5 overflow-auto"
-          style={{ maxWidth: 'calc(100vw - 238px)' }}
-        >
-          {children}
-        </div>
-      </div>
-    </div>
+        <div className="children-wrap">{children}</div>
+      </Flexbox>
+    </Container>
   );
 };
 
 Layout.defaultProps = {};
 
 export default Layout;
+
+const Container = styled(Flexbox)`
+  max-width: 100%;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  background-color: ${({ theme }) => theme.colors.background};
+
+  .children-wrap {
+    padding: 10px;
+    width: 100%;
+    background-color: ${({ theme }) => theme.colors.background};
+    height: calc(100vh - 45px);
+    max-width: calc(100vw - 160px);
+    overflow: auto;
+  }
+`;

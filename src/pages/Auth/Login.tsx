@@ -30,7 +30,7 @@ const initialState = {
 
 const Login: React.FC<Props> = memo(() => {
   const dispatch = useDispatch();
-  const [LoginUser, loginResponse] = useMutation(LOGIN_USER);
+  const [LoginUser] = useMutation(LOGIN_USER);
   const [state, setState] = useState<userData>(initialState);
 
   async function _onClick(): Promise<void> {

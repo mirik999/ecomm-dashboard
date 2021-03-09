@@ -24,7 +24,7 @@ const authCredentialsSlice = createSlice({
       return initialState;
     },
     loadFromCookies() {
-      return getFromCookies("authCredentials");
+      return getFromCookies("authCredentials") || initialState;
     }
   },
 });

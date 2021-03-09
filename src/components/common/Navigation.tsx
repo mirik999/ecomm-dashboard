@@ -1,10 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useSelector } from "react-redux";
+import styled from 'styled-components';
+import { useSelector } from 'react-redux';
 import { HiMenuAlt1 } from 'react-icons/hi';
+//components
+import Flexbox from './layout/Flexbox';
 //types
-import { RootState } from "../../redux/store";
-import { NavType } from "../../redux/types/nav.type";
+import { RootState } from '../../redux/store';
+import { NavType } from '../../redux/types/nav.type';
 
 type Props = {};
 
@@ -12,45 +15,85 @@ const Navigation: React.FC<Props> = (props) => {
   const { nav, user } = useSelector((state: RootState) => state);
 
   return (
-    <div
-      className="min-w-min w-60 h-full bg-gradient-to-b from-blue-800 to-blue-700 border-blue-900
-        border-r-4"
-    >
-     <div className="p-4 flex justify-between items-center">
-       <div className="uppercase text-white tracking-wider font-bold">
-         <h3 className="text-xl leading-5">Electroshop</h3>
-         <span className="leading-3 text-xs">Dashboard v. 0.7.2</span>
-       </div>
-       <div>
-        <HiMenuAlt1
-          size={32}
-          color="white"
-          className="cursor-pointer transition-all hover:opacity-75"
-        />
-       </div>
-     </div>
-      <nav className="mt-5">
-        <ul className="text-white">
-          {
-            nav.map((n: NavType, i: number) => {
-              if (n.visible && n.accessRoles.some((acr, i) => user.roles.includes(acr))) {
-                return (
-                  <li
-                    key={i}
-                    className="cursor-pointer transition-all hover:opacity-75"
-                  >
-                    <Link to={n.path} className="block p-4">{n.name}</Link>
-                  </li>
-                )
-              }
-            })
-          }
+    <Container>
+      <Flexbox cls="nav-header" justify="between">
+        <div>
+          <h3>Electroshop</h3>
+          <span>Dashboard v. 1.0.2</span>
+        </div>
+        <div>
+          <HiMenuAlt1 size={20} color="white" className="hoverable" />
+        </div>
+      </Flexbox>
+      <Flexbox cls="nav-body">
+        <ul>
+          {nav.map((n: NavType, i: number) => {
+            if (
+              n.visible &&
+              n.accessRoles.some((acr, i) => user.roles.includes(acr))
+            ) {
+              return (
+                <li key={i} className="hoverable">
+                  <Link to={n.path}>{n.name}</Link>
+                </li>
+              );
+            }
+
+            return null;
+          })}
         </ul>
-      </nav>
-    </div>
+      </Flexbox>
+    </Container>
   );
 };
 
 Navigation.defaultProps = {};
 
 export default Navigation;
+
+const Container = styled.nav`
+  min-width: 160px;
+  width: 160px;
+  height: 100%;
+  background-color: ${({ theme }) => theme.colors.main};
+
+  .nav-header {
+    padding: 10px;
+
+    div:first-child {
+      text-transform: uppercase;
+      color: ${({ theme }) => theme.colors.white};
+      font-weight: bold;
+
+      h3 {
+        font-size: ${({ theme }) => theme.fontSize.sm + 'px'};
+        line-height: 60%;
+      }
+
+      span {
+        font-size: ${({ theme }) => theme.fontSize.xs + 'px'};
+      }
+    }
+
+    div:last-child {
+      cursor: pointer;
+    }
+  }
+
+  .nav-body {
+    margin-top: 10px;
+
+    ul {
+      li {
+        cursor: pointer;
+
+        a {
+          display: block;
+          padding: 10px 0;
+          color: ${({ theme }) => theme.colors.white};
+          font-size: ${({ theme }) => theme.fontSize.sm + 'px'};
+        }
+      }
+    }
+  }
+`;

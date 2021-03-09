@@ -2,15 +2,22 @@ import React, { FC } from 'react';
 import styled from 'styled-components';
 
 interface Props {
-  children: React.ReactNode
-  flex?: 'row' | 'row-reverse' | 'column' | 'column-reverse'
-  justify?: 'start' | 'end' | 'center' | 'between' | 'evenly' | 'around'
-  align?: 'start' | 'end' | 'center' | 'between' | 'evenly' | 'around'
-  wrap?: 'wrap' | 'no-wrap' | 'wrap-reverse'
-  content?: 'start' | 'end' | 'center' | 'between' | 'evenly' | 'around' | 'auto'
-  col?: '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9'
-  cls?: string
-  [key: string]: any
+  children: React.ReactNode;
+  flex?: 'row' | 'row-reverse' | 'column' | 'column-reverse';
+  justify?: 'start' | 'end' | 'center' | 'between' | 'evenly' | 'around';
+  align?: 'start' | 'end' | 'center' | 'between' | 'evenly' | 'around';
+  wrap?: 'wrap' | 'no-wrap' | 'wrap-reverse';
+  content?:
+    | 'start'
+    | 'end'
+    | 'center'
+    | 'between'
+    | 'evenly'
+    | 'around'
+    | 'auto';
+  col?: '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9';
+  cls?: string;
+  [key: string]: any;
 }
 
 const Flexbox: FC<Props> = ({
@@ -37,8 +44,8 @@ const Flexbox: FC<Props> = ({
     >
       {children}
     </Container>
-  )
-}
+  );
+};
 
 Flexbox.defaultProps = {
   flex: 'row',
@@ -48,42 +55,40 @@ Flexbox.defaultProps = {
   wrap: 'wrap',
   content: 'auto',
   col: '1',
-}
+};
 
 export default Flexbox;
 
 const Container = styled.div`
-  max-width: 1190px;
   width: 100%;
-  margin: 0 auto;
   padding: 0 10px;
   display: flex;
-  ${({flex, justify, align, wrap, content, col}: Props) => {
-  return`
+  ${({ flex, justify, align, wrap, content, col }: Props) => {
+    return `
       flex: ${col};
       flex-direction: ${flex};
       justify-content: ${handleAlignment(justify!)};
       align-items: ${handleAlignment(align!)};
       align-content: ${handleAlignment(content!)};
       flex-wrap: ${wrap};
-    `
+    `;
   }}
 `;
 
 // handle flex commands
 function handleAlignment(cmd: string) {
   switch (cmd) {
-    case "start":
+    case 'start':
       return 'flex-start';
-    case "end":
+    case 'end':
       return 'flex-end';
-    case "between":
+    case 'between':
       return 'space-between';
-    case "evenly":
+    case 'evenly':
       return 'space-evenly';
-    case "around":
+    case 'around':
       return 'space-around';
-    case "center":
+    case 'center':
       return 'center';
     default:
       return '';

@@ -6,7 +6,6 @@ import {v4 as uuid} from "uuid";
 import Input from '../../components/common/Input';
 import Button from '../../components/common/Button';
 import Divider from '../../components/common/Divider';
-import NotificationBox from "../../components/common/notificationBox";
 //styled
 import { RegisterWrap } from './styled-components';
 //requests
@@ -31,7 +30,7 @@ const initialState = {
 
 const Register: React.FC<Props> = () => {
   const dispatch = useDispatch();
-  const [CreateUser, createResponse] = useMutation(CREATE_USER);
+  const [CreateUser] = useMutation(CREATE_USER);
   const [state, setState] = useState<userData>(initialState);
 
   async function _onClick(): Promise<void> {
@@ -70,12 +69,6 @@ const Register: React.FC<Props> = () => {
       />
       <Divider label="Action" />
       <Button type="success" label="SUBMIT" onAction={_onClick} />
-
-      {/*<NotificationBox*/}
-      {/*  list={[*/}
-      {/*    createResponse*/}
-      {/*  ]}*/}
-      {/*/>*/}
     </RegisterWrap>
   );
 };

@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 //type
-import { Theme } from "../types/theme.type";
+import { Theme } from '../types/theme.type';
 
 const light: Theme = {
   fontSize: {
@@ -15,16 +15,16 @@ const light: Theme = {
     color: '#333',
     secondColor: '#90a4ae',
     background: '#eaeaea',
-    shadow: 'rgba(0,0,0,0.3)',
+    shadow: 'rgba(0,0,0,0.1)',
     border: '#e2e2e2',
-    main: '#3b82f6',
+    main: '#2c3e50',
     success: '#16a085',
     successLight: '#1abc9c',
     warning: '#f39c12',
     warningLight: '#f1c40f',
     error: '#c0392b',
     errorLight: '#e74c3c',
-  }
+  },
 };
 
 const dark: Theme = {
@@ -36,21 +36,21 @@ const dark: Theme = {
   },
   colors: {
     white: '#fff',
-    black: '',
+    black: '#000',
     color: '#dee4e7',
     secondColor: '#90a4ae',
     background: '#37474f',
     shadow: 'rgba(0,0,0,0.7)',
     border: '#222222',
-    main: '#3b82f6',
+    main: '#2c3e50',
     success: '#16a085',
     successLight: '#1abc9c',
     warning: '#f39c12',
     warningLight: '#f1c40f',
     error: '#c0392b',
     errorLight: '#e74c3c',
-  }
-}
+  },
+};
 
 const themeSlice = createSlice({
   name: 'theme',
@@ -61,7 +61,7 @@ const themeSlice = createSlice({
     },
     themeToLight() {
       return light;
-    }
+    },
   },
 });
 
