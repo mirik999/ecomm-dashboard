@@ -9,6 +9,7 @@ export const Container = styled.div`
   }
 
   & > div {
+    margin-top: 10px;
     grid-gap: 10px;
   }
 `;

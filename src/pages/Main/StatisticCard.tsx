@@ -1,93 +1,117 @@
-import React, {memo, useEffect, useRef} from 'react';
+import React, { memo, useEffect, useRef } from 'react';
 import styled from 'styled-components';
-import Highcharts from 'highcharts'
-import HighchartsReact from 'highcharts-react-official'
+import Highcharts from 'highcharts';
+import HC_exporting from 'highcharts/modules/exporting';
+import HighchartsReact from 'highcharts-react-official';
 //components
-import Flexbox from "../../components/common/layout/Flexbox";
+import Flexbox from '../../components/common/layout/Flexbox';
 
+HC_exporting(Highcharts);
 
 type Props = {
-  header: string[]
-  stats: any[]
-}
+  header: string[];
+  stats: any[];
+};
 
-const StatisticCard: React.FC<Props> = ({header, stats}) => {
-
+const StatisticCard: React.FC<Props> = ({ header, stats }) => {
+  const chart: any = useRef(null);
   const cleanData = stats.filter(Boolean);
   const keys = Object.keys(cleanData[0]);
   const data = keys.map((key, i) => {
     return {
       name: key,
       y: cleanData[0][key],
-      drilldown: key
-    }
+      drilldown: key,
+    };
   });
 
-  console.log(data);
+  useEffect(() => {
+    chart.current.chart.reflow();
+  }, [chart]);
 
   const options = {
     chart: {
-      type: 'column'
+      type: 'column',
+      events: {
+        load: function () {
+          chart.current = this;
+        },
+      },
+    },
+    exporting: {
+      enabled: true,
+      buttons: {
+        contextButton: {
+          enabled: false,
+        },
+        exportButton: {
+          text: 'Download',
+          menuItems: [
+            'downloadPNG',
+            'downloadJPEG',
+            'downloadPDF',
+            'downloadSVG',
+          ],
+        },
+      },
     },
     title: {
-      text: header
+      text: header,
+      style: {
+        fontSize: '14px',
+        fontWeight: 'bold',
+      },
     },
     accessibility: {
       announceNewData: {
-        enabled: true
-      }
+        enabled: true,
+      },
     },
     xAxis: {
       title: false,
-      type: 'category'
     },
     yAxis: {
-      title: false
+      title: false,
     },
     legend: {
-      enabled: false
+      enabled: false,
     },
     credits: {
-      enabled: false
+      enabled: false,
     },
     plotOptions: {
       series: {
         borderWidth: 0,
         dataLabels: {
           enabled: true,
-          format: '{point.y}'
-        }
-      }
+          format: '{point.y}',
+        },
+      },
     },
-
     tooltip: {
       headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
-      pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}%</b> of total<br/>'
+      pointFormat: '<span>value </span>: <b>{point.y}</b><br/>',
     },
-
     series: [
       {
-        name: "Browsers",
+        name: '',
         colorByPoint: true,
-        data: data
-      }
+        data: data,
+      },
     ],
-  }
+  };
 
-  return(
+  return (
     <Container>
-      <HighchartsReact
-        highcharts={Highcharts}
-        options={options}
-      />
+      <HighchartsReact highcharts={Highcharts} options={options} ref={chart} />
     </Container>
-  )
-}
+  );
+};
 
 StatisticCard.defaultProps = {
   stats: [],
-  header: ["Header"]
-}
+  header: ['Header'],
+};
 
 export default StatisticCard;
 
@@ -96,9 +120,8 @@ const Container = styled(Flexbox)`
   border-radius: 5px;
   box-shadow: ${({ theme }) => `0 3px 10px ${theme.colors.shadow}`};
   padding: 10px;
-  min-width: 410px;
+  min-width: 300px;
   width: 100%;
-  max-width: 410px;
 
   & > div {
     position: relative;

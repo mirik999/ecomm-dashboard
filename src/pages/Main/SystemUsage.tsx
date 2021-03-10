@@ -1,21 +1,20 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { formatDistance } from 'date-fns';
 import styled from 'styled-components';
 //components
 import LoadingCard from './LoadingCard';
+import Flexbox from '../../components/common/layout/Flexbox';
 //types
 import { SystemInfo } from '../../redux/types/systemInfo.type';
 //utils
 import io from '../../utils/socket.utils';
 //hooks
 import { useInterval } from '../../hooks/useInterval';
-import Flexbox from '../../components/common/layout/Flexbox';
-//socket connection
-const socket = io('statistic');
 
 type Props = {};
 
 const SystemUsage: React.FC<Props> = (props) => {
+  const socket = useRef(io('statistic')).current;
   const [systemInfo, setSystemInfo] = useState<Partial<SystemInfo>>({});
 
   useEffect(() => {
@@ -48,15 +47,44 @@ const SystemUsage: React.FC<Props> = (props) => {
 
   return (
     <Container align="stretch">
-      <Flexbox cls="left-col" flex="column-reverse" >
-        <div
-          style={{
-            height: `${systemInfo.memUsage! * 100}%`,
-            backgroundColor: handleBackColor(systemInfo.memUsage! * 100),
-          }}
-        />
+      <Flexbox col="1">
+        <ul>
+          <li>
+            <strong>CPU cores:</strong>
+            <span>{systemInfo.cpuCores}</span>
+          </li>
+          <li>
+            <strong>CPU speed:</strong>
+            <span>{systemInfo.cpuSpeed! / 1000}GHz</span>
+          </li>
+          <li>
+            <strong>CPU usage:</strong>
+            <span>{systemInfo.cpuLoad}%</span>
+          </li>
+        </ul>
       </Flexbox>
-      <Flexbox cls="middle-col" flex="column" col="5" align="start">
+      <Flexbox col="1">
+        <ul>
+          <li>
+            <strong>Memory usage:</strong>
+            <span>{systemInfo.memUsage! * 100}%</span>
+          </li>
+          <li>
+            <strong>Memory free:</strong>
+            <span>
+              {Math.round(((systemInfo.freeMem! / 1073741824) * 100) / 100)}GB
+            </span>
+          </li>
+          <li>
+            <strong>Memory total:</strong>
+            <span>
+              {Math.round(((systemInfo.totalMem! / 1073741824) * 100) / 100)}
+              GB
+            </span>
+          </li>
+        </ul>
+      </Flexbox>
+      <Flexbox col="1" align="end">
         <ul>
           <li>
             <strong>OS type:</strong>
@@ -76,47 +104,24 @@ const SystemUsage: React.FC<Props> = (props) => {
             <span>{systemInfo.cpuModel}</span>
           </li>
         </ul>
-        <ul>
-          <li>
-            <strong>Memory usage:</strong>
-            <span>{systemInfo.memUsage! * 100}%</span>
-          </li>
-          <li>
-            <strong>Memory free:</strong>
-            <span>
-                {Math.round(((systemInfo.freeMem! / 1073741824) * 100) / 100)}GB
-              </span>
-          </li>
-          <li>
-            <strong>Memory total:</strong>
-            <span>
-                {Math.round(((systemInfo.totalMem! / 1073741824) * 100) / 100)}
-              GB
-              </span>
-          </li>
-        </ul>
-        <ul>
-          <li>
-            <strong>CPU cores:</strong>
-            <span>{systemInfo.cpuCores}</span>
-          </li>
-          <li>
-            <strong>CPU speed:</strong>
-            <span>{systemInfo.cpuSpeed! / 1000}GHz</span>
-          </li>
-          <li>
-            <strong>CPU usage:</strong>
-            <span>{systemInfo.cpuLoad}%</span>
-          </li>
-        </ul>
       </Flexbox>
-      <Flexbox cls="right-col" flex="column-reverse">
-        <div
-          style={{
-            height: `${systemInfo.cpuLoad}%`,
-            backgroundColor: handleBackColor(systemInfo.cpuLoad),
-          }}
-        />
+      <Flexbox cls="animated" align="stretch">
+        <Flexbox col="1" flex="column-reverse" align="stretch">
+          <div
+            style={{
+              height: `${systemInfo.memUsage! * 100}%`,
+              backgroundColor: handleBackColor(systemInfo.memUsage! * 100),
+            }}
+          />
+        </Flexbox>
+        <Flexbox col="1" flex="column-reverse" align="stretch">
+          <div
+            style={{
+              height: `${systemInfo.cpuLoad}%`,
+              backgroundColor: handleBackColor(systemInfo.cpuLoad),
+            }}
+          />
+        </Flexbox>
       </Flexbox>
     </Container>
   );
@@ -129,60 +134,40 @@ const Container = styled(Flexbox)`
   border-radius: 5px;
   box-shadow: ${({ theme }) => `0 3px 10px ${theme.colors.shadow}`};
   padding: 10px;
-  min-width: 410px;
+  min-width: 370px;
   width: 100%;
-  max-width: 410px;
+  max-width: 370px;
   height: 230px;
 
-  .middle-col {
-    h3 {
-      text-align: center;
-      margin-bottom: 10px;
+  div {
+    min-width: 50%;
+
+    span,
+    strong {
       font-size: ${({ theme }) => theme.fontSize.sm + 'px'};
     }
 
     strong {
-      display: block;
-      font-size: ${({ theme }) => theme.fontSize.xs + 'px'};
+      display: inline-block;
+      margin-right: 5px;
     }
+  }
 
-    span {
-      font-size: ${({ theme }) => theme.fontSize.xs + 'px'};
-    }
-
-    ul {
-      flex: 1;
-      margin: 4px 10px 4px 0;
-
-      li {
-        display: flex;
+  .animated {
+    div {
+      padding: 0;
+      &:first-child {
+        padding-right: 10px;
+      }
+      div {
+        transition: all 0.3s ease;
       }
     }
   }
 
-  .left-col,
-  .right-col {
-    position: relative;
-    min-height: 100%;
-    width: 26px;
-    padding: 0;
-
-    & > div {
-      width: 100%;
-      height: 20px;
-      transition: all 0.3s ease;
-    }
-  }
-
-  @media screen and (max-width: 750px) {
-    min-width: 250px !important;
-    max-width: 250px !important;
+  @media screen and (max-width: 839px) {
+    min-width: 100% !important;
+    max-width: 100% !important;
     padding: 10px 0;
-    .left-col, .right-col {
-      display: none;
-    }
-    .middle-col {
-      padding: 0;
-    }
   }
 `;

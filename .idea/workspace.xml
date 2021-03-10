@@ -20,15 +20,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e021988f-3eda-4fed-af49-63e1e5ec9f51" name="Default Changelist" comment="users done">
-      <change afterPath="$PROJECT_DIR$/src/assets/canvasjs-charts/canvasjs.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/canvasjs-charts/canvasjs.react.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.eslintcache" beforeDir="false" afterPath="$PROJECT_DIR$/.eslintcache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/common/layout/Flexbox.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/layout/Flexbox.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/canvasjs-charts/canvasjs.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/canvasjs-charts/canvasjs.react.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/common/Layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/Layout.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Category/Category.page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Category/Category.page.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/Main/LoadingCard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Main/LoadingCard.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/Main/StatisticCard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Main/StatisticCard.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/Main/SystemUsage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Main/SystemUsage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Main/styled-components.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Main/styled-components.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -109,7 +112,7 @@
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="yarn" />
     <property name="prettierjs.PrettierConfiguration.Package" value="C:\Users\miral\WebstormProjects\@electroshop\ecomm-dashboard\node_modules\prettier" />
-    <property name="settings.editor.selected.configurable" value="settings.javascript.prettier" />
+    <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
     <property name="ts.external.directory.path" value="$PROJECT_DIR$/node_modules/typescript/lib" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>

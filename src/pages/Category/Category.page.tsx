@@ -1,25 +1,27 @@
 import React, { useEffect, useState } from 'react';
-import { useLazyQuery, useMutation } from "@apollo/client";
+import { useLazyQuery, useMutation } from '@apollo/client';
 //components
-import Layout from "../../components/common/Layout";
-import Table from "../../components/common/table/Table";
-import NotificationBox from "../../components/common/notificationBox";
+import Layout from '../../components/common/Layout';
+import Table from '../../components/common/table/Table';
+import NotificationBox from '../../components/common/notificationBox';
 //types
-import { CategoryType } from "../../redux/types/category.type";
+import { CategoryType } from '../../redux/types/category.type';
 //request
 import {
   GET_CATEGORIES,
   DISABLE_CATEGORIES,
   ACTIVATE_CATEGORIES,
-  DELETE_CATEGORIES
-} from "../../redux/requests/category.request";
+  DELETE_CATEGORIES,
+} from '../../redux/requests/category.request';
 
 type Props = {};
 
 const CategoryPage: React.FC<Props> = (props) => {
   const [GetCategories, getResponse] = useLazyQuery(GET_CATEGORIES);
   const [DisableCategories, disableResponse] = useMutation(DISABLE_CATEGORIES);
-  const [ActivateCategories, activateResponse] = useMutation(ACTIVATE_CATEGORIES);
+  const [ActivateCategories, activateResponse] = useMutation(
+    ACTIVATE_CATEGORIES,
+  );
   const [DeleteCategories, deleteResponse] = useMutation(DELETE_CATEGORIES);
   const [categories, setCategories] = useState<CategoryType[]>([]);
   //pagination
@@ -37,32 +39,36 @@ const CategoryPage: React.FC<Props> = (props) => {
       setCategories(payload);
       setAllCount(count);
     }
-  }, [getResponse.data])
+  }, [getResponse.data]);
 
   useEffect(() => {
-    (async function() {
-      await getCategories(currentPage, rowCount, deepSearch)
-    })()
-  }, [])
+    (async function () {
+      await getCategories(currentPage, rowCount, deepSearch);
+    })();
+  }, []);
 
-  async function getCategories(pg: number, rc: number, kw: string): Promise<void> {
+  async function getCategories(
+    pg: number,
+    rc: number,
+    kw: string,
+  ): Promise<void> {
     try {
       await GetCategories({
         variables: {
           controls: {
             offset: (pg - 1) * rc,
             limit: rc,
-            keyword: kw
-          }
-        }
-      })
-    } catch(err) {
-      console.log(err.message)
+            keyword: kw,
+          },
+        },
+      });
+    } catch (err) {
+      console.log(err.message);
     }
   }
 
   async function getPageFromTable(pageNumber: number): Promise<void> {
-    setCurrentPage(pageNumber)
+    setCurrentPage(pageNumber);
     await getCategories(pageNumber, rowCount, deepSearch);
   }
 
@@ -80,12 +86,12 @@ const CategoryPage: React.FC<Props> = (props) => {
     try {
       await DisableCategories({
         variables: {
-          disabledCategories: { ids }
-        }
-      })
-      handleCategoriesState(ids, true)
-    } catch(err) {
-      console.log(err.message)
+          disabledCategories: { ids },
+        },
+      });
+      handleCategoriesState(ids, true);
+    } catch (err) {
+      console.log(err.message);
     }
   }
 
@@ -93,12 +99,12 @@ const CategoryPage: React.FC<Props> = (props) => {
     try {
       await ActivateCategories({
         variables: {
-          activateCategories: { ids }
-        }
-      })
-      handleCategoriesState(ids, false)
-    } catch(err) {
-      console.log(err.message)
+          activateCategories: { ids },
+        },
+      });
+      handleCategoriesState(ids, false);
+    } catch (err) {
+      console.log(err.message);
     }
   }
 
@@ -106,39 +112,39 @@ const CategoryPage: React.FC<Props> = (props) => {
     try {
       await DeleteCategories({
         variables: {
-          deleteCategories: { ids }
-        }
-      })
-      handleCategoriesList(ids)
-    } catch(err) {
-      console.log(err.message)
+          deleteCategories: { ids },
+        },
+      });
+      handleCategoriesList(ids);
+    } catch (err) {
+      console.log(err.message);
     }
   }
 
   function handleCategoriesState(ids: string[], isDisabled: boolean) {
-    const updatedCategories = categories.map(cat => {
+    const updatedCategories = categories.map((cat) => {
       if (ids.includes(cat.id!)) {
         return {
           ...cat,
-          isDisabled
-        }
+          isDisabled,
+        };
       }
       return cat;
-    })
-    setCategories(updatedCategories)
+    });
+    setCategories(updatedCategories);
   }
 
   function handleCategoriesList(ids: string[]) {
-    const deletedCategories = categories.filter(category => !ids.includes(category.id!))
-    setCategories(deletedCategories)
+    const deletedCategories = categories.filter(
+      (category) => !ids.includes(category.id!),
+    );
+    setCategories(deletedCategories);
     setUnSelect(true);
   }
 
   return (
     <Layout>
-      <h2 className="font-medium uppercase mx-4">
-        Categories
-      </h2>
+      <h2>Categories</h2>
       {/*  table */}
       <Table
         data={categories}

@@ -39,5 +39,10 @@ const Container = styled(Flexbox)`
     height: calc(100vh - 45px);
     max-width: calc(100vw - 160px);
     overflow: auto;
+
+    & > h2 {
+      font-size: ${({ theme }) => theme.fontSize.md + 'px'};
+      text-transform: uppercase;
+    }
   }
 `;

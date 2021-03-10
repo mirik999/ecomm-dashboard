@@ -1,32 +1,34 @@
 import React, { useEffect, useState } from 'react';
 import ReactPagination from 'react-paginate';
 import { useHistory } from 'react-router-dom';
-import { useSelector } from "react-redux";
+import { useSelector } from 'react-redux';
 //components
-import Input from "../Input";
-import Select from "../Select";
-import LoadingBox from "./LoadingBox";
-import FakeTable from "./FakeTable";
-import Buttons from "./Buttons";
+import Input from '../Input';
+import Select from '../Select';
+import LoadingBox from './LoadingBox';
+import FakeTable from './FakeTable';
+import Buttons from './Buttons';
+//styled
+import { Container, HeaderPanel } from './styled-components';
 //types
 import { Props } from './props';
-import { OptionType } from "../../../redux/types/common.type";
-import { RootState } from "../../../redux/store";
+import { OptionType } from '../../../redux/types/common.type';
+import { RootState } from '../../../redux/store';
 //handler
-import { tableBodyHandler } from "./body.handler.";
+import { tableBodyHandler } from './body.handler.';
 
 const options = [
-  { id: 10, name: '10 rows'},
-  { id: 20, name: '20 rows'},
-  { id: 50, name: '50 rows'},
-  { id: 75, name: '75 rows'},
-  { id: 100, name: '100 rows'},
-]
+  { id: 10, name: '10 rows' },
+  { id: 20, name: '20 rows' },
+  { id: 50, name: '50 rows' },
+  { id: 75, name: '75 rows' },
+  { id: 100, name: '100 rows' },
+];
 
 const initialRowCountState = {
   id: 10,
-  name: '10 rows'
-}
+  name: '10 rows',
+};
 
 const Table: React.FC<Props> = ({
   data,
@@ -40,7 +42,7 @@ const Table: React.FC<Props> = ({
   getDeepSearch,
   getIdsAndDisable,
   getIdsAndActivate,
-  getIdsAndDelete
+  getIdsAndDelete,
 }) => {
   const history = useHistory();
   const { user } = useSelector((state: RootState) => state);
@@ -52,18 +54,18 @@ const Table: React.FC<Props> = ({
 
   useEffect(() => {
     if (unSelect) {
-      setSelected([])
+      setSelected([]);
     }
-  }, [unSelect])
+  }, [unSelect]);
 
   useEffect(() => {
-    setState(data)
+    setState(data);
   }, [data]);
 
   function _onSelected(category: any): void {
-    const isExists = selected.some(s => s.id === category.id);
+    const isExists = selected.some((s) => s.id === category.id);
     if (isExists) {
-      setSelected(selected.filter(s => s.id !== category.id))
+      setSelected(selected.filter((s) => s.id !== category.id));
     } else {
       setSelected([category, ...selected]);
     }
@@ -74,32 +76,32 @@ const Table: React.FC<Props> = ({
   }
 
   function _onRowCountChange(val: number): void {
-    const rowCount = options.find(o => o.id === val) || initialRowCountState;
-    setRowCount(rowCount)
-    getRowCount(rowCount.id)
+    const rowCount = options.find((o) => o.id === val) || initialRowCountState;
+    setRowCount(rowCount);
+    getRowCount(rowCount.id);
   }
 
   function _onDeepSearch(val: string): void {
-    setDeepSearch(val)
+    setDeepSearch(val);
   }
 
   function _onQuickSearch(val: string): void {
-    setQuickSearch(val)
+    setQuickSearch(val);
   }
 
   function _onFilter(search: string) {
-    return function(elem: any) {
+    return function (elem: any) {
       if (elem.email) {
         return elem.email.toLowerCase().includes(search.toLowerCase());
       }
 
       return elem.name.toLowerCase().includes(search.toLowerCase());
-    }
+    };
   }
 
   function _onFilterDeep(e: KeyboardEvent): void {
-    if (e.key === "Enter") {
-      getDeepSearch(deepSearch)
+    if (e.key === 'Enter') {
+      getDeepSearch(deepSearch);
     }
   }
 
@@ -108,37 +110,32 @@ const Table: React.FC<Props> = ({
       pathname: `/${path}/create`,
       state: {
         mode,
-        selected
-      }
-    })
+        selected,
+      },
+    });
   }
 
   function getIds(ids: string[], action: string): void {
-    if (action === "disable") {
-      getIdsAndDisable(ids)
-    } else if (action === "activate") {
-      getIdsAndActivate(ids)
-    } else if (action === "delete") {
-      getIdsAndDelete(ids)
+    if (action === 'disable') {
+      getIdsAndDisable(ids);
+    } else if (action === 'activate') {
+      getIdsAndActivate(ids);
+    } else if (action === 'delete') {
+      getIdsAndDelete(ids);
     }
     setSelected([]);
   }
 
   if (!state.length && !error) {
-    return <LoadingBox />
+    return <LoadingBox />;
   }
 
   if (!state.length && error) {
-    return (
-      <FakeTable
-        onCreate={_onRouteChange}
-        roles={user.roles}
-      />
-    )
+    return <FakeTable onCreate={_onRouteChange} roles={user.roles} />;
   }
 
   function handleTableBody(val: any, key: string): any {
-    return tableBodyHandler(val, key)
+    return tableBodyHandler(val, key);
   }
 
   const totalCount = allCount / rowCount.id;
@@ -147,12 +144,8 @@ const Table: React.FC<Props> = ({
     .filter((k, i) => ![...exclude!].includes(k));
 
   return (
-    <div
-      className="m-4"
-    >
-      <div
-        className="flex justify-between items-center flex-wrap py-3"
-      >
+    <Container>
+      <HeaderPanel justify="between">
         <Input
           label="Quick search"
           name="search"
@@ -177,69 +170,53 @@ const Table: React.FC<Props> = ({
           returnType="number"
           cls="m-0"
         />
-      </div>
-      <div
-        className="data-height overflow-auto max-w-full"
-      >
-        <table
-          className="w-full border-separate bg-gray-100 w-full overflow-auto whitespace-nwrap"
-        >
+      </HeaderPanel>
+      <div className="data-height overflow-auto max-w-full">
+        <table className="w-full border-separate bg-gray-100 w-full overflow-auto whitespace-nwrap">
           {/* TABLE HEAD */}
           <thead>
-          <tr>
-            <th className="border-2 border-gray-300 bg-gray-200 p-1 w-8" />
-            {keys.map((key, i) => (
-              <th
-                key={i}
-                className="border-2 border-gray-300 bg-gray-200 py-1 px-3 whitespace-nowrap"
-              >
-                {
-                  key
+            <tr>
+              <th className="border-2 border-gray-300 bg-gray-200 p-1 w-8" />
+              {keys.map((key, i) => (
+                <th
+                  key={i}
+                  className="border-2 border-gray-300 bg-gray-200 py-1 px-3 whitespace-nowrap"
+                >
+                  {key
                     .replace(/([A-Z])/g, ' $1')
                     .trim()
-                    .toUpperCase()
-                }
-              </th>
-            ))}
-
-          </tr>
+                    .toUpperCase()}
+                </th>
+              ))}
+            </tr>
           </thead>
           {/* TABLE BODY */}
           <tbody>
-          {
-            state
-              .filter(_onFilter(quickSearch))
-              .map((st, i: number) => (
-                <tr
-                  key={i}
-                  className="bg-gray-100 even:bg-gray-200"
-                >
-                  <td className="border-2 border-gray-200 p-1">
-                    <input
-                      type="checkbox"
-                      className="w-5 h-5"
-                      onChange={() => _onSelected(st)}
-                      disabled={st?.email === user?.email || user.roles.every(r => r === "guest")}
-                      checked={selected.some(slt => slt.id === st.id)}
+            {state.filter(_onFilter(quickSearch)).map((st, i: number) => (
+              <tr key={i} className="bg-gray-100 even:bg-gray-200">
+                <td className="border-2 border-gray-200 p-1">
+                  <input
+                    type="checkbox"
+                    className="w-5 h-5"
+                    onChange={() => _onSelected(st)}
+                    disabled={
+                      st?.email === user?.email ||
+                      user.roles.every((r) => r === 'guest')
+                    }
+                    checked={selected.some((slt) => slt.id === st.id)}
+                  />
+                </td>
+                {keys.map((k, id: number) => (
+                  <td key={id} className="border-2 border-gray-200 py-1 px-3">
+                    <div
+                      dangerouslySetInnerHTML={{
+                        __html: handleTableBody(st[k], k),
+                      }}
                     />
                   </td>
-                  {
-                    keys.map((k, id: number) => (
-                      <td
-                        key={id}
-                        className="border-2 border-gray-200 py-1 px-3"
-                      >
-                        <div
-                          dangerouslySetInnerHTML={{
-                            __html: handleTableBody(st[k], k)
-                          }}
-                        />
-                      </td>
-                    ))
-                  }
-                </tr>
-              ))
-          }
+                ))}
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
@@ -255,7 +232,7 @@ const Table: React.FC<Props> = ({
           pageRangeDisplayed={5}
           pageCount={totalCount}
           marginPagesDisplayed={10}
-          containerClassName='flex justify-end items-center h-12'
+          containerClassName="flex justify-end items-center h-12"
           pageLinkClassName="border-2 border-gray-300 font-medium text-gray-300 p-3 ml-1"
           previousLinkClassName="border-2 border-gray-300 font-medium text-gray-300 p-3 ml-1"
           nextLinkClassName="border-2 border-gray-300 font-medium text-gray-300 p-3 ml-1"
@@ -264,7 +241,7 @@ const Table: React.FC<Props> = ({
           nextLabel="next"
         />
       </div>
-    </div>
+    </Container>
   );
 };
 
@@ -274,7 +251,7 @@ Table.defaultProps = {
   exclude: ['id'],
   path: '',
   error: false,
-  unSelect: false
-}
+  unSelect: false,
+};
 
 export default Table;
