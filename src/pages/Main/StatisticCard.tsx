@@ -1,75 +1,88 @@
 import React, {memo, useEffect, useRef} from 'react';
-import 'chart.js/dist/Chart.min.css';
-const Chart = require('chart.js/dist/Chart');
+import styled from 'styled-components';
+import Highcharts from 'highcharts'
+import HighchartsReact from 'highcharts-react-official'
+//components
+import Flexbox from "../../components/common/layout/Flexbox";
+
 
 type Props = {
   header: string[]
   stats: any[]
 }
 
-const StatisticCard: React.FC<Props> = memo(({header, stats}) => {
-  const canvas = useRef(null)
+const StatisticCard: React.FC<Props> = ({header, stats}) => {
 
-  useEffect(() => {
-    const labels = Object.keys(stats[0]);
-    const data = stats.map(stat => Object.keys(stat).map(key => stat[key]));
-    new Chart(canvas.current, {
-      type: 'bar',
-      data: {
-        labels,
-        datasets: [{
-          label: '# of statistics',
-          data,
-          backgroundColor: [
-            'rgba(255, 99, 132, 0.2)',
-            'rgba(54, 162, 235, 0.2)',
-            'rgba(255, 206, 86, 0.2)',
-            'rgba(75, 192, 192, 0.2)',
-            'rgba(153, 102, 255, 0.2)',
-            'rgba(255, 159, 64, 0.2)'
-          ],
-          borderColor: [
-            'rgba(255, 99, 132, 1)',
-            'rgba(54, 162, 235, 1)',
-            'rgba(255, 206, 86, 1)',
-            'rgba(75, 192, 192, 1)',
-            'rgba(153, 102, 255, 1)',
-            'rgba(255, 159, 64, 1)'
-          ],
-          borderWidth: 1
-        }]
-      },
-      options: {
-        scales: {
-          yAxes: [{
-            ticks: {
-              beginAtZero: true,
-              precision: 0
-            }
-          }]
-        },
-      },
-      responsive: false,
-    })
-  }, [])
+  const cleanData = stats.filter(Boolean);
+  const keys = Object.keys(cleanData[0]);
+  const data = keys.map((key, i) => {
+    return {
+      name: key,
+      y: cleanData[0][key],
+      drilldown: key
+    }
+  });
+
+  console.log(data);
+
+  const options = {
+    chart: {
+      type: 'column'
+    },
+    title: {
+      text: header
+    },
+    accessibility: {
+      announceNewData: {
+        enabled: true
+      }
+    },
+    xAxis: {
+      title: false,
+      type: 'category'
+    },
+    yAxis: {
+      title: false
+    },
+    legend: {
+      enabled: false
+    },
+    credits: {
+      enabled: false
+    },
+    plotOptions: {
+      series: {
+        borderWidth: 0,
+        dataLabels: {
+          enabled: true,
+          format: '{point.y}'
+        }
+      }
+    },
+
+    tooltip: {
+      headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+      pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}%</b> of total<br/>'
+    },
+
+    series: [
+      {
+        name: "Browsers",
+        colorByPoint: true,
+        data: data
+      }
+    ],
+  }
 
   return(
-    <div
-      className="bg-white rounded shadow-md p-4 w-520 h-230 flex-1"
-    >
-      <div className="chart-container" style={{ position: "relative", maxHeight: "210px", width:"100%" }}>
-        <canvas
-          id="myChart"
-          style={{
-            maxWidth: '510px',
-            maxHeight: '210px'
-          }}
-          ref={canvas}
-        />
-      </div>
-    </div>
+    <Container>
+      <HighchartsReact
+        highcharts={Highcharts}
+        options={options}
+      />
+    </Container>
   )
-})
+}
 
 StatisticCard.defaultProps = {
   stats: [],
@@ -77,3 +90,24 @@ StatisticCard.defaultProps = {
 }
 
 export default StatisticCard;
+
+const Container = styled(Flexbox)`
+  background-color: ${({ theme }) => theme.colors.white};
+  border-radius: 5px;
+  box-shadow: ${({ theme }) => `0 3px 10px ${theme.colors.shadow}`};
+  padding: 10px;
+  min-width: 410px;
+  width: 100%;
+  max-width: 410px;
+
+  & > div {
+    position: relative;
+    max-height: 210px;
+    width: 100%;
+
+    canvas {
+      max-width: 510px;
+      max-height: 210px;
+    }
+  }
+`;

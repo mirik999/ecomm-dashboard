@@ -47,29 +47,22 @@ const SystemUsage: React.FC<Props> = (props) => {
   }
 
   return (
-    <Container align="start">
-      <Flexbox cls="left-col" flex="column-reverse">
+    <Container align="stretch">
+      <Flexbox cls="left-col" flex="column-reverse" >
         <div
           style={{
             height: `${systemInfo.memUsage! * 100}%`,
             backgroundColor: handleBackColor(systemInfo.memUsage! * 100),
           }}
-        >
-          <div style={{ right: '24px' }}>
-            <span>MEM</span>
-          </div>
-        </div>
+        />
       </Flexbox>
-      <Flexbox cls="middle-col" flex="column" col="5">
-        <h3>
-          <strong>System Information</strong>
-        </h3>
-        <Flexbox cls="np" flex="column">
-          <Flexbox>
+      <Flexbox cls="middle-col" flex="column" col="5" align="start">
+        <ul>
+          <li>
             <strong>OS type:</strong>
             <span>{systemInfo.type}</span>
-          </Flexbox>
-          <Flexbox>
+          </li>
+          <li>
             <strong>OS uptime:</strong>
             <span>
               {formatDistance(
@@ -77,47 +70,45 @@ const SystemUsage: React.FC<Props> = (props) => {
                 new Date(),
               )}
             </span>
-          </Flexbox>
-          <Flexbox>
+          </li>
+          <li>
             <strong>CPU name:</strong>
             <span>{systemInfo.cpuModel}</span>
-          </Flexbox>
-        </Flexbox>
-        <Flexbox>
-          <ul>
-            <li>
-              <strong>Memory usage:</strong>
-              <span>{systemInfo.memUsage! * 100}%</span>
-            </li>
-            <li>
-              <strong>Memory free:</strong>
-              <span>
+          </li>
+        </ul>
+        <ul>
+          <li>
+            <strong>Memory usage:</strong>
+            <span>{systemInfo.memUsage! * 100}%</span>
+          </li>
+          <li>
+            <strong>Memory free:</strong>
+            <span>
                 {Math.round(((systemInfo.freeMem! / 1073741824) * 100) / 100)}GB
               </span>
-            </li>
-            <li>
-              <strong>Memory total:</strong>
-              <span>
+          </li>
+          <li>
+            <strong>Memory total:</strong>
+            <span>
                 {Math.round(((systemInfo.totalMem! / 1073741824) * 100) / 100)}
-                GB
+              GB
               </span>
-            </li>
-          </ul>
-          <ul>
-            <li>
-              <strong>CPU cores:</strong>
-              <span>{systemInfo.cpuCores}</span>
-            </li>
-            <li>
-              <strong>CPU speed:</strong>
-              <span>{systemInfo.cpuSpeed! / 1000}GHz</span>
-            </li>
-            <li>
-              <strong>CPU usage:</strong>
-              <span>{systemInfo.cpuLoad}%</span>
-            </li>
-          </ul>
-        </Flexbox>
+          </li>
+        </ul>
+        <ul>
+          <li>
+            <strong>CPU cores:</strong>
+            <span>{systemInfo.cpuCores}</span>
+          </li>
+          <li>
+            <strong>CPU speed:</strong>
+            <span>{systemInfo.cpuSpeed! / 1000}GHz</span>
+          </li>
+          <li>
+            <strong>CPU usage:</strong>
+            <span>{systemInfo.cpuLoad}%</span>
+          </li>
+        </ul>
       </Flexbox>
       <Flexbox cls="right-col" flex="column-reverse">
         <div
@@ -125,11 +116,7 @@ const SystemUsage: React.FC<Props> = (props) => {
             height: `${systemInfo.cpuLoad}%`,
             backgroundColor: handleBackColor(systemInfo.cpuLoad),
           }}
-        >
-          <div style={{ left: '24px' }}>
-            <span>CPU</span>
-          </div>
-        </div>
+        />
       </Flexbox>
     </Container>
   );
@@ -142,10 +129,10 @@ const Container = styled(Flexbox)`
   border-radius: 5px;
   box-shadow: ${({ theme }) => `0 3px 10px ${theme.colors.shadow}`};
   padding: 10px;
-  min-width: 250px;
+  min-width: 410px;
   width: 100%;
-  max-width: 420px;
-  height: 130px;
+  max-width: 410px;
+  height: 230px;
 
   .middle-col {
     h3 {
@@ -155,7 +142,6 @@ const Container = styled(Flexbox)`
     }
 
     strong {
-      width: 72px;
       display: block;
       font-size: ${({ theme }) => theme.fontSize.xs + 'px'};
     }
@@ -164,16 +150,9 @@ const Container = styled(Flexbox)`
       font-size: ${({ theme }) => theme.fontSize.xs + 'px'};
     }
 
-    ul:first-child {
+    ul {
+      flex: 1;
       margin: 4px 10px 4px 0;
-
-      li {
-        display: flex;
-      }
-    }
-
-    ul:last-child {
-      margin: 4px 0;
 
       li {
         display: flex;
@@ -184,22 +163,26 @@ const Container = styled(Flexbox)`
   .left-col,
   .right-col {
     position: relative;
-    height: 100%;
+    min-height: 100%;
     width: 26px;
+    padding: 0;
 
     & > div {
       width: 100%;
       height: 20px;
       transition: all 0.3s ease;
+    }
+  }
 
-      & > div {
-        top: 0;
-        position: absolute;
-
-        span {
-          font-size: ${({ theme }) => theme.fontSize.xs + 'px'};
-        }
-      }
+  @media screen and (max-width: 750px) {
+    min-width: 250px !important;
+    max-width: 250px !important;
+    padding: 10px 0;
+    .left-col, .right-col {
+      display: none;
+    }
+    .middle-col {
+      padding: 0;
     }
   }
 `;

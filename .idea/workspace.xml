@@ -20,25 +20,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e021988f-3eda-4fed-af49-63e1e5ec9f51" name="Default Changelist" comment="users done">
-      <change afterPath="$PROJECT_DIR$/src/pages/Main/styled-components.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/canvasjs-charts/canvasjs.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/canvasjs-charts/canvasjs.react.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.eslintcache" beforeDir="false" afterPath="$PROJECT_DIR$/.eslintcache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.prettierrc" beforeDir="false" afterPath="$PROJECT_DIR$/.prettierrc" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/common/Header.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/Header.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/common/Layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/Layout.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/common/Navigation.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/Navigation.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/common/layout/Flexbox.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/layout/Flexbox.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/common/notificationBox/ErrorBox.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/notificationBox/ErrorBox.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/common/notificationBox/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/notificationBox/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Auth/Login.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Auth/Login.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Auth/Register.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Auth/Register.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Main/Main.page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Main/Main.page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Main/LoadingCard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Main/LoadingCard.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Main/StatisticCard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Main/StatisticCard.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/Main/SystemUsage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Main/SystemUsage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/redux/slices/auth-credentials.slice.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/slices/auth-credentials.slice.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/redux/slices/theme.slice.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/slices/theme.slice.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/redux/types/theme.type.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/types/theme.type.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />

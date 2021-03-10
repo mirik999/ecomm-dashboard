@@ -5,7 +5,7 @@ interface Props {
   children: React.ReactNode;
   flex?: 'row' | 'row-reverse' | 'column' | 'column-reverse';
   justify?: 'start' | 'end' | 'center' | 'between' | 'evenly' | 'around';
-  align?: 'start' | 'end' | 'center' | 'between' | 'evenly' | 'around';
+  align?: 'start' | 'end' | 'center' | 'stretch';
   wrap?: 'wrap' | 'no-wrap' | 'wrap-reverse';
   content?:
     | 'start'
