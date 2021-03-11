@@ -6,7 +6,6 @@ export const GET_STATISTICS = gql`
       product {
         count
         isDisabled
-        price
         sold
         sale
       }

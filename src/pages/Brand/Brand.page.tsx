@@ -1,26 +1,30 @@
 import React, { useEffect, useState } from 'react';
-import { useLazyQuery, useMutation } from "@apollo/client";
+import { useLazyQuery, useMutation } from '@apollo/client';
+import { useDispatch } from 'react-redux';
 //components
-import Layout from "../../components/common/Layout";
-import Table from "../../components/common/table/Table";
-import NotificationBox from "../../components/common/notificationBox";
+import Layout from '../../components/common/Layout';
+import Table from '../../components/common/table/Table';
 //types
-import { BrandType } from "../../redux/types/brand.type";
+import { BrandType } from '../../redux/types/brand.type';
 //request
 import {
   GET_BRANDS,
   DISABLE_BRANDS,
   ACTIVATE_BRANDS,
-  DELETE_BRANDS
-} from "../../redux/requests/brand.request";
+  DELETE_BRANDS,
+} from '../../redux/requests/brand.request';
+//actions
+import { saveNetStatus } from '../../redux/slices/net-status.slice';
 
 type Props = {};
 
 const BrandPage: React.FC<Props> = (props) => {
+  const dispatch = useDispatch();
+  //state
   const [GetBrands, getResponse] = useLazyQuery(GET_BRANDS);
-  const [DisableBrands, disableResponse] = useMutation(DISABLE_BRANDS);
-  const [ActivateBrands, activateResponse] = useMutation(ACTIVATE_BRANDS);
-  const [DeleteBrands, deleteResponse] = useMutation(DELETE_BRANDS);
+  const [DisableBrands] = useMutation(DISABLE_BRANDS);
+  const [ActivateBrands] = useMutation(ACTIVATE_BRANDS);
+  const [DeleteBrands] = useMutation(DELETE_BRANDS);
   const [brands, setBrands] = useState<BrandType[]>([]);
   //pagination
   const [allCount, setAllCount] = useState<number>(0);
@@ -37,13 +41,13 @@ const BrandPage: React.FC<Props> = (props) => {
       setBrands(payload);
       setAllCount(count);
     }
-  }, [getResponse.data])
+  }, [getResponse.data]);
 
   useEffect(() => {
-    (async function() {
-      await getBrands(currentPage, rowCount, deepSearch)
-    })()
-  }, [])
+    (async function () {
+      await getBrands(currentPage, rowCount, deepSearch);
+    })();
+  }, []);
 
   async function getBrands(pg: number, rc: number, kw: string): Promise<void> {
     try {
@@ -52,17 +56,17 @@ const BrandPage: React.FC<Props> = (props) => {
           controls: {
             offset: (pg - 1) * rc,
             limit: rc,
-            keyword: kw
-          }
-        }
-      })
-    } catch(err) {
-      console.log(err.message)
+            keyword: kw,
+          },
+        },
+      });
+    } catch (err) {
+      dispatch(saveNetStatus(err.graphQLErrors));
     }
   }
 
   async function getPageFromTable(pageNumber: number): Promise<void> {
-    setCurrentPage(pageNumber)
+    setCurrentPage(pageNumber);
     await getBrands(pageNumber, rowCount, deepSearch);
   }
 
@@ -80,12 +84,12 @@ const BrandPage: React.FC<Props> = (props) => {
     try {
       await DisableBrands({
         variables: {
-          disabledBrands: { ids }
-        }
-      })
-      handleBrandsState(ids, true)
-    } catch(err) {
-      console.log(err.message)
+          disabledBrands: { ids },
+        },
+      });
+      handleBrandsState(ids, true);
+    } catch (err) {
+      dispatch(saveNetStatus(err.graphQLErrors));
     }
   }
 
@@ -93,12 +97,12 @@ const BrandPage: React.FC<Props> = (props) => {
     try {
       await ActivateBrands({
         variables: {
-          activateBrands: { ids }
-        }
-      })
-      handleBrandsState(ids, false)
-    } catch(err) {
-      console.log(err.message)
+          activateBrands: { ids },
+        },
+      });
+      handleBrandsState(ids, false);
+    } catch (err) {
+      dispatch(saveNetStatus(err.graphQLErrors));
     }
   }
 
@@ -106,39 +110,37 @@ const BrandPage: React.FC<Props> = (props) => {
     try {
       await DeleteBrands({
         variables: {
-          deleteBrands: { ids }
-        }
-      })
-      handleBrandsList(ids)
-    } catch(err) {
-      console.log(err.message)
+          deleteBrands: { ids },
+        },
+      });
+      handleBrandsList(ids);
+    } catch (err) {
+      dispatch(saveNetStatus(err.graphQLErrors));
     }
   }
 
   function handleBrandsState(ids: string[], isDisabled: boolean) {
-    const updatedBrands = brands.map(cat => {
+    const updatedBrands = brands.map((cat) => {
       if (ids.includes(cat.id!)) {
         return {
           ...cat,
-          isDisabled
-        }
+          isDisabled,
+        };
       }
       return cat;
-    })
-    setBrands(updatedBrands)
+    });
+    setBrands(updatedBrands);
   }
 
   function handleBrandsList(ids: string[]) {
-    const deletedBrands = brands.filter(brand => !ids.includes(brand.id!))
-    setBrands(deletedBrands)
+    const deletedBrands = brands.filter((brand) => !ids.includes(brand.id!));
+    setBrands(deletedBrands);
     setUnSelect(true);
   }
 
   return (
     <Layout>
-      <h2 className="font-medium uppercase mx-4">
-        Brands
-      </h2>
+      <h2 className="font-medium uppercase mx-4">Brands</h2>
       {/*  table */}
       <Table
         data={brands}
@@ -154,14 +156,6 @@ const BrandPage: React.FC<Props> = (props) => {
         exclude={['id']}
         unSelect={unSelect}
       />
-      {/*<NotificationBox*/}
-      {/*  list={[*/}
-      {/*    getResponse,*/}
-      {/*    activateResponse,*/}
-      {/*    disableResponse,*/}
-      {/*    deleteResponse*/}
-      {/*  ]}*/}
-      {/*/>*/}
     </Layout>
   );
 };

@@ -2,13 +2,13 @@ import React, { FormEvent } from 'react';
 import styled from 'styled-components';
 
 type Props = {
-  type?: 'text' | 'number' | 'email' | 'password' | 'phone'
-  label?: string
-  value: any
-  name: string
-  cls?: string
-  getValue: (val: any) => void
-  [key: string]: any
+  type?: 'text' | 'number' | 'email' | 'password' | 'phone';
+  label?: string;
+  value: any;
+  name: string;
+  cls?: string;
+  getValue: (val: any) => void;
+  [key: string]: any;
 };
 
 const Input: React.FC<Props> = ({
@@ -20,16 +20,12 @@ const Input: React.FC<Props> = ({
   getValue,
   ...props
 }) => {
-
   return (
-    <Label
-      htmlFor={type + '-' + Date.now()}
-      className={`flex flex-col flex-1 ${cls}`}
-    >
+    <Label htmlFor={type + label!} className={cls}>
       <span>{label}</span>
       <input
         type={type}
-        id={type + '-' + Date.now()}
+        id={type + label!}
         name="email"
         autoComplete="off"
         value={value}
@@ -52,20 +48,29 @@ Input.defaultProps = {
 
 export default Input;
 
-
 const Label = styled.label`
   display: flex;
   flex-direction: column;
+  flex: 1;
 
   span {
-    font-size: ${({theme}) => theme.fontSize.sm + "px"};
+    font-size: ${({ theme }) => theme.fontSize.sm + 'px'};
     font-weight: 600;
     margin-bottom: 5px;
   }
 
   input {
     padding: 8px 12px;
-    border: ${({ theme }) => ` 1px solid ${theme.colors.border}`};
     border-radius: 4px;
+    border-width: 2px 4px 2px 2px;
+    border-style: solid;
+    border-color: ${({ theme }) => theme.colors.border};
+
+    &:focus {
+      outline: none;
+      border-bottom-color: ${({ theme }) => theme.colors.successLight};
+      border-right-color: ${({ theme }) => theme.colors.successLight};
+      border-width: 2px 4px 2px 2px;
+    }
   }
 `;

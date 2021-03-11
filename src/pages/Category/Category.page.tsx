@@ -3,7 +3,6 @@ import { useLazyQuery, useMutation } from '@apollo/client';
 //components
 import Layout from '../../components/common/Layout';
 import Table from '../../components/common/table/Table';
-import NotificationBox from '../../components/common/notificationBox';
 //types
 import { CategoryType } from '../../redux/types/category.type';
 //request
@@ -160,14 +159,6 @@ const CategoryPage: React.FC<Props> = (props) => {
         exclude={['id']}
         unSelect={unSelect}
       />
-      {/*<NotificationBox*/}
-      {/*  list={[*/}
-      {/*    getResponse,*/}
-      {/*    activateResponse,*/}
-      {/*    disableResponse,*/}
-      {/*    deleteResponse*/}
-      {/*  ]}*/}
-      {/*/>*/}
     </Layout>
   );
 };

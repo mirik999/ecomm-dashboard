@@ -1,22 +1,22 @@
 import React from 'react';
 
 type Props = {
-  message?: string
-}
+  message?: string;
+};
 
-const LoadingBox: React.FC<Props> = ({message}) => {
+const LoadingBox: React.FC<Props> = ({ message }) => {
   return (
     <div
       className="loading-height overflow-auto max-w-full mx-4 my-3
           flex justify-center items-center"
     >
-      <strong>Loading...</strong>
+      {/*<strong>Loading...</strong>*/}
     </div>
   );
-}
+};
 
 LoadingBox.defaultProps = {
-  message: 'Loading...'
-}
+  message: 'Loading...',
+};
 
 export default LoadingBox;

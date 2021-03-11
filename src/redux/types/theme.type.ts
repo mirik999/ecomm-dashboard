@@ -35,6 +35,7 @@ export type Theme = {
     color?: string;
     secondColor?: string;
     background?: string;
+    secondBackground?: string;
     shadow?: string;
     border?: string;
     main?: string;

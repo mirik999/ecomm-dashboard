@@ -4,21 +4,22 @@ import { Route, Redirect } from 'react-router-dom';
 //types
 import { RootState } from '../../redux/store';
 
-
 type Props = {
   component: React.FunctionComponent<any>;
   [key: string]: any;
 };
 
 const WithToken: React.FC<Props> = ({ component: Component, ...rest }) => {
-  const { authCredentials, user, nav } = useSelector((state: RootState) => state);
+  const { authCredentials, user, nav } = useSelector(
+    (state: RootState) => state,
+  );
 
-  const findNav = nav.find(n => {
+  const findNav = nav.find((n) => {
     if (n.path === rest.path) {
       return n;
     }
     if (n.subPaths) {
-      const checkSubPath = n.subPaths.some(p => rest.path.includes(p))
+      const checkSubPath = n.subPaths.some((p) => rest.path.includes(p));
       if (checkSubPath) {
         return n;
       }
@@ -28,18 +29,23 @@ const WithToken: React.FC<Props> = ({ component: Component, ...rest }) => {
 
   if (Object.keys(findNav).length) {
     const noAccess = findNav.accessRoles.some((acr: string) => {
-      return user.roles.length ? user.roles.includes(acr) : "guest"
+      return user.roles.length ? user.roles.includes(acr) : 'guest';
     });
     if (!noAccess && authCredentials.accessToken) {
-      return <Redirect to="/404" />
+      return <Redirect to="/404" />;
     }
   }
 
   return (
     <Route
       {...rest}
-      render={(props) => (authCredentials.accessToken ? <Component {...props} /> :
-        <Redirect to="/auth" />)}
+      render={(props) =>
+        authCredentials.accessToken ? (
+          <Component {...props} />
+        ) : (
+          <Redirect to="/auth" />
+        )
+      }
     />
   );
 };

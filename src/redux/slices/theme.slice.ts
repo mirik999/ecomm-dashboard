@@ -5,9 +5,9 @@ import { Theme } from '../types/theme.type';
 const light: Theme = {
   fontSize: {
     small: { xs: 10, sm: 10, md: 12, lg: 14, xl: 18 },
-    medium: { xs: 10, sm: 12, md: 14, lg: 16, xl: 22 },
-    hd: { xs: 10, sm: 14, md: 16, lg: 20, xl: 26 },
-    fhd: { xs: 12, sm: 16, md: 18, lg: 22, xl: 32 },
+    medium: { xs: 10, sm: 11, md: 13, lg: 16, xl: 20 },
+    hd: { xs: 10, sm: 12, md: 14, lg: 16, xl: 22 },
+    fhd: { xs: 12, sm: 14, md: 16, lg: 18, xl: 26 },
   },
   colors: {
     white: '#fff',
@@ -15,6 +15,7 @@ const light: Theme = {
     color: '#333',
     secondColor: '#90a4ae',
     background: '#eaeaea',
+    secondBackground: '#c2c2c2',
     shadow: 'rgba(0,0,0,0.1)',
     border: '#e2e2e2',
     main: '#2c3e50',
@@ -30,9 +31,9 @@ const light: Theme = {
 const dark: Theme = {
   fontSize: {
     small: { xs: 10, sm: 10, md: 12, lg: 14, xl: 18 },
-    medium: { xs: 10, sm: 12, md: 14, lg: 16, xl: 22 },
-    hd: { xs: 10, sm: 14, md: 16, lg: 20, xl: 26 },
-    fhd: { xs: 12, sm: 16, md: 18, lg: 22, xl: 32 },
+    medium: { xs: 10, sm: 11, md: 13, lg: 16, xl: 20 },
+    hd: { xs: 10, sm: 12, md: 14, lg: 16, xl: 22 },
+    fhd: { xs: 12, sm: 14, md: 16, lg: 18, xl: 26 },
   },
   colors: {
     white: '#fff',
@@ -40,6 +41,7 @@ const dark: Theme = {
     color: '#dee4e7',
     secondColor: '#90a4ae',
     background: '#37474f',
+    secondBackground: '#536b77',
     shadow: 'rgba(0,0,0,0.7)',
     border: '#222222',
     main: '#2c3e50',

@@ -9,13 +9,20 @@ import LoadingBox from './LoadingBox';
 import FakeTable from './FakeTable';
 import Buttons from './Buttons';
 //styled
-import { Container, HeaderPanel } from './styled-components';
+import {
+  Container,
+  HeaderPanel,
+  TableContainer,
+  CustomTable,
+  FooterPanel,
+} from './styled-components';
 //types
 import { Props } from './props';
 import { OptionType } from '../../../redux/types/common.type';
 import { RootState } from '../../../redux/store';
 //handler
 import { tableBodyHandler } from './body.handler.';
+import Paginate from './Paginate';
 
 const options = [
   { id: 10, name: '10 rows' },
@@ -62,12 +69,12 @@ const Table: React.FC<Props> = ({
     setState(data);
   }, [data]);
 
-  function _onSelected(category: any): void {
-    const isExists = selected.some((s) => s.id === category.id);
+  function _onSelected(elem: any): void {
+    const isExists = selected.some((s) => s.id === elem.id);
     if (isExists) {
-      setSelected(selected.filter((s) => s.id !== category.id));
+      setSelected(selected.filter((s) => s.id !== elem.id));
     } else {
-      setSelected([category, ...selected]);
+      setSelected([elem, ...selected]);
     }
   }
 
@@ -151,7 +158,6 @@ const Table: React.FC<Props> = ({
           name="search"
           value={quickSearch}
           getValue={_onQuickSearch}
-          cls="mr-4"
         />
         <Input
           label="Deep search"
@@ -159,7 +165,6 @@ const Table: React.FC<Props> = ({
           value={deepSearch}
           getValue={_onDeepSearch}
           onKeyDown={_onFilterDeep}
-          cls="mr-4"
         />
         <Select
           label="Select row count"
@@ -168,20 +173,16 @@ const Table: React.FC<Props> = ({
           options={options}
           getValue={_onRowCountChange}
           returnType="number"
-          cls="m-0"
         />
       </HeaderPanel>
-      <div className="data-height overflow-auto max-w-full">
-        <table className="w-full border-separate bg-gray-100 w-full overflow-auto whitespace-nwrap">
+      <TableContainer>
+        <CustomTable>
           {/* TABLE HEAD */}
           <thead>
             <tr>
-              <th className="border-2 border-gray-300 bg-gray-200 p-1 w-8" />
+              <th />
               {keys.map((key, i) => (
-                <th
-                  key={i}
-                  className="border-2 border-gray-300 bg-gray-200 py-1 px-3 whitespace-nowrap"
-                >
+                <th key={i}>
                   {key
                     .replace(/([A-Z])/g, ' $1')
                     .trim()
@@ -193,11 +194,10 @@ const Table: React.FC<Props> = ({
           {/* TABLE BODY */}
           <tbody>
             {state.filter(_onFilter(quickSearch)).map((st, i: number) => (
-              <tr key={i} className="bg-gray-100 even:bg-gray-200">
-                <td className="border-2 border-gray-200 p-1">
+              <tr key={i}>
+                <td>
                   <input
                     type="checkbox"
-                    className="w-5 h-5"
                     onChange={() => _onSelected(st)}
                     disabled={
                       st?.email === user?.email ||
@@ -207,7 +207,7 @@ const Table: React.FC<Props> = ({
                   />
                 </td>
                 {keys.map((k, id: number) => (
-                  <td key={id} className="border-2 border-gray-200 py-1 px-3">
+                  <td key={id}>
                     <div
                       dangerouslySetInnerHTML={{
                         __html: handleTableBody(st[k], k),
@@ -218,29 +218,21 @@ const Table: React.FC<Props> = ({
               </tr>
             ))}
           </tbody>
-        </table>
-      </div>
-      <div className="flex justify-between items-center">
+        </CustomTable>
+      </TableContainer>
+      <FooterPanel justify="between">
         <Buttons
           selected={selected}
           getIds={getIds}
           roles={user.roles}
           onRouteChange={_onRouteChange}
         />
-        <ReactPagination
-          onPageChange={_onPageChange}
-          pageRangeDisplayed={5}
-          pageCount={totalCount}
-          marginPagesDisplayed={10}
-          containerClassName="flex justify-end items-center h-12"
-          pageLinkClassName="border-2 border-gray-300 font-medium text-gray-300 p-3 ml-1"
-          previousLinkClassName="border-2 border-gray-300 font-medium text-gray-300 p-3 ml-1"
-          nextLinkClassName="border-2 border-gray-300 font-medium text-gray-300 p-3 ml-1"
-          activeLinkClassName="border-blue-400 text-blue-400"
-          previousLabel="prev"
-          nextLabel="next"
+        <Paginate
+          getPageChange={_onPageChange}
+          pageRange={5}
+          totalCount={totalCount}
         />
-      </div>
+      </FooterPanel>
     </Container>
   );
 };

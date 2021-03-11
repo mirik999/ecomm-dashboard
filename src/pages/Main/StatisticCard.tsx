@@ -68,7 +68,8 @@ const StatisticCard: React.FC<Props> = ({ header, stats }) => {
       },
     },
     xAxis: {
-      title: false,
+      title: true,
+      categories: data.map((d) => d.name),
     },
     yAxis: {
       title: false,
@@ -94,7 +95,6 @@ const StatisticCard: React.FC<Props> = ({ header, stats }) => {
     },
     series: [
       {
-        name: '',
         colorByPoint: true,
         data: data,
       },
