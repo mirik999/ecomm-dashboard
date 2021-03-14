@@ -15,6 +15,12 @@ export const TableContainer = styled.div`
   overflow: auto;
   max-width: 100%;
   margin-bottom: 10px;
+  padding: 10px;
+  background-color: ${({ theme }) => theme.colors.white};
+  border-radius: 4px;
+  border-width: 2px 4px 2px 2px;
+  border-style: solid;
+  border-color: ${({ theme }) => theme.colors.border};
 `;
 
 export const CustomTable = styled.table`
@@ -23,6 +29,12 @@ export const CustomTable = styled.table`
   background-color: ${({ theme }) => theme.colors.shadow};
   overflow: auto;
   white-space: nowrap;
+  border-radius: 3px;
+
+  th,
+  td {
+    border-radius: 3px;
+  }
 
   th:first-child {
     border-width: 1px;
@@ -72,4 +84,15 @@ export const CustomTable = styled.table`
   }
 `;
 
-export const FooterPanel = styled(Flexbox)``;
+export const FooterPanel = styled(Flexbox)`
+  padding: 0;
+
+  @media screen and (max-width: 800px) {
+    flex-direction: column;
+    align-items: flex-start;
+
+    .pagination-wrap {
+      order: -1;
+    }
+  }
+`;

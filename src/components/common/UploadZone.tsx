@@ -1,190 +1,185 @@
 import React, { FormEvent, useEffect, useState, memo } from 'react';
 import Lightbox from 'react-image-lightbox';
+import styled from 'styled-components';
+//components
+import Flexbox from './layout/Flexbox';
 //utils
-import { imageUploadAndGetUrl } from "../../utils/cloudinary.utils";
+import { imageUploadAndGetUrl } from '../../utils/cloudinary.utils';
 
 type Props = {
-  label?: string
-  value: string[]
-  multiple: boolean
-  cls?: string
-  getValue: (val: string[]) => void
-  [key: string]: any
+  label?: string;
+  value: string[];
+  multiple: boolean;
+  cls?: string;
+  getValue: (val: string[]) => void;
+  [key: string]: any;
 };
 
-const UploadZone: React.FC<Props> = memo(({
- label,
- value,
- multiple,
- cls,
- getValue,
- ...props
-}) => {
-  const [preview, setPreview] = useState<string[]>([]);
-  const [upLoading, setUpLoading] = useState<boolean>(false);
-  const [warning, setWarning] = useState<string>('');
-  const [uploadPercent, setUploadPercent] = useState<number>(0);
-  const [photoIndex, setPhotoIndex] = useState<number>(0);
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+const UploadZone: React.FC<Props> = memo(
+  ({ label, value, multiple, cls, getValue, ...props }) => {
+    const [preview, setPreview] = useState<string[]>([]);
+    const [upLoading, setUpLoading] = useState<boolean>(false);
+    const [warning, setWarning] = useState<string>('');
+    const [uploadPercent, setUploadPercent] = useState<number>(0);
+    const [photoIndex, setPhotoIndex] = useState<number>(0);
+    const [isOpen, setIsOpen] = useState<boolean>(false);
 
-  useEffect(() => {
-    if (multiple && typeof value === "object") {
-      setPreview(value)
-    }
-
-    if (!multiple && typeof value === "string" && value !== "") {
-      setPreview([value])
-    }
-  }, [value])
-
-  async function handleImage({ currentTarget }: FormEvent<HTMLInputElement>) {
-    const files = currentTarget.files!;
-    const newPreviewList: string[] = [];
-
-    if (files.length > 5) {
-      setWarning('Please follow the above instruction');
-      return;
-    }
-
-    setUpLoading(true);
-
-    for (let i = 0; i < files.length; i++) {
-      const file = files[i];
-
-      if (file.size > 524000) {
-        if (multiple) {
-          setWarning('Some of the images size greater than 500KB');
-        } else {
-          setWarning('Image size greater than 500KB');
-        }
-        setUpLoading(false);
-        continue;
+    useEffect(() => {
+      if (multiple && typeof value === 'object') {
+        setPreview(value);
       }
 
-      await imageUploadAndGetUrl(file, "product_images",(percent, error, file) => {
-        if (percent) {
-          setUploadPercent(percent);
-        }
-        if (error) {
-          setWarning(error)
-        }
-        if (file) {
-          setUploadPercent(0);
-          setWarning('');
+      if (!multiple && typeof value === 'string' && value !== '') {
+        setPreview([value]);
+      }
+    }, [value]);
+
+    async function handleImage({ currentTarget }: FormEvent<HTMLInputElement>) {
+      const files = currentTarget.files!;
+      const newPreviewList: string[] = [];
+
+      if (files.length >= 5 || preview.length >= 5) {
+        setWarning('Please follow the above instruction');
+        return;
+      }
+
+      setUpLoading(true);
+
+      for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+
+        if (file.size > 524000) {
           if (multiple) {
-            setPreview(prevState => [file.data.secure_url, ...prevState]);
-            newPreviewList.push(file.data.secure_url);
+            setWarning('Some of the images size greater than 500KB');
           } else {
-            setPreview([file.data.secure_url]);
-            newPreviewList.push(file.data.secure_url);
+            setWarning('Image size greater than 500KB');
           }
+          setUpLoading(false);
+          continue;
         }
-      });
+
+        await imageUploadAndGetUrl(
+          file,
+          'product_images',
+          (percent, error, file) => {
+            if (percent) {
+              setUploadPercent(percent);
+            }
+            if (error) {
+              setWarning(error);
+            }
+            if (file) {
+              setUploadPercent(0);
+              setWarning('');
+              if (multiple) {
+                setPreview((prevState) => [file.data.secure_url, ...prevState]);
+                newPreviewList.push(file.data.secure_url);
+              } else {
+                setPreview([file.data.secure_url]);
+                newPreviewList.push(file.data.secure_url);
+              }
+            }
+          },
+        );
+      }
+
+      getValue([...newPreviewList, ...preview]);
+      setUpLoading(false);
     }
 
-    getValue([...newPreviewList, ...preview]);
-    setUpLoading(false);
-  }
+    function _onDeletePreviewImage(e: any, url: string): void {
+      e.stopPropagation();
+      const newPreviewState: string[] = preview.filter((pre) => pre !== url);
+      setPreview(newPreviewState);
+      getValue(newPreviewState);
+    }
 
-  function _onDeletePreviewImage(e: any, url: string): void {
-    e.stopPropagation();
-    const newPreviewState: string[] = preview.filter(pre => pre !== url);
-    setPreview(newPreviewState);
-    getValue(newPreviewState);
-  }
-
-  return (
-    <div  className={`flex flex-col relative ${cls}`}>
-      <div className="flex justify-between">
-        <span className={warning ? 'text-red-400' : 'text-black'}>{label}</span>
-        { uploadPercent ? <span className="ml-2 font-bold">{uploadPercent}%</span> : null }
-      </div>
-      <label htmlFor="file-upload">
-        <div className="flex-1">
-          <input
-            type="file"
-            id="file-upload"
-            name="file-upload"
-            autoComplete="off"
-            className="absolute w-full p-2 opacity-0"
-            onChange={handleImage}
-            multiple={multiple}
-            accept="image/*"
-            disabled={upLoading}
-          />
-          <input type="text"
-           value=""
-           className="shadow-ml outline-none border-b-2 border-gray-200 p-3 text-black
-            border-r-4 rounded-md text-base focus:border-blue-400 w-full"
-           readOnly={true}
-           placeholder={ warning ?  warning : 'Click to select' }
-           {...props}
-          />
-        </div>
-      </label>
-      <div
-        className="p-3 my-4 border-dashed border-2 border-gray-300 flex
-         flex-wrap rounded text-gray-300"
-      >
-        {
-          preview.length ? preview.map((pre, i) => (
-            <div
-              key={i}
-              className="min-w-44 min-h-44 flex-1 m-3 p-2 bg-white rounded flex
-                flex-col items-center"
-              onClick={() => {
-                setPhotoIndex(i)
-                setIsOpen(true)
-              }}
-            >
-              <div
-                className="w-36 h-36 bg-no-repeat bg-center bg-contain"
-                style={{ backgroundImage: `url(${pre})` }}
+    return (
+      <Container cls={cls} flex="column" justify="start" align="start">
+        <Flexbox cls="np">
+          <Flexbox cls="np" justify="between">
+            <span className={warning ? 'text-red' : 'text-black'}>{label}</span>
+            {uploadPercent ? <span>{uploadPercent}%</span> : null}
+          </Flexbox>
+          <label htmlFor="file-upload">
+            <Flexbox cls="input-wrap gap np">
+              <input
+                type="file"
+                id="file-upload"
+                name="file-upload"
+                autoComplete="off"
+                onChange={handleImage}
+                multiple={multiple}
+                accept="image/*"
+                disabled={upLoading}
               />
-              <div
-                className="cursor-pointer text-gray-200 px-1 pt-3 pb-1 text-center
-                  transition-all hover:text-gray-400"
-                onClick={(e) => _onDeletePreviewImage(e, pre)}
-              >
-                Remove
-              </div>
-            </div>
-          )) : 'Preview'
-        }
-      </div>
+              <input
+                type="text"
+                value=""
+                readOnly={true}
+                placeholder={warning ? warning : 'Click to select'}
+                {...props}
+              />
+            </Flexbox>
+          </label>
+        </Flexbox>
+        <Flexbox cls="preview-wrap" wrap="no-wrap">
+          {preview.length
+            ? preview.map((pre, i) => (
+                <Flexbox key={i} flex="column">
+                  <div
+                    style={{ backgroundImage: `url(${pre})` }}
+                    onClick={() => {
+                      setPhotoIndex(i);
+                      setIsOpen(true);
+                    }}
+                  />
+                  <div
+                    className="hoverable"
+                    onClick={(e) => _onDeletePreviewImage(e, pre)}
+                  >
+                    Remove
+                  </div>
+                </Flexbox>
+              ))
+            : 'Preview'}
+        </Flexbox>
 
-      {isOpen && (
-        <Lightbox
-          mainSrc={preview[photoIndex]}
-          nextSrc={preview[(photoIndex + 1) % preview.length]}
-          prevSrc={preview[(photoIndex + preview.length - 1) % preview.length]}
-          onCloseRequest={() => setIsOpen(false)}
-          onMovePrevRequest={() =>
-            setPhotoIndex((photoIndex + preview.length - 1) % preview.length)
-          }
-          onMoveNextRequest={() =>
-            setPhotoIndex((photoIndex + 1) % preview.length)
-          }
-        />
-      )}
-    </div>
-  );
-}, (prevState, nextState) => {
-  if (typeof prevState.value === "string") {
-    return prevState.value === nextState.value
-  }
-  return compareDeeper(prevState.value, nextState.value)
-});
+        {isOpen && (
+          <Lightbox
+            mainSrc={preview[photoIndex]}
+            nextSrc={preview[(photoIndex + 1) % preview.length]}
+            prevSrc={
+              preview[(photoIndex + preview.length - 1) % preview.length]
+            }
+            onCloseRequest={() => setIsOpen(false)}
+            onMovePrevRequest={() =>
+              setPhotoIndex((photoIndex + preview.length - 1) % preview.length)
+            }
+            onMoveNextRequest={() =>
+              setPhotoIndex((photoIndex + 1) % preview.length)
+            }
+          />
+        )}
+      </Container>
+    );
+  },
+  (prevState, nextState) => {
+    if (typeof prevState.value === 'string') {
+      return prevState.value === nextState.value;
+    }
+    return compareDeeper(prevState.value, nextState.value);
+  },
+);
 
 UploadZone.defaultProps = {
   label: 'Upload an image',
   cls: 'm-4',
   value: [],
-  multiple: false
+  multiple: false,
 };
 
 export default UploadZone;
-
 
 function compareDeeper(prev: string[], next: string[]): boolean {
   if (prev.length !== next.length) {
@@ -192,3 +187,93 @@ function compareDeeper(prev: string[], next: string[]): boolean {
   }
   return true;
 }
+
+const Container = styled(Flexbox)`
+  position: relative;
+  padding: 0;
+  min-width: 340px;
+
+  & > div {
+    .text-black {
+      color: ${({ theme }) => theme.colors.color};
+    }
+    .text-red {
+      color: ${({ theme }) => theme.colors.error};
+    }
+
+    span {
+      font-size: ${({ theme }) => theme.fontSize.sm + 'px'};
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+  }
+
+  label {
+    width: 100%;
+  }
+
+  .input-wrap {
+    input:first-child {
+      flex: 1;
+      position: absolute;
+      width: 100%;
+      padding: 5px;
+      opacity: 0;
+    }
+
+    input:last-child {
+      flex: 1;
+      padding: 9px 12px;
+      border-radius: 5px;
+      border-width: 2px 4px 2px 2px;
+      border-style: solid;
+      border-color: ${({ theme }) => theme.colors.border};
+
+      &:focus {
+        outline: none;
+        border-bottom-color: ${({ theme }) => theme.colors.successLight};
+        border-right-color: ${({ theme }) => theme.colors.successLight};
+        border-width: 2px 4px 2px 2px;
+      }
+    }
+  }
+
+  .preview-wrap {
+    grid-gap: 10px;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 5px;
+    border-width: 2px 4px 2px 2px;
+    border-style: dashed;
+    border-color: ${({ theme }) => theme.colors.border};
+    color: ${({ theme }) => theme.colors.secondColor};
+    overflow: auto;
+
+    & > div {
+      padding: 0;
+      min-width: 80px;
+      min-height: 80px;
+      background-color: ${({ theme }) => theme.colors.background};
+      border-radius: 5px;
+
+      & > div:first-child {
+        width: 75px;
+        height: 75px;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: contain;
+      }
+
+      & > div:last-child {
+        cursor: pointer;
+        color: ${({ theme }) => theme.colors.color};
+        font-size: ${({ theme }) => theme.fontSize.xs + 'px'};
+        text-align: center;
+      }
+    }
+  }
+
+  @media screen and (max-width: 1100px) {
+    min-width: 300px !important;
+  }
+`;

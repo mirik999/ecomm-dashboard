@@ -1,54 +1,57 @@
 import React, { FormEvent, memo } from 'react';
+import styled from 'styled-components';
 
 type Props = {
-  value: boolean
-  label: string
-  name: string
-  getValue: (val: boolean) => void
-}
+  value: boolean;
+  label: string;
+  name: string;
+  getValue: (val: boolean) => void;
+};
 
-const Checkbox: React.FC<Props> = memo(({
-  value,
-  label,
-  name,
-  getValue
-}) => {
-
+const Checkbox: React.FC<Props> = memo(({ value, label, name, getValue }) => {
   function _onChange(e: FormEvent<HTMLInputElement>): void {
     if (value) {
-      getValue(false)
+      getValue(false);
     } else {
-      getValue(true)
+      getValue(true);
     }
   }
 
-  return(
-    <div className="m-4">
-      <label
-        htmlFor={name}
-        className="flex items-center"
-      >
+  return (
+    <Container>
+      <label htmlFor={name}>
         <input
           type="checkbox"
           id={name}
           onChange={_onChange}
-          className="w-6 h-6"
           name={name}
           checked={value}
         />
-        <span
-          className="ml-2"
-        >
-          {label}
-        </span>
+        <span>{label}</span>
       </label>
-    </div>
-  )
+    </Container>
+  );
 });
 
 Checkbox.defaultProps = {
   value: false,
-  label: 'Checkbox'
-}
+  label: 'Checkbox',
+};
 
 export default Checkbox;
+
+const Container = styled.div`
+  label {
+    display: flex;
+    align-items: center;
+
+    input {
+      zoom: 1.5;
+    }
+
+    span {
+      margin-left: 5px;
+      font-size: ${({ theme }) => theme.fontSize.sm + 'px'};
+    }
+  }
+`;

@@ -1,89 +1,151 @@
 import React, { memo, useEffect, useState } from 'react';
-import { useLazyQuery } from "@apollo/client";
+import { useLazyQuery } from '@apollo/client';
+import styled from 'styled-components';
+//components
+import Flexbox from '../../components/common/layout/Flexbox';
 //request
-import {GET_BRANDS_BY_CATEGORY_ID} from "../../redux/requests/brand.request";
+import { GET_BRANDS_BY_CATEGORY_ID } from '../../redux/requests/brand.request';
 //types
-import { BrandType } from "../../redux/types/brand.type";
+import { BrandType } from '../../redux/types/brand.type';
 
 type Props = {
-  id: string
-}
+  id: string;
+};
 
 const Brands: React.FC<Props> = memo(({ id }) => {
   //requests
-  const [GetBrandsByCategoryId, brandsResponse] = useLazyQuery(GET_BRANDS_BY_CATEGORY_ID);
+  const [GetBrandsByCategoryId, brandsResponse] = useLazyQuery(
+    GET_BRANDS_BY_CATEGORY_ID,
+  );
   //state
   const [brands, setBrands] = useState<BrandType[]>([]);
 
   useEffect(() => {
-    (async function() {
+    (async function () {
       await getBrandsByCategoryId();
-    })()
-  }, [])
+    })();
+  }, []);
 
   useEffect(() => {
     if (brandsResponse.data) {
       const payload = brandsResponse.data.getBrandsByCategoryId;
-      setBrands(payload)
+      setBrands(payload);
     }
-  }, [brandsResponse])
+  }, [brandsResponse]);
 
   async function getBrandsByCategoryId(): Promise<void> {
     try {
       await GetBrandsByCategoryId({
         variables: {
-          id
-        }
-      })
-    } catch(err) {
-      console.log(err)
+          id,
+        },
+      });
+    } catch (err) {
+      console.log(err);
     }
   }
 
   return (
-    <div
-      className="flex-col flex-auto bg-white rounded shadow-md p-4 min-w-96 m-4"
-    >
-      <div className="flex justify-center">
-        <h3 className="font-bold mb-3">Brands</h3>
-        <div
-          className="bg-red-500 text-white flex justify-center items-center rounded-full w-8 h-5 ml-3
-          transform translate-y-0.5 text-center"
-        >
-          <small className="font-bold text-xs mr-0.5 mb-0.5">{brands.length}</small>
-        </div>
-      </div>
-      <ul className="flex flex-wrap gap-5">
-        {
-          brands.map((brand, i) => (
-            <li key={i} className="flex-col flex-1">
-              <strong className="">{brand.name}</strong>
-              <ul className="my-1">
-                <li>
-                  <p className="text-xs text-gray-500 whitespace-nowrap">other categories</p>
-                </li>
-                {
-                  brand.category.map((cat: any, idx) => {
+    <Container flex="column" align="start">
+      <Flexbox cls="header np" justify="between">
+        <h3>Brands</h3>
+        <Flexbox cls="np count-wrap" justify="end">
+          <small>{brands.length}</small>
+        </Flexbox>
+      </Flexbox>
+      {brands.length ? (
+        <table>
+          <thead>
+            <tr>
+              <th>Brand name</th>
+              <th>Other brands</th>
+            </tr>
+          </thead>
+          <tbody>
+            {brands.map((brand, i) => (
+              <tr key={i}>
+                <td>{brand.name}</td>
+                <td>
+                  {brand.category.map((cat: any, idx) => {
                     if (cat.id !== id) {
-                      return (
-                        <li key={idx}>
-                          <small>{cat.name}</small>
-                        </li>
-                      )
+                      return <span key={idx}>{cat.name}</span>;
                     }
                     return '';
-                  })
-                }
-              </ul>
-            </li>
-          ))
-        }
-      </ul>
-
-    </div>
+                  })}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      ) : (
+        <span className="no-data">No brands</span>
+      )}
+    </Container>
   );
-})
+});
 
-Brands.defaultProps = {}
+Brands.defaultProps = {};
 
 export default Brands;
+
+const Container = styled(Flexbox)`
+  background-color: ${({ theme }) => theme.colors.white};
+  border-radius: 4px;
+  border-width: 2px 4px 2px 2px;
+  border-style: solid;
+  border-color: ${({ theme }) => theme.colors.border};
+  padding: 10px;
+  min-width: 300px;
+  max-width: 500px;
+
+  .header {
+    min-height: 40px !important;
+    border-width: 0 0 2px 0;
+    border-style: solid;
+    border-color: ${({ theme }) => theme.colors.border};
+
+    h3 {
+      font-weight: bold;
+      margin: 0;
+    }
+
+    .count-wrap {
+      small {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: ${({ theme }) => theme.colors.errorLight};
+        border-right: ${({ theme }) => `4px solid ${theme.colors.error}`};
+        color: ${({ theme }) => theme.colors.white};
+        border-radius: 5px;
+        width: 40px;
+        height: 20px;
+        text-align: center;
+        font-weight: bold;
+        font-size: ${({ theme }) => theme.fontSize.xs + 'px'};
+      }
+    }
+  }
+
+  table {
+    width: 100%;
+    border-collapse: separate;
+    overflow: auto;
+    white-space: nowrap;
+    border-radius: 3px;
+
+    th,
+    td {
+      text-align: left;
+      border-width: 1px;
+      border-style: solid;
+      border-color: ${({ theme }) => theme.colors.border};
+      padding: 3px;
+    }
+  }
+
+  .no-data {
+    display: block;
+    margin-top: 10px;
+  }
+`;

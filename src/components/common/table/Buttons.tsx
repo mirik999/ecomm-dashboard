@@ -105,4 +105,13 @@ export default Buttons;
 const Container = styled(Flexbox)`
   padding: 8px 0;
   grid-gap: 10px;
+
+  @media screen and (max-width: 501px) {
+    div {
+      width: 100% !important;
+      button {
+        width: 100% !important;
+      }
+    }
+  }
 `;

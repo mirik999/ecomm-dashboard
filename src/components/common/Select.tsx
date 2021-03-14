@@ -91,7 +91,7 @@ const Selectable: React.FC<Props> = memo(
       <Label htmlFor={type + name} className={cls}>
         <span>{label}</span>
         <Select
-          id={name}
+          id={type + name}
           name={name}
           value={innerState}
           getOptionLabel={(option: any) => option.name}
@@ -128,6 +128,7 @@ const Label = styled.label`
   display: flex;
   flex-direction: column;
   flex: 1;
+  min-width: 200px;
 
   span {
     font-size: ${({ theme }) => theme.fontSize.sm + 'px'};
@@ -135,9 +136,12 @@ const Label = styled.label`
     margin-bottom: 5px;
   }
 
-  // input {
-  //   padding: 8px 12px;
-  //   border: ${({ theme }) => ` 1px solid ${theme.colors.border}`};
-  //   border-radius: 4px;
-  // }
+  div {
+    div {
+      border-color: ${({ theme }) => theme.colors.border};
+      div {
+        flex-wrap: nowrap !important;
+      }
+    }
+  }
 `;

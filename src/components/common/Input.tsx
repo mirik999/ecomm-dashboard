@@ -60,8 +60,8 @@ const Label = styled.label`
   }
 
   input {
-    padding: 8px 12px;
-    border-radius: 4px;
+    padding: 9px 12px;
+    border-radius: 5px;
     border-width: 2px 4px 2px 2px;
     border-style: solid;
     border-color: ${({ theme }) => theme.colors.border};

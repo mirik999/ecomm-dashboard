@@ -14,7 +14,7 @@ const Paginate: React.FC<Props> = ({
   pageRange,
 }) => {
   return (
-    <Container>
+    <Container className="pagination-wrap">
       <ReactPagination
         onPageChange={getPageChange}
         pageRangeDisplayed={pageRange}

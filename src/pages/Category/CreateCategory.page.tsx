@@ -1,44 +1,54 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { useMutation} from "@apollo/client";
+import { useMutation } from '@apollo/client';
 import { v4 as uuid } from 'uuid';
+import { useDispatch } from 'react-redux';
+import styled from 'styled-components';
 //components
-import Layout from "../../components/common/Layout";
-import Input from "../../components/common/Input";
-import Button from "../../components/common/Button";
-import Divider from "../../components/common/Divider";
-import NotificationBox from "../../components/common/notificationBox";
-import SubCategories from "./SubCategories";
+import Layout from '../../components/common/Layout';
+import Input from '../../components/common/Input';
+import Button from '../../components/common/Button';
+import Divider from '../../components/common/Divider';
+import SubCategories from './SubCategories';
 import Brands from '../Brand/Brands';
-import Products from "../Product/Products";
+import Products from '../Product/Products';
+import Flexbox from '../../components/common/layout/Flexbox';
 //types
-import {CategoryType, SubCategoryType} from "../../redux/types/category.type";
+import { CategoryType, SubCategoryType } from '../../redux/types/category.type';
 //request
-import {CREATE_CATEGORY, UPDATE_CATEGORY} from "../../redux/requests/category.request";
+import {
+  CREATE_CATEGORY,
+  UPDATE_CATEGORY,
+} from '../../redux/requests/category.request';
+//actions
+import { saveNetStatus } from '../../redux/slices/net-status.slice';
 
 const initialState = {
   name: '',
   tabName: '',
-  subCategories: []
-}
+  subCategories: [],
+};
 
-type Props = {}
+type Props = {};
 
 const CreateCategory: React.FC<Props> = (props) => {
   const history = useHistory();
+  const dispatch = useDispatch();
   //requests
   const [CreateCategory, createResponse] = useMutation(CREATE_CATEGORY);
-  const [UpdateCategory, updateResponse] = useMutation(UPDATE_CATEGORY, { errorPolicy: "all" });
+  const [UpdateCategory, updateResponse] = useMutation(UPDATE_CATEGORY, {
+    errorPolicy: 'all',
+  });
   //state
   const [state, setState] = useState<Partial<CategoryType>>({
     id: uuid(),
-    ...initialState
+    ...initialState,
   });
   const [mode, setMode] = useState<string>('create');
 
   useEffect(() => {
     const { mode, selected }: any = history.location.state;
-    if (mode === "update") {
+    if (mode === 'update') {
       setState(selected[0]);
       setMode(mode);
     }
@@ -46,29 +56,29 @@ const CreateCategory: React.FC<Props> = (props) => {
 
   useEffect(() => {
     if (createResponse.data) {
-      history.push("/categories")
+      history.push('/categories');
     }
-  }, [createResponse])
+  }, [createResponse.data]);
 
   useEffect(() => {
     if (updateResponse.data) {
-      history.push("/categories")
+      history.push('/categories');
     }
-  }, [updateResponse])
+  }, [updateResponse.data]);
 
   function _onSubCategoryChange(val: SubCategoryType[]): void {
-    setState({ ...state, subCategories: val })
+    setState({ ...state, subCategories: val });
   }
 
   async function _onSave(): Promise<void> {
     try {
       await CreateCategory({
         variables: {
-          newCategory: state
-        }
-      })
-    } catch(err) {
-      console.log(err.message)
+          newCategory: state,
+        },
+      });
+    } catch (err) {
+      dispatch(saveNetStatus(err.graphQLErrors));
     }
   }
 
@@ -76,96 +86,115 @@ const CreateCategory: React.FC<Props> = (props) => {
     try {
       await UpdateCategory({
         variables: {
-          updatedCategory: state
-        }
-      })
-    } catch(err) {
-      console.log(err.message)
+          updatedCategory: state,
+        },
+      });
+    } catch (err) {
+      dispatch(saveNetStatus(err.graphQLErrors));
     }
   }
 
   return (
     <Layout>
-      <div className="flex justify-between items-center">
-        <h2 className="font-medium uppercase mx-4">
-          Create category
-        </h2>
+      <HeaderPanel justify="between">
+        <h2>Create category</h2>
         <h2
           onClick={() => history.goBack()}
           className="font-medium uppercase mx-4 cursor-pointer hover:opacity-75"
         >
           Go Back
         </h2>
-      </div>
-      <div className="flex items-center">
+      </HeaderPanel>
+      <Body>
         <Input
           type="text"
           label="Name"
           name="name"
           value={state.name}
-          getValue={(val: string) => setState({...state, name: val})}
+          getValue={(val: string) => setState({ ...state, name: val })}
         />
         <Input
           type="text"
           label="Tab Name"
           name="tabName"
           value={state.tabName}
-          getValue={(val: string) => setState({...state, tabName: val})}
+          getValue={(val: string) => setState({ ...state, tabName: val })}
         />
-      </div>
+      </Body>
       <SubCategories
         parentId={state.id!}
         subCategories={state.subCategories!}
         getValue={_onSubCategoryChange}
       />
-      <div className="flex items-center mx-4 py-3">
-        {
-          mode === "create" ? (
-            <Button
-              type="success"
-              label="Create"
-              onAction={_onSave}
-              cls="m-0 mr-3"
-            />
-          ) : (
-            <Button
-              type="success"
-              label="Update"
-              onAction={_onUpdate}
-              cls="m-0 mr-3"
-            />
-          )
-        }
+      <FooterPanel>
+        {mode === 'create' ? (
+          <Button
+            type="success"
+            label="Create"
+            onAction={_onSave}
+            cls="m-0 mr-3"
+          />
+        ) : (
+          <Button
+            type="success"
+            label="Update"
+            onAction={_onUpdate}
+            cls="m-0 mr-3"
+          />
+        )}
         <Button
           type="success"
           label="Reset fields"
           onAction={() => setState(initialState)}
           cls="m-0 mr-3"
         />
-      </div>
-
-      {
-        mode === "update" ? (
-          <>
-            <Divider label="Additional Information" />
-            <div className="flex flex-wrap">
-              <Brands id={state.id!} />
-              <Products id={state.id!} />
-            </div>
-          </>
-        ) : null
-      }
-
-      {/*<NotificationBox*/}
-      {/*  list={[*/}
-      {/*    createResponse,*/}
-      {/*    updateResponse,*/}
-      {/*  ]}*/}
-      {/*/>*/}
+      </FooterPanel>
+      {mode === 'update' ? (
+        <InfoCardsWrap>
+          <Divider label="Connections" />
+          <Flexbox cls="np">
+            <Brands id={state.id!} />
+            <Products id={state.id!} />
+          </Flexbox>
+        </InfoCardsWrap>
+      ) : null}
     </Layout>
   );
-}
+};
 
-CreateCategory.defaultProps = {}
+CreateCategory.defaultProps = {};
 
 export default CreateCategory;
+
+const HeaderPanel = styled(Flexbox)`
+  padding: 0;
+
+  h2:first-child {
+    font-size: ${({ theme }) => theme.fontSize.md + 'px'};
+    text-transform: uppercase;
+  }
+
+  h2:last-child {
+    font-size: ${({ theme }) => theme.fontSize.md + 'px'};
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+`;
+
+const Body = styled(Flexbox)`
+  padding: 0;
+  margin: 10px 0;
+  grid-gap: 10px;
+`;
+
+const FooterPanel = styled(Flexbox)`
+  margin-top: 10px;
+  padding: 0;
+  grid-gap: 10px;
+`;
+
+const InfoCardsWrap = styled.div`
+  div {
+    grid-gap: 10px;
+  }
+`;

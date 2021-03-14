@@ -58,7 +58,8 @@ const Container = styled.nav`
   background-color: ${({ theme }) => theme.colors.main};
 
   .nav-header {
-    padding: 10px;
+    padding: 9px 10px;
+    border-bottom: ${({ theme }) => `2px solid ${theme.colors.secondColor}`};
 
     div:first-child {
       text-transform: uppercase;
@@ -95,5 +96,14 @@ const Container = styled.nav`
         }
       }
     }
+  }
+
+  @media screen and (max-width: 600px) {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    height: 100vh;
+    transform: translateX(-127px);
   }
 `;

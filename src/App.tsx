@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import {
   ApolloClient,
@@ -44,6 +44,15 @@ function App() {
   const hd = useMediaLayout({ maxWidth: '1376px' });
   const dispatch = useDispatch();
   const { theme } = useSelector((state: RootState) => state);
+
+  useEffect(() => {
+    if (
+      window.matchMedia &&
+      window.matchMedia('(prefers-color-scheme: dark)').matches
+    ) {
+      console.log('dark mode');
+    }
+  }, []);
 
   const getNewToken = async () => {
     return new Promise(async (resolve, reject) => {

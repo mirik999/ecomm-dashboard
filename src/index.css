@@ -53,6 +53,18 @@ h1,h2,h3,h4,h5,h6,p {
   padding: 0 !important;
 }
 
+.gap {
+  grid-gap: 10px !important;
+}
+
+.mt {
+  margin-top: 10px;
+}
+
+.mb {
+  margin-bottom: 10px;
+}
+
 .hoverable:hover {
   transition: all 0.3s ease;
   opacity: 0.7;
