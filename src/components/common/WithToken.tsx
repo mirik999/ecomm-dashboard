@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { Route, Redirect } from 'react-router-dom';
 //types
 import { RootState } from '../../redux/store';
+import { isEmpty } from '../../utils/functions.utils';
 
 type Props = {
   component: React.FunctionComponent<any>;
@@ -14,27 +15,29 @@ const WithToken: React.FC<Props> = ({ component: Component, ...rest }) => {
     (state: RootState) => state,
   );
 
-  const findNav = nav.find((n) => {
-    if (n.path === rest.path) {
-      return n;
-    }
-    if (n.subPaths) {
-      const checkSubPath = n.subPaths.some((p) => rest.path.includes(p));
-      if (checkSubPath) {
-        return n;
-      }
-    }
-    return n;
-  })!;
+  console.log('xose', rest);
 
-  if (Object.keys(findNav).length) {
-    const noAccess = findNav.accessRoles.some((acr: string) => {
-      return user.roles.length ? user.roles.includes(acr) : 'guest';
-    });
-    if (!noAccess && authCredentials.accessToken) {
-      return <Redirect to="/404" />;
-    }
-  }
+  // const currentNav = nav.find((n) => n.path === rest.path);
+  //
+  // if (isEmpty(currentNav)) {
+  //   return <Redirect to="/404" />;
+  // }
+  //
+  // const hasAccess = user.roles.some((acr) =>
+  //   currentNav!.accessRoles.includes(acr),
+  // );
+
+  // if (!isEmpty(currentNav)) {
+  //   console.log(user);
+  //   console.log(currentNav[0]);
+  //   const noAccess = currentNav[0].accessRoles.some((acr: string) => {
+  //     return user.roles.length ? user.roles.includes(acr) : 'guest';
+  //   });
+  //   console.log('access', noAccess);
+  //   if (!noAccess && authCredentials.accessToken) {
+  //     return <Redirect to="/404" />;
+  //   }
+  // }
 
   return (
     <Route

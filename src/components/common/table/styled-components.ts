@@ -46,7 +46,7 @@ export const CustomTable = styled.table`
   }
 
   th:not(:first-child) {
-    font-size: ${({ theme }) => theme.fontSize.xs + 'px'};
+    font-size: ${({ theme }) => theme.fontSize.sm + 'px'};
     border-width: 1px;
     border-style: solid;
     border-color: ${({ theme }) => theme.colors.border};
@@ -76,7 +76,7 @@ export const CustomTable = styled.table`
   }
 
   td:not(:first-child) {
-    font-size: ${({ theme }) => theme.fontSize.xs + 'px'};
+    font-size: ${({ theme }) => theme.fontSize.md + 'px'};
     border-width: 1px;
     border-style: solid;
     border-color: ${({ theme }) => theme.colors.border};
