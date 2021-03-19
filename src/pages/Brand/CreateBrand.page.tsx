@@ -56,14 +56,16 @@ const CreateBrand: React.FC<Props> = (props) => {
       let options = [];
       for (let i = 0; i < payload.length; i++) {
         options.push({
-          id: payload[i].id,
-          name: payload[i].name,
+          id: payload[i]?.id,
+          name: payload[i]?.name,
         });
-        for (let j = 0; j < payload[i].subCategories.length; j++) {
-          options.push({
-            id: payload[i].subCategories[j].id,
-            name: payload[i].subCategories[j].name,
-          });
+        if (payload[i]?.subCategories) {
+          for (let j = 0; j < payload[i].subCategories.length; j++) {
+            options.push({
+              id: payload[i].subCategories[j].id,
+              name: payload[i].subCategories[j].name,
+            });
+          }
         }
       }
       setCategories(options);

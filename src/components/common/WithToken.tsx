@@ -11,11 +11,11 @@ type Props = {
 };
 
 const WithToken: React.FC<Props> = ({ component: Component, ...rest }) => {
-  const { authCredentials, user, nav } = useSelector(
+  const { authCredentials, user } = useSelector(
     (state: RootState) => state,
   );
 
-  console.log('xose', rest);
+  console.log('rest', rest);
 
   // const currentNav = nav.find((n) => n.path === rest.path);
   //

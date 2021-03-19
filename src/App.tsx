@@ -137,6 +137,17 @@ function App() {
     ? 'hd'
     : 'fhd';
 
+  function renderRoutes(): RoutesType[] {
+    let allRoutes: RoutesType[] = [];
+    routes.forEach((route, i) => {
+      if (route.subRoutes) {
+        allRoutes.push(route.subRoutes.find((rt: any) => rt)!)
+      }
+      allRoutes.push(route);
+    })
+    return allRoutes;
+  }
+
   return (
     <div className="site-container">
       <ApolloProvider client={client}>
@@ -144,20 +155,11 @@ function App() {
           theme={{ ...theme, fontSize: theme.fontSize[setResponsiveFontSize] }}
         >
           <Switch>
-            {routes
-              .map((arr: any, i) => {
-                if (arr.subRoutes) {
-                  return arr.subRoutes.find((route: any) => route);
-                }
-                return arr;
-              })
+            {renderRoutes()
               .map((route: RoutesType, i: number) => {
                 if (route.path === '/auth')
                   return <WithoutToken key={i} {...route} />;
 
-                if (route.path === '*') return <Route key={i} {...route} />;
-
-                console.log('render', route);
                 return <WithToken key={i} {...route} />;
               })}
           </Switch>

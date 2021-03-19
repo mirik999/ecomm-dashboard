@@ -7,12 +7,14 @@ import { HiMenuAlt1 } from 'react-icons/hi';
 import Flexbox from './layout/Flexbox';
 //types
 import { RootState } from '../../redux/store';
-import { NavType } from '../../redux/types/nav.type';
+import { RoutesType } from '../../redux/types/routes.types';
+//routes
+import { routes } from '../../config/routes';
 
 type Props = {};
 
 const Navigation: React.FC<Props> = (props) => {
-  const { nav, user } = useSelector((state: RootState) => state);
+  const { user } = useSelector((state: RootState) => state);
 
   return (
     <Container>
@@ -27,7 +29,7 @@ const Navigation: React.FC<Props> = (props) => {
       </Flexbox>
       <Flexbox cls="nav-body">
         <ul>
-          {nav.map((n: NavType, i: number) => {
+          {routes.map((n: RoutesType, i: number) => {
             if (
               n.visible &&
               n.accessRoles.some((acr, i) => user.roles.includes(acr))

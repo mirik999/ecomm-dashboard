@@ -84,8 +84,10 @@ const CreateProduct: React.FC<Props> = (props) => {
       let options = [];
       for (let i = 0; i < payload.length; i++) {
         options.push(payload[i]);
-        for (let j = 0; j < payload[i].subCategories.length; j++) {
-          options.push(payload[i].subCategories[j]);
+        if (payload[i]?.subCategories) {
+          for (let j = 0; j < payload[i].subCategories.length; j++) {
+            options.push(payload[i].subCategories[j]);
+          }
         }
       }
 

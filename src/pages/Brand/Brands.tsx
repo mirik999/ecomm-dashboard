@@ -148,4 +148,8 @@ const Container = styled(Flexbox)`
     display: block;
     margin-top: 10px;
   }
+
+  @media (max-width: 789px) {
+    max-width: 100%;
+  }
 `;

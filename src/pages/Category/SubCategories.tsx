@@ -25,7 +25,7 @@ const SubCategories: React.FC<Props> = memo(
     };
 
     useEffect(() => {
-      if (subCategories.length) {
+      if (subCategories?.length) {
         setList(subCategories);
       }
     }, [subCategories]);

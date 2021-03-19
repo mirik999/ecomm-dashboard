@@ -21,5 +21,12 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+.idea/webServers.xml
+.idea/sshConfigs.xml
+.idea/prettier.xml
+.idea/deployment.xml
+/.idea/
+/.eslintcache
+debug.log
+*.log
 *.eslintcache
-.idea

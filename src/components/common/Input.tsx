@@ -20,6 +20,7 @@ const Input: React.FC<Props> = ({
   getValue,
   ...props
 }) => {
+  const defaultValue = type === "number" ? 0 : '';
   return (
     <Label htmlFor={type + label!} className={cls}>
       <span>{label}</span>
@@ -28,7 +29,7 @@ const Input: React.FC<Props> = ({
         id={type + label!}
         name="email"
         autoComplete="off"
-        value={value}
+        value={value ?? defaultValue}
         onChange={({ currentTarget }: FormEvent<HTMLInputElement>) =>
           getValue(currentTarget.value)
         }
