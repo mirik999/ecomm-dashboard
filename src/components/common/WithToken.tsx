@@ -11,11 +11,12 @@ type Props = {
 };
 
 const WithToken: React.FC<Props> = ({ component: Component, ...rest }) => {
-  const { authCredentials, user } = useSelector(
-    (state: RootState) => state,
-  );
+  const { authCredentials, user } = useSelector((state: RootState) => state);
 
   console.log('rest', rest);
+  console.log('user', user);
+
+  // const hasAccess =
 
   // const currentNav = nav.find((n) => n.path === rest.path);
   //
@@ -38,6 +39,10 @@ const WithToken: React.FC<Props> = ({ component: Component, ...rest }) => {
   //     return <Redirect to="/404" />;
   //   }
   // }
+
+  if (rest.computedMatch.url === '/') {
+    return <Redirect to="/main" />;
+  }
 
   return (
     <Route

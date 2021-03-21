@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { useQuery } from '@apollo/client';
+import { useLazyQuery } from '@apollo/client';
+import { useDispatch } from 'react-redux';
 //components
 import Layout from '../../components/common/Layout';
 import SystemUsage from './SystemUsage';
@@ -9,11 +10,15 @@ import Flexbox from '../../components/common/layout/Flexbox';
 import { Container } from './styled-components';
 //request
 import { GET_STATISTICS } from '../../redux/requests/main.request';
+//actions
+import { saveNetStatus } from '../../redux/slices/net-status.slice';
 
 type Props = {};
 
 const MainPage: React.FC<Props> = (props) => {
-  const statsResponse = useQuery(GET_STATISTICS);
+  const dispatch = useDispatch();
+  //state
+  const [GetStatistics, statsResponse] = useLazyQuery(GET_STATISTICS);
   const [stats, setStats] = useState({
     product: {},
     category: {},
@@ -21,10 +26,24 @@ const MainPage: React.FC<Props> = (props) => {
   });
 
   useEffect(() => {
+    (async () => {
+      await getStatistics();
+    })();
+  }, []);
+
+  useEffect(() => {
     if (statsResponse.data) {
       setStats(statsResponse.data.getAll);
     }
-  }, [statsResponse]);
+  }, [statsResponse.data]);
+
+  async function getStatistics() {
+    try {
+      await GetStatistics();
+    } catch (err) {
+      dispatch(saveNetStatus(err.graphQLErrors));
+    }
+  }
 
   return (
     <Layout>

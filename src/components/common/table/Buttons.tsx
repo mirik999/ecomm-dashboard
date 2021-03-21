@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useLocation } from 'react-router-dom';
 //components
 import Button from '../Button';
 import Flexbox from '../layout/Flexbox';
@@ -9,43 +10,50 @@ const buttons = [
     id: 1,
     name: 'create',
     type: 'link',
+    visible: true,
     disable: 'never',
-    roles: ['admin', 'sudo'],
+    accessRoles: ['admin', 'sudo'],
+    excludeFromPage: ['/users'],
   },
   {
     id: 2,
     name: 'update',
     type: 'link',
     disable: 'non-multiple',
-    roles: ['admin', 'sudo'],
+    accessRoles: ['admin', 'sudo'],
+    excludeFromPage: [],
   },
   {
     id: 3,
     name: 'disable',
     type: 'action',
     disable: 'non-zero',
-    roles: ['admin', 'sudo'],
+    accessRoles: ['admin', 'sudo'],
+    excludeFromPage: [],
   },
   {
     id: 4,
     name: 'activate',
     type: 'action',
     disable: 'non-zero',
-    roles: ['admin', 'sudo'],
+    accessRoles: ['admin', 'sudo'],
+    excludeFromPage: [],
   },
   {
     id: 5,
     name: 'properties',
     type: 'action',
     disable: 'non-zero',
-    roles: ['admin', 'sudo'],
+    accessRoles: ['admin', 'sudo'],
+    excludeFromPage: [],
   },
   {
     id: 6,
     name: 'delete',
     type: 'action',
     disable: 'non-zero',
-    roles: ['sudo'],
+    accessRoles: ['sudo'],
+    excludeFromPage: [],
   },
 ];
 
@@ -62,6 +70,8 @@ const Buttons: React.FC<Props> = ({
   roles,
   onRouteChange,
 }) => {
+  const location = useLocation();
+
   function handleDisabling(btn: any): boolean {
     return btn.disable === 'non-multiple'
       ? selected.length !== 1
@@ -73,7 +83,11 @@ const Buttons: React.FC<Props> = ({
   return (
     <Container>
       {buttons
-        .filter((btn) => btn.roles.some((b) => roles.includes(b)))
+        .filter(
+          (btn) =>
+            !btn.excludeFromPage.includes(location.pathname) &&
+            btn.accessRoles.some((b) => roles.includes(b)),
+        )
         .map((btn, i) => {
           return (
             <Button

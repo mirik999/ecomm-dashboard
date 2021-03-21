@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { formatDistance } from 'date-fns';
 import styled from 'styled-components';
 //components
@@ -10,11 +10,12 @@ import { SystemInfo } from '../../redux/types/systemInfo.type';
 import io from '../../utils/socket.utils';
 //hooks
 import { useInterval } from '../../hooks/useInterval';
+//socket
+const socket = io('statistic');
 
 type Props = {};
 
 const SystemUsage: React.FC<Props> = (props) => {
-  const socket = useRef(io('statistic')).current;
   const [systemInfo, setSystemInfo] = useState<Partial<SystemInfo>>({});
 
   useEffect(() => {

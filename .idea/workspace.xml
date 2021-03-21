@@ -23,26 +23,13 @@
       <change beforePath="$PROJECT_DIR$/.eslintcache" beforeDir="false" afterPath="$PROJECT_DIR$/.eslintcache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/common/Checkbox.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/Checkbox.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/common/ColorPicker.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/ColorPicker.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/common/Header.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/Header.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/common/Input.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/Input.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/common/Layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/Layout.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/common/Navigation.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/Navigation.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/common/Select.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/Select.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/common/TextEditor.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/TextEditor.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/common/UploadZone.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/UploadZone.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/common/richTextEditor/TinyEditor.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/richTextEditor/TinyEditor.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/common/WithToken.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/WithToken.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/common/WithoutToken.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/WithoutToken.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/common/table/Buttons.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/table/Buttons.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/common/table/Paginate.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/table/Paginate.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/common/table/styled-components.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/table/styled-components.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Brand/Brands.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Brand/Brands.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Brand/CreateBrand.page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Brand/CreateBrand.page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Category/CreateCategory.page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Category/CreateCategory.page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Category/SubCategories.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Category/SubCategories.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Product/CreateProduct.page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Product/CreateProduct.page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Product/Products.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Product/Products.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Main/Main.page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Main/Main.page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Main/SystemUsage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Main/SystemUsage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/User/CreateUser.page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/User/CreateUser.page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/socket.utils.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/socket.utils.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -113,7 +100,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../ecomm-api" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -181,7 +168,9 @@
       <workItem from="1615312438474" duration="7825000" />
       <workItem from="1615480117951" duration="12544000" />
       <workItem from="1615630475921" duration="11184000" />
-      <workItem from="1615711656772" duration="15054000" />
+      <workItem from="1615711656772" duration="15257000" />
+      <workItem from="1616081534962" duration="9043000" />
+      <workItem from="1616230659580" duration="11297000" />
     </task>
     <task id="LOCAL-00001" summary="users done">
       <created>1612213179093</created>

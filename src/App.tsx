@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Switch } from 'react-router-dom';
 import {
   ApolloClient,
   ApolloProvider,
@@ -26,6 +26,7 @@ import { getFromCookies, removeFromCookies } from './utils/storage.utils';
 //types
 import { RootState } from './redux/store';
 import { RoutesType } from './redux/types/routes.types';
+//routes
 import { routes } from './config/routes';
 
 function App() {
@@ -141,10 +142,10 @@ function App() {
     let allRoutes: RoutesType[] = [];
     routes.forEach((route, i) => {
       if (route.subRoutes) {
-        allRoutes.push(route.subRoutes.find((rt: any) => rt)!)
+        allRoutes.push(route.subRoutes.find((rt: any) => rt)!);
       }
       allRoutes.push(route);
-    })
+    });
     return allRoutes;
   }
 
@@ -155,13 +156,12 @@ function App() {
           theme={{ ...theme, fontSize: theme.fontSize[setResponsiveFontSize] }}
         >
           <Switch>
-            {renderRoutes()
-              .map((route: RoutesType, i: number) => {
-                if (route.path === '/auth')
-                  return <WithoutToken key={i} {...route} />;
+            {renderRoutes().map((route: RoutesType, i: number) => {
+              if (route.path === '/auth')
+                return <WithoutToken key={i} {...route} />;
 
-                return <WithToken key={i} {...route} />;
-              })}
+              return <WithToken key={i} {...route} />;
+            })}
           </Switch>
           <NotificationBox />
         </ThemeProvider>

@@ -1,41 +1,45 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import { useLocation, useHistory, RouteComponentProps } from 'react-router-dom';
-import { useMutation } from "@apollo/client";
-import { useSelector } from "react-redux";
+import { useMutation } from '@apollo/client';
+import { useSelector, useDispatch } from 'react-redux';
 //components
-import Layout from "../../components/common/Layout";
-import Input from "../../components/common/Input";
-import Button from "../../components/common/Button";
-import Selectable from "../../components/common/Select";
-import NotificationBox from "../../components/common/notificationBox";
+import Layout from '../../components/common/Layout';
+import Input from '../../components/common/Input';
+import Button from '../../components/common/Button';
+import Selectable from '../../components/common/Select';
 //types
-import { UserType } from "../../redux/types/user.types";
-import { RootState } from "../../redux/store";
+import { UserType } from '../../redux/types/user.types';
+import { RootState } from '../../redux/store';
 //request
-import { UPDATE_USER } from "../../redux/requests/user.request";
+import { UPDATE_USER } from '../../redux/requests/user.request';
+//actions
+import { saveNetStatus } from '../../redux/slices/net-status.slice';
 
 const initialState = {
   id: '',
   email: '',
   isDisabled: false,
   roles: [],
-}
+};
 
-interface QueryState extends RouteComponentProps<
-  { myParamProp?: string }, //params
-  any, //history
-  { selected?: any } //state
+interface QueryState
+  extends RouteComponentProps<
+    { myParamProp?: string }, //params
+    any, //history
+    { selected?: any } //state
   > {
   selected: any;
 }
 
-type Props = {}
+type Props = {};
 
 const CreatUser: React.FC<Props> = (props) => {
   const location = useLocation<QueryState>();
   const history = useHistory();
+  const dispatch = useDispatch();
+  //state
   const { roles } = useSelector((state: RootState) => state);
-  const [UpdateUser, updateResponse] = useMutation(UPDATE_USER, { errorPolicy: "all" });
+  const [UpdateUser, updateResponse] = useMutation(UPDATE_USER);
   const [state, setState] = useState<Partial<UserType>>(initialState);
 
   useEffect(() => {
@@ -47,33 +51,38 @@ const CreatUser: React.FC<Props> = (props) => {
 
   useEffect(() => {
     if (updateResponse.data) {
-      history.push("/users")
+      history.push('/users');
     }
-  }, [updateResponse])
-
+  }, [updateResponse.data]);
 
   async function _onUpdate(): Promise<void> {
     try {
       await UpdateUser({
         variables: {
-          updatedUser: state
-        }
-      })
-    } catch(err) {
-      console.log(err.message)
+          updatedUser: state,
+        },
+      });
+    } catch (err) {
+      dispatch(saveNetStatus(err.graphQLErrors));
     }
   }
 
   function _onRoleSelect(role: string | string[], action: string): void {
-    if (action === "remove-value") {
+    if (action === 'remove-value') {
       if (Array.isArray(role)) {
-        setState(prevState => ({...prevState, roles: role }))
+        setState((prevState) => ({ ...prevState, roles: role }));
       }
     } else {
       if (Array.isArray(role)) {
-        setState(prevState => ({...prevState, roles: Array.from(new Set([...role, ...prevState.roles!])) }))
+        setState((prevState) => ({
+          ...prevState,
+          roles: Array.from(new Set([...role, ...prevState.roles!])),
+        }));
       } else {
-        setState(prevState => ({...prevState, roles: Array.from(new Set([role, ...prevState.roles!])) }))
+        setState((prevState) => ({
+          ...prevState,
+          roles: Array.from(new Set([role, ...prevState.roles!])),
+        }));
       }
     }
   }
@@ -81,9 +90,7 @@ const CreatUser: React.FC<Props> = (props) => {
   return (
     <Layout>
       <div className="flex justify-between items-center">
-        <h2 className="font-medium uppercase mx-4">
-          Create category
-        </h2>
+        <h2 className="font-medium uppercase mx-4">Create category</h2>
         <h2
           onClick={() => history.goBack()}
           className="font-medium uppercase mx-4 cursor-pointer hover:opacity-75"
@@ -112,9 +119,11 @@ const CreatUser: React.FC<Props> = (props) => {
           label="Role"
           name="role"
           returnType="string"
-          value={state.roles!.map((r, i) => ({id: r, name: r}))}
-          options={roles.map((r, i) => ({id: r, name: r}))}
-          getValue={(val: string | string[], action = "") => _onRoleSelect(val, action)}
+          value={state.roles!.map((r, i) => ({ id: r, name: r }))}
+          options={roles.map((r, i) => ({ id: r, name: r }))}
+          getValue={(val: string | string[], action = '') =>
+            _onRoleSelect(val, action)
+          }
           cls="m-4"
           isMulti
         />
@@ -140,8 +149,8 @@ const CreatUser: React.FC<Props> = (props) => {
       {/*/>*/}
     </Layout>
   );
-}
+};
 
-CreatUser.defaultProps = {}
+CreatUser.defaultProps = {};
 
 export default CreatUser;
