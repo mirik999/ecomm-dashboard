@@ -23,7 +23,7 @@ type userData = {
 type Props = {};
 
 const initialState = {
-  email: 'xose@bk.ru',
+  email: 'sudo@gmail.com',
   password: 'qweqwe',
   clientId: uuid()
 };

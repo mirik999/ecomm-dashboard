@@ -3,7 +3,6 @@ import { useSelector } from 'react-redux';
 import { Route, Redirect } from 'react-router-dom';
 //types
 import { RootState } from '../../redux/store';
-import { isEmpty } from '../../utils/functions.utils';
 
 type Props = {
   component: React.FunctionComponent<any>;
@@ -12,33 +11,11 @@ type Props = {
 
 const WithToken: React.FC<Props> = ({ component: Component, ...rest }) => {
   const { authCredentials, user } = useSelector((state: RootState) => state);
+  const hasAccess = rest.accessRoles.some((er: string) => user.roles.includes(er));
 
-  console.log('rest', rest);
-  console.log('user', user);
-
-  // const hasAccess =
-
-  // const currentNav = nav.find((n) => n.path === rest.path);
-  //
-  // if (isEmpty(currentNav)) {
-  //   return <Redirect to="/404" />;
-  // }
-  //
-  // const hasAccess = user.roles.some((acr) =>
-  //   currentNav!.accessRoles.includes(acr),
-  // );
-
-  // if (!isEmpty(currentNav)) {
-  //   console.log(user);
-  //   console.log(currentNav[0]);
-  //   const noAccess = currentNav[0].accessRoles.some((acr: string) => {
-  //     return user.roles.length ? user.roles.includes(acr) : 'guest';
-  //   });
-  //   console.log('access', noAccess);
-  //   if (!noAccess && authCredentials.accessToken) {
-  //     return <Redirect to="/404" />;
-  //   }
-  // }
+  if (!hasAccess) {
+    return <Redirect to="/404" />;
+  }
 
   if (rest.computedMatch.url === '/') {
     return <Redirect to="/main" />;
@@ -49,7 +26,7 @@ const WithToken: React.FC<Props> = ({ component: Component, ...rest }) => {
       {...rest}
       render={(props) =>
         authCredentials.accessToken ? (
-          <Component {...props} />
+          <Component {...props} {...rest} />
         ) : (
           <Redirect to="/auth" />
         )

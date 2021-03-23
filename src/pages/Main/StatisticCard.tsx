@@ -1,20 +1,35 @@
-import React, { memo, useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import Highcharts from 'highcharts';
 import HC_exporting from 'highcharts/modules/exporting';
 import HighchartsReact from 'highcharts-react-official';
 //components
 import Flexbox from '../../components/common/layout/Flexbox';
+import LoadingCard from "./LoadingCard";
+//utils
+import { isEmpty } from "../../utils/functions.utils";
 
 HC_exporting(Highcharts);
 
 type Props = {
-  header: string[];
-  stats: any[];
+  header: string
+  stats: any
+  status?: boolean
 };
 
-const StatisticCard: React.FC<Props> = ({ header, stats }) => {
+const StatisticCard: React.FC<Props> = ({ header, stats, status }) => {
   const chart: any = useRef(null);
+
+  useEffect(() => {
+    if (chart.current) {
+      chart.current.chart.reflow();
+    }
+  }, [chart]);
+
+  if (isEmpty(stats)) {
+    return <LoadingCard status={status} />
+  }
+
   const cleanData = stats.filter(Boolean);
   const keys = Object.keys(cleanData[0]);
   const data = keys.map((key, i) => {
@@ -25,9 +40,7 @@ const StatisticCard: React.FC<Props> = ({ header, stats }) => {
     };
   });
 
-  useEffect(() => {
-    chart.current.chart.reflow();
-  }, [chart]);
+
 
   const options = {
     chart: {
@@ -109,8 +122,9 @@ const StatisticCard: React.FC<Props> = ({ header, stats }) => {
 };
 
 StatisticCard.defaultProps = {
-  stats: [],
-  header: ['Header'],
+  stats: null,
+  header: 'Header',
+  status: false
 };
 
 export default StatisticCard;

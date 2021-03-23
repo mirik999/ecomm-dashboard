@@ -2,11 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { useLocation, useHistory, RouteComponentProps } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { useSelector, useDispatch } from 'react-redux';
+import styled from 'styled-components';
 //components
 import Layout from '../../components/common/Layout';
 import Input from '../../components/common/Input';
 import Button from '../../components/common/Button';
 import Selectable from '../../components/common/Select';
+import Flexbox from '../../components/common/layout/Flexbox';
 //types
 import { UserType } from '../../redux/types/user.types';
 import { RootState } from '../../redux/store';
@@ -89,16 +91,16 @@ const CreatUser: React.FC<Props> = (props) => {
 
   return (
     <Layout>
-      <div className="flex justify-between items-center">
-        <h2 className="font-medium uppercase mx-4">Create category</h2>
+      <HeaderPanel justify="between">
+        <h2>Update user</h2>
         <h2
           onClick={() => history.goBack()}
           className="font-medium uppercase mx-4 cursor-pointer hover:opacity-75"
         >
           Go Back
         </h2>
-      </div>
-      <div className="flex items-center">
+      </HeaderPanel>
+      <Body>
         <Input
           type="text"
           label="ID"
@@ -127,8 +129,8 @@ const CreatUser: React.FC<Props> = (props) => {
           cls="m-4"
           isMulti
         />
-      </div>
-      <div className="flex items-center mx-4 py-3">
+      </Body>
+      <FooterPanel>
         <Button
           type="success"
           label="Update"
@@ -141,12 +143,7 @@ const CreatUser: React.FC<Props> = (props) => {
           onAction={() => setState(initialState)}
           cls="m-0 mr-3"
         />
-      </div>
-      {/*<NotificationBox*/}
-      {/*  list={[*/}
-      {/*    updateResponse*/}
-      {/*  ]}*/}
-      {/*/>*/}
+      </FooterPanel>
     </Layout>
   );
 };
@@ -154,3 +151,30 @@ const CreatUser: React.FC<Props> = (props) => {
 CreatUser.defaultProps = {};
 
 export default CreatUser;
+
+const HeaderPanel = styled(Flexbox)`
+  padding: 0;
+
+  h2:first-child {
+    font-size: ${({ theme }) => theme.fontSize.md + 'px'};
+    text-transform: uppercase;
+  }
+
+  h2:last-child {
+    font-size: ${({ theme }) => theme.fontSize.md + 'px'};
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+`;
+
+const Body = styled(Flexbox)`
+  padding: 0;
+  margin: 10px 0;
+  grid-gap: 10px;
+`;
+
+const FooterPanel = styled(Flexbox)`
+  margin-top: 10px;
+  padding: 0;
+  grid-gap: 10px;
+`;

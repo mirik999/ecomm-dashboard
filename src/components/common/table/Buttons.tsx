@@ -1,18 +1,17 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useHistory } from 'react-router-dom';
 //components
 import Button from '../Button';
 import Flexbox from '../layout/Flexbox';
 
-const buttons = [
+const buttons: any = [
   {
     id: 1,
     name: 'create',
     type: 'link',
     visible: true,
     disable: 'never',
-    accessRoles: ['admin', 'sudo'],
     excludeFromPage: ['/users'],
   },
   {
@@ -20,7 +19,6 @@ const buttons = [
     name: 'update',
     type: 'link',
     disable: 'non-multiple',
-    accessRoles: ['admin', 'sudo'],
     excludeFromPage: [],
   },
   {
@@ -28,7 +26,6 @@ const buttons = [
     name: 'disable',
     type: 'action',
     disable: 'non-zero',
-    accessRoles: ['admin', 'sudo'],
     excludeFromPage: [],
   },
   {
@@ -36,7 +33,6 @@ const buttons = [
     name: 'activate',
     type: 'action',
     disable: 'non-zero',
-    accessRoles: ['admin', 'sudo'],
     excludeFromPage: [],
   },
   {
@@ -44,7 +40,6 @@ const buttons = [
     name: 'properties',
     type: 'action',
     disable: 'non-zero',
-    accessRoles: ['admin', 'sudo'],
     excludeFromPage: [],
   },
   {
@@ -52,7 +47,6 @@ const buttons = [
     name: 'delete',
     type: 'action',
     disable: 'non-zero',
-    accessRoles: ['sudo'],
     excludeFromPage: [],
   },
 ];
@@ -71,6 +65,7 @@ const Buttons: React.FC<Props> = ({
   onRouteChange,
 }) => {
   const location = useLocation();
+  const history = useHistory();
 
   function handleDisabling(btn: any): boolean {
     return btn.disable === 'non-multiple'
@@ -84,11 +79,10 @@ const Buttons: React.FC<Props> = ({
     <Container>
       {buttons
         .filter(
-          (btn) =>
-            !btn.excludeFromPage.includes(location.pathname) &&
-            btn.accessRoles.some((b) => roles.includes(b)),
+          (btn: any) =>
+            !btn.excludeFromPage.includes(location.pathname)
         )
-        .map((btn, i) => {
+        .map((btn: any, i: number) => {
           return (
             <Button
               type="success"

@@ -36,9 +36,7 @@ const CreateCategory: React.FC<Props> = (props) => {
   const dispatch = useDispatch();
   //requests
   const [CreateCategory, createResponse] = useMutation(CREATE_CATEGORY);
-  const [UpdateCategory, updateResponse] = useMutation(UPDATE_CATEGORY, {
-    errorPolicy: 'all',
-  });
+  const [UpdateCategory, updateResponse] = useMutation(UPDATE_CATEGORY);
   //state
   const [state, setState] = useState<Partial<CategoryType>>({
     id: uuid(),
@@ -100,7 +98,7 @@ const CreateCategory: React.FC<Props> = (props) => {
         <h2>Create category</h2>
         <h2
           onClick={() => history.goBack()}
-          className="font-medium uppercase mx-4 cursor-pointer hover:opacity-75"
+          className="hoverable"
         >
           Go Back
         </h2>

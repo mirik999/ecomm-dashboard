@@ -3,7 +3,6 @@ import { useLazyQuery, useMutation } from "@apollo/client";
 //components
 import Layout from "../../components/common/Layout";
 import Table from "../../components/common/table/Table";
-import NotificationBox from "../../components/common/notificationBox";
 //types
 import { ProductType } from "../../redux/types/product.type";
 //request
@@ -57,7 +56,7 @@ const UserPage: React.FC<Props> = (props) => {
         }
       })
     } catch(err) {
-      console.log(err.message)
+      console.log('error', err.graphQLErrors)
     }
   }
 
@@ -136,7 +135,7 @@ const UserPage: React.FC<Props> = (props) => {
 
   return (
     <Layout>
-      <h2 className="font-medium uppercase mx-4">
+      <h2>
         Users and roles
       </h2>
       {/*  table */}
@@ -154,14 +153,6 @@ const UserPage: React.FC<Props> = (props) => {
         path="users"
         unSelect={unSelect}
       />
-      {/*<NotificationBox*/}
-      {/*  list={[*/}
-      {/*    getResponse,*/}
-      {/*    activateResponse,*/}
-      {/*    disableResponse,*/}
-      {/*    deleteResponse*/}
-      {/*  ]}*/}
-      {/*/>*/}
     </Layout>
   );
 };

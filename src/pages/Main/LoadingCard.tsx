@@ -4,13 +4,16 @@ import styled from 'styled-components';
 import Flexbox from '../../components/common/layout/Flexbox';
 
 type Props = {
-  ms?: number;
+  ms?: number
+  status?: boolean
 };
 
-const LoadingCard: React.FC<Props> = memo(({ ms }) => {
+const LoadingCard: React.FC<Props> = memo(({ ms, status }) => {
   return (
     <Container justify="center">
-      <span>Calculating...</span>
+      {
+        status ? <span>Calculating...</span> : <span>No data</span>
+      }
     </Container>
   );
 });
@@ -26,13 +29,7 @@ const Container = styled(Flexbox)`
   border-radius: 5px;
   box-shadow: ${({ theme }) => `0 3px 10px ${theme.colors.shadow}`};
   padding: 10px;
-  min-width: 350px;
+  min-width: 250px;
   width: 100%;
-  max-width: 350px;
   height: 230px;
-
-  @media screen and (max-width: 750px) {
-    min-width: 250px !important;
-    max-width: 250px !important;
-  }
 `;

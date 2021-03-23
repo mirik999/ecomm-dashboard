@@ -51,11 +51,9 @@ const MainPage: React.FC<Props> = (props) => {
         <h2>Common Statistics</h2>
         <Flexbox cls="np">
           <SystemUsage />
-          <StatisticCard header={['Product']} stats={[stats.product]} />
-          <StatisticCard
-            header={['Category', 'Brand']}
-            stats={[stats.category, stats.brand]}
-          />
+          <StatisticCard header='Product' stats={stats.product} status={statsResponse.loading} />
+          <StatisticCard header='Category' stats={stats.category} status={statsResponse.loading} />
+          <StatisticCard header='Brand' stats={stats.brand} status={statsResponse.loading} />
         </Flexbox>
       </Container>
     </Layout>

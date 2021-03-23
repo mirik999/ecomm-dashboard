@@ -22,14 +22,20 @@
     <list default="true" id="e021988f-3eda-4fed-af49-63e1e5ec9f51" name="Default Changelist" comment="users done">
       <change beforePath="$PROJECT_DIR$/.eslintcache" beforeDir="false" afterPath="$PROJECT_DIR$/.eslintcache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/common/WithToken.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/WithToken.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/common/WithoutToken.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/WithoutToken.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/common/table/Buttons.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/table/Buttons.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/common/table/FakeTable.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/table/FakeTable.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/common/table/LoadingBox.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/common/table/Table.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/table/Table.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/config/routes.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/config/routes.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Auth/Login.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Auth/Login.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Category/CreateCategory.page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Category/CreateCategory.page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Main/LoadingCard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Main/LoadingCard.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/Main/Main.page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Main/Main.page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Main/SystemUsage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Main/SystemUsage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Main/StatisticCard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Main/StatisticCard.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Rest/NotFound.page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Rest/NotFound.page.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/User/CreateUser.page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/User/CreateUser.page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/socket.utils.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/socket.utils.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/User/User.page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/User/User.page.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
