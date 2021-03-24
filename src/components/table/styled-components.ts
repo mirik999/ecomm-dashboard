@@ -1,26 +1,27 @@
 import styled from 'styled-components';
 //components
-import Flexbox from '../layout/Flexbox';
+import Flexbox from '../hoc/Flexbox';
 
-export const Container = styled.div``;
-
-export const HeaderPanel = styled(Flexbox)`
-  padding: 8px 0;
-  grid-gap: 10px;
-  margin: 10px 0;
-`;
-
-export const TableContainer = styled.div`
-  height: calc(100vh - 300px);
+export const Container = styled.div`
   overflow: auto;
   max-width: 100%;
-  margin-bottom: 10px;
+  margin: 10px 0;
   padding: 10px;
-  background-color: ${({ theme }) => theme.colors.white};
+  background-color: ${({ theme }) => theme.colors.secondBackground};
   border-radius: 4px;
   border-width: 2px 4px 2px 2px;
   border-style: solid;
   border-color: ${({ theme }) => theme.colors.border};
+`;
+
+export const HeaderPanel = styled(Flexbox)`
+  padding: 8px 0;
+  grid-gap: 10px;
+  margin: 0 0 10px 0;
+`;
+
+export const TableContainer = styled.div`
+  height: calc(100vh - 300px);
 `;
 
 export const CustomTable = styled.table`
@@ -40,8 +41,8 @@ export const CustomTable = styled.table`
     border-width: 1px;
     border-style: solid;
     border-color: ${({ theme }) => theme.colors.border};
-    background-color: ${({ theme }) => theme.colors.main};
-    color: ${({ theme }) => theme.colors.white};
+    background-color: ${({ theme }) => theme.colors.thirdBackground};
+    color: ${({ theme }) => theme.colors.color};
     width: 34px;
   }
 
@@ -50,18 +51,14 @@ export const CustomTable = styled.table`
     border-width: 1px;
     border-style: solid;
     border-color: ${({ theme }) => theme.colors.border};
-    background-color: ${({ theme }) => theme.colors.main};
-    color: ${({ theme }) => theme.colors.white};
+    background-color: ${({ theme }) => theme.colors.thirdBackground};
+    color: ${({ theme }) => theme.colors.color};
     padding: 10px 8px;
     white-space: nowrap;
   }
 
   tr {
-    background-color: ${({ theme }) => theme.colors.background};
-
-    &:nth-child(even) {
-      background-color: ${({ theme }) => theme.colors.white};
-    }
+    background-color: ${({ theme }) => theme.colors.thirdBackground};
   }
 
   td:first-child {
@@ -80,6 +77,7 @@ export const CustomTable = styled.table`
     border-width: 1px;
     border-style: solid;
     border-color: ${({ theme }) => theme.colors.border};
+    color: ${({ theme }) => theme.colors.color};
     padding: 8px;
   }
 `;

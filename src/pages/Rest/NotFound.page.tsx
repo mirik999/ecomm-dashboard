@@ -2,7 +2,7 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 //components
-import Flexbox from "../../components/common/layout/Flexbox";
+import Flexbox from "../../components/hoc/Flexbox";
 
 type Props = {};
 

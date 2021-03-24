@@ -56,6 +56,7 @@ const Label = styled.label`
 
   span {
     font-size: ${({ theme }) => theme.fontSize.sm + 'px'};
+    color: ${({ theme }) => theme.colors.color};
     font-weight: 600;
     margin-bottom: 5px;
   }
@@ -66,11 +67,13 @@ const Label = styled.label`
     border-width: 2px 4px 2px 2px;
     border-style: solid;
     border-color: ${({ theme }) => theme.colors.border};
+    background-color: ${({ theme }) => theme.colors.thirdBackground};
+    color: ${({ theme }) => theme.colors.color};
 
     &:focus {
       outline: none;
-      border-bottom-color: ${({ theme }) => theme.colors.successLight};
-      border-right-color: ${({ theme }) => theme.colors.successLight};
+      border-bottom-color: ${({ theme }) => theme.colors.success};
+      border-right-color: ${({ theme }) => theme.colors.success};
       border-width: 2px 4px 2px 2px;
     }
   }

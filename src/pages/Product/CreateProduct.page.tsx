@@ -4,15 +4,15 @@ import { useLazyQuery, useMutation } from '@apollo/client';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 //components
-import Layout from '../../components/common/Layout';
+import Layout from '../../components/hoc/Layout';
 import Input from '../../components/common/Input';
 import Button from '../../components/common/Button';
 import UploadZone from '../../components/common/UploadZone';
 import Selectable from '../../components/common/Select';
 import ColorPicker from '../../components/common/ColorPicker';
 import Checkbox from '../../components/common/Checkbox';
-import TinyEditor from '../../components/common/richTextEditor/TinyEditor';
-import Flexbox from '../../components/common/layout/Flexbox';
+import TinyEditor from '../../components/richTextEditor/TinyEditor';
+import Flexbox from '../../components/hoc/Flexbox';
 //types
 import { OptionType } from '../../redux/types/common.type';
 import { CategoryType } from '../../redux/types/category.type';

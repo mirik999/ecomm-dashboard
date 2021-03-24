@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import { Editor } from '@tinymce/tinymce-react';
 import styled from 'styled-components';
 //components
-import Flexbox from '../layout/Flexbox';
+import Flexbox from '../hoc/Flexbox';
 //templates
 import { templates } from './templates';
 //utils
-import { imageUploadAndGetUrl } from '../../../utils/cloudinary.utils';
+import { imageUploadAndGetUrl } from '../../utils/cloudinary.utils';
 
 type Props = {
   label: string;

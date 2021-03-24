@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useLazyQuery, useMutation } from '@apollo/client';
 //components
-import Layout from '../../components/common/Layout';
-import Table from '../../components/common/table/Table';
+import Layout from '../../components/hoc/Layout';
+import Table from '../../components/table/Table';
 //types
 import { CategoryType } from '../../redux/types/category.type';
 //request

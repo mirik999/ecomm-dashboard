@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import Input from '../../components/common/Input';
 //types
 import { SubCategoryType } from '../../redux/types/category.type';
-import Flexbox from '../../components/common/layout/Flexbox';
+import Flexbox from '../../components/hoc/Flexbox';
 
 type Props = {
   parentId: string;

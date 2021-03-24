@@ -5,9 +5,9 @@ import { useDispatch } from 'react-redux';
 import { v4 as uuid } from 'uuid';
 import styled from 'styled-components';
 //components
-import Layout from '../../components/common/Layout';
+import Layout from '../../components/hoc/Layout';
 import Input from '../../components/common/Input';
-import Flexbox from '../../components/common/layout/Flexbox';
+import Flexbox from '../../components/hoc/Flexbox';
 import Button from '../../components/common/Button';
 import Selectable from '../../components/common/Select';
 //types

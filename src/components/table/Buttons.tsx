@@ -2,8 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import { useLocation, useHistory } from 'react-router-dom';
 //components
-import Button from '../Button';
-import Flexbox from '../layout/Flexbox';
+import Button from '../common/Button';
+import Flexbox from '../hoc/Flexbox';
 
 const buttons: any = [
   {

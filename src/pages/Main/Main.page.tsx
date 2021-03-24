@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { useLazyQuery } from '@apollo/client';
 import { useDispatch } from 'react-redux';
 //components
-import Layout from '../../components/common/Layout';
+import Layout from '../../components/hoc/Layout';
 import SystemUsage from './SystemUsage';
 import StatisticCard from './StatisticCard';
-import Flexbox from '../../components/common/layout/Flexbox';
+import Flexbox from '../../components/hoc/Flexbox';
 //styled
 import { Container } from './styled-components';
 //request

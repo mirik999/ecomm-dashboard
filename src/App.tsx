@@ -14,9 +14,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ThemeProvider } from 'styled-components';
 import { useMediaLayout } from 'use-media';
 //components
-import WithToken from './components/common/WithToken';
-import WithoutToken from './components/common/WithoutToken';
-import NotificationBox from './components/common/notificationBox';
+import WithToken from './components/hoc/WithToken';
+import WithoutToken from './components/hoc/WithoutToken';
+import NotificationBox from './components/notificationBox';
 //request
 import { REFRESH_TOKEN } from './redux/requests/user.request';
 //slicer

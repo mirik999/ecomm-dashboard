@@ -5,6 +5,7 @@ export const Container = styled.div`
 
   & > h2 {
     font-size: ${({ theme }) => theme.fontSize.sm + 'px'};
+    color: ${({ theme }) => theme.colors.color};
     text-transform: uppercase;
   }
 

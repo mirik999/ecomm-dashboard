@@ -2,7 +2,7 @@ import React, { memo, useEffect, useState } from 'react';
 import { CirclePicker } from 'react-color';
 import styled from 'styled-components';
 //components
-import Flexbox from './layout/Flexbox';
+import Flexbox from '../hoc/Flexbox';
 
 type Props = {
   value: string;

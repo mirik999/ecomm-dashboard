@@ -5,14 +5,14 @@ import { v4 as uuid } from 'uuid';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 //components
-import Layout from '../../components/common/Layout';
+import Layout from '../../components/hoc/Layout';
 import Input from '../../components/common/Input';
 import Button from '../../components/common/Button';
 import Divider from '../../components/common/Divider';
 import SubCategories from './SubCategories';
 import Brands from '../Brand/Brands';
 import Products from '../Product/Products';
-import Flexbox from '../../components/common/layout/Flexbox';
+import Flexbox from '../../components/hoc/Flexbox';
 //types
 import { CategoryType, SubCategoryType } from '../../redux/types/category.type';
 //request

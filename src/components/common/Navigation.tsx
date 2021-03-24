@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { useSelector } from 'react-redux';
 import { HiMenuAlt1 } from 'react-icons/hi';
 //components
-import Flexbox from './layout/Flexbox';
+import Flexbox from '../hoc/Flexbox';
 //types
 import { RootState } from '../../redux/store';
 import { RoutesType } from '../../redux/types/routes.types';
@@ -57,15 +57,16 @@ const Container = styled.nav`
   min-width: 160px;
   width: 160px;
   height: 100%;
-  background-color: ${({ theme }) => theme.colors.main};
+  background-color: ${({ theme }) => theme.colors.thirdBackground};
 
   .nav-header {
-    padding: 9px 10px;
-    border-bottom: ${({ theme }) => `2px solid ${theme.colors.secondColor}`};
+    padding: 8.5px 10px;
+    background-color: ${({ theme }) => theme.colors.background};
+    border-bottom: ${({ theme }) => `2px solid ${theme.colors.border}`};
 
     div:first-child {
       text-transform: uppercase;
-      color: ${({ theme }) => theme.colors.white};
+      color: ${({ theme }) => theme.colors.color};
       font-weight: bold;
 
       h3 {
@@ -81,6 +82,10 @@ const Container = styled.nav`
     div:last-child {
       cursor: pointer;
     }
+
+    svg path {
+      fill:  ${({ theme }) => theme.colors.color};
+    }
   }
 
   .nav-body {
@@ -93,7 +98,7 @@ const Container = styled.nav`
         a {
           display: block;
           padding: 10px 0;
-          color: ${({ theme }) => theme.colors.white};
+          color: ${({ theme }) => theme.colors.color};
           font-size: ${({ theme }) => theme.fontSize.sm + 'px'};
         }
       }

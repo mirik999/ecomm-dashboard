@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 import styled from 'styled-components';
 //components
-import Flexbox from '../../components/common/layout/Flexbox';
+import Flexbox from '../../components/hoc/Flexbox';
 
 type Props = {
   ms?: number
@@ -25,11 +25,14 @@ LoadingCard.defaultProps = {
 export default LoadingCard;
 
 const Container = styled(Flexbox)`
-  background-color: ${({ theme }) => theme.colors.white};
+  background-color: ${({ theme }) => theme.colors.secondBackground};
   border-radius: 5px;
-  box-shadow: ${({ theme }) => `0 3px 10px ${theme.colors.shadow}`};
   padding: 10px;
   min-width: 250px;
   width: 100%;
   height: 230px;
+
+  span {
+    color: ${({ theme }) => theme.colors.color};
+  }
 `;

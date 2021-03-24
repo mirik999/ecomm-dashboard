@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 //components
-import Flexbox from "./layout/Flexbox";
+import Flexbox from "../hoc/Flexbox";
 
 type Props = {
   label?: string;
@@ -32,13 +32,13 @@ const Container = styled(Flexbox)`
 
   .left-line, .right-line {
     height: 2px;
-    background-color: ${({theme}) => theme.colors.secondColor};
+    background-color: ${({theme}) => theme.colors.color};
     flex: 1;
   }
 
   span {
     padding: 0 10px;
-    color:  ${({theme}) => theme.colors.secondColor};
+    color:  ${({theme}) => theme.colors.color};
     text-transform: uppercase;
     font-weight: bold;
     font-size: ${({theme}) => theme.fontSize.xs + "px"};

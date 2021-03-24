@@ -26,7 +26,7 @@ const WithToken: React.FC<Props> = ({ component: Component, ...rest }) => {
       {...rest}
       render={(props) =>
         authCredentials.accessToken ? (
-          <Component {...props} {...rest} />
+          <Component {...props} />
         ) : (
           <Redirect to="/auth" />
         )

@@ -30,20 +30,14 @@ export type Theme = {
     };
   };
   colors: {
-    white?: string;
-    black?: string;
     color?: string;
-    secondColor?: string;
     background?: string;
     secondBackground?: string;
-    shadow?: string;
+    thirdBackground?: string;
     border?: string;
     main?: string;
     success?: string;
-    successLight?: string;
     warning?: string;
-    warningLight?: string;
     error?: string;
-    errorLight?: string;
   };
 };

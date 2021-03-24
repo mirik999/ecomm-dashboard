@@ -4,7 +4,7 @@ import Highcharts from 'highcharts';
 import HC_exporting from 'highcharts/modules/exporting';
 import HighchartsReact from 'highcharts-react-official';
 //components
-import Flexbox from '../../components/common/layout/Flexbox';
+import Flexbox from '../../components/hoc/Flexbox';
 import LoadingCard from "./LoadingCard";
 //utils
 import { isEmpty } from "../../utils/functions.utils";

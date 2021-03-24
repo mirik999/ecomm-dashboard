@@ -4,15 +4,17 @@ import { MdExitToApp } from 'react-icons/md';
 import { useHistory } from 'react-router-dom';
 import { useLazyQuery } from '@apollo/client';
 import styled from 'styled-components';
+//components
+import Flexbox from '../hoc/Flexbox';
 //types
 import { RootState } from '../../redux/store';
 //actions
 import { removeToken } from '../../redux/slices/auth-credentials.slice';
 import { removeUser } from '../../redux/slices/user.slice';
 import { saveNetStatus } from '../../redux/slices/net-status.slice';
+import { themeToDark, themeToLight } from '../../redux/slices/theme.slice';
 //request
 import { LOGOUT_USER } from '../../redux/requests/user.request';
-import Flexbox from './layout/Flexbox';
 
 type Props = {};
 
@@ -21,7 +23,7 @@ const Header: React.FC<Props> = memo(
     const dispatch = useDispatch();
     const history = useHistory();
     const { user, authCredentials } = useSelector((state: RootState) => state);
-    const [Logout, logoutResponse] = useLazyQuery(LOGOUT_USER);
+    const [Logout] = useLazyQuery(LOGOUT_USER);
 
     async function _onLogout(): Promise<void> {
       try {
@@ -42,9 +44,13 @@ const Header: React.FC<Props> = memo(
     return (
       <Container justify="between">
         <div>
-          <span>path: {path}</span>
+          {/*<span>path: {path}</span>*/}
         </div>
         <Flexbox justify="end">
+          <div>
+            <span className="hoverable" onClick={() => dispatch(themeToDark())}>DARK</span>
+            <span className="hoverable" onClick={() => dispatch(themeToLight())}>LIGHT</span>
+          </div>
           <span>{user.email}</span>
           <MdExitToApp
             size={20}
@@ -88,6 +94,14 @@ const Container = styled(Flexbox)`
       margin-left: 5px;
       cursor: pointer;
     }
+  }
+
+  span {
+    color: ${({ theme }) => theme.colors.color};
+  }
+
+  svg path {
+    fill: ${({ theme }) => theme.colors.color};
   }
 
   @media screen and (max-width: 600px) {

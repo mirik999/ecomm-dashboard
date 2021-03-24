@@ -2,7 +2,7 @@ import React, { memo, useEffect, useState } from 'react';
 import { useLazyQuery } from '@apollo/client';
 import styled from 'styled-components';
 //components
-import Flexbox from '../../components/common/layout/Flexbox';
+import Flexbox from '../../components/hoc/Flexbox';
 //request
 import { GET_PRODUCTS_BY_CATEGORY_ID } from '../../redux/requests/product.request';
 //types

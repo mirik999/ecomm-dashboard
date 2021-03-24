@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 //components
-import Header from './Header';
-import Navigation from './Navigation';
-import Flexbox from './layout/Flexbox';
+import Header from '../common/Header';
+import Navigation from '../common/Navigation';
+import Flexbox from './Flexbox';
 
 type Props = {
   children: React.ReactNode;

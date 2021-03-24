@@ -8,7 +8,13 @@ export function saveToLocalStorage(key: string, value: any): void {
 
 export function getFromLocalStorage(key: string): any {
   const data = localStorage.getItem(key);
-  return data ? JSON.parse(data) : "No data found by this key name";
+  if (typeof data === "string") {
+    return data;
+  }
+  if (data) {
+    return JSON.parse(data);
+  }
+  return "";
 }
 
 export function removeFromLocalStorage(key: string): void {

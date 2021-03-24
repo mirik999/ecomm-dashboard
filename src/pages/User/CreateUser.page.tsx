@@ -4,11 +4,11 @@ import { useMutation } from '@apollo/client';
 import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
 //components
-import Layout from '../../components/common/Layout';
+import Layout from '../../components/hoc/Layout';
 import Input from '../../components/common/Input';
 import Button from '../../components/common/Button';
 import Selectable from '../../components/common/Select';
-import Flexbox from '../../components/common/layout/Flexbox';
+import Flexbox from '../../components/hoc/Flexbox';
 //types
 import { UserType } from '../../redux/types/user.types';
 import { RootState } from '../../redux/store';

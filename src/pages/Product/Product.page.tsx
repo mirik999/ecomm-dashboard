@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useLazyQuery, useMutation } from "@apollo/client";
 //components
-import Layout from "../../components/common/Layout";
-import Table from "../../components/common/table/Table";
-import NotificationBox from "../../components/common/notificationBox";
+import Layout from "../../components/hoc/Layout";
+import Table from "../../components/table/Table";
+import NotificationBox from "../../components/notificationBox";
 //types
 import { ProductType } from "../../redux/types/product.type";
 //request

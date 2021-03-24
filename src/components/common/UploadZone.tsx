@@ -2,7 +2,7 @@ import React, { FormEvent, useEffect, useState, memo } from 'react';
 import Lightbox from 'react-image-lightbox';
 import styled from 'styled-components';
 //components
-import Flexbox from './layout/Flexbox';
+import Flexbox from '../hoc/Flexbox';
 //utils
 import { imageUploadAndGetUrl } from '../../utils/cloudinary.utils';
 
@@ -246,7 +246,7 @@ const Container = styled(Flexbox)`
     border-width: 2px 4px 2px 2px;
     border-style: dashed;
     border-color: ${({ theme }) => theme.colors.border};
-    color: ${({ theme }) => theme.colors.secondColor};
+    color: ${({ theme }) => theme.colors.color};
     overflow: auto;
 
     & > div {

@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 //components
-import Button from "../Button";
-import Flexbox from "../../common/layout/Flexbox";
+import Button from "../common/Button";
+import Flexbox from "../hoc/Flexbox";
 
 
 
@@ -25,30 +25,18 @@ type Props = {
 const FakeTable: React.FC<Props> = ({ onCreate, roles, loading }) => {
   if (loading) {
     return (
-      <div>
-        <HeaderPanel>
-          <div />
-          <div />
-          <div />
-        </HeaderPanel>
-        <Container justify="center">
-          Loading data...
-        </Container>
-      </div>
+      <Container justify="center">
+        Loading data...
+      </Container>
     )
   }
 
   return (
-    <div>
-      <HeaderPanel>
-        <div />
-        <div />
-        <div />
-      </HeaderPanel>
-      <Container justify="center">
+    <Container flex="column">
+      <Flexbox cls="np" justify="center">
         No data in table
-      </Container>
-      <div className="mx-4 my-3 flex justify-start">
+      </Flexbox>
+      <div className="btn-wrap">
         {
           buttons
             .filter(btn => btn.roles.some(b => roles.includes(b)))
@@ -63,7 +51,7 @@ const FakeTable: React.FC<Props> = ({ onCreate, roles, loading }) => {
             ))
         }
       </div>
-    </div>
+    </Container>
   );
 }
 
@@ -75,35 +63,22 @@ FakeTable.defaultProps = {
 
 export default FakeTable;
 
-const HeaderPanel = styled(Flexbox)`
-  height: 85px;
-  overflow: auto;
-  max-width: 100%;
-  margin-bottom: 10px;
-  grid-gap: 10px;
-  padding: 0;
-
-  div {
-    flex: 1;
-    height: 40px;
-    background-color: ${({ theme }) => theme.colors.white};
-    border-radius: 4px;
-    border-width: 2px 4px 2px 2px;
-    border-style: solid;
-    border-color: ${({ theme }) => theme.colors.border};
-    transform: translateY(14px);
-  }
-`;
-
 const Container = styled(Flexbox)`
-  height: calc(100vh - 300px);
+  height: calc(100vh - 137px);
   overflow: auto;
   max-width: 100%;
-  margin-bottom: 10px;
+  margin: 10px 0;
   padding: 10px;
-  background-color: ${({ theme }) => theme.colors.white};
+  background-color: ${({ theme }) => theme.colors.secondBackground};
   border-radius: 4px;
   border-width: 2px 4px 2px 2px;
   border-style: solid;
   border-color: ${({ theme }) => theme.colors.border};
+  position: relative;
+
+  .btn-wrap {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+  }
 `;

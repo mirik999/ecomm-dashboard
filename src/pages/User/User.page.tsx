@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useLazyQuery, useMutation } from "@apollo/client";
+import { useDispatch } from "react-redux";
 //components
-import Layout from "../../components/common/Layout";
-import Table from "../../components/common/table/Table";
+import Layout from "../../components/hoc/Layout";
+import Table from "../../components/table/Table";
 //types
 import { ProductType } from "../../redux/types/product.type";
 //request
@@ -12,22 +13,24 @@ import {
   ACTIVATE_USERS,
   DELETE_USERS
 } from "../../redux/requests/user.request";
+//actions
+import { saveNetStatus } from '../../redux/slices/net-status.slice';
 
 type Props = {};
 
 const UserPage: React.FC<Props> = (props) => {
+  const dispatch = useDispatch();
+  //graphql
   const [GetUsers, getResponse] = useLazyQuery(GET_USERS);
-  const [DisableUsers, disableResponse] = useMutation(DISABLE_USERS);
-  const [ActivateUsers, activateResponse] = useMutation(ACTIVATE_USERS);
-  const [DeleteUsers, deleteResponse] = useMutation(DELETE_USERS);
+  const [DisableUsers] = useMutation(DISABLE_USERS);
+  const [ActivateUsers] = useMutation(ACTIVATE_USERS);
+  const [DeleteUsers] = useMutation(DELETE_USERS);
+  //state
   const [users, setUsers] = useState<ProductType[]>([]);
-  //pagination
   const [allCount, setAllCount] = useState<number>(0);
   const [rowCount, setRowCount] = useState<number>(10);
   const [currentPage, setCurrentPage] = useState<number>(1);
-  //deep search
   const [deepSearch, setDeepSearch] = useState<string>('');
-  //side effects
   const [unSelect, setUnSelect] = useState<boolean>(false);
 
   useEffect(() => {
@@ -56,7 +59,7 @@ const UserPage: React.FC<Props> = (props) => {
         }
       })
     } catch(err) {
-      console.log('error', err.graphQLErrors)
+      dispatch(saveNetStatus(err.graphQLErrors))
     }
   }
 
@@ -84,7 +87,7 @@ const UserPage: React.FC<Props> = (props) => {
       })
       handleUsersState(ids, true)
     } catch(err) {
-      console.log(err.message)
+      dispatch(saveNetStatus(err.graphQLErrors))
     }
   }
 
@@ -97,7 +100,7 @@ const UserPage: React.FC<Props> = (props) => {
       })
       handleUsersState(ids, false)
     } catch(err) {
-      console.log(err.message)
+      dispatch(saveNetStatus(err.graphQLErrors))
     }
   }
 
@@ -110,7 +113,7 @@ const UserPage: React.FC<Props> = (props) => {
       })
       handleUsersList(ids)
     } catch(err) {
-      console.log(err.message)
+      dispatch(saveNetStatus(err.graphQLErrors))
     }
   }
 

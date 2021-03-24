@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 //components
-import Input from '../Input';
-import Select from '../Select';
+import Input from '../common/Input';
+import Select from '../common/Select';
 import FakeTable from './FakeTable';
 import Buttons from './Buttons';
 import Paginate from './Paginate';
@@ -17,8 +17,8 @@ import {
 } from './styled-components';
 //types
 import { Props } from './props';
-import { OptionType } from '../../../redux/types/common.type';
-import { RootState } from '../../../redux/store';
+import { OptionType } from '../../redux/types/common.type';
+import { RootState } from '../../redux/store';
 //handler
 import { tableBodyHandler } from './body.handler.';
 
@@ -147,8 +147,6 @@ const Table: React.FC<Props> = ({
   const keys = state
     .map((d) => Object.keys(d))[0]
     .filter((k, i) => ![...exclude!].includes(k));
-
-  console.log(history)
 
   return (
     <Container>

@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { FaRegWindowClose } from "react-icons/fa";
 //components
-import Flexbox from "../layout/Flexbox";
+import Flexbox from "../hoc/Flexbox";
 
 type Props = {
   message?: string
