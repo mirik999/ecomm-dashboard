@@ -1,4 +1,4 @@
-import React, { FormEvent } from 'react';
+import React, { FormEvent, useRef } from 'react';
 import styled from 'styled-components';
 
 type Props = {
@@ -20,13 +20,14 @@ const Input: React.FC<Props> = ({
   getValue,
   ...props
 }) => {
-  const defaultValue = type === "number" ? 0 : '';
+  const defaultValue = type === 'number' ? 0 : '';
+  const randomNumber = useRef(Math.floor(Math.random() * 1000)).current;
   return (
-    <Label htmlFor={type + label!} className={cls}>
+    <Label htmlFor={type + label! + randomNumber} className={cls}>
       <span>{label}</span>
       <input
         type={type}
-        id={type + label!}
+        id={type + label! + randomNumber}
         name="email"
         autoComplete="off"
         value={value ?? defaultValue}

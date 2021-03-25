@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 //components
 import Layout from '../../components/hoc/Layout';
 import Table from '../../components/table/Table';
+import HeaderLine from '../../components/common/HeaderLine';
 //types
 import { BrandType } from '../../redux/types/brand.type';
 //request
@@ -20,19 +21,17 @@ type Props = {};
 
 const BrandPage: React.FC<Props> = (props) => {
   const dispatch = useDispatch();
-  //state
+  //graphql
   const [GetBrands, getResponse] = useLazyQuery(GET_BRANDS);
   const [DisableBrands] = useMutation(DISABLE_BRANDS);
   const [ActivateBrands] = useMutation(ACTIVATE_BRANDS);
   const [DeleteBrands] = useMutation(DELETE_BRANDS);
+  //state
   const [brands, setBrands] = useState<BrandType[]>([]);
-  //pagination
   const [allCount, setAllCount] = useState<number>(0);
   const [rowCount, setRowCount] = useState<number>(10);
   const [currentPage, setCurrentPage] = useState<number>(1);
-  //deep search
   const [deepSearch, setDeepSearch] = useState<string>('');
-  //side effects
   const [unSelect, setUnSelect] = useState<boolean>(false);
 
   useEffect(() => {
@@ -140,7 +139,7 @@ const BrandPage: React.FC<Props> = (props) => {
 
   return (
     <Layout>
-      <h2 className="font-medium uppercase mx-4">Brands</h2>
+      <HeaderLine label="Brands" />
       {/*  table */}
       <Table
         data={brands}

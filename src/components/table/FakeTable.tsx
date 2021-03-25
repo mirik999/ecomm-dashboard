@@ -1,70 +1,76 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 //components
-import Button from "../common/Button";
-import Flexbox from "../hoc/Flexbox";
-
-
+import Button from '../common/Button';
+import Flexbox from '../hoc/Flexbox';
 
 const buttons = [
   {
     id: 1,
     name: 'create',
     type: 'link',
-    disable: "never",
-    roles: ["admin", "sudo"]
-  }
-]
+    disable: 'never',
+    roles: ['admin', 'sudo'],
+  },
+];
 
 type Props = {
-  roles: string[]
-  loading?: boolean
-  onCreate?: (mode: string) => any
-}
+  roles: string[];
+  loading?: boolean;
+  onCreate?: (mode: string) => any;
+};
 
 const FakeTable: React.FC<Props> = ({ onCreate, roles, loading }) => {
-  if (loading) {
+  const [progress, setProgress] = useState<boolean>(true);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setProgress(false);
+    }, 1000);
+
+    return () => clearTimeout(timeout);
+  }, []);
+
+  if (progress) {
     return (
       <Container justify="center">
-        Loading data...
+        <span>Loading data...</span>
       </Container>
-    )
+    );
   }
 
   return (
     <Container flex="column">
       <Flexbox cls="np" justify="center">
-        No data in table
+        <span>No data in table</span>
       </Flexbox>
       <div className="btn-wrap">
-        {
-          buttons
-            .filter(btn => btn.roles.some(b => roles.includes(b)))
-            .map((btn, i) => (
-              <Button
-                type="success"
-                key={i}
-                label="Create"
-                onAction={() => onCreate && onCreate('create')}
-                cls="m-0 mr-3"
-              />
-            ))
-        }
+        {buttons
+          .filter((btn) => btn.roles.some((b) => roles.includes(b)))
+          .map((btn, i) => (
+            <Button
+              type="success"
+              key={i}
+              label="Create"
+              onAction={() => onCreate && onCreate('create')}
+              cls="m-0 mr-3"
+            />
+          ))}
       </div>
     </Container>
   );
-}
+};
 
 FakeTable.defaultProps = {
   roles: [],
   onCreate: () => false,
-  loading: false
-}
+  loading: false,
+};
 
 export default FakeTable;
 
 const Container = styled(Flexbox)`
-  height: calc(100vh - 137px);
+  height: calc(100vh - 167px);
   overflow: auto;
   max-width: 100%;
   margin: 10px 0;
@@ -75,6 +81,10 @@ const Container = styled(Flexbox)`
   border-style: solid;
   border-color: ${({ theme }) => theme.colors.border};
   position: relative;
+
+  span {
+    color: ${({ theme }) => theme.colors.color};
+  }
 
   .btn-wrap {
     position: absolute;

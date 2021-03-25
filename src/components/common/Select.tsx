@@ -1,10 +1,10 @@
 import React, { memo, useEffect, useState } from 'react';
 import Select from 'react-select';
-import { useSelector } from "react-redux";
+import { useSelector } from 'react-redux';
 //types
 import { OptionType } from '../../redux/types/common.type';
 import styled from 'styled-components';
-import {RootState} from "../../redux/store";
+import { RootState } from '../../redux/store';
 
 type Props = {
   type?: string;
@@ -20,7 +20,7 @@ type Props = {
 
 const Selectable: React.FC<Props> = memo(
   ({ type, label, name, value, cls, options, getValue, ...rest }) => {
-    const { theme } = useSelector((state:  RootState) => state);
+    const { theme } = useSelector((state: RootState) => state);
     const [innerState, setInnerState] = useState<OptionType>({
       id: '',
       name: '',
@@ -55,15 +55,24 @@ const Selectable: React.FC<Props> = memo(
     }
 
     const customStyles = {
-      singleValue: (base: any) => ({
+      singleValue: (base: React.CSSProperties) => ({
         ...base,
-        color: theme.colors.color
+        color: theme.colors.color,
       }),
-      menu: (provided: any, state: any) => ({
+      multiValue: (base: React.CSSProperties) => ({
+        ...base,
+        backgroundColor: theme.colors.secondBackground,
+        color: theme.colors.color,
+      }),
+      multiValueLabel: (base: React.CSSProperties): React.CSSProperties => ({
+        ...base,
+        color: theme.colors.color,
+      }),
+      menu: (provided: React.CSSProperties, state: any) => ({
         ...provided,
-        backgroundColor: theme.colors.thirdBackground
+        backgroundColor: theme.colors.thirdBackground,
       }),
-      control: (provided: any, state: any) => ({
+      control: (provided: React.CSSProperties, state: any) => ({
         ...provided,
         outline: '2px solid transparent',
         outlineOffset: '2px',
@@ -75,25 +84,36 @@ const Selectable: React.FC<Props> = memo(
         borderTopWidth: '2px',
         borderRightWidth: '4px',
         borderBottomWidth: '2px',
-        borderBottomColor: state.isFocused ? theme.colors.success : theme.colors.border,
-        borderRightColor: state.isFocused ? theme.colors.success : theme.colors.border,
+        borderBottomColor: state.isFocused
+          ? theme.colors.success
+          : theme.colors.border,
+        borderRightColor: state.isFocused
+          ? theme.colors.success
+          : theme.colors.border,
         borderRadius: '4px',
         cursor: 'pointer',
+        color: theme.colors.color,
 
         '&:hover': {
-          borderBottomColor: state.isFocused ? theme.colors.success : theme.colors.border,
-          borderRightColor: state.isFocused ? theme.colors.success : theme.colors.border,
+          borderBottomColor: state.isFocused
+            ? theme.colors.success
+            : theme.colors.border,
+          borderRightColor: state.isFocused
+            ? theme.colors.success
+            : theme.colors.border,
         },
       }),
-      option: (provided: any, state: any) => ({
+      option: (provided: React.CSSProperties, state: any) => ({
         ...provided,
-        backgroundColor: state.isSelected ? theme.colors.success : theme.colors.thirdBackground,
+        backgroundColor: state.isSelected
+          ? theme.colors.success
+          : theme.colors.thirdBackground,
         cursor: 'pointer',
         color: state.isSelected ? 'white' : theme.colors.color,
 
-        '&:hover':  {
+        '&:hover': {
           backgroundColor: theme.colors.success,
-          color: 'white'
+          color: 'white',
         },
       }),
     };

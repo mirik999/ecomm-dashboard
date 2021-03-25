@@ -57,7 +57,10 @@ const Container = styled.nav`
   min-width: 160px;
   width: 160px;
   height: 100%;
-  background-color: ${({ theme }) => theme.colors.thirdBackground};
+  background-color: ${({ theme }) => theme.colors.secondBackground};
+  border-right-width: 2px;
+  border-right-style: solid;
+  border-right-color: ${({ theme }) => theme.colors.border};
 
   .nav-header {
     padding: 8.5px 10px;
@@ -84,7 +87,7 @@ const Container = styled.nav`
     }
 
     svg path {
-      fill:  ${({ theme }) => theme.colors.color};
+      fill: ${({ theme }) => theme.colors.color};
     }
   }
 

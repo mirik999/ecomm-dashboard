@@ -13,7 +13,7 @@ type Props = {
 };
 
 const Brands: React.FC<Props> = memo(({ id }) => {
-  //requests
+  //graphql
   const [GetBrandsByCategoryId, brandsResponse] = useLazyQuery(
     GET_BRANDS_BY_CATEGORY_ID,
   );

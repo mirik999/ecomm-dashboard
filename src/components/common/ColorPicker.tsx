@@ -46,13 +46,12 @@ const ColorPicker: React.FC<Props> = memo(
     return (
       <Container flex="column" align="start">
         <span>Color of the product</span>
-        <Flexbox
-          justify="center"
-          style={{
-            backgroundColor: color,
-          }}
-        >
-          <div>
+        <Flexbox justify="center">
+          <div
+            style={{
+              backgroundColor: color,
+            }}
+          >
             <CirclePicker colors={colors} onChange={_onChange} />
           </div>
         </Flexbox>
@@ -78,18 +77,24 @@ const Container = styled(Flexbox)`
 
   & > span {
     font-size: ${({ theme }) => theme.fontSize.sm + 'px'};
+    color: ${({ theme }) => theme.colors.color};
     font-weight: bold;
     margin-bottom: 5px;
   }
 
   & > div {
     border-radius: 5px;
-    background-color: ${({ theme }) => theme.colors.white};
+    background-color: ${({ theme }) => theme.colors.thirdBackground};
 
     & > div {
+      border: 1px solid silver;
       padding: 10px;
-      background-color: ${({ theme }) => theme.colors.background};
+      background-color: ${({ theme }) => theme.colors.secondBackground};
       border-radius: 5px;
+
+      span div span div {
+        border: ${({ theme }) => `1px solid ${theme.colors.border}`};
+      }
     }
   }
 `;

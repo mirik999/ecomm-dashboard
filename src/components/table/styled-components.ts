@@ -21,7 +21,7 @@ export const HeaderPanel = styled(Flexbox)`
 `;
 
 export const TableContainer = styled.div`
-  height: calc(100vh - 300px);
+  height: calc(100vh - 320px);
 `;
 
 export const CustomTable = styled.table`

@@ -6,8 +6,8 @@ import Layout from '../../components/hoc/Layout';
 import SystemUsage from './SystemUsage';
 import StatisticCard from './StatisticCard';
 import Flexbox from '../../components/hoc/Flexbox';
-//styled
-import { Container } from './styled-components';
+import HeaderLine from '../../components/common/HeaderLine';
+import BorderedBox from '../../components/hoc/BorderedBox';
 //request
 import { GET_STATISTICS } from '../../redux/requests/main.request';
 //actions
@@ -47,15 +47,27 @@ const MainPage: React.FC<Props> = (props) => {
 
   return (
     <Layout>
-      <Container>
-        <h2>Common Statistics</h2>
-        <Flexbox cls="np">
+      <HeaderLine label="Common Statistics" />
+      <BorderedBox>
+        <Flexbox cls="np gap">
           <SystemUsage />
-          <StatisticCard header='Product' stats={stats.product} status={statsResponse.loading} />
-          <StatisticCard header='Category' stats={stats.category} status={statsResponse.loading} />
-          <StatisticCard header='Brand' stats={stats.brand} status={statsResponse.loading} />
+          <StatisticCard
+            header="Product"
+            stats={stats.product}
+            status={statsResponse.loading}
+          />
+          <StatisticCard
+            header="Category"
+            stats={stats.category}
+            status={statsResponse.loading}
+          />
+          <StatisticCard
+            header="Brand"
+            stats={stats.brand}
+            status={statsResponse.loading}
+          />
         </Flexbox>
-      </Container>
+      </BorderedBox>
     </Layout>
   );
 };

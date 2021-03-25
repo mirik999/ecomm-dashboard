@@ -9,6 +9,7 @@ import Input from '../../components/common/Input';
 import Button from '../../components/common/Button';
 import Selectable from '../../components/common/Select';
 import Flexbox from '../../components/hoc/Flexbox';
+import HeaderLine from '../../components/common/HeaderLine';
 //types
 import { UserType } from '../../redux/types/user.types';
 import { RootState } from '../../redux/store';
@@ -16,6 +17,7 @@ import { RootState } from '../../redux/store';
 import { UPDATE_USER } from '../../redux/requests/user.request';
 //actions
 import { saveNetStatus } from '../../redux/slices/net-status.slice';
+import BorderedBox from '../../components/hoc/BorderedBox';
 
 const initialState = {
   id: '',
@@ -91,59 +93,53 @@ const CreatUser: React.FC<Props> = (props) => {
 
   return (
     <Layout>
-      <HeaderPanel justify="between">
-        <h2>Update user</h2>
-        <h2
-          onClick={() => history.goBack()}
-          className="font-medium uppercase mx-4 cursor-pointer hover:opacity-75"
-        >
-          Go Back
-        </h2>
-      </HeaderPanel>
-      <Body>
-        <Input
-          type="text"
-          label="ID"
-          name="id"
-          value={state.id}
-          getValue={(val: string) => false}
-          readOnly
-        />
-        <Input
-          type="text"
-          label="Email"
-          name="email"
-          value={state.email}
-          getValue={(val: string) => false}
-          readOnly
-        />
-        <Selectable
-          label="Role"
-          name="role"
-          returnType="string"
-          value={state.roles!.map((r, i) => ({ id: r, name: r }))}
-          options={roles.map((r, i) => ({ id: r, name: r }))}
-          getValue={(val: string | string[], action = '') =>
-            _onRoleSelect(val, action)
-          }
-          cls="m-4"
-          isMulti
-        />
-      </Body>
-      <FooterPanel>
-        <Button
-          type="success"
-          label="Update"
-          onAction={_onUpdate}
-          cls="m-0 mr-3"
-        />
-        <Button
-          type="success"
-          label="Reset fields"
-          onAction={() => setState(initialState)}
-          cls="m-0 mr-3"
-        />
-      </FooterPanel>
+      <HeaderLine label="Update user" goBack={true} />
+      <BorderedBox>
+        <Body>
+          <Input
+            type="text"
+            label="ID"
+            name="id"
+            value={state.id}
+            getValue={(val: string) => false}
+            readOnly
+          />
+          <Input
+            type="text"
+            label="Email"
+            name="email"
+            value={state.email}
+            getValue={(val: string) => false}
+            readOnly
+          />
+          <Selectable
+            label="Role"
+            name="role"
+            returnType="string"
+            value={state.roles!.map((r, i) => ({ id: r, name: r }))}
+            options={roles.map((r, i) => ({ id: r, name: r }))}
+            getValue={(val: string | string[], action = '') =>
+              _onRoleSelect(val, action)
+            }
+            cls="m-4"
+            isMulti
+          />
+        </Body>
+        <FooterPanel>
+          <Button
+            type="success"
+            label="Update"
+            onAction={_onUpdate}
+            cls="m-0 mr-3"
+          />
+          <Button
+            type="success"
+            label="Reset fields"
+            onAction={() => setState(initialState)}
+            cls="m-0 mr-3"
+          />
+        </FooterPanel>
+      </BorderedBox>
     </Layout>
   );
 };
@@ -151,21 +147,6 @@ const CreatUser: React.FC<Props> = (props) => {
 CreatUser.defaultProps = {};
 
 export default CreatUser;
-
-const HeaderPanel = styled(Flexbox)`
-  padding: 0;
-
-  h2:first-child {
-    font-size: ${({ theme }) => theme.fontSize.md + 'px'};
-    text-transform: uppercase;
-  }
-
-  h2:last-child {
-    font-size: ${({ theme }) => theme.fontSize.md + 'px'};
-    text-transform: uppercase;
-    cursor: pointer;
-  }
-`;
 
 const Body = styled(Flexbox)`
   padding: 0;

@@ -2,7 +2,10 @@ import { createSlice } from '@reduxjs/toolkit';
 //type
 import { Theme } from '../types/theme.type';
 //utils
-import { getFromLocalStorage, saveToLocalStorage } from "../../utils/storage.utils";
+import {
+  getFromLocalStorage,
+  saveToLocalStorage,
+} from '../../utils/storage.utils';
 
 const light: Theme = {
   fontSize: {
@@ -23,27 +26,6 @@ const light: Theme = {
     error: '#C50000',
   },
 };
-
-/*
-*
-*   colors: {
-    white: '#fff',
-    black: '#000',
-    color: '#333',
-    secondColor: '#90a4ae',
-    background: '#eaeaea',
-    secondBackground: '#c2c2c2',
-    shadow: 'rgba(0,0,0,0.1)',
-    border: '#B9B9B9',
-    main: '#2c3e50',
-    success: '#16a085',
-    successLight: '#1abc9c',
-    warning: '#f39c12',
-    warningLight: '#f1c40f',
-    error: '#c0392b',
-    errorLight: '#e74c3c',
-  },
-* */
 
 const dark: Theme = {
   fontSize: {
@@ -71,16 +53,29 @@ const themeSlice = createSlice({
   reducers: {
     loadTheme() {
       const theme = getFromLocalStorage('theme');
-      if (theme === "dark") return dark;
-      return light;
+      if (theme === 'dark')
+        return {
+          name: 'dark',
+          ...dark,
+        };
+      return {
+        name: 'light',
+        ...light,
+      };
     },
     themeToDark() {
       saveToLocalStorage('theme', 'dark');
-      return dark;
+      return {
+        name: 'dark',
+        ...dark,
+      };
     },
     themeToLight() {
       saveToLocalStorage('theme', 'light');
-      return light;
+      return {
+        name: 'light',
+        ...light,
+      };
     },
   },
 });

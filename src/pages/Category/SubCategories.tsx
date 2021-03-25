@@ -99,14 +99,14 @@ const HeaderPanel = styled(Flexbox)`
   margin-top: 10px;
   padding: 0;
 
-  h2:first-child {
+  h2 {
     font-size: ${({ theme }) => theme.fontSize.md + 'px'};
+    color: ${({ theme }) => theme.colors.color};
     text-transform: uppercase;
+    user-select: none;
   }
 
   h2:last-child {
-    font-size: ${({ theme }) => theme.fontSize.md + 'px'};
-    text-transform: uppercase;
     cursor: pointer;
   }
 `;
@@ -123,16 +123,21 @@ const InputsWrap = styled(Flexbox)`
   position: relative;
   grid-gap: 10px;
 
+  label {
+    margin-bottom: 15px;
+  }
+
   .remove-btn {
     width: 60px;
     position: absolute;
-    bottom: -18px;
+    bottom: -7px;
     right: 0;
     cursor: pointer;
     user-select: none;
 
     small {
       font-size: ${({ theme }) => theme.fontSize.sm + 'px'};
+      color: ${({ theme }) => theme.colors.color};
     }
   }
 `;

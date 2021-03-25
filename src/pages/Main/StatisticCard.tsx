@@ -5,16 +5,16 @@ import HC_exporting from 'highcharts/modules/exporting';
 import HighchartsReact from 'highcharts-react-official';
 //components
 import Flexbox from '../../components/hoc/Flexbox';
-import LoadingCard from "./LoadingCard";
+import LoadingCard from './LoadingCard';
 //utils
-import { isEmpty } from "../../utils/functions.utils";
+import { isEmpty } from '../../utils/functions.utils';
 
 HC_exporting(Highcharts);
 
 type Props = {
-  header: string
-  stats: any
-  status?: boolean
+  header: string;
+  stats: any;
+  status?: boolean;
 };
 
 const StatisticCard: React.FC<Props> = ({ header, stats, status }) => {
@@ -27,7 +27,7 @@ const StatisticCard: React.FC<Props> = ({ header, stats, status }) => {
   }, [chart]);
 
   if (isEmpty(stats)) {
-    return <LoadingCard status={status} />
+    return <LoadingCard status={status} />;
   }
 
   const cleanData = stats.filter(Boolean);
@@ -39,8 +39,6 @@ const StatisticCard: React.FC<Props> = ({ header, stats, status }) => {
       drilldown: key,
     };
   });
-
-
 
   const options = {
     chart: {
@@ -124,15 +122,14 @@ const StatisticCard: React.FC<Props> = ({ header, stats, status }) => {
 StatisticCard.defaultProps = {
   stats: null,
   header: 'Header',
-  status: false
+  status: false,
 };
 
 export default StatisticCard;
 
 const Container = styled(Flexbox)`
-  background-color: ${({ theme }) => theme.colors.white};
+  background-color: ${({ theme }) => theme.colors.thirdBackground};
   border-radius: 5px;
-  box-shadow: ${({ theme }) => `0 3px 10px ${theme.colors.shadow}`};
   padding: 10px;
   min-width: 300px;
   width: 100%;

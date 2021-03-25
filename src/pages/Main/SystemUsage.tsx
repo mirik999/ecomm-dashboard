@@ -131,7 +131,7 @@ const SystemUsage: React.FC<Props> = (props) => {
 export default SystemUsage;
 
 const Container = styled(Flexbox)`
-  background-color: ${({ theme }) => theme.colors.secondBackground};
+  background-color: ${({ theme }) => theme.colors.thirdBackground};
   border-radius: 5px;
   padding: 10px;
   min-width: 370px;
@@ -165,7 +165,8 @@ const Container = styled(Flexbox)`
     }
   }
 
-  span, strong {
+  span,
+  strong {
     color: ${({ theme }) => theme.colors.color};
   }
 

@@ -4,16 +4,14 @@ import styled from 'styled-components';
 import Flexbox from '../../components/hoc/Flexbox';
 
 type Props = {
-  ms?: number
-  status?: boolean
+  ms?: number;
+  status?: boolean;
 };
 
 const LoadingCard: React.FC<Props> = memo(({ ms, status }) => {
   return (
     <Container justify="center">
-      {
-        status ? <span>Calculating...</span> : <span>No data</span>
-      }
+      {status ? <span>Calculating...</span> : <span>No data</span>}
     </Container>
   );
 });
@@ -25,7 +23,7 @@ LoadingCard.defaultProps = {
 export default LoadingCard;
 
 const Container = styled(Flexbox)`
-  background-color: ${({ theme }) => theme.colors.secondBackground};
+  background-color: ${({ theme }) => theme.colors.thirdBackground};
   border-radius: 5px;
   padding: 10px;
   min-width: 250px;

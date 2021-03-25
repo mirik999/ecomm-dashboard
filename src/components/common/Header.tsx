@@ -22,8 +22,10 @@ const Header: React.FC<Props> = memo(
   (props) => {
     const dispatch = useDispatch();
     const history = useHistory();
-    const { user, authCredentials } = useSelector((state: RootState) => state);
+    //graphql
     const [Logout] = useLazyQuery(LOGOUT_USER);
+    //state
+    const { user, authCredentials } = useSelector((state: RootState) => state);
 
     async function _onLogout(): Promise<void> {
       try {
@@ -43,13 +45,18 @@ const Header: React.FC<Props> = memo(
 
     return (
       <Container justify="between">
-        <div>
-          {/*<span>path: {path}</span>*/}
-        </div>
+        <div>{/*<span>path: {path}</span>*/}</div>
         <Flexbox justify="end">
           <div>
-            <span className="hoverable" onClick={() => dispatch(themeToDark())}>DARK</span>
-            <span className="hoverable" onClick={() => dispatch(themeToLight())}>LIGHT</span>
+            <span className="hoverable" onClick={() => dispatch(themeToDark())}>
+              DARK
+            </span>
+            <span
+              className="hoverable"
+              onClick={() => dispatch(themeToLight())}
+            >
+              LIGHT
+            </span>
           </div>
           <span>{user.email}</span>
           <MdExitToApp
@@ -74,8 +81,8 @@ export default Header;
 const Container = styled(Flexbox)`
   width: 100%;
   min-height: 45px;
-  padding: 7px 10px;
-  background-color: ${({ theme }) => theme.colors.background};
+  padding: 7px 30px 7px 10px;
+  background-color: ${({ theme }) => theme.colors.secondBackground};
   border-bottom: ${({ theme }) => `2px solid ${theme.colors.border}`};
 
   div:first-child {
@@ -102,6 +109,10 @@ const Container = styled(Flexbox)`
 
   svg path {
     fill: ${({ theme }) => theme.colors.color};
+  }
+
+  @media screen and (max-width: 767px) {
+    padding: 7px 10px;
   }
 
   @media screen and (max-width: 600px) {

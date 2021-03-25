@@ -20,36 +20,23 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e021988f-3eda-4fed-af49-63e1e5ec9f51" name="Default Changelist" comment="users done">
+      <change afterPath="$PROJECT_DIR$/src/components/common/HeaderLine.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/hoc/BorderedBox.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.eslintcache" beforeDir="false" afterPath="$PROJECT_DIR$/.eslintcache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/common/Button.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/Button.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.prettierrc" beforeDir="false" afterPath="$PROJECT_DIR$/.prettierrc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/common/Checkbox.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/Checkbox.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/common/ColorPicker.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/ColorPicker.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/common/Divider.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/Divider.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/common/Header.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/Header.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/common/Input.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/Input.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/common/Layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/hoc/Layout.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/common/Navigation.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/Navigation.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/common/Select.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/Select.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/common/UploadZone.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/UploadZone.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/common/WithToken.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/hoc/WithToken.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/common/WithoutToken.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/hoc/WithoutToken.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/common/layout/Flexbox.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/hoc/Flexbox.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/common/notificationBox/ErrorBox.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/notificationBox/ErrorBox.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/common/notificationBox/ProcessBox.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/notificationBox/ProcessBox.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/common/notificationBox/WarningBox.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/notificationBox/WarningBox.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/common/notificationBox/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/notificationBox/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/common/richTextEditor/TinyEditor.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/richTextEditor/TinyEditor.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/common/richTextEditor/templates.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/richTextEditor/templates.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/common/table/Buttons.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/table/Buttons.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/common/table/FakeTable.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/table/FakeTable.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/common/table/Paginate.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/table/Paginate.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/common/table/Table.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/table/Table.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/common/table/body.handler..ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/table/body.handler..ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/common/table/props.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/table/props.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/common/table/styled-components.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/table/styled-components.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Auth/styled-components.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Auth/styled-components.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/hoc/Layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/hoc/Layout.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/richTextEditor/TinyEditor.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/richTextEditor/TinyEditor.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/richTextEditor/templates.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/richTextEditor/templates.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/table/FakeTable.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/table/FakeTable.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/table/styled-components.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/table/styled-components.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/Brand/Brand.page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Brand/Brand.page.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/Brand/Brands.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Brand/Brands.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/Brand/CreateBrand.page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Brand/CreateBrand.page.tsx" afterDir="false" />
@@ -63,14 +50,9 @@
       <change beforePath="$PROJECT_DIR$/src/pages/Main/styled-components.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Main/styled-components.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/Product/CreateProduct.page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Product/CreateProduct.page.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/Product/Product.page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Product/Product.page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Product/Products.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Product/Products.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Rest/NotFound.page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Rest/NotFound.page.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/User/CreateUser.page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/User/CreateUser.page.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/User/User.page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/User/User.page.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/redux/slices/theme.slice.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/slices/theme.slice.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/redux/types/routes.types.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/types/routes.types.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/redux/types/theme.type.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/types/theme.type.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/storage.utils.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/storage.utils.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -149,18 +131,18 @@
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="yarn" />
-    <property name="prettierjs.PrettierConfiguration.Package" value="C:\Users\miral\WebstormProjects\@electroshop\ecomm-dashboard\node_modules\prettier" />
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="prettierjs.PrettierConfiguration.Package" value="$PROJECT_DIR$/node_modules/prettier" />
+    <property name="settings.editor.selected.configurable" value="settings.javascript.prettier" />
     <property name="ts.external.directory.path" value="$PROJECT_DIR$/node_modules/typescript/lib" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/components/hoc" />
       <recent name="$PROJECT_DIR$/src/components" />
       <recent name="$PROJECT_DIR$/src/components/common/layout" />
       <recent name="C:\Users\miral\WebstormProjects\@electroshop\ecomm-dashboard\src\pages\Brand" />
       <recent name="C:\Users\miral\WebstormProjects\ecomm-dashboard\src\components\common\table" />
-      <recent name="C:\Users\miral\WebstormProjects\ecomm-dashboard\src\components\common\richTextEditor" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -212,7 +194,8 @@
       <workItem from="1615711656772" duration="15257000" />
       <workItem from="1616081534962" duration="9043000" />
       <workItem from="1616230659580" duration="11297000" />
-      <workItem from="1616581926184" duration="9441000" />
+      <workItem from="1616581926184" duration="9542000" />
+      <workItem from="1616662428775" duration="17082000" />
     </task>
     <task id="LOCAL-00001" summary="users done">
       <created>1612213179093</created>
