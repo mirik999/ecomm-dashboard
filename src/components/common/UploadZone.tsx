@@ -96,7 +96,7 @@ const UploadZone: React.FC<Props> = memo(
 
     return (
       <Container cls={cls} flex="column" justify="start" align="start">
-        <Flexbox cls="np">
+        <Flexbox cls="np" flex="column" align="start">
           <Flexbox cls="np" justify="between">
             <span className={warning ? 'text-red' : 'text-black'}>{label}</span>
             {uploadPercent ? <span>{uploadPercent}%</span> : null}
@@ -278,5 +278,9 @@ const Container = styled(Flexbox)`
 
   @media screen and (max-width: 1100px) {
     min-width: 300px !important;
+  }
+
+  @media screen and (max-width: 500px) {
+    min-width: 200px !important;
   }
 `;

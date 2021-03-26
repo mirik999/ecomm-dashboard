@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { Editor } from '@tinymce/tinymce-react';
 import styled from 'styled-components';
 //components
