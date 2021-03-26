@@ -1,6 +1,10 @@
 import { format } from 'date-fns';
 
 export function tableBodyHandler(val: any, key: string): any {
+  if (val === undefined || val === null) {
+    return '';
+  }
+
   if (key === 'createdAt') {
     return format(new Date(val), 'dd MMMM yyyy');
   }

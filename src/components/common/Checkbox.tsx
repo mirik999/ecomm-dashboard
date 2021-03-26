@@ -52,6 +52,7 @@ const Container = styled.div`
     span {
       margin-left: 5px;
       font-size: ${({ theme }) => theme.fontSize.sm + 'px'};
+      color: ${({ theme }) => theme.colors.color};
     }
   }
 `;

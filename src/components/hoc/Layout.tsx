@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 //components
-import Header from './Header';
-import Navigation from './Navigation';
-import Flexbox from './layout/Flexbox';
+import Header from '../common/Header';
+import Navigation from '../common/Navigation';
+import Flexbox from './Flexbox';
 
 type Props = {
   children: React.ReactNode;
@@ -33,7 +33,7 @@ const Container = styled(Flexbox)`
   background-color: ${({ theme }) => theme.colors.background};
 
   .children-wrap {
-    padding: 10px;
+    padding: 30px;
     width: 100%;
     background-color: ${({ theme }) => theme.colors.background};
     height: calc(100vh - 45px);
@@ -42,7 +42,12 @@ const Container = styled(Flexbox)`
 
     & > h2 {
       font-size: ${({ theme }) => theme.fontSize.md + 'px'};
+      color: ${({ theme }) => theme.colors.color};
       text-transform: uppercase;
+    }
+
+    @media screen and (max-width: 767px) {
+      padding: 10px;
     }
 
     @media screen and (max-width: 600px) {

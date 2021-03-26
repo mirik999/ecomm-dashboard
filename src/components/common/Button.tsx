@@ -33,14 +33,15 @@ export default Button;
 const Container = styled.div<{ type: string }>`
   button {
     padding: 8px 12px;
-    background-color: ${({ theme, type }) => theme.colors[`${type}Light`]};
+    background-color: ${({ theme, type }) => theme.colors[type]};
     border-radius: 4px;
     border-width: 2px 4px 2px 2px;
     border-style: solid;
     border-color: ${({ theme, type }) => theme.colors[type]};
-    color: ${({ theme }) => theme.colors.white};
+    color: white;
     cursor: pointer;
     transition: all 0.3s ease;
+    text-transform: capitalize;
     font-size: ${({ theme }) => theme.fontSize.sm + 'px'};
 
     &:not(:disabled):hover {

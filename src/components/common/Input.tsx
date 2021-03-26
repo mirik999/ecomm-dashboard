@@ -1,4 +1,4 @@
-import React, { FormEvent } from 'react';
+import React, { FormEvent, useRef } from 'react';
 import styled from 'styled-components';
 
 type Props = {
@@ -20,15 +20,17 @@ const Input: React.FC<Props> = ({
   getValue,
   ...props
 }) => {
+  const defaultValue = type === 'number' ? 0 : '';
+  const randomNumber = useRef(Math.floor(Math.random() * 1000)).current;
   return (
-    <Label htmlFor={type + label!} className={cls}>
+    <Label htmlFor={type + label! + randomNumber} className={cls}>
       <span>{label}</span>
       <input
         type={type}
-        id={type + label!}
+        id={type + label! + randomNumber}
         name="email"
         autoComplete="off"
-        value={value}
+        value={value ?? defaultValue}
         onChange={({ currentTarget }: FormEvent<HTMLInputElement>) =>
           getValue(currentTarget.value)
         }
@@ -55,6 +57,7 @@ const Label = styled.label`
 
   span {
     font-size: ${({ theme }) => theme.fontSize.sm + 'px'};
+    color: ${({ theme }) => theme.colors.color};
     font-weight: 600;
     margin-bottom: 5px;
   }
@@ -65,11 +68,13 @@ const Label = styled.label`
     border-width: 2px 4px 2px 2px;
     border-style: solid;
     border-color: ${({ theme }) => theme.colors.border};
+    background-color: ${({ theme }) => theme.colors.thirdBackground};
+    color: ${({ theme }) => theme.colors.color};
 
     &:focus {
       outline: none;
-      border-bottom-color: ${({ theme }) => theme.colors.successLight};
-      border-right-color: ${({ theme }) => theme.colors.successLight};
+      border-bottom-color: ${({ theme }) => theme.colors.success};
+      border-right-color: ${({ theme }) => theme.colors.success};
       border-width: 2px 4px 2px 2px;
     }
   }

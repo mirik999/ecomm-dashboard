@@ -1,20 +1,21 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { formatDistance } from 'date-fns';
 import styled from 'styled-components';
 //components
 import LoadingCard from './LoadingCard';
-import Flexbox from '../../components/common/layout/Flexbox';
+import Flexbox from '../../components/hoc/Flexbox';
 //types
 import { SystemInfo } from '../../redux/types/systemInfo.type';
 //utils
 import io from '../../utils/socket.utils';
 //hooks
 import { useInterval } from '../../hooks/useInterval';
+//socket
+const socket = io('statistic');
 
 type Props = {};
 
 const SystemUsage: React.FC<Props> = (props) => {
-  const socket = useRef(io('statistic')).current;
   const [systemInfo, setSystemInfo] = useState<Partial<SystemInfo>>({});
 
   useEffect(() => {
@@ -130,9 +131,8 @@ const SystemUsage: React.FC<Props> = (props) => {
 export default SystemUsage;
 
 const Container = styled(Flexbox)`
-  background-color: ${({ theme }) => theme.colors.white};
+  background-color: ${({ theme }) => theme.colors.thirdBackground};
   border-radius: 5px;
-  box-shadow: ${({ theme }) => `0 3px 10px ${theme.colors.shadow}`};
   padding: 10px;
   min-width: 370px;
   width: 100%;
@@ -163,6 +163,11 @@ const Container = styled(Flexbox)`
         transition: all 0.3s ease;
       }
     }
+  }
+
+  span,
+  strong {
+    color: ${({ theme }) => theme.colors.color};
   }
 
   @media screen and (max-width: 839px) {

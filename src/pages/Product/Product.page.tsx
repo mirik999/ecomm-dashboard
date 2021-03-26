@@ -1,34 +1,37 @@
 import React, { useEffect, useState } from 'react';
-import { useLazyQuery, useMutation } from "@apollo/client";
+import { useLazyQuery, useMutation } from '@apollo/client';
+import { useDispatch } from 'react-redux';
 //components
-import Layout from "../../components/common/Layout";
-import Table from "../../components/common/table/Table";
-import NotificationBox from "../../components/common/notificationBox";
+import Layout from '../../components/hoc/Layout';
+import Table from '../../components/table/Table';
+import HeaderLine from '../../components/common/HeaderLine';
 //types
-import { ProductType } from "../../redux/types/product.type";
+import { ProductType } from '../../redux/types/product.type';
 //request
 import {
   GET_PRODUCTS,
   DISABLE_PRODUCTS,
   ACTIVATE_PRODUCTS,
-  DELETE_PRODUCTS
-} from "../../redux/requests/product.request";
+  DELETE_PRODUCTS,
+} from '../../redux/requests/product.request';
+//actions
+import { saveNetStatus } from '../../redux/slices/net-status.slice';
 
 type Props = {};
 
 const ProductPage: React.FC<Props> = (props) => {
+  const dispatch = useDispatch();
+  //graphql
   const [GetProducts, getResponse] = useLazyQuery(GET_PRODUCTS);
-  const [DisableProducts, disableResponse] = useMutation(DISABLE_PRODUCTS);
-  const [ActivateProducts, activateResponse] = useMutation(ACTIVATE_PRODUCTS);
-  const [DeleteProducts, deleteResponse] = useMutation(DELETE_PRODUCTS);
+  const [DisableProducts] = useMutation(DISABLE_PRODUCTS);
+  const [ActivateProducts] = useMutation(ACTIVATE_PRODUCTS);
+  const [DeleteProducts] = useMutation(DELETE_PRODUCTS);
+  //state
   const [products, setProducts] = useState<ProductType[]>([]);
-  //pagination
   const [allCount, setAllCount] = useState<number>(0);
   const [rowCount, setRowCount] = useState<number>(10);
   const [currentPage, setCurrentPage] = useState<number>(1);
-  //deep search
   const [deepSearch, setDeepSearch] = useState<string>('');
-  //side effects
   const [unSelect, setUnSelect] = useState<boolean>(false);
 
   useEffect(() => {
@@ -37,32 +40,36 @@ const ProductPage: React.FC<Props> = (props) => {
       setProducts(payload);
       setAllCount(count);
     }
-  }, [getResponse.data])
+  }, [getResponse.data]);
 
   useEffect(() => {
-    (async function() {
-      await getProducts(currentPage, rowCount, deepSearch)
-    })()
-  }, [])
+    (async function () {
+      await getProducts(currentPage, rowCount, deepSearch);
+    })();
+  }, []);
 
-  async function getProducts(pg: number, rc: number, kw: string): Promise<void> {
+  async function getProducts(
+    pg: number,
+    rc: number,
+    kw: string,
+  ): Promise<void> {
     try {
       await GetProducts({
         variables: {
           controls: {
             offset: (pg - 1) * rc,
             limit: rc,
-            keyword: kw
-          }
-        }
-      })
-    } catch(err) {
-      console.log(err.message)
+            keyword: kw,
+          },
+        },
+      });
+    } catch (err) {
+      dispatch(saveNetStatus(err.graphQLErrors));
     }
   }
 
   async function getPageFromTable(pageNumber: number): Promise<void> {
-    setCurrentPage(pageNumber)
+    setCurrentPage(pageNumber);
     await getProducts(pageNumber, rowCount, deepSearch);
   }
 
@@ -80,12 +87,12 @@ const ProductPage: React.FC<Props> = (props) => {
     try {
       await DisableProducts({
         variables: {
-          disabledProducts: { ids }
-        }
-      })
-      handleProductsState(ids, true)
-    } catch(err) {
-      console.log(err.message)
+          disabledProducts: { ids },
+        },
+      });
+      handleProductsState(ids, true);
+    } catch (err) {
+      dispatch(saveNetStatus(err.graphQLErrors));
     }
   }
 
@@ -93,12 +100,12 @@ const ProductPage: React.FC<Props> = (props) => {
     try {
       await ActivateProducts({
         variables: {
-          activateProducts: { ids }
-        }
-      })
-      handleProductsState(ids, false)
-    } catch(err) {
-      console.log(err.message)
+          activateProducts: { ids },
+        },
+      });
+      handleProductsState(ids, false);
+    } catch (err) {
+      dispatch(saveNetStatus(err.graphQLErrors));
     }
   }
 
@@ -106,39 +113,39 @@ const ProductPage: React.FC<Props> = (props) => {
     try {
       await DeleteProducts({
         variables: {
-          deleteProducts: { ids }
-        }
-      })
-      handleProductsList(ids)
-    } catch(err) {
-      console.log(err.message)
+          deleteProducts: { ids },
+        },
+      });
+      handleProductsList(ids);
+    } catch (err) {
+      dispatch(saveNetStatus(err.graphQLErrors));
     }
   }
 
   function handleProductsState(ids: string[], isDisabled: boolean) {
-    const updatedProducts = products.map(product => {
+    const updatedProducts = products.map((product) => {
       if (ids.includes(product.id)) {
         return {
           ...product,
-          isDisabled
-        }
+          isDisabled,
+        };
       }
       return product;
-    })
-    setProducts(updatedProducts)
+    });
+    setProducts(updatedProducts);
   }
 
   function handleProductsList(ids: string[]) {
-    const deletedProducts = products.filter(product => !ids.includes(product.id))
-    setProducts(deletedProducts)
+    const deletedProducts = products.filter(
+      (product) => !ids.includes(product.id),
+    );
+    setProducts(deletedProducts);
     setUnSelect(true);
   }
 
   return (
     <Layout>
-      <h2 className="font-medium uppercase mx-4">
-        Products
-      </h2>
+      <HeaderLine label="Products" />
       {/*  table */}
       <Table
         data={products}
@@ -154,14 +161,6 @@ const ProductPage: React.FC<Props> = (props) => {
         error={!!getResponse.error}
         unSelect={unSelect}
       />
-      {/*<NotificationBox*/}
-      {/*  list={[*/}
-      {/*    getResponse,*/}
-      {/*    activateResponse,*/}
-      {/*    disableResponse,*/}
-      {/*    deleteResponse*/}
-      {/*  ]}*/}
-      {/*/>*/}
     </Layout>
   );
 };
@@ -178,5 +177,5 @@ const excludeList = [
   'stars',
   'group',
   'best',
-  'viewCount'
-]
+  'viewCount',
+];

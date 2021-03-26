@@ -1,34 +1,37 @@
 import React, { useEffect, useState } from 'react';
-import { useLazyQuery, useMutation } from "@apollo/client";
+import { useLazyQuery, useMutation } from '@apollo/client';
+import { useDispatch } from 'react-redux';
 //components
-import Layout from "../../components/common/Layout";
-import Table from "../../components/common/table/Table";
-import NotificationBox from "../../components/common/notificationBox";
+import Layout from '../../components/hoc/Layout';
+import Table from '../../components/table/Table';
 //types
-import { ProductType } from "../../redux/types/product.type";
+import { ProductType } from '../../redux/types/product.type';
 //request
 import {
   GET_USERS,
   DISABLE_USERS,
   ACTIVATE_USERS,
-  DELETE_USERS
-} from "../../redux/requests/user.request";
+  DELETE_USERS,
+} from '../../redux/requests/user.request';
+//actions
+import { saveNetStatus } from '../../redux/slices/net-status.slice';
+import HeaderLine from '../../components/common/HeaderLine';
 
 type Props = {};
 
 const UserPage: React.FC<Props> = (props) => {
+  const dispatch = useDispatch();
+  //graphql
   const [GetUsers, getResponse] = useLazyQuery(GET_USERS);
-  const [DisableUsers, disableResponse] = useMutation(DISABLE_USERS);
-  const [ActivateUsers, activateResponse] = useMutation(ACTIVATE_USERS);
-  const [DeleteUsers, deleteResponse] = useMutation(DELETE_USERS);
+  const [DisableUsers] = useMutation(DISABLE_USERS);
+  const [ActivateUsers] = useMutation(ACTIVATE_USERS);
+  const [DeleteUsers] = useMutation(DELETE_USERS);
+  //state
   const [users, setUsers] = useState<ProductType[]>([]);
-  //pagination
   const [allCount, setAllCount] = useState<number>(0);
   const [rowCount, setRowCount] = useState<number>(10);
   const [currentPage, setCurrentPage] = useState<number>(1);
-  //deep search
   const [deepSearch, setDeepSearch] = useState<string>('');
-  //side effects
   const [unSelect, setUnSelect] = useState<boolean>(false);
 
   useEffect(() => {
@@ -37,13 +40,13 @@ const UserPage: React.FC<Props> = (props) => {
       setUsers(payload);
       setAllCount(count);
     }
-  }, [getResponse.data])
+  }, [getResponse.data]);
 
   useEffect(() => {
-    (async function() {
-      await getUsers(currentPage, rowCount, deepSearch)
-    })()
-  }, [])
+    (async function () {
+      await getUsers(currentPage, rowCount, deepSearch);
+    })();
+  }, []);
 
   async function getUsers(pg: number, rc: number, kw: string): Promise<void> {
     try {
@@ -52,17 +55,17 @@ const UserPage: React.FC<Props> = (props) => {
           controls: {
             offset: (pg - 1) * rc,
             limit: rc,
-            keyword: kw
-          }
-        }
-      })
-    } catch(err) {
-      console.log(err.message)
+            keyword: kw,
+          },
+        },
+      });
+    } catch (err) {
+      dispatch(saveNetStatus(err.graphQLErrors));
     }
   }
 
   async function getPageFromTable(pageNumber: number): Promise<void> {
-    setCurrentPage(pageNumber)
+    setCurrentPage(pageNumber);
     await getUsers(pageNumber, rowCount, deepSearch);
   }
 
@@ -80,12 +83,12 @@ const UserPage: React.FC<Props> = (props) => {
     try {
       await DisableUsers({
         variables: {
-          disabledUsers: { ids }
-        }
-      })
-      handleUsersState(ids, true)
-    } catch(err) {
-      console.log(err.message)
+          disabledUsers: { ids },
+        },
+      });
+      handleUsersState(ids, true);
+    } catch (err) {
+      dispatch(saveNetStatus(err.graphQLErrors));
     }
   }
 
@@ -93,12 +96,12 @@ const UserPage: React.FC<Props> = (props) => {
     try {
       await ActivateUsers({
         variables: {
-          activateUsers: { ids }
-        }
-      })
-      handleUsersState(ids, false)
-    } catch(err) {
-      console.log(err.message)
+          activateUsers: { ids },
+        },
+      });
+      handleUsersState(ids, false);
+    } catch (err) {
+      dispatch(saveNetStatus(err.graphQLErrors));
     }
   }
 
@@ -106,39 +109,37 @@ const UserPage: React.FC<Props> = (props) => {
     try {
       await DeleteUsers({
         variables: {
-          deleteUsers: { ids }
-        }
-      })
-      handleUsersList(ids)
-    } catch(err) {
-      console.log(err.message)
+          deleteUsers: { ids },
+        },
+      });
+      handleUsersList(ids);
+    } catch (err) {
+      dispatch(saveNetStatus(err.graphQLErrors));
     }
   }
 
   function handleUsersState(ids: string[], isDisabled: boolean) {
-    const updatedUsers = users.map(product => {
+    const updatedUsers = users.map((product) => {
       if (ids.includes(product.id)) {
         return {
           ...product,
-          isDisabled
-        }
+          isDisabled,
+        };
       }
       return product;
-    })
-    setUsers(updatedUsers)
+    });
+    setUsers(updatedUsers);
   }
 
   function handleUsersList(ids: string[]) {
-    const deletedUsers = users.filter(user => !ids.includes(user.id))
-    setUsers(deletedUsers)
+    const deletedUsers = users.filter((user) => !ids.includes(user.id));
+    setUsers(deletedUsers);
     setUnSelect(true);
   }
 
   return (
     <Layout>
-      <h2 className="font-medium uppercase mx-4">
-        Users and roles
-      </h2>
+      <HeaderLine label="Users and roles" />
       {/*  table */}
       <Table
         data={users}
@@ -154,14 +155,6 @@ const UserPage: React.FC<Props> = (props) => {
         path="users"
         unSelect={unSelect}
       />
-      {/*<NotificationBox*/}
-      {/*  list={[*/}
-      {/*    getResponse,*/}
-      {/*    activateResponse,*/}
-      {/*    disableResponse,*/}
-      {/*    deleteResponse*/}
-      {/*  ]}*/}
-      {/*/>*/}
     </Layout>
   );
 };

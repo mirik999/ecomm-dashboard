@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 //styled
-import Flexbox from "../../components/common/layout/Flexbox";
+import Flexbox from "../../components/hoc/Flexbox";
 
 export const Container = styled(Flexbox)`
   max-width: 100%;

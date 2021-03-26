@@ -9,12 +9,15 @@ import store from './redux/store';
 //actions
 import { loadFromCookies } from './redux/slices/auth-credentials.slice';
 import { saveUser } from './redux/slices/user.slice';
-//styles [tailwind css]
+import { loadTheme } from './redux/slices/theme.slice';
+//styles
 import 'normalize.css';
 import './index.css';
 import 'react-image-lightbox/style.css';
 import 'react-quill/dist/quill.snow.css';
 
+//load theme
+store.dispatch(loadTheme());
 //save token in redux
 store.dispatch(loadFromCookies());
 // if token exists decode and save user in redux

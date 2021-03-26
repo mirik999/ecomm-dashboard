@@ -5,11 +5,13 @@ import { useDispatch } from 'react-redux';
 import { v4 as uuid } from 'uuid';
 import styled from 'styled-components';
 //components
-import Layout from '../../components/common/Layout';
+import Layout from '../../components/hoc/Layout';
 import Input from '../../components/common/Input';
-import Flexbox from '../../components/common/layout/Flexbox';
+import Flexbox from '../../components/hoc/Flexbox';
 import Button from '../../components/common/Button';
 import Selectable from '../../components/common/Select';
+import HeaderLine from '../../components/common/HeaderLine';
+import BorderedBox from '../../components/hoc/BorderedBox';
 //types
 import { BrandType } from '../../redux/types/brand.type';
 import { OptionType } from '../../redux/types/common.type';
@@ -56,14 +58,16 @@ const CreateBrand: React.FC<Props> = (props) => {
       let options = [];
       for (let i = 0; i < payload.length; i++) {
         options.push({
-          id: payload[i].id,
-          name: payload[i].name,
+          id: payload[i]?.id,
+          name: payload[i]?.name,
         });
-        for (let j = 0; j < payload[i].subCategories.length; j++) {
-          options.push({
-            id: payload[i].subCategories[j].id,
-            name: payload[i].subCategories[j].name,
-          });
+        if (payload[i]?.subCategories) {
+          for (let j = 0; j < payload[i].subCategories.length; j++) {
+            options.push({
+              id: payload[i].subCategories[j].id,
+              name: payload[i].subCategories[j].name,
+            });
+          }
         }
       }
       setCategories(options);
@@ -182,56 +186,53 @@ const CreateBrand: React.FC<Props> = (props) => {
 
   return (
     <Layout>
-      <HeaderPanel justify="between">
-        <h2>Create brand</h2>
-        <h2 onClick={() => history.goBack()} className="hoverable">
-          Go Back
-        </h2>
-      </HeaderPanel>
-      <Body>
-        <Input
-          type="text"
-          label="Name"
-          name="name"
-          value={state.name}
-          getValue={(val: string) => setState({ ...state, name: val })}
-        />
-        <Selectable
-          label="Category"
-          name="category"
-          returnType="string"
-          value={handleSelectableValue()}
-          options={categories}
-          getValue={(val: string | string[], action = '') =>
-            _onCategorySelect(val, action)
-          }
-          cls="m-4"
-          isMulti
-        />
-      </Body>
-      <FooterPanel>
-        {mode === 'create' ? (
+      <HeaderLine label="Create brand" goBack={true} />
+      <BorderedBox>
+        <Body>
+          <Input
+            type="text"
+            label="Name"
+            name="name"
+            value={state.name}
+            getValue={(val: string) => setState({ ...state, name: val })}
+          />
+          <Selectable
+            label="Category"
+            name="category"
+            returnType="string"
+            value={handleSelectableValue()}
+            options={categories}
+            getValue={(val: string | string[], action = '') =>
+              _onCategorySelect(val, action)
+            }
+            cls="m-4"
+            isMulti
+          />
+        </Body>
+        <FooterPanel>
+          {mode === 'create' ? (
+            <Button
+              type="success"
+              label="Create"
+              onAction={_onSave}
+              cls="m-0 mr-3"
+            />
+          ) : (
+            <Button
+              type="success"
+              label="Update"
+              onAction={_onUpdate}
+              cls="m-0 mr-3"
+            />
+          )}
           <Button
             type="success"
-            label="Create"
-            onAction={_onSave}
+            label="Reset fields"
+            onAction={() => setState(initialState)}
             cls="m-0 mr-3"
           />
-        ) : (
-          <Button
-            type="success"
-            label="Update"
-            onAction={_onUpdate}
-            cls="m-0 mr-3"
-          />
-        )}
-        <Button
-          type="success"
-          label="Reset fields"
-          onAction={() => setState(initialState)}
-          cls="m-0 mr-3"
-        />
-      </FooterPanel>
+        </FooterPanel>
+      </BorderedBox>
     </Layout>
   );
 };
@@ -239,21 +240,6 @@ const CreateBrand: React.FC<Props> = (props) => {
 CreateBrand.defaultProps = {};
 
 export default CreateBrand;
-
-const HeaderPanel = styled(Flexbox)`
-  padding: 0;
-
-  h2:first-child {
-    font-size: ${({ theme }) => theme.fontSize.md + 'px'};
-    text-transform: uppercase;
-  }
-
-  h2:last-child {
-    font-size: ${({ theme }) => theme.fontSize.md + 'px'};
-    text-transform: uppercase;
-    cursor: pointer;
-  }
-`;
 
 const Body = styled(Flexbox)`
   padding: 0;

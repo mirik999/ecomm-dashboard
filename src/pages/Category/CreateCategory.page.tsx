@@ -5,14 +5,16 @@ import { v4 as uuid } from 'uuid';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 //components
-import Layout from '../../components/common/Layout';
+import Layout from '../../components/hoc/Layout';
 import Input from '../../components/common/Input';
 import Button from '../../components/common/Button';
 import Divider from '../../components/common/Divider';
 import SubCategories from './SubCategories';
 import Brands from '../Brand/Brands';
 import Products from '../Product/Products';
-import Flexbox from '../../components/common/layout/Flexbox';
+import Flexbox from '../../components/hoc/Flexbox';
+import HeaderLine from '../../components/common/HeaderLine';
+import BorderedBox from '../../components/hoc/BorderedBox';
 //types
 import { CategoryType, SubCategoryType } from '../../redux/types/category.type';
 //request
@@ -36,9 +38,7 @@ const CreateCategory: React.FC<Props> = (props) => {
   const dispatch = useDispatch();
   //requests
   const [CreateCategory, createResponse] = useMutation(CREATE_CATEGORY);
-  const [UpdateCategory, updateResponse] = useMutation(UPDATE_CATEGORY, {
-    errorPolicy: 'all',
-  });
+  const [UpdateCategory, updateResponse] = useMutation(UPDATE_CATEGORY);
   //state
   const [state, setState] = useState<Partial<CategoryType>>({
     id: uuid(),
@@ -96,68 +96,62 @@ const CreateCategory: React.FC<Props> = (props) => {
 
   return (
     <Layout>
-      <HeaderPanel justify="between">
-        <h2>Create category</h2>
-        <h2
-          onClick={() => history.goBack()}
-          className="font-medium uppercase mx-4 cursor-pointer hover:opacity-75"
-        >
-          Go Back
-        </h2>
-      </HeaderPanel>
-      <Body>
-        <Input
-          type="text"
-          label="Name"
-          name="name"
-          value={state.name}
-          getValue={(val: string) => setState({ ...state, name: val })}
+      <HeaderLine label="Create category" goBack={true} />
+      <BorderedBox>
+        <Body>
+          <Input
+            type="text"
+            label="Name"
+            name="name"
+            value={state.name}
+            getValue={(val: string) => setState({ ...state, name: val })}
+          />
+          <Input
+            type="text"
+            label="Tab Name"
+            name="tabName"
+            value={state.tabName}
+            getValue={(val: string) => setState({ ...state, tabName: val })}
+          />
+        </Body>
+        <SubCategories
+          parentId={state.id!}
+          subCategories={state.subCategories!}
+          getValue={_onSubCategoryChange}
         />
-        <Input
-          type="text"
-          label="Tab Name"
-          name="tabName"
-          value={state.tabName}
-          getValue={(val: string) => setState({ ...state, tabName: val })}
-        />
-      </Body>
-      <SubCategories
-        parentId={state.id!}
-        subCategories={state.subCategories!}
-        getValue={_onSubCategoryChange}
-      />
-      <FooterPanel>
-        {mode === 'create' ? (
+        <FooterPanel>
+          {mode === 'create' ? (
+            <Button
+              type="success"
+              label="Create"
+              onAction={_onSave}
+              cls="m-0 mr-3"
+            />
+          ) : (
+            <Button
+              type="success"
+              label="Update"
+              onAction={_onUpdate}
+              cls="m-0 mr-3"
+            />
+          )}
           <Button
             type="success"
-            label="Create"
-            onAction={_onSave}
+            label="Reset fields"
+            onAction={() => setState(initialState)}
             cls="m-0 mr-3"
           />
-        ) : (
-          <Button
-            type="success"
-            label="Update"
-            onAction={_onUpdate}
-            cls="m-0 mr-3"
-          />
-        )}
-        <Button
-          type="success"
-          label="Reset fields"
-          onAction={() => setState(initialState)}
-          cls="m-0 mr-3"
-        />
-      </FooterPanel>
-      {mode === 'update' ? (
-        <InfoCardsWrap>
-          <Divider label="Connections" />
-          <Flexbox cls="np">
-            <Brands id={state.id!} />
-            <Products id={state.id!} />
-          </Flexbox>
-        </InfoCardsWrap>
-      ) : null}
+        </FooterPanel>
+        {mode === 'update' ? (
+          <InfoCardsWrap>
+            <Divider label="Connections" />
+            <Flexbox cls="np" align="start">
+              <Brands id={state.id!} />
+              <Products id={state.id!} />
+            </Flexbox>
+          </InfoCardsWrap>
+        ) : null}
+      </BorderedBox>
     </Layout>
   );
 };
@@ -166,24 +160,9 @@ CreateCategory.defaultProps = {};
 
 export default CreateCategory;
 
-const HeaderPanel = styled(Flexbox)`
-  padding: 0;
-
-  h2:first-child {
-    font-size: ${({ theme }) => theme.fontSize.md + 'px'};
-    text-transform: uppercase;
-  }
-
-  h2:last-child {
-    font-size: ${({ theme }) => theme.fontSize.md + 'px'};
-    text-transform: uppercase;
-    cursor: pointer;
-  }
-`;
-
 const Body = styled(Flexbox)`
   padding: 0;
-  margin: 10px 0;
+  margin: 10px 0 20px 0;
   grid-gap: 10px;
 `;
 

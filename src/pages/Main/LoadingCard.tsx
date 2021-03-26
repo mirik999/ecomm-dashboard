@@ -1,16 +1,17 @@
 import React, { memo } from 'react';
 import styled from 'styled-components';
 //components
-import Flexbox from '../../components/common/layout/Flexbox';
+import Flexbox from '../../components/hoc/Flexbox';
 
 type Props = {
   ms?: number;
+  status?: boolean;
 };
 
-const LoadingCard: React.FC<Props> = memo(({ ms }) => {
+const LoadingCard: React.FC<Props> = memo(({ ms, status }) => {
   return (
     <Container justify="center">
-      <span>Calculating...</span>
+      {status ? <span>Calculating...</span> : <span>No data</span>}
     </Container>
   );
 });
@@ -22,17 +23,14 @@ LoadingCard.defaultProps = {
 export default LoadingCard;
 
 const Container = styled(Flexbox)`
-  background-color: ${({ theme }) => theme.colors.white};
+  background-color: ${({ theme }) => theme.colors.thirdBackground};
   border-radius: 5px;
-  box-shadow: ${({ theme }) => `0 3px 10px ${theme.colors.shadow}`};
   padding: 10px;
-  min-width: 350px;
+  min-width: 250px;
   width: 100%;
-  max-width: 350px;
   height: 230px;
 
-  @media screen and (max-width: 750px) {
-    min-width: 250px !important;
-    max-width: 250px !important;
+  span {
+    color: ${({ theme }) => theme.colors.color};
   }
 `;

@@ -1,51 +1,53 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useLocation, useHistory } from 'react-router-dom';
 //components
-import Button from '../Button';
-import Flexbox from '../layout/Flexbox';
+import Button from '../common/Button';
+import Flexbox from '../hoc/Flexbox';
 
-const buttons = [
+const buttons: any = [
   {
     id: 1,
     name: 'create',
     type: 'link',
+    visible: true,
     disable: 'never',
-    roles: ['admin', 'sudo'],
+    excludeFromPage: ['/users'],
   },
   {
     id: 2,
     name: 'update',
     type: 'link',
     disable: 'non-multiple',
-    roles: ['admin', 'sudo'],
+    excludeFromPage: [],
   },
   {
     id: 3,
     name: 'disable',
     type: 'action',
     disable: 'non-zero',
-    roles: ['admin', 'sudo'],
+    excludeFromPage: [],
   },
   {
     id: 4,
     name: 'activate',
     type: 'action',
     disable: 'non-zero',
-    roles: ['admin', 'sudo'],
+    excludeFromPage: [],
   },
   {
     id: 5,
     name: 'properties',
     type: 'action',
     disable: 'non-zero',
-    roles: ['admin', 'sudo'],
+    excludeFromPage: [],
   },
   {
     id: 6,
     name: 'delete',
     type: 'action',
     disable: 'non-zero',
-    roles: ['sudo'],
+    excludeFromPage: [],
   },
 ];
 
@@ -62,6 +64,9 @@ const Buttons: React.FC<Props> = ({
   roles,
   onRouteChange,
 }) => {
+  const location = useLocation();
+  const history = useHistory();
+
   function handleDisabling(btn: any): boolean {
     return btn.disable === 'non-multiple'
       ? selected.length !== 1
@@ -73,8 +78,11 @@ const Buttons: React.FC<Props> = ({
   return (
     <Container>
       {buttons
-        .filter((btn) => btn.roles.some((b) => roles.includes(b)))
-        .map((btn, i) => {
+        .filter(
+          (btn: any) =>
+            !btn.excludeFromPage.includes(location.pathname)
+        )
+        .map((btn: any, i: number) => {
           return (
             <Button
               type="success"

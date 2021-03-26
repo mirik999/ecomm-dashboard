@@ -55,8 +55,10 @@ const Container = styled.div`
   .next-link {
     border-width: 2px;
     border-style: solid;
-    border-color: ${({ theme }) => theme.colors.main};
+    border-color: ${({ theme }) => theme.colors.success};
     border-radius: 4px;
+    background-color: ${({ theme }) => theme.colors.success};
+    color: white;
     font-size: ${({ theme }) => theme.fontSize.sm + 'px'};
     padding: 7.6px;
     cursor: pointer;
@@ -67,6 +69,6 @@ const Container = styled.div`
     border-style: solid;
     border-color: ${({ theme }) => theme.colors.success};
     background-color: ${({ theme }) => theme.colors.success};
-    color: ${({ theme }) => theme.colors.white};
+    color: white;
   }
 `;

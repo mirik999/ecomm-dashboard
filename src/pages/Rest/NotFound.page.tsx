@@ -1,5 +1,8 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
+import styled from 'styled-components';
+//components
+import Flexbox from "../../components/hoc/Flexbox";
 
 type Props = {};
 
@@ -7,14 +10,24 @@ const NotFoundPage: React.FC<Props> = (props) => {
   const history = useHistory();
 
   return (
-    <div className="w-full h-full flex justify-center items-center">
-      <div className="flex flex-col justify-center items-center">
+    <Container>
+      <Flexbox flex="column">
         <h2>This page not found</h2>
-        <h3>or You dont have permission</h3>
-        <h4 className="cursor-pointer" onClick={() => history.goBack()}>Go Back</h4>
-      </div>
-    </div>
+        <h3>or You dont have required permission</h3>
+        <h4 className="hoverable" onClick={() => history.goBack()}>Go Back</h4>
+      </Flexbox>
+    </Container>
   );
 };
 
 export default NotFoundPage;
+
+const Container = styled(Flexbox)`
+  width: 100%;
+  height: 100%;
+
+  h4 {
+    cursor: pointer;
+    margin-top: 10px;
+  }
+`;

@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import ReactPagination from 'react-paginate';
 import { useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 //components
-import Input from '../Input';
-import Select from '../Select';
-import LoadingBox from './LoadingBox';
+import Input from '../common/Input';
+import Select from '../common/Select';
 import FakeTable from './FakeTable';
 import Buttons from './Buttons';
+import Paginate from './Paginate';
 //styled
 import {
   Container,
@@ -18,11 +17,10 @@ import {
 } from './styled-components';
 //types
 import { Props } from './props';
-import { OptionType } from '../../../redux/types/common.type';
-import { RootState } from '../../../redux/store';
+import { OptionType } from '../../redux/types/common.type';
+import { RootState } from '../../redux/store';
 //handler
 import { tableBodyHandler } from './body.handler.';
-import Paginate from './Paginate';
 
 const options = [
   { id: 10, name: '10 rows' },
@@ -134,11 +132,11 @@ const Table: React.FC<Props> = ({
   }
 
   if (!state.length && !error) {
-    return <LoadingBox />;
+    return <FakeTable loading={true} roles={user.roles} />;
   }
 
   if (!state.length && error) {
-    return <FakeTable onCreate={_onRouteChange} roles={user.roles} />;
+    return <FakeTable loading={false} onCreate={_onRouteChange} roles={user.roles} />;
   }
 
   function handleTableBody(val: any, key: string): any {

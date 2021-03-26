@@ -1,19 +1,24 @@
 import React, { useEffect, useState } from 'react';
-import { useQuery } from '@apollo/client';
+import { useLazyQuery } from '@apollo/client';
+import { useDispatch } from 'react-redux';
 //components
-import Layout from '../../components/common/Layout';
+import Layout from '../../components/hoc/Layout';
 import SystemUsage from './SystemUsage';
 import StatisticCard from './StatisticCard';
-import Flexbox from '../../components/common/layout/Flexbox';
-//styled
-import { Container } from './styled-components';
+import Flexbox from '../../components/hoc/Flexbox';
+import HeaderLine from '../../components/common/HeaderLine';
+import BorderedBox from '../../components/hoc/BorderedBox';
 //request
 import { GET_STATISTICS } from '../../redux/requests/main.request';
+//actions
+import { saveNetStatus } from '../../redux/slices/net-status.slice';
 
 type Props = {};
 
 const MainPage: React.FC<Props> = (props) => {
-  const statsResponse = useQuery(GET_STATISTICS);
+  const dispatch = useDispatch();
+  //state
+  const [GetStatistics, statsResponse] = useLazyQuery(GET_STATISTICS);
   const [stats, setStats] = useState({
     product: {},
     category: {},
@@ -21,24 +26,48 @@ const MainPage: React.FC<Props> = (props) => {
   });
 
   useEffect(() => {
+    (async () => {
+      await getStatistics();
+    })();
+  }, []);
+
+  useEffect(() => {
     if (statsResponse.data) {
       setStats(statsResponse.data.getAll);
     }
-  }, [statsResponse]);
+  }, [statsResponse.data]);
+
+  async function getStatistics() {
+    try {
+      await GetStatistics();
+    } catch (err) {
+      dispatch(saveNetStatus(err.graphQLErrors));
+    }
+  }
 
   return (
     <Layout>
-      <Container>
-        <h2>Common Statistics</h2>
-        <Flexbox cls="np">
+      <HeaderLine label="Common Statistics" />
+      <BorderedBox>
+        <Flexbox cls="np gap">
           <SystemUsage />
-          <StatisticCard header={['Product']} stats={[stats.product]} />
           <StatisticCard
-            header={['Category', 'Brand']}
-            stats={[stats.category, stats.brand]}
+            header="Product"
+            stats={stats.product}
+            status={statsResponse.loading}
+          />
+          <StatisticCard
+            header="Category"
+            stats={stats.category}
+            status={statsResponse.loading}
+          />
+          <StatisticCard
+            header="Brand"
+            stats={stats.brand}
+            status={statsResponse.loading}
           />
         </Flexbox>
-      </Container>
+      </BorderedBox>
     </Layout>
   );
 };

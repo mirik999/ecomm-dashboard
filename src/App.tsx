@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Switch } from 'react-router-dom';
 import {
   ApolloClient,
   ApolloProvider,
@@ -14,21 +14,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ThemeProvider } from 'styled-components';
 import { useMediaLayout } from 'use-media';
 //components
-import WithToken from './components/common/WithToken';
-import WithoutToken from './components/common/WithoutToken';
-import NotificationBox from './components/common/notificationBox';
-//pages
-import AuthPage from './pages/Auth/Auth.page';
-import NotFoundPage from './pages/Rest/NotFound.page';
-import MainPage from './pages/Main/Main.page';
-import CategoryPage from './pages/Category/Category.page';
-import CreateCategory from './pages/Category/CreateCategory.page';
-import BrandPage from './pages/Brand/Brand.page';
-import CreateBrand from './pages/Brand/CreateBrand.page';
-import ProductPage from './pages/Product/Product.page';
-import CreateProduct from './pages/Product/CreateProduct.page';
-import UserPage from './pages/User/User.page';
-import CreateUser from './pages/User/CreateUser.page';
+import WithToken from './components/hoc/WithToken';
+import WithoutToken from './components/hoc/WithoutToken';
+import NotificationBox from './components/notificationBox';
 //request
 import { REFRESH_TOKEN } from './redux/requests/user.request';
 //slicer
@@ -37,6 +25,9 @@ import { saveToken } from './redux/slices/auth-credentials.slice';
 import { getFromCookies, removeFromCookies } from './utils/storage.utils';
 //types
 import { RootState } from './redux/store';
+import { RoutesType } from './redux/types/routes.types';
+//routes
+import { routes } from './config/routes';
 
 function App() {
   const small = useMediaLayout({ maxWidth: '360px' });
@@ -147,6 +138,17 @@ function App() {
     ? 'hd'
     : 'fhd';
 
+  function renderRoutes(): RoutesType[] {
+    let allRoutes: RoutesType[] = [];
+    routes.forEach((route, i) => {
+      if (route.subRoutes) {
+        allRoutes.push(route.subRoutes.find((rt: any) => rt)!);
+      }
+      allRoutes.push(route);
+    });
+    return allRoutes;
+  }
+
   return (
     <div className="site-container">
       <ApolloProvider client={client}>
@@ -154,17 +156,12 @@ function App() {
           theme={{ ...theme, fontSize: theme.fontSize[setResponsiveFontSize] }}
         >
           <Switch>
-            <WithoutToken exact path="/auth" component={AuthPage} />
-            <WithToken exact path="/" component={MainPage} />
-            <WithToken exact path="/categories" component={CategoryPage} />
-            <WithToken path="/categories/create" component={CreateCategory} />
-            <WithToken exact path="/brands" component={BrandPage} />
-            <WithToken path="/brands/create" component={CreateBrand} />
-            <WithToken exact path="/products" component={ProductPage} />
-            <WithToken path="/products/create" component={CreateProduct} />
-            <WithToken exact path="/users" component={UserPage} />
-            <WithToken path="/users/create" component={CreateUser} />
-            <Route exact path="*" component={NotFoundPage} />
+            {renderRoutes().map((route: RoutesType, i: number) => {
+              if (route.path === '/auth')
+                return <WithoutToken key={i} {...route} />;
+
+              return <WithToken key={i} {...route} />;
+            })}
           </Switch>
           <NotificationBox />
         </ThemeProvider>

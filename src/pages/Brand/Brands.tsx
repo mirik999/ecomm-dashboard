@@ -2,7 +2,7 @@ import React, { memo, useEffect, useState } from 'react';
 import { useLazyQuery } from '@apollo/client';
 import styled from 'styled-components';
 //components
-import Flexbox from '../../components/common/layout/Flexbox';
+import Flexbox from '../../components/hoc/Flexbox';
 //request
 import { GET_BRANDS_BY_CATEGORY_ID } from '../../redux/requests/brand.request';
 //types
@@ -13,7 +13,7 @@ type Props = {
 };
 
 const Brands: React.FC<Props> = memo(({ id }) => {
-  //requests
+  //graphql
   const [GetBrandsByCategoryId, brandsResponse] = useLazyQuery(
     GET_BRANDS_BY_CATEGORY_ID,
   );
@@ -147,5 +147,9 @@ const Container = styled(Flexbox)`
   .no-data {
     display: block;
     margin-top: 10px;
+  }
+
+  @media (max-width: 789px) {
+    max-width: 100%;
   }
 `;

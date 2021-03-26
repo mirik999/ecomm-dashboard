@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
+import React, { Suspense } from 'react';
 import { Editor } from '@tinymce/tinymce-react';
 import styled from 'styled-components';
 //components
-import Flexbox from '../layout/Flexbox';
+import Flexbox from '../hoc/Flexbox';
 //templates
 import { templates } from './templates';
 //utils
-import { imageUploadAndGetUrl } from '../../../utils/cloudinary.utils';
+import { imageUploadAndGetUrl } from '../../utils/cloudinary.utils';
+import { getFromLocalStorage } from '../../utils/storage.utils';
 
 type Props = {
   label: string;
@@ -56,6 +57,8 @@ const TinyEditor: React.FC<Props> = ({ label, value, getValue, cls }) => {
     );
   }
 
+  const isDark = getFromLocalStorage('theme') === 'dark';
+
   return (
     <Container cls={cls} flex="column" justify="start" align="start">
       <span>{label}</span>
@@ -63,6 +66,8 @@ const TinyEditor: React.FC<Props> = ({ label, value, getValue, cls }) => {
         apiKey="ujhxkgc5qcu6syhl2b7qv1n2ydnqwtl1vwyy8ndwnl650f0t"
         initialValue={value}
         init={{
+          skin: isDark ? 'oxide-dark' : '',
+          content_css: isDark ? 'dark' : '',
           height: 500,
           menubar: true,
           file_picker_types: 'image',
@@ -99,22 +104,13 @@ const Container = styled(Flexbox)`
 
   & > span {
     font-size: ${({ theme }) => theme.fontSize.sm + 'px'};
+    color: ${({ theme }) => theme.colors.color};
     font-weight: bold;
     margin-bottom: 5px;
   }
 
   & > div {
     width: 100%;
-    border-radius: 5px;
-    border-width: 2px 4px 2px 2px;
-    border-style: solid;
-    border-color: ${({ theme }) => theme.colors.border};
-
-    &:focus {
-      outline: none;
-      border-bottom-color: ${({ theme }) => theme.colors.successLight};
-      border-right-color: ${({ theme }) => theme.colors.successLight};
-      border-width: 2px 4px 2px 2px;
-    }
+    border: none;
   }
 `;

@@ -15,7 +15,13 @@ const WithoutToken: React.FC<Props> = ({ component: Component, ...rest }) => {
   return (
     <Route
       {...rest}
-      render={(props) => (!authCredentials.accessToken ? <Component {...props} /> : <Redirect to="/" />)}
+      render={(props) =>
+        !authCredentials.accessToken ? (
+          <Component {...props} />
+        ) : (
+          <Redirect to="/main" />
+        )
+      }
     />
   );
 };

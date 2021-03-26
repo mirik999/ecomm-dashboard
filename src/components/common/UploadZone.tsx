@@ -2,7 +2,7 @@ import React, { FormEvent, useEffect, useState, memo } from 'react';
 import Lightbox from 'react-image-lightbox';
 import styled from 'styled-components';
 //components
-import Flexbox from './layout/Flexbox';
+import Flexbox from '../hoc/Flexbox';
 //utils
 import { imageUploadAndGetUrl } from '../../utils/cloudinary.utils';
 
@@ -96,7 +96,7 @@ const UploadZone: React.FC<Props> = memo(
 
     return (
       <Container cls={cls} flex="column" justify="start" align="start">
-        <Flexbox cls="np">
+        <Flexbox cls="np" flex="column" align="start">
           <Flexbox cls="np" justify="between">
             <span className={warning ? 'text-red' : 'text-black'}>{label}</span>
             {uploadPercent ? <span>{uploadPercent}%</span> : null}
@@ -205,6 +205,7 @@ const Container = styled(Flexbox)`
       font-size: ${({ theme }) => theme.fontSize.sm + 'px'};
       font-weight: bold;
       margin-bottom: 5px;
+      color: ${({ theme }) => theme.colors.color};
     }
   }
 
@@ -228,11 +229,13 @@ const Container = styled(Flexbox)`
       border-width: 2px 4px 2px 2px;
       border-style: solid;
       border-color: ${({ theme }) => theme.colors.border};
+      background-color: ${({ theme }) => theme.colors.thirdBackground};
+      color: ${({ theme }) => theme.colors.color};
 
       &:focus {
         outline: none;
-        border-bottom-color: ${({ theme }) => theme.colors.successLight};
-        border-right-color: ${({ theme }) => theme.colors.successLight};
+        border-bottom-color: ${({ theme }) => theme.colors.success};
+        border-right-color: ${({ theme }) => theme.colors.success};
         border-width: 2px 4px 2px 2px;
       }
     }
@@ -246,11 +249,11 @@ const Container = styled(Flexbox)`
     border-width: 2px 4px 2px 2px;
     border-style: dashed;
     border-color: ${({ theme }) => theme.colors.border};
-    color: ${({ theme }) => theme.colors.secondColor};
+    color: ${({ theme }) => theme.colors.color};
     overflow: auto;
 
     & > div {
-      padding: 0;
+      padding: 10px 0;
       min-width: 80px;
       min-height: 80px;
       background-color: ${({ theme }) => theme.colors.background};
@@ -275,5 +278,9 @@ const Container = styled(Flexbox)`
 
   @media screen and (max-width: 1100px) {
     min-width: 300px !important;
+  }
+
+  @media screen and (max-width: 500px) {
+    min-width: 200px !important;
   }
 `;

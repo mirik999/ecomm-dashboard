@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useLazyQuery, useMutation } from '@apollo/client';
+import { useDispatch } from 'react-redux';
 //components
-import Layout from '../../components/common/Layout';
-import Table from '../../components/common/table/Table';
+import Layout from '../../components/hoc/Layout';
+import Table from '../../components/table/Table';
+import HeaderLine from '../../components/common/HeaderLine';
 //types
 import { CategoryType } from '../../redux/types/category.type';
 //request
@@ -12,24 +14,24 @@ import {
   ACTIVATE_CATEGORIES,
   DELETE_CATEGORIES,
 } from '../../redux/requests/category.request';
+//actions
+import { saveNetStatus } from '../../redux/slices/net-status.slice';
 
 type Props = {};
 
 const CategoryPage: React.FC<Props> = (props) => {
+  const dispatch = useDispatch();
+  //graphql
   const [GetCategories, getResponse] = useLazyQuery(GET_CATEGORIES);
-  const [DisableCategories, disableResponse] = useMutation(DISABLE_CATEGORIES);
-  const [ActivateCategories, activateResponse] = useMutation(
-    ACTIVATE_CATEGORIES,
-  );
-  const [DeleteCategories, deleteResponse] = useMutation(DELETE_CATEGORIES);
+  const [DisableCategories] = useMutation(DISABLE_CATEGORIES);
+  const [ActivateCategories] = useMutation(ACTIVATE_CATEGORIES);
+  const [DeleteCategories] = useMutation(DELETE_CATEGORIES);
+  //state
   const [categories, setCategories] = useState<CategoryType[]>([]);
-  //pagination
   const [allCount, setAllCount] = useState<number>(0);
   const [rowCount, setRowCount] = useState<number>(10);
   const [currentPage, setCurrentPage] = useState<number>(1);
-  //deep search
   const [deepSearch, setDeepSearch] = useState<string>('');
-  //side effects
   const [unSelect, setUnSelect] = useState<boolean>(false);
 
   useEffect(() => {
@@ -62,7 +64,7 @@ const CategoryPage: React.FC<Props> = (props) => {
         },
       });
     } catch (err) {
-      console.log(err.message);
+      dispatch(saveNetStatus(err.graphQLErrors));
     }
   }
 
@@ -90,7 +92,7 @@ const CategoryPage: React.FC<Props> = (props) => {
       });
       handleCategoriesState(ids, true);
     } catch (err) {
-      console.log(err.message);
+      dispatch(saveNetStatus(err.graphQLErrors));
     }
   }
 
@@ -103,7 +105,7 @@ const CategoryPage: React.FC<Props> = (props) => {
       });
       handleCategoriesState(ids, false);
     } catch (err) {
-      console.log(err.message);
+      dispatch(saveNetStatus(err.graphQLErrors));
     }
   }
 
@@ -116,7 +118,7 @@ const CategoryPage: React.FC<Props> = (props) => {
       });
       handleCategoriesList(ids);
     } catch (err) {
-      console.log(err.message);
+      dispatch(saveNetStatus(err.graphQLErrors));
     }
   }
 
@@ -143,7 +145,7 @@ const CategoryPage: React.FC<Props> = (props) => {
 
   return (
     <Layout>
-      <h2>Categories</h2>
+      <HeaderLine label="categories" />
       {/*  table */}
       <Table
         data={categories}

@@ -2,7 +2,7 @@ import React, { memo, useEffect, useState } from 'react';
 import { useLazyQuery } from '@apollo/client';
 import styled from 'styled-components';
 //components
-import Flexbox from '../../components/common/layout/Flexbox';
+import Flexbox from '../../components/hoc/Flexbox';
 //request
 import { GET_PRODUCTS_BY_CATEGORY_ID } from '../../redux/requests/product.request';
 //types
@@ -140,5 +140,9 @@ const Container = styled(Flexbox)`
   .no-data {
     display: block;
     margin-top: 10px;
+  }
+
+  @media (max-width: 789px) {
+    max-width: 100%;
   }
 `;
