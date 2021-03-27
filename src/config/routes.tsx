@@ -11,6 +11,8 @@ import CreateUser from '../pages/User/CreateUser.page';
 import NotFoundPage from '../pages/Rest/NotFound.page';
 //types
 import { RoutesType } from '../redux/types/routes.types';
+import CouponPage from '../pages/Coupon/Coupon.page';
+import CreateCoupon from '../pages/Coupon/CreateCoupon.page';
 
 export const routes: RoutesType[] = [
   {
@@ -69,7 +71,7 @@ export const routes: RoutesType[] = [
         exact: false,
         visible: false,
         component: () => <CreateBrand />,
-        accessRoles: ['admin', 'sudo']
+        accessRoles: ['admin', 'sudo'],
       },
     ],
   },
@@ -90,12 +92,33 @@ export const routes: RoutesType[] = [
         exact: false,
         visible: false,
         component: () => <CreateProduct />,
-        accessRoles: ['admin', 'sudo']
+        accessRoles: ['admin', 'sudo'],
       },
     ],
   },
   {
     id: 6,
+    name: 'Coupons',
+    path: '/coupons',
+    exact: true,
+    visible: true,
+    component: () => <CouponPage />,
+    accessRoles: ['guest', 'admin', 'sudo'],
+    editableRoles: ['admin', 'sudo'],
+    subRoutes: [
+      {
+        id: 61,
+        name: 'Create Coupon',
+        path: '/coupons/create',
+        exact: false,
+        visible: false,
+        component: () => <CreateCoupon />,
+        accessRoles: ['admin', 'sudo'],
+      },
+    ],
+  },
+  {
+    id: 7,
     name: 'Users',
     path: '/users',
     exact: true,
@@ -105,7 +128,7 @@ export const routes: RoutesType[] = [
     editableRoles: ['admin', 'sudo'],
     subRoutes: [
       {
-        id: 61,
+        id: 71,
         name: 'Create User',
         path: '/users/create',
         exact: false,
@@ -116,7 +139,7 @@ export const routes: RoutesType[] = [
     ],
   },
   {
-    id: 7,
+    id: 8,
     name: 'Not Found',
     path: '*',
     exact: true,

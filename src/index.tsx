@@ -13,6 +13,7 @@ import { loadTheme } from './redux/slices/theme.slice';
 //styles
 import 'normalize.css';
 import './index.css';
+import 'react-datepicker/dist/react-datepicker.css';
 import 'react-image-lightbox/style.css';
 import 'react-quill/dist/quill.snow.css';
 
@@ -29,7 +30,7 @@ ReactDOM.render(
       <Route component={App} />
     </Provider>
   </BrowserRouter>,
-  document.getElementById('root')
+  document.getElementById('root'),
 );
 
 // If you want to start measuring performance in your app, pass a function
