@@ -15,7 +15,6 @@ export default BorderedBox;
 BorderedBox.defaultProps = {};
 
 const Container = styled.div`
-  overflow: auto;
   max-width: 100%;
   padding: 10px;
   margin-bottom: 10px;

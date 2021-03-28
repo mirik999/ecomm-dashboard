@@ -18,5 +18,5 @@ export type CreateCouponType = {
   description: string;
   type: string[];
   value: number;
-  endDate: Date;
+  endDate: string;
 };

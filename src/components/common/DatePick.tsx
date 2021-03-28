@@ -3,12 +3,18 @@ import DatePicker from 'react-datepicker';
 import styled from 'styled-components';
 import { subDays } from 'date-fns';
 
-type Props = {};
+type Props = {
+  value: string;
+  getValue: (val: string) => void;
+};
 
-const DatePick: React.FC<Props> = (props) => {
-  const [selectedDate, setSelectedDate] = useState<Date>(new Date());
+const DatePick: React.FC<Props> = ({ getValue, value }) => {
+  const [selectedDate, setSelectedDate] = useState<Date>(new Date(value));
 
-  console.log('date', selectedDate);
+  function _onChange(date: Date): void {
+    setSelectedDate(date);
+    getValue(date.toString());
+  }
 
   return (
     <Container>
@@ -16,9 +22,10 @@ const DatePick: React.FC<Props> = (props) => {
         <span>Select a date before 3 days in the future</span>
         <DatePicker
           selected={selectedDate}
-          onChange={(date: Date) => setSelectedDate(date)}
+          onChange={_onChange}
           minDate={subDays(new Date(), 3)}
-          dateFormat="MM/dd/yyyy h:mm aa"
+          dateFormat="MM/dd/yyyy HH:mm"
+          timeFormat="HH:mm"
           timeInputLabel="Time:"
           showTimeSelect
           popperPlacement="bottom-end"
@@ -29,7 +36,10 @@ const DatePick: React.FC<Props> = (props) => {
   );
 };
 
-DatePick.defaultProps = {};
+DatePick.defaultProps = {
+  value: new Date().toString(),
+  getValue: () => false,
+};
 
 export default DatePick;
 

@@ -30,6 +30,7 @@ export const GET_COUPONS = gql`
         createdAt
         createdBy
         modifiedBy
+        endDate
         isDisabled
       }
     }

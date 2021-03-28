@@ -21,13 +21,16 @@ import {
 } from '../../redux/requests/coupon.request';
 //actions
 import { saveNetStatus } from '../../redux/slices/net-status.slice';
+import Selectable from '../../components/common/Select';
+
+const types = ['product', 'brand', 'category', 'all'];
 
 const initialState = {
   name: '',
   type: [],
   value: 0,
   description: '',
-  endDate: new Date(),
+  endDate: new Date().toString(),
 };
 
 type Props = {};
@@ -55,13 +58,13 @@ const CreateCoupon: React.FC<Props> = (props) => {
 
   useEffect(() => {
     if (createResponse.data) {
-      history.push('/categories');
+      history.push('/coupons');
     }
   }, [createResponse.data]);
 
   useEffect(() => {
     if (updateResponse.data) {
-      history.push('/categories');
+      history.push('/coupons');
     }
   }, [updateResponse.data]);
 
@@ -89,6 +92,26 @@ const CreateCoupon: React.FC<Props> = (props) => {
     }
   }
 
+  function _onTypeSelect(type: string | string[], action: string): void {
+    if (action === 'remove-value') {
+      if (Array.isArray(type)) {
+        setState((prevState) => ({ ...prevState, type }));
+      }
+    } else {
+      if (Array.isArray(type)) {
+        setState((prevState) => ({
+          ...prevState,
+          type: Array.from(new Set([...type, ...prevState.type!])),
+        }));
+      } else {
+        setState((prevState) => ({
+          ...prevState,
+          type: Array.from(new Set([type, ...prevState.type!])),
+        }));
+      }
+    }
+  }
+
   return (
     <Layout>
       <HeaderLine label="Create coupon" goBack={true} />
@@ -113,9 +136,23 @@ const CreateCoupon: React.FC<Props> = (props) => {
             label="Value of coupon"
             name="value"
             value={state.value}
-            getValue={(val: number) => setState({ ...state, value: val })}
+            getValue={(val: number) => setState({ ...state, value: +val })}
           />
-          <DatePick />
+          <Selectable
+            label="Target"
+            name="type"
+            returnType="string"
+            value={state.type!.map((t, i) => ({ id: t, name: t }))}
+            options={types.map((t, i) => ({ id: t, name: t }))}
+            getValue={(val: string | string[], action = '') =>
+              _onTypeSelect(val, action)
+            }
+            isMulti
+          />
+          <DatePick
+            value={state.endDate}
+            getValue={(val: string) => setState({ ...state, endDate: val })}
+          />
         </Body>
         <FooterPanel>
           {mode === 'create' ? (

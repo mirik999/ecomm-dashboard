@@ -9,6 +9,10 @@ export function tableBodyHandler(val: any, key: string): any {
     return format(new Date(val), 'dd MMMM yyyy');
   }
 
+  if (key === 'endDate') {
+    return format(new Date(+val), 'dd MMMM yyyy HH:mm');
+  }
+
   if (key === 'color') {
     return `<div
       class="w-full rounded"
@@ -19,7 +23,7 @@ export function tableBodyHandler(val: any, key: string): any {
     />`;
   }
 
-  if (key === 'roles') {
+  if (key === 'roles' || key === 'type') {
     const roles = val.join(' - ');
     return `<span class="mr-2">${roles}</span>`;
   }
