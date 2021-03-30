@@ -13,16 +13,23 @@ import { setContext } from '@apollo/client/link/context';
 import { useDispatch, useSelector } from 'react-redux';
 import { ThemeProvider } from 'styled-components';
 import { useMediaLayout } from 'use-media';
+import { useHistory } from 'react-router-dom';
 //components
 import WithToken from './components/hoc/WithToken';
 import WithoutToken from './components/hoc/WithoutToken';
 import NotificationBox from './components/notificationBox';
 //request
 import { REFRESH_TOKEN } from './redux/requests/user.request';
-//slicer
+//action
 import { saveToken } from './redux/slices/auth-credentials.slice';
+import { removeNetStatus } from './redux/slices/net-status.slice';
+import { themeToDark } from './redux/slices/theme.slice';
 //utils
-import { getFromCookies, removeFromCookies } from './utils/storage.utils';
+import {
+  getFromCookies,
+  getFromLocalStorage,
+  removeFromCookies,
+} from './utils/storage.utils';
 //types
 import { RootState } from './redux/store';
 import { RoutesType } from './redux/types/routes.types';
@@ -33,6 +40,7 @@ function App() {
   const small = useMediaLayout({ maxWidth: '360px' });
   const medium = useMediaLayout({ maxWidth: '767px' });
   const hd = useMediaLayout({ maxWidth: '1376px' });
+  const history = useHistory();
   const dispatch = useDispatch();
   const { theme } = useSelector((state: RootState) => state);
 
@@ -41,8 +49,17 @@ function App() {
       window.matchMedia &&
       window.matchMedia('(prefers-color-scheme: dark)').matches
     ) {
-      console.log('dark mode');
+      const theme = getFromLocalStorage('theme');
+      if (!theme) {
+        dispatch(themeToDark());
+      }
     }
+  }, []);
+
+  useEffect(() => {
+    history.listen((loc, act) => {
+      dispatch(removeNetStatus());
+    });
   }, []);
 
   const getNewToken = async () => {

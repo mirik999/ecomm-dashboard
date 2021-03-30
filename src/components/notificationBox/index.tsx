@@ -5,8 +5,6 @@ import ErrorBox from './ErrorBox';
 import Flexbox from '../hoc/Flexbox';
 //types
 import { RootState } from '../../redux/store';
-//utils
-import { isEmpty } from '../../utils/functions.utils';
 //actions
 import { removeNetStatus } from '../../redux/slices/net-status.slice';
 
@@ -17,7 +15,7 @@ const NotificationBox: React.FC<Props> = memo(
     const dispatch = useDispatch();
     const { netStatus } = useSelector((state: RootState) => state);
 
-    if (isEmpty(netStatus)) {
+    if (!netStatus.isOpen) {
       return null;
     }
 

@@ -10,7 +10,7 @@ export function tableBodyHandler(val: any, key: string): any {
   }
 
   if (key === 'endDate') {
-    return format(new Date(+val), 'dd MMMM yyyy HH:mm');
+    return format(new Date(val), 'dd MMMM yyyy HH:mm');
   }
 
   if (key === 'color') {

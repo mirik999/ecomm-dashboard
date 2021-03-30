@@ -7,6 +7,7 @@ import Select from '../common/Select';
 import FakeTable from './FakeTable';
 import Buttons from './Buttons';
 import Paginate from './Paginate';
+import DatePick from '../common/DatePick';
 //styled
 import {
   Container,
@@ -48,6 +49,7 @@ const Table: React.FC<Props> = ({
   getIdsAndDisable,
   getIdsAndActivate,
   getIdsAndDelete,
+  getDateRange,
 }) => {
   const history = useHistory();
   const { user } = useSelector((state: RootState) => state);
@@ -55,6 +57,7 @@ const Table: React.FC<Props> = ({
   const [selected, setSelected] = useState<any[]>([]);
   const [quickSearch, setQuickSearch] = useState<string>('');
   const [deepSearch, setDeepSearch] = useState<string>('');
+  const [dateRange, setDateRange] = useState<{ [key: string]: Date }>({});
   const [rowCount, setRowCount] = useState<OptionType>(initialRowCountState);
 
   useEffect(() => {
@@ -92,6 +95,11 @@ const Table: React.FC<Props> = ({
 
   function _onQuickSearch(val: string): void {
     setQuickSearch(val);
+  }
+
+  function _onDateRange(val: Date, range: string): void {
+    setDateRange({ ...dateRange, [range]: val });
+    getDateRange({ range: val });
   }
 
   function _onFilter(search: string) {
@@ -132,11 +140,13 @@ const Table: React.FC<Props> = ({
   }
 
   if (!state.length && !error) {
-    return <FakeTable loading={true} roles={user.roles} />;
+    return (
+      <FakeTable loading={true} onCreate={_onRouteChange} roles={user.roles} />
+    );
   }
 
-  if (!state.length && error) {
-    return <FakeTable loading={false} onCreate={_onRouteChange} roles={user.roles} />;
+  if (!state.length) {
+    return <FakeTable loading={false} roles={user.roles} />;
   }
 
   function handleTableBody(val: any, key: string): any {
@@ -163,6 +173,14 @@ const Table: React.FC<Props> = ({
           value={deepSearch}
           getValue={_onDeepSearch}
           onKeyDown={_onFilterDeep}
+        />
+        <DatePick
+          value={dateRange.from}
+          getValue={(val: Date) => _onDateRange(val, 'from')}
+        />
+        <DatePick
+          value={dateRange.to}
+          getValue={(val: Date) => _onDateRange(val, 'to')}
         />
         <Select
           label="Select row count"

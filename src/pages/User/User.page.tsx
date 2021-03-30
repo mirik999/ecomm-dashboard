@@ -150,6 +150,7 @@ const UserPage: React.FC<Props> = (props) => {
         getIdsAndDisable={getIdsAndDisable}
         getIdsAndActivate={getIdsAndActivate}
         getIdsAndDelete={getIdsAndDelete}
+        getDateRange={(val) => false}
         exclude={['id']}
         error={!!getResponse.error}
         path="users"

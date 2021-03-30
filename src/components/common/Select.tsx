@@ -39,8 +39,13 @@ const Selectable: React.FC<Props> = memo(
       try {
         if (action === 'remove-value') {
           const options = selectedOption || [{ id: '', name: '' }];
-          const restAfterRemoving = options.map((s: OptionType) => s.id);
+          const restAfterRemoving = options.flatMap(
+            (s: OptionType) => s.id || [],
+          );
           getValue(restAfterRemoving, action);
+        }
+        if (action === 'clear') {
+          getValue([], 'remove-value');
         }
         if (rest.isMulti) {
           const options = selectedOption || [];
@@ -63,6 +68,7 @@ const Selectable: React.FC<Props> = memo(
         ...base,
         backgroundColor: theme.colors.secondBackground,
         color: theme.colors.color,
+        height: '28px',
       }),
       multiValueLabel: (base: React.CSSProperties): React.CSSProperties => ({
         ...base,

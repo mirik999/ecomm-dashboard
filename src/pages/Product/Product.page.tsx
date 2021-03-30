@@ -156,6 +156,7 @@ const ProductPage: React.FC<Props> = (props) => {
         getIdsAndDisable={getIdsAndDisable}
         getIdsAndActivate={getIdsAndActivate}
         getIdsAndDelete={getIdsAndDelete}
+        getDateRange={(val) => false}
         path="products"
         exclude={excludeList}
         error={!!getResponse.error}

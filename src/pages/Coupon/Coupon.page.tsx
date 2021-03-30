@@ -32,6 +32,7 @@ const CouponPage: React.FC<Props> = (props) => {
   const [rowCount, setRowCount] = useState<number>(10);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [deepSearch, setDeepSearch] = useState<string>('');
+  const [dateRange, setDateRange] = useState<{ [key: string]: Date }>({});
   const [unSelect, setUnSelect] = useState<boolean>(false);
 
   useEffect(() => {
@@ -49,6 +50,7 @@ const CouponPage: React.FC<Props> = (props) => {
   }, []);
 
   async function getCoupons(pg: number, rc: number, kw: string): Promise<void> {
+    console.log(rc, dateRange);
     try {
       await GetCoupons({
         variables: {
@@ -56,6 +58,8 @@ const CouponPage: React.FC<Props> = (props) => {
             offset: (pg - 1) * rc,
             limit: rc,
             keyword: kw,
+            from: dateRange.from,
+            to: dateRange.to,
           },
         },
       });
@@ -118,6 +122,10 @@ const CouponPage: React.FC<Props> = (props) => {
     }
   }
 
+  function getDateRange(range: { [key: string]: Date }): void {
+    setDateRange(range);
+  }
+
   function handleCouponsState(ids: string[], isDisabled: boolean) {
     const updatedCoupons = coupons.map((product) => {
       if (ids.includes(product.id)) {
@@ -152,6 +160,7 @@ const CouponPage: React.FC<Props> = (props) => {
         getIdsAndDisable={getIdsAndDisable}
         getIdsAndActivate={getIdsAndActivate}
         getIdsAndDelete={getIdsAndDelete}
+        getDateRange={getDateRange}
         path="coupons"
         exclude={excludeList}
         error={!!getResponse.error}

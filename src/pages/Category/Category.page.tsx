@@ -156,6 +156,7 @@ const CategoryPage: React.FC<Props> = (props) => {
         getIdsAndDisable={getIdsAndDisable}
         getIdsAndActivate={getIdsAndActivate}
         getIdsAndDelete={getIdsAndDelete}
+        getDateRange={(val) => false}
         path="categories"
         error={!!getResponse.error}
         exclude={['id']}

@@ -12,6 +12,7 @@ import Flexbox from '../../components/hoc/Flexbox';
 import HeaderLine from '../../components/common/HeaderLine';
 import BorderedBox from '../../components/hoc/BorderedBox';
 import DatePick from '../../components/common/DatePick';
+import Selectable from '../../components/common/Select';
 //types
 import { CreateCouponType } from '../../redux/types/coupon.type';
 //request
@@ -21,7 +22,6 @@ import {
 } from '../../redux/requests/coupon.request';
 //actions
 import { saveNetStatus } from '../../redux/slices/net-status.slice';
-import Selectable from '../../components/common/Select';
 
 const types = ['product', 'brand', 'category', 'all'];
 
@@ -30,7 +30,7 @@ const initialState = {
   type: [],
   value: 0,
   description: '',
-  endDate: new Date().toString(),
+  endDate: new Date(),
 };
 
 type Props = {};
@@ -151,7 +151,8 @@ const CreateCoupon: React.FC<Props> = (props) => {
           />
           <DatePick
             value={state.endDate}
-            getValue={(val: string) => setState({ ...state, endDate: val })}
+            getValue={(val: Date) => setState({ ...state, endDate: val })}
+            time={true}
           />
         </Body>
         <FooterPanel>

@@ -4,16 +4,17 @@ import styled from 'styled-components';
 import { subDays } from 'date-fns';
 
 type Props = {
-  value: string;
-  getValue: (val: string) => void;
+  value: Date;
+  getValue: (val: Date) => void;
+  time?: boolean;
 };
 
-const DatePick: React.FC<Props> = ({ getValue, value }) => {
+const DatePick: React.FC<Props> = ({ getValue, value, time }) => {
   const [selectedDate, setSelectedDate] = useState<Date>(new Date(value));
 
   function _onChange(date: Date): void {
     setSelectedDate(date);
-    getValue(date.toString());
+    getValue(date);
   }
 
   return (
@@ -27,7 +28,7 @@ const DatePick: React.FC<Props> = ({ getValue, value }) => {
           dateFormat="MM/dd/yyyy HH:mm"
           timeFormat="HH:mm"
           timeInputLabel="Time:"
-          showTimeSelect
+          showTimeSelect={time}
           popperPlacement="bottom-end"
           showPopperArrow={false}
         />
@@ -37,7 +38,8 @@ const DatePick: React.FC<Props> = ({ getValue, value }) => {
 };
 
 DatePick.defaultProps = {
-  value: new Date().toString(),
+  time: false,
+  value: new Date(),
   getValue: () => false,
 };
 

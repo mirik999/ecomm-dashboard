@@ -150,6 +150,7 @@ const BrandPage: React.FC<Props> = (props) => {
         getIdsAndDisable={getIdsAndDisable}
         getIdsAndActivate={getIdsAndActivate}
         getIdsAndDelete={getIdsAndDelete}
+        getDateRange={(val) => false}
         path="brands"
         error={!!getResponse.error}
         exclude={['id']}
