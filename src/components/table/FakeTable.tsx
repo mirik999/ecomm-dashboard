@@ -17,7 +17,7 @@ const buttons = [
 type Props = {
   roles: string[];
   loading?: boolean;
-  onCreate?: (mode: string) => any;
+  onCreate: (mode: string) => any;
 };
 
 const FakeTable: React.FC<Props> = ({ onCreate, roles, loading }) => {
@@ -39,6 +39,10 @@ const FakeTable: React.FC<Props> = ({ onCreate, roles, loading }) => {
     );
   }
 
+  function _onAction() {
+    onCreate('create');
+  }
+
   return (
     <Container flex="column">
       <Flexbox cls="np" justify="center">
@@ -52,7 +56,7 @@ const FakeTable: React.FC<Props> = ({ onCreate, roles, loading }) => {
               type="success"
               key={i}
               label="Create"
-              onAction={() => onCreate && onCreate('create')}
+              onAction={_onAction}
               cls="m-0 mr-3"
             />
           ))}
@@ -63,7 +67,7 @@ const FakeTable: React.FC<Props> = ({ onCreate, roles, loading }) => {
 
 FakeTable.defaultProps = {
   roles: [],
-  onCreate: () => false,
+  onCreate: () => null,
   loading: false,
 };
 

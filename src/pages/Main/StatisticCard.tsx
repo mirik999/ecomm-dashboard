@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, memo } from 'react';
 import styled from 'styled-components';
 import Highcharts from 'highcharts';
 import HC_exporting from 'highcharts/modules/exporting';
@@ -17,7 +17,7 @@ type Props = {
   status?: boolean;
 };
 
-const StatisticCard: React.FC<Props> = ({ header, stats, status }) => {
+const StatisticCard: React.FC<Props> = memo(({ header, stats, status }) => {
   const chart: any = useRef(null);
 
   useEffect(() => {
@@ -117,7 +117,7 @@ const StatisticCard: React.FC<Props> = ({ header, stats, status }) => {
       <HighchartsReact highcharts={Highcharts} options={options} ref={chart} />
     </Container>
   );
-};
+});
 
 StatisticCard.defaultProps = {
   stats: null,

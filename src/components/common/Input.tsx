@@ -2,7 +2,7 @@ import React, { FormEvent, useRef } from 'react';
 import styled from 'styled-components';
 
 type Props = {
-  type?: 'text' | 'number' | 'email' | 'password' | 'phone';
+  type?: 'text' | 'number' | 'email' | 'password' | 'phone' | 'range';
   label?: string;
   value: any;
   name: string;

@@ -11,9 +11,11 @@ type Props = {
 
 const WithToken: React.FC<Props> = ({ component: Component, ...rest }) => {
   const { authCredentials, user } = useSelector((state: RootState) => state);
-  const hasAccess = rest.accessRoles.some((er: string) => user.roles.includes(er));
+  const hasAccess = rest.accessRoles.some((er: string) =>
+    user.roles.includes(er),
+  );
 
-  if (!hasAccess) {
+  if (authCredentials.accessToken && !hasAccess) {
     return <Redirect to="/404" />;
   }
 

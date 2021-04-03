@@ -139,14 +139,10 @@ const Table: React.FC<Props> = ({
     setSelected([]);
   }
 
-  if (!state.length && !error) {
+  if (!state.length) {
     return (
       <FakeTable loading={true} onCreate={_onRouteChange} roles={user.roles} />
     );
-  }
-
-  if (!state.length) {
-    return <FakeTable loading={false} roles={user.roles} />;
   }
 
   function handleTableBody(val: any, key: string): any {

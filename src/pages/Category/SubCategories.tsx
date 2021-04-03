@@ -3,9 +3,9 @@ import { v4 as uuid } from 'uuid';
 import styled from 'styled-components';
 //components
 import Input from '../../components/common/Input';
+import Flexbox from '../../components/hoc/Flexbox';
 //types
 import { SubCategoryType } from '../../redux/types/category.type';
-import Flexbox from '../../components/hoc/Flexbox';
 
 type Props = {
   parentId: string;

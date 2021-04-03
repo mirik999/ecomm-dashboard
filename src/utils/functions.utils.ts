@@ -1,5 +1,5 @@
 export function isEmpty(data: any): boolean {
-  if (!data) {
+  if (data === undefined || data === null) {
     return true;
   }
 

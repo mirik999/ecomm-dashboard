@@ -16,6 +16,7 @@ import './index.css';
 import 'react-datepicker/dist/react-datepicker.css';
 import 'react-image-lightbox/style.css';
 import 'react-quill/dist/quill.snow.css';
+import 'rsuite/dist/styles/rsuite-default.css';
 
 //load theme
 store.dispatch(loadTheme());

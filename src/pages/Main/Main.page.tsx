@@ -51,21 +51,21 @@ const MainPage: React.FC<Props> = (props) => {
       <BorderedBox>
         <Flexbox cls="np gap">
           <SystemUsage />
-          <StatisticCard
-            header="Product"
-            stats={stats.product}
-            status={statsResponse.loading}
-          />
-          <StatisticCard
-            header="Category"
-            stats={stats.category}
-            status={statsResponse.loading}
-          />
-          <StatisticCard
-            header="Brand"
-            stats={stats.brand}
-            status={statsResponse.loading}
-          />
+          {/*<StatisticCard*/}
+          {/*  header="Product"*/}
+          {/*  stats={stats.product}*/}
+          {/*  status={statsResponse.loading}*/}
+          {/*/>*/}
+          {/*<StatisticCard*/}
+          {/*  header="Category"*/}
+          {/*  stats={stats.category}*/}
+          {/*  status={statsResponse.loading}*/}
+          {/*/>*/}
+          {/*<StatisticCard*/}
+          {/*  header="Brand"*/}
+          {/*  stats={stats.brand}*/}
+          {/*  status={statsResponse.loading}*/}
+          {/*/>*/}
         </Flexbox>
       </BorderedBox>
     </Layout>

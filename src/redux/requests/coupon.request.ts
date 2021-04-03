@@ -60,3 +60,17 @@ export const DELETE_COUPONS = gql`
     }
   }
 `;
+
+export const GET_COUPONS_FOR_SELECT = gql`
+  query GetCoupons($controls: GetElementsInput!) {
+    getCoupons(controls: $controls) {
+      count
+      payload {
+        id
+        name
+        value
+        endDate
+      }
+    }
+  }
+`;

@@ -116,6 +116,7 @@ const Selectable: React.FC<Props> = memo(
           : theme.colors.thirdBackground,
         cursor: 'pointer',
         color: state.isSelected ? 'white' : theme.colors.color,
+        fontSize: '12px',
 
         '&:hover': {
           backgroundColor: theme.colors.success,

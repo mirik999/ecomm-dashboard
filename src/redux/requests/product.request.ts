@@ -23,11 +23,10 @@ export const GET_PRODUCTS = gql`
       payload {
         id
         name
-        articul
+        code
         images
         cover
         color
-        group
         sold
         description
         category {
@@ -42,12 +41,19 @@ export const GET_PRODUCTS = gql`
           id
           name
         }
+        coupon {
+          name
+          endDate
+        }
         stars
         price
         viewCount
         sale
         saleCount
         new
+        hasCoupon
+        used
+        defective
         freeDelivery
         guarantee
         best
@@ -97,4 +103,3 @@ export const GET_PRODUCTS_BY_CATEGORY_ID = gql`
     }
   }
 `;
-

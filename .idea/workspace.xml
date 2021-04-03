@@ -22,22 +22,22 @@
     <list default="true" id="e021988f-3eda-4fed-af49-63e1e5ec9f51" name="Default Changelist" comment="users done">
       <change beforePath="$PROJECT_DIR$/.eslintcache" beforeDir="false" afterPath="$PROJECT_DIR$/.eslintcache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/common/DatePick.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/DatePick.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/common/Input.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/Input.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/common/Select.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/Select.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/notificationBox/ErrorBox.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/notificationBox/ErrorBox.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/notificationBox/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/notificationBox/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/hoc/WithToken.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/hoc/WithToken.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/table/FakeTable.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/table/FakeTable.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/table/Table.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/table/Table.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/table/body.handler..ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/table/body.handler..ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/table/props.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/table/props.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Brand/Brand.page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Brand/Brand.page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Category/Category.page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Category/Category.page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Coupon/Coupon.page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Coupon/Coupon.page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Category/SubCategories.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Category/SubCategories.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/Coupon/CreateCoupon.page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Coupon/CreateCoupon.page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Product/Product.page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Product/Product.page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/User/User.page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/User/User.page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/redux/slices/net-status.slice.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/slices/net-status.slice.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/redux/types/coupon.type.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/types/coupon.type.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Main/Main.page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Main/Main.page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Main/StatisticCard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Main/StatisticCard.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Product/CreateProduct.page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Product/CreateProduct.page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/requests/coupon.request.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/requests/coupon.request.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/requests/product.request.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/requests/product.request.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/functions.utils.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/functions.utils.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -183,6 +183,7 @@
       <workItem from="1616662428775" duration="17082000" />
       <workItem from="1616929538696" duration="7235000" />
       <workItem from="1617121733517" duration="6294000" />
+      <workItem from="1617440619143" duration="13466000" />
     </task>
     <task id="LOCAL-00001" summary="users done">
       <created>1612213179093</created>

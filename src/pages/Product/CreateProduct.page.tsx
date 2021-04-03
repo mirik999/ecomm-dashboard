@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useLazyQuery, useMutation } from '@apollo/client';
 import { useDispatch } from 'react-redux';
+import { format, differenceInDays } from 'date-fns';
 import styled from 'styled-components';
 //components
 import Layout from '../../components/hoc/Layout';
@@ -13,6 +14,8 @@ import ColorPicker from '../../components/common/ColorPicker';
 import Checkbox from '../../components/common/Checkbox';
 import TinyEditor from '../../components/richTextEditor/TinyEditor';
 import Flexbox from '../../components/hoc/Flexbox';
+import HeaderLine from '../../components/common/HeaderLine';
+import BorderedBox from '../../components/hoc/BorderedBox';
 //types
 import { OptionType } from '../../redux/types/common.type';
 import { CategoryType } from '../../redux/types/category.type';
@@ -23,14 +26,13 @@ import {
 } from '../../redux/requests/product.request';
 import { GET_CATEGORIES_FOR_SELECT } from '../../redux/requests/category.request';
 import { GET_BRANDS_FOR_SELECT } from '../../redux/requests/brand.request';
+import { GET_COUPONS_FOR_SELECT } from '../../redux/requests/coupon.request';
 //actions
 import { saveNetStatus } from '../../redux/slices/net-status.slice';
-import HeaderLine from '../../components/common/HeaderLine';
-import BorderedBox from '../../components/hoc/BorderedBox';
 
-const initialState = {
+const initialState: any = {
   name: '',
-  articul: '',
+  code: '',
   images: [],
   cover: '',
   description: '',
@@ -41,11 +43,12 @@ const initialState = {
   new: true,
   freeDelivery: true,
   guarantee: true,
-  coupon: false,
+  hasCoupon: false,
   used: false,
   defective: false,
   category: [],
   brand: '',
+  coupon: '',
 };
 
 type Props = {};
@@ -59,16 +62,19 @@ const CreateProduct: React.FC<Props> = (props) => {
   const [GetCategories, categoriesResponse] = useLazyQuery(
     GET_CATEGORIES_FOR_SELECT,
   );
+  const [GetCoupons, couponsResponse] = useLazyQuery(GET_COUPONS_FOR_SELECT);
   const [GetBrands, brandsResponse] = useLazyQuery(GET_BRANDS_FOR_SELECT);
   const [state, setState] = useState<any>(initialState);
   const [mode, setMode] = useState<string>('create');
   const [categories, setCategories] = useState<OptionType[]>([]);
   const [brands, setBrands] = useState<OptionType[]>([]);
+  const [coupons, setCoupons] = useState<OptionType[]>([]);
 
   useEffect(() => {
     (async function () {
       await getCategories();
       await getBrands();
+      await getCoupons();
     })();
   }, []);
 
@@ -108,6 +114,31 @@ const CreateProduct: React.FC<Props> = (props) => {
       setBrands(options);
     }
   }, [brandsResponse.data]);
+
+  useEffect(() => {
+    if (couponsResponse.data) {
+      const payload = couponsResponse.data.getCoupons.payload;
+      let options = [];
+      for (let i = 0; i < payload.length; i++) {
+        if (payload[i].type.includes('product')) {
+          const modifiedPayload = Object.assign(
+            {},
+            { id: payload[i].id },
+            {
+              name: `
+              ${payload[i].name} -
+              ${payload[i].value} price -
+              ${differenceInDays(new Date(payload[i].endDate), new Date())} days
+            `,
+            },
+          );
+          options.push(modifiedPayload);
+        }
+      }
+
+      setCoupons(options);
+    }
+  }, [couponsResponse.data]);
 
   useEffect(() => {
     if (createResponse.data) {
@@ -153,6 +184,22 @@ const CreateProduct: React.FC<Props> = (props) => {
     }
   }
 
+  async function getCoupons(): Promise<void> {
+    try {
+      await GetCoupons({
+        variables: {
+          controls: {
+            offset: 0,
+            limit: 1000,
+            keyword: '',
+          },
+        },
+      });
+    } catch (err) {
+      dispatch(saveNetStatus(err.graphQLErrors));
+    }
+  }
+
   function _onChange(val: any, name: string): void {
     setState((prevState: any) => ({ ...prevState, [name]: val }));
   }
@@ -181,26 +228,23 @@ const CreateProduct: React.FC<Props> = (props) => {
     }
   }
 
-  function _onCategorySelected(val: string): void {
+  function _onComboSelect(
+    key: string,
+    val: string,
+    multi: boolean = false,
+  ): void {
     if (val === 'not-selected') {
       setState((prevState: any) => ({
         ...prevState,
-        category: initialState.category,
+        [key]: initialState[key],
       }));
       return;
     }
-    setState((prevState: any) => ({ ...prevState, category: [val] }));
-  }
-
-  function _onBrandSelected(val: string): void {
-    if (val === 'not-selected') {
-      setState((prevState: any) => ({
-        ...prevState,
-        brand: initialState.brand,
-      }));
-      return;
+    if (multi) {
+      setState((prevState: any) => ({ ...prevState, [key]: [val] }));
+    } else {
+      setState((prevState: any) => ({ ...prevState, [key]: val }));
     }
-    setState((prevState: any) => ({ ...prevState, brand: val }));
   }
 
   function getCoverImage(val: string[]): void {
@@ -241,10 +285,10 @@ const CreateProduct: React.FC<Props> = (props) => {
             />
             <Input
               type="text"
-              label="Articul"
-              name="articul"
+              label="Code"
+              name="code"
               value={state.articul}
-              getValue={(val: string) => _onChange(val, 'articul')}
+              getValue={(val: string) => _onChange(val, 'code')}
             />
             <Input
               type="number"
@@ -266,7 +310,7 @@ const CreateProduct: React.FC<Props> = (props) => {
               returnType="string"
               value={state.category[0]} // { id, name } or 'id-string'
               options={categories}
-              getValue={(val: string) => _onCategorySelected(val)}
+              getValue={(val: string) => _onComboSelect('category', val, true)}
             />
             <Selectable
               label="Brand"
@@ -274,7 +318,7 @@ const CreateProduct: React.FC<Props> = (props) => {
               returnType="string"
               value={state.brand} // { id, name } or 'id-string'
               options={brands}
-              getValue={(val: string) => _onBrandSelected(val)}
+              getValue={(val: string) => _onComboSelect('brand', val)}
             />
           </Flexbox>
           <Flexbox cls="sides-wrap mt gap np" justify="start" align="start">
@@ -285,11 +329,21 @@ const CreateProduct: React.FC<Props> = (props) => {
               align="start"
             >
               <Flexbox cls="color-and-checkbox-wrap np gap" align="start">
-                <ColorPicker
-                  value={state.color}
-                  getValue={(val: string) => _onChange(val, 'color')}
-                  editable={true}
-                />
+                <Flexbox cls="np gap" align="start">
+                  <ColorPicker
+                    value={state.color}
+                    getValue={(val: string) => _onChange(val, 'color')}
+                    editable={true}
+                  />
+                  <Selectable
+                    label="Coupon"
+                    name="coupon"
+                    returnType="string"
+                    value={state.coupon} // { id, name } or 'id-string'
+                    options={coupons}
+                    getValue={(val: string) => _onComboSelect('coupon', val)}
+                  />
+                </Flexbox>
                 <Flexbox
                   cls="checkbox-wrap gap np"
                   flex="column"
@@ -329,24 +383,24 @@ const CreateProduct: React.FC<Props> = (props) => {
                       value={state.guarantee}
                       getValue={(val: boolean) => _onChange(val, 'guarantee')}
                     />
-                    {/*<Checkbox*/}
-                    {/*  label="Coupon"*/}
-                    {/*  name="coupon"*/}
-                    {/*  value={state.coupon}*/}
-                    {/*  getValue={(val: boolean) => _onChange(val, 'coupon')}*/}
-                    {/*/>*/}
-                    {/*<Checkbox*/}
-                    {/*  label="Used"*/}
-                    {/*  name="used"*/}
-                    {/*  value={state.used}*/}
-                    {/*  getValue={(val: boolean) => _onChange(val, 'used')}*/}
-                    {/*/>*/}
-                    {/*<Checkbox*/}
-                    {/*  label="Defective"*/}
-                    {/*  name="defective"*/}
-                    {/*  value={state.defective}*/}
-                    {/*  getValue={(val: boolean) => _onChange(val, 'defective')}*/}
-                    {/*/>*/}
+                    <Checkbox
+                      label="Coupon"
+                      name="hasCoupon"
+                      value={state.hasCoupon}
+                      getValue={(val: boolean) => _onChange(val, 'hasCoupon')}
+                    />
+                    <Checkbox
+                      label="Used"
+                      name="used"
+                      value={state.used}
+                      getValue={(val: boolean) => _onChange(val, 'used')}
+                    />
+                    <Checkbox
+                      label="Defective"
+                      name="defective"
+                      value={state.defective}
+                      getValue={(val: boolean) => _onChange(val, 'defective')}
+                    />
                   </Flexbox>
                 </Flexbox>
               </Flexbox>

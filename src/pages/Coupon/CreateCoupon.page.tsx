@@ -4,6 +4,7 @@ import { useMutation } from '@apollo/client';
 import { v4 as uuid } from 'uuid';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
+import { Slider } from 'rsuite';
 //components
 import Layout from '../../components/hoc/Layout';
 import Input from '../../components/common/Input';
@@ -33,6 +34,11 @@ const initialState = {
   endDate: new Date(),
 };
 
+type CouponGeneratorType = {
+  length: number;
+  list: string[];
+};
+
 type Props = {};
 
 const CreateCoupon: React.FC<Props> = (props) => {
@@ -45,6 +51,10 @@ const CreateCoupon: React.FC<Props> = (props) => {
   const [state, setState] = useState<CreateCouponType>({
     id: uuid(),
     ...initialState,
+  });
+  const [coupon, setCoupon] = useState({
+    length: 5,
+    list: [],
   });
   const [mode, setMode] = useState<string>('create');
 
@@ -112,48 +122,69 @@ const CreateCoupon: React.FC<Props> = (props) => {
     }
   }
 
+  function _onGenerate(): void {}
+
   return (
     <Layout>
       <HeaderLine label="Create coupon" goBack={true} />
       <BorderedBox>
-        <Body>
-          <Input
-            type="text"
-            label="Name"
-            name="name"
-            value={state.name}
-            getValue={(val: string) => setState({ ...state, name: val })}
-          />
-          <Input
-            type="text"
-            label="Description"
-            name="description"
-            value={state.description}
-            getValue={(val: string) => setState({ ...state, description: val })}
-          />
-          <Input
-            type="number"
-            label="Value of coupon"
-            name="value"
-            value={state.value}
-            getValue={(val: number) => setState({ ...state, value: +val })}
-          />
-          <Selectable
-            label="Target"
-            name="type"
-            returnType="string"
-            value={state.type!.map((t, i) => ({ id: t, name: t }))}
-            options={types.map((t, i) => ({ id: t, name: t }))}
-            getValue={(val: string | string[], action = '') =>
-              _onTypeSelect(val, action)
-            }
-            isMulti
-          />
-          <DatePick
-            value={state.endDate}
-            getValue={(val: Date) => setState({ ...state, endDate: val })}
-            time={true}
-          />
+        <Body flex="column" align="start">
+          <Flexbox cls="np gap">
+            <Input
+              type="text"
+              label="Name"
+              name="name"
+              value={state.name}
+              getValue={(val: string) => setState({ ...state, name: val })}
+            />
+            <Input
+              type="text"
+              label="Description"
+              name="description"
+              value={state.description}
+              getValue={(val: string) =>
+                setState({ ...state, description: val })
+              }
+            />
+            <Input
+              type="number"
+              label="Value of coupon"
+              name="value"
+              value={state.value}
+              getValue={(val: number) => setState({ ...state, value: +val })}
+            />
+            <Selectable
+              label="Target"
+              name="type"
+              returnType="string"
+              value={state.type!.map((t, i) => ({ id: t, name: t }))}
+              options={types.map((t, i) => ({ id: t, name: t }))}
+              getValue={(val: string | string[], action = '') =>
+                _onTypeSelect(val, action)
+              }
+              isMulti
+            />
+            <DatePick
+              value={state.endDate}
+              getValue={(val: Date) => setState({ ...state, endDate: val })}
+              time={true}
+            />
+          </Flexbox>
+          <Flexbox cls="np">
+            <Flexbox cls="np gap range-wrap">
+              <Input
+                type="range"
+                label={`Length of coupon ${coupon.length}`}
+                name="length"
+                value={coupon.length}
+                getValue={(val: number) =>
+                  setCoupon({ ...coupon, length: +val })
+                }
+                min={5}
+                max={10}
+              />
+            </Flexbox>
+          </Flexbox>
         </Body>
         <FooterPanel>
           {mode === 'create' ? (
@@ -182,6 +213,12 @@ const CreateCoupon: React.FC<Props> = (props) => {
             }
             cls="m-0 mr-3"
           />
+          <Button
+            type="success"
+            label="Generate Coupons"
+            onAction={_onGenerate}
+            cls="m-0 mr-3"
+          />
         </FooterPanel>
       </BorderedBox>
     </Layout>
@@ -196,6 +233,13 @@ const Body = styled(Flexbox)`
   padding: 0;
   margin: 10px 0 20px 0;
   grid-gap: 10px;
+
+  .range-wrap {
+    input[type='range'] {
+      max-width: 325px;
+      background-color: red;
+    }
+  }
 `;
 
 const FooterPanel = styled(Flexbox)`
