@@ -4,7 +4,6 @@ import { useMutation } from '@apollo/client';
 import { v4 as uuid } from 'uuid';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
-import { Slider } from 'rsuite';
 //components
 import Layout from '../../components/hoc/Layout';
 import Input from '../../components/common/Input';
