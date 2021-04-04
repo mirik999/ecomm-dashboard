@@ -27,6 +27,10 @@ export const GET_COUPONS = gql`
         type
         value
         used
+        couponList {
+          used
+          key
+        }
         createdAt
         createdBy
         modifiedBy
@@ -68,6 +72,7 @@ export const GET_COUPONS_FOR_SELECT = gql`
       payload {
         id
         name
+        type
         value
         endDate
       }

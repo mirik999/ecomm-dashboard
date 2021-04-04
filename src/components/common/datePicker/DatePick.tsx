@@ -5,7 +5,7 @@ import { subDays } from 'date-fns';
 
 type Props = {
   value: Date;
-  getValue: (val: Date) => void;
+  getValue?: (val: Date) => void;
   time?: boolean;
 };
 
@@ -14,7 +14,7 @@ const DatePick: React.FC<Props> = ({ getValue, value, time }) => {
 
   function _onChange(date: Date): void {
     setSelectedDate(date);
-    getValue(date);
+    getValue!(date);
   }
 
   return (
@@ -31,6 +31,7 @@ const DatePick: React.FC<Props> = ({ getValue, value, time }) => {
           showTimeSelect={time}
           popperPlacement="bottom-end"
           showPopperArrow={false}
+          withPortal
         />
       </label>
     </Container>
@@ -54,9 +55,28 @@ const Container = styled.div`
     span {
       font-size: ${({ theme }) => theme.fontSize.sm + 'px'};
       color: ${({ theme }) => theme.colors.color};
-      font-weight: 600;
       margin-bottom: 5px;
       white-space: nowrap;
+    }
+  }
+
+  .range-wrap {
+    position: relative;
+
+    .react-datepicker-wrapper {
+      flex: 1;
+    }
+
+    .to {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      z-index: 2;
+
+      span {
+        color: ${({ theme }) => theme.colors.color};
+        font-size: ${({ theme }) => theme.fontSize.md + 'px'};
+      }
     }
   }
 
@@ -98,7 +118,6 @@ const Container = styled.div`
     }
 
     .react-datepicker__header {
-      height: 54px;
       background-color: ${({ theme }) => theme.colors.secondBackground};
       border-bottom-color: ${({ theme }) => theme.colors.border};
       * {
@@ -107,10 +126,16 @@ const Container = styled.div`
     }
 
     .react-datepicker__header--time {
-      height: 54px;
+      height: 88px;
+    }
+
+    .react-datepicker__day-names {
+      //padding-top: 30px !important;
     }
 
     .react-datepicker__month {
+      //margin-top: 30px;
+
       div[aria-disabled='true'] {
         color: ${({ theme }) => theme.colors.background};
       }
@@ -124,6 +149,13 @@ const Container = styled.div`
       .react-datepicker__day:hover {
         background-color: ${({ theme }) => theme.colors.success} !important;
         color: white !important;
+      }
+      .react-datepicker__day--in-range {
+        background-color: ${({ theme }) => theme.colors.success};
+        color: white !important;
+      }
+      .react-datepicker__day-name {
+        padding: 5px;
       }
     }
 
@@ -155,6 +187,12 @@ const Container = styled.div`
     .react-datepicker__time-list-item--selected {
       background-color: ${({ theme }) => theme.colors.success} !important;
       color: white !important;
+    }
+
+    @media (max-width: 476px) {
+      .react-datepicker__header--time {
+        height: 67px;
+      }
     }
   }
 `;

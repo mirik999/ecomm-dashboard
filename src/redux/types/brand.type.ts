@@ -1,7 +1,8 @@
 export type BrandType = {
-  id?: string
-  name: string
-  category: string[]
-  createdAt?: Date
-  isDisabled?: boolean
+  id?: string;
+  name: string;
+  category: string[];
+  imageUrl: string | string[];
+  createdAt?: Date;
+  isDisabled?: boolean;
 };

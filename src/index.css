@@ -110,3 +110,14 @@ h1,h2,h3,h4,h5,h6,p {
 .font-italic {
   font-family: 'Lato-Italic', sans-serif !important;
 }
+
+/* datepicker */
+
+@media (max-width: 476px) {
+  .react-datepicker__portal .react-datepicker__day-name,
+  .react-datepicker__portal .react-datepicker__day,
+  .react-datepicker__portal .react-datepicker__time-name {
+    width: 1.7rem !important;
+    line-height: 1.7rem !important;
+  }
+}

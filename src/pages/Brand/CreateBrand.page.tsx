@@ -11,6 +11,7 @@ import Flexbox from '../../components/hoc/Flexbox';
 import Button from '../../components/common/Button';
 import Selectable from '../../components/common/Select';
 import HeaderLine from '../../components/common/HeaderLine';
+import UploadZone from '../../components/common/UploadZone';
 import BorderedBox from '../../components/hoc/BorderedBox';
 //types
 import { BrandType } from '../../redux/types/brand.type';
@@ -23,6 +24,7 @@ import { saveNetStatus } from '../../redux/slices/net-status.slice';
 
 const initialState = {
   name: '',
+  imageUrl: '',
   category: [],
 };
 
@@ -184,11 +186,16 @@ const CreateBrand: React.FC<Props> = (props) => {
     }
   }
 
+  function getBrandsImage(val: string[]): void {
+    const imageUrl = val[0] ? val[0] : '';
+    setState((prevState: any) => ({ ...prevState, imageUrl }));
+  }
+
   return (
     <Layout>
       <HeaderLine label="Create brand" goBack={true} />
       <BorderedBox>
-        <Body>
+        <Body align="start">
           <Input
             type="text"
             label="Name"
@@ -205,31 +212,26 @@ const CreateBrand: React.FC<Props> = (props) => {
             getValue={(val: string | string[], action = '') =>
               _onCategorySelect(val, action)
             }
-            cls="m-4"
             isMulti
+          />
+          <UploadZone
+            multiple={false}
+            value={state.imageUrl}
+            label="Maximum 1 image and Size less than 500KB"
+            getValue={getBrandsImage}
+            folderInCloud="brands_images"
           />
         </Body>
         <FooterPanel>
           {mode === 'create' ? (
-            <Button
-              type="success"
-              label="Create"
-              onAction={_onSave}
-              cls="m-0 mr-3"
-            />
+            <Button type="success" label="Create" onAction={_onSave} />
           ) : (
-            <Button
-              type="success"
-              label="Update"
-              onAction={_onUpdate}
-              cls="m-0 mr-3"
-            />
+            <Button type="success" label="Update" onAction={_onUpdate} />
           )}
           <Button
             type="success"
             label="Reset fields"
             onAction={() => setState(initialState)}
-            cls="m-0 mr-3"
           />
         </FooterPanel>
       </BorderedBox>

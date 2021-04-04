@@ -7,7 +7,8 @@ import Select from '../common/Select';
 import FakeTable from './FakeTable';
 import Buttons from './Buttons';
 import Paginate from './Paginate';
-import DatePick from '../common/DatePick';
+import DateRangePick from '../common/datePicker/DateRangePick';
+
 //styled
 import {
   Container,
@@ -57,7 +58,6 @@ const Table: React.FC<Props> = ({
   const [selected, setSelected] = useState<any[]>([]);
   const [quickSearch, setQuickSearch] = useState<string>('');
   const [deepSearch, setDeepSearch] = useState<string>('');
-  const [dateRange, setDateRange] = useState<{ [key: string]: Date }>({});
   const [rowCount, setRowCount] = useState<OptionType>(initialRowCountState);
 
   useEffect(() => {
@@ -97,11 +97,6 @@ const Table: React.FC<Props> = ({
     setQuickSearch(val);
   }
 
-  function _onDateRange(val: Date, range: string): void {
-    setDateRange({ ...dateRange, [range]: val });
-    getDateRange({ range: val });
-  }
-
   function _onFilter(search: string) {
     return function (elem: any) {
       if (elem.email) {
@@ -139,20 +134,24 @@ const Table: React.FC<Props> = ({
     setSelected([]);
   }
 
-  if (!state.length) {
-    return (
-      <FakeTable loading={true} onCreate={_onRouteChange} roles={user.roles} />
-    );
-  }
-
   function handleTableBody(val: any, key: string): any {
     return tableBodyHandler(val, key);
   }
 
-  const totalCount = allCount / rowCount.id;
-  const keys = state
-    .map((d) => Object.keys(d))[0]
-    .filter((k, i) => ![...exclude!].includes(k));
+  function handleKeysAndCount() {
+    if (!state.length) {
+      return {
+        totalCount: 0,
+        keys: [],
+      };
+    }
+    const totalCount = allCount / rowCount.id;
+    const keys = state
+      .map((d) => Object.keys(d))[0]
+      .filter((k, i) => ![...exclude!].includes(k));
+
+    return { totalCount, keys };
+  }
 
   return (
     <Container>
@@ -170,14 +169,7 @@ const Table: React.FC<Props> = ({
           getValue={_onDeepSearch}
           onKeyDown={_onFilterDeep}
         />
-        <DatePick
-          value={dateRange.from}
-          getValue={(val: Date) => _onDateRange(val, 'from')}
-        />
-        <DatePick
-          value={dateRange.to}
-          getValue={(val: Date) => _onDateRange(val, 'to')}
-        />
+        <DateRangePick getRangeValue={(range) => getDateRange(range)} />
         <Select
           label="Select row count"
           name="select-row-size"
@@ -187,51 +179,59 @@ const Table: React.FC<Props> = ({
           returnType="number"
         />
       </HeaderPanel>
-      <TableContainer>
-        <CustomTable>
-          {/* TABLE HEAD */}
-          <thead>
-            <tr>
-              <th />
-              {keys.map((key, i) => (
-                <th key={i}>
-                  {key
-                    .replace(/([A-Z])/g, ' $1')
-                    .trim()
-                    .toUpperCase()}
-                </th>
-              ))}
-            </tr>
-          </thead>
-          {/* TABLE BODY */}
-          <tbody>
-            {state.filter(_onFilter(quickSearch)).map((st, i: number) => (
-              <tr key={i}>
-                <td>
-                  <input
-                    type="checkbox"
-                    onChange={() => _onSelected(st)}
-                    disabled={
-                      st?.email === user?.email ||
-                      user.roles.every((r) => r === 'guest')
-                    }
-                    checked={selected.some((slt) => slt.id === st.id)}
-                  />
-                </td>
-                {keys.map((k, id: number) => (
-                  <td key={id}>
-                    <div
-                      dangerouslySetInnerHTML={{
-                        __html: handleTableBody(st[k], k),
-                      }}
-                    />
-                  </td>
+      {!state.length ? (
+        <FakeTable
+          loading={true}
+          onCreate={_onRouteChange}
+          roles={user.roles}
+        />
+      ) : (
+        <TableContainer>
+          <CustomTable>
+            {/* TABLE HEAD */}
+            <thead>
+              <tr>
+                <th />
+                {handleKeysAndCount().keys.map((key, i) => (
+                  <th key={i}>
+                    {key
+                      .replace(/([A-Z])/g, ' $1')
+                      .trim()
+                      .toUpperCase()}
+                  </th>
                 ))}
               </tr>
-            ))}
-          </tbody>
-        </CustomTable>
-      </TableContainer>
+            </thead>
+            {/* TABLE BODY */}
+            <tbody>
+              {state.filter(_onFilter(quickSearch)).map((st, i: number) => (
+                <tr key={i}>
+                  <td>
+                    <input
+                      type="checkbox"
+                      onChange={() => _onSelected(st)}
+                      disabled={
+                        st?.email === user?.email ||
+                        user.roles.every((r) => r === 'guest')
+                      }
+                      checked={selected.some((slt) => slt.id === st.id)}
+                    />
+                  </td>
+                  {handleKeysAndCount().keys.map((k, id: number) => (
+                    <td key={id}>
+                      <div
+                        dangerouslySetInnerHTML={{
+                          __html: handleTableBody(st[k], k),
+                        }}
+                      />
+                    </td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </CustomTable>
+        </TableContainer>
+      )}
       <FooterPanel justify="between">
         <Buttons
           selected={selected}
@@ -242,7 +242,7 @@ const Table: React.FC<Props> = ({
         <Paginate
           getPageChange={_onPageChange}
           pageRange={5}
-          totalCount={totalCount}
+          totalCount={handleKeysAndCount().totalCount}
         />
       </FooterPanel>
     </Container>

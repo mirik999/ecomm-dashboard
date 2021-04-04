@@ -22,6 +22,7 @@ export const HeaderPanel = styled(Flexbox)`
 
 export const TableContainer = styled.div`
   height: calc(100vh - 320px);
+  overflow: auto;
 `;
 
 export const CustomTable = styled.table`

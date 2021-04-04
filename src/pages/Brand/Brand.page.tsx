@@ -153,7 +153,7 @@ const BrandPage: React.FC<Props> = (props) => {
         getDateRange={(val) => false}
         path="brands"
         error={!!getResponse.error}
-        exclude={['id']}
+        exclude={['id', 'imageUrl']}
         unSelect={unSelect}
       />
     </Layout>

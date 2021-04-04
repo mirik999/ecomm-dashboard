@@ -23,6 +23,7 @@ export const GET_BRANDS = gql`
       payload {
         id
         name
+        imageUrl
         category {
           id
           name

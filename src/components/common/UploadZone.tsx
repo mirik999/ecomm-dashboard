@@ -8,15 +8,16 @@ import { imageUploadAndGetUrl } from '../../utils/cloudinary.utils';
 
 type Props = {
   label?: string;
-  value: string[];
+  value: string[] | string;
   multiple: boolean;
   cls?: string;
   getValue: (val: string[]) => void;
+  folderInCloud: string;
   [key: string]: any;
 };
 
 const UploadZone: React.FC<Props> = memo(
-  ({ label, value, multiple, cls, getValue, ...props }) => {
+  ({ label, value, multiple, cls, getValue, folderInCloud, ...props }) => {
     const [preview, setPreview] = useState<string[]>([]);
     const [upLoading, setUpLoading] = useState<boolean>(false);
     const [warning, setWarning] = useState<string>('');
@@ -60,7 +61,7 @@ const UploadZone: React.FC<Props> = memo(
 
         await imageUploadAndGetUrl(
           file,
-          'product_images',
+          folderInCloud,
           (percent, error, file) => {
             if (percent) {
               setUploadPercent(percent);
@@ -168,7 +169,7 @@ const UploadZone: React.FC<Props> = memo(
     if (typeof prevState.value === 'string') {
       return prevState.value === nextState.value;
     }
-    return compareDeeper(prevState.value, nextState.value);
+    return compareDeeper(prevState.value, nextState.value as string[]);
   },
 );
 

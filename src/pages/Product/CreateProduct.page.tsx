@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useLazyQuery, useMutation } from '@apollo/client';
 import { useDispatch } from 'react-redux';
-import { format, differenceInDays } from 'date-fns';
+import { differenceInDays } from 'date-fns';
 import styled from 'styled-components';
 //components
 import Layout from '../../components/hoc/Layout';
@@ -118,6 +118,7 @@ const CreateProduct: React.FC<Props> = (props) => {
   useEffect(() => {
     if (couponsResponse.data) {
       const payload = couponsResponse.data.getCoupons.payload;
+      console.log(payload);
       let options = [];
       for (let i = 0; i < payload.length; i++) {
         if (payload[i].type.includes('product')) {
@@ -201,7 +202,13 @@ const CreateProduct: React.FC<Props> = (props) => {
   }
 
   function _onChange(val: any, name: string): void {
-    setState((prevState: any) => ({ ...prevState, [name]: val }));
+    if (name === 'new' && val) {
+      setState((prevState: any) => ({ ...prevState, new: true, used: false }));
+    } else if (name === 'used' && val) {
+      setState((prevState: any) => ({ ...prevState, new: false, used: true }));
+    } else {
+      setState((prevState: any) => ({ ...prevState, [name]: val }));
+    }
   }
 
   async function _onSave(): Promise<void> {
@@ -287,7 +294,7 @@ const CreateProduct: React.FC<Props> = (props) => {
               type="text"
               label="Code"
               name="code"
-              value={state.articul}
+              value={state.code}
               getValue={(val: string) => _onChange(val, 'code')}
             />
             <Input
@@ -335,14 +342,16 @@ const CreateProduct: React.FC<Props> = (props) => {
                     getValue={(val: string) => _onChange(val, 'color')}
                     editable={true}
                   />
-                  <Selectable
-                    label="Coupon"
-                    name="coupon"
-                    returnType="string"
-                    value={state.coupon} // { id, name } or 'id-string'
-                    options={coupons}
-                    getValue={(val: string) => _onComboSelect('coupon', val)}
-                  />
+                  {state.hasCoupon ? (
+                    <Selectable
+                      label="Coupon"
+                      name="coupon"
+                      returnType="string"
+                      value={state.coupon} // { id, name } or 'id-string'
+                      options={coupons}
+                      getValue={(val: string) => _onComboSelect('coupon', val)}
+                    />
+                  ) : null}
                 </Flexbox>
                 <Flexbox
                   cls="checkbox-wrap gap np"
@@ -442,12 +451,14 @@ const CreateProduct: React.FC<Props> = (props) => {
                   value={state.cover}
                   label="Maximum 1 image and Size less than 500KB"
                   getValue={getCoverImage}
+                  folderInCloud="product_images"
                 />
                 <UploadZone
                   multiple={true}
                   value={state.images}
                   label="Maximum 5 images and Each size less than 500KB"
                   getValue={getImages}
+                  folderInCloud="product_images"
                 />
               </Flexbox>
               <TinyEditor
@@ -501,6 +512,7 @@ const Container = styled.div`
     }
 
     .checkbox-child-wrap {
+      overflow: hidden;
       max-height: 187px;
     }
   }

@@ -13,6 +13,11 @@ export function tableBodyHandler(val: any, key: string): any {
     return format(new Date(val), 'dd MMMM yyyy HH:mm');
   }
 
+  if (key === 'couponList') {
+    const used = val.filter((v: any) => v.used);
+    return val.length + ' / ' + used.length;
+  }
+
   if (key === 'color') {
     return `<div
       class="w-full rounded"

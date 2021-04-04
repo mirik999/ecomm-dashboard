@@ -179,4 +179,5 @@ const excludeList = [
   'group',
   'best',
   'viewCount',
+  'coupon',
 ];

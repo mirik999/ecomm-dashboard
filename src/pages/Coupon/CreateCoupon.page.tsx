@@ -11,7 +11,7 @@ import Button from '../../components/common/Button';
 import Flexbox from '../../components/hoc/Flexbox';
 import HeaderLine from '../../components/common/HeaderLine';
 import BorderedBox from '../../components/hoc/BorderedBox';
-import DatePick from '../../components/common/DatePick';
+import DatePick from '../../components/common/datePicker/DatePick';
 import Selectable from '../../components/common/Select';
 //types
 import { CreateCouponType } from '../../redux/types/coupon.type';
@@ -30,12 +30,14 @@ const initialState = {
   type: [],
   value: 0,
   description: '',
+  couponList: [],
   endDate: new Date(),
 };
 
 type CouponGeneratorType = {
   length: number;
-  list: string[];
+  count: number;
+  list: { used: boolean; key: string }[];
 };
 
 type Props = {};
@@ -51,8 +53,9 @@ const CreateCoupon: React.FC<Props> = (props) => {
     id: uuid(),
     ...initialState,
   });
-  const [coupon, setCoupon] = useState({
+  const [coupon, setCoupon] = useState<CouponGeneratorType>({
     length: 5,
+    count: 30,
     list: [],
   });
   const [mode, setMode] = useState<string>('create');
@@ -61,6 +64,12 @@ const CreateCoupon: React.FC<Props> = (props) => {
     const { mode, selected }: any = history.location.state;
     if (mode === 'update') {
       setState(selected[0]);
+      console.log(selected);
+      setCoupon({
+        length: selected[0].couponList[0].key.length,
+        count: selected[0].couponList.length,
+        list: selected[0].couponList,
+      });
       setMode(mode);
     }
   }, []);
@@ -81,7 +90,10 @@ const CreateCoupon: React.FC<Props> = (props) => {
     try {
       await CreateCoupon({
         variables: {
-          newCoupon: state,
+          newCoupon: {
+            ...state,
+            couponList: coupon.list,
+          },
         },
       });
     } catch (err) {
@@ -121,7 +133,19 @@ const CreateCoupon: React.FC<Props> = (props) => {
     }
   }
 
-  function _onGenerate(): void {}
+  function _onGenerate(): void {
+    const symbols = 'QWERTYUIOPASDFGHJKLZXCVBNM1234567890';
+    const list = [];
+    let key = new Date().getFullYear() + '';
+    for (let i = 0; i < coupon.count; i++) {
+      for (let j = 0; j < coupon.length; j++) {
+        key += symbols[Math.floor(Math.random() * symbols.length)];
+      }
+      list.push({ used: false, key });
+      key = new Date().getFullYear() + '';
+    }
+    setCoupon({ ...coupon, list });
+  }
 
   return (
     <Layout>
@@ -145,6 +169,11 @@ const CreateCoupon: React.FC<Props> = (props) => {
                 setState({ ...state, description: val })
               }
             />
+            <DatePick
+              value={state.endDate}
+              getValue={(val: Date) => setState({ ...state, endDate: val })}
+              time={true}
+            />
             <Input
               type="number"
               label="Value of coupon"
@@ -163,14 +192,9 @@ const CreateCoupon: React.FC<Props> = (props) => {
               }
               isMulti
             />
-            <DatePick
-              value={state.endDate}
-              getValue={(val: Date) => setState({ ...state, endDate: val })}
-              time={true}
-            />
           </Flexbox>
-          <Flexbox cls="np">
-            <Flexbox cls="np gap range-wrap">
+          <Flexbox cls="np" align="start">
+            <Flexbox cls="np gap range-wrap" flex="column" align="start">
               <Input
                 type="range"
                 label={`Length of coupon ${coupon.length}`}
@@ -182,6 +206,38 @@ const CreateCoupon: React.FC<Props> = (props) => {
                 min={5}
                 max={10}
               />
+              <Input
+                type="range"
+                label={`Count of coupon ${coupon.count}`}
+                name="count"
+                value={coupon.count}
+                getValue={(val: number) =>
+                  setCoupon({ ...coupon, count: +val })
+                }
+                min={1}
+                max={99}
+              />
+            </Flexbox>
+            <Flexbox
+              cls="np coupon-list-wrap"
+              col="4"
+              flex="column"
+              align="start"
+            >
+              <span>List of coupon keys</span>
+              <ul>
+                {coupon.list.length ? (
+                  coupon.list.map((l, i) => (
+                    <li key={i}>
+                      {l.used ? <del>{l.key}</del> : <span>{l.key}</span>}
+                    </li>
+                  ))
+                ) : (
+                  <li>
+                    <span>Generate button is down below 👇</span>
+                  </li>
+                )}
+              </ul>
             </Flexbox>
           </Flexbox>
         </Body>
@@ -234,9 +290,36 @@ const Body = styled(Flexbox)`
   grid-gap: 10px;
 
   .range-wrap {
-    input[type='range'] {
-      max-width: 325px;
-      background-color: red;
+    label {
+      width: 100%;
+      input[type='range'] {
+        max-width: 325px;
+      }
+    }
+  }
+
+  .coupon-list-wrap {
+    span {
+      font-size: ${({ theme }) => theme.fontSize.sm + 'px'};
+      color: ${({ theme }) => theme.colors.color};
+      font-weight: 600;
+      margin-bottom: 5px;
+    }
+
+    ul {
+      display: flex;
+      flex-wrap: wrap;
+      background-color: ${({ theme }) => theme.colors.thirdBackground};
+      border-radius: 5px;
+      border-width: 2px 4px 2px 2px;
+      border-style: solid;
+      border-color: ${({ theme }) => theme.colors.border};
+
+      li {
+        padding: 5px;
+        font-size: ${({ theme }) => theme.fontSize.xs + 'px'};
+        color: ${({ theme }) => theme.colors.color};
+      }
     }
   }
 `;

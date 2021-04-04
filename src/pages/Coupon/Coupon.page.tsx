@@ -45,12 +45,23 @@ const CouponPage: React.FC<Props> = (props) => {
 
   useEffect(() => {
     (async function () {
-      await getCoupons(currentPage, rowCount, deepSearch);
+      await getCoupons(
+        currentPage,
+        rowCount,
+        deepSearch,
+        dateRange.from,
+        dateRange.to,
+      );
     })();
   }, []);
 
-  async function getCoupons(pg: number, rc: number, kw: string): Promise<void> {
-    console.log(rc, dateRange);
+  async function getCoupons(
+    pg: number,
+    rc: number,
+    kw: string,
+    from: Date | null,
+    to: Date | null,
+  ): Promise<void> {
     try {
       await GetCoupons({
         variables: {
@@ -58,8 +69,8 @@ const CouponPage: React.FC<Props> = (props) => {
             offset: (pg - 1) * rc,
             limit: rc,
             keyword: kw,
-            from: dateRange.from,
-            to: dateRange.to,
+            from: to === null ? null : from,
+            to: to,
           },
         },
       });
@@ -70,17 +81,29 @@ const CouponPage: React.FC<Props> = (props) => {
 
   async function getPageFromTable(pageNumber: number): Promise<void> {
     setCurrentPage(pageNumber);
-    await getCoupons(pageNumber, rowCount, deepSearch);
+    await getCoupons(
+      pageNumber,
+      rowCount,
+      deepSearch,
+      dateRange.from,
+      dateRange.to,
+    );
   }
 
   async function getRowCountFromTable(rc: number): Promise<void> {
     setRowCount(rc);
-    await getCoupons(currentPage, rc, deepSearch);
+    await getCoupons(currentPage, rc, deepSearch, dateRange.from, dateRange.to);
   }
 
   async function getDeepSearchFromTable(keyword: string): Promise<void> {
     setDeepSearch(keyword);
-    await getCoupons(currentPage, rowCount, keyword);
+    await getCoupons(
+      currentPage,
+      rowCount,
+      keyword,
+      dateRange.from,
+      dateRange.to,
+    );
   }
 
   async function getIdsAndDisable(ids: string[]): Promise<void> {
@@ -122,8 +145,15 @@ const CouponPage: React.FC<Props> = (props) => {
     }
   }
 
-  function getDateRange(range: { [key: string]: Date }): void {
-    setDateRange(range);
+  async function getDateRange(range: { [key: string]: Date }): Promise<void> {
+    setDateRange({ ...dateRange, ...range });
+    if (range.to === null) {
+      await getCoupons(currentPage, rowCount, deepSearch, null, null);
+    } else if (range.from.toString() === range.to.toString()) {
+      await getCoupons(currentPage, rowCount, deepSearch, null, null);
+    } else {
+      await getCoupons(currentPage, rowCount, deepSearch, range.from, range.to);
+    }
   }
 
   function handleCouponsState(ids: string[], isDisabled: boolean) {
