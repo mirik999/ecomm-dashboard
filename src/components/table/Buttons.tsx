@@ -1,9 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useLocation, useHistory } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+import { ButtonToolbar } from 'rsuite';
 //components
-import Button from '../common/Button';
 import Flexbox from '../hoc/Flexbox';
+import Button from '../common/Button';
 
 const buttons: any = [
   {
@@ -65,7 +66,6 @@ const Buttons: React.FC<Props> = ({
   onRouteChange,
 }) => {
   const location = useLocation();
-  const history = useHistory();
 
   function handleDisabling(btn: any): boolean {
     return btn.disable === 'non-multiple'
@@ -77,29 +77,30 @@ const Buttons: React.FC<Props> = ({
 
   return (
     <Container>
-      {buttons
-        .filter(
-          (btn: any) =>
-            !btn.excludeFromPage.includes(location.pathname)
-        )
-        .map((btn: any, i: number) => {
-          return (
-            <Button
-              type="success"
-              key={i}
-              label={btn.name}
-              onAction={() => {
-                btn.type === 'link'
-                  ? onRouteChange(btn.name)
-                  : getIds(
-                      selected.map((s) => s.id),
-                      btn.name,
-                    );
-              }}
-              disabled={handleDisabling(btn)}
-            />
-          );
-        })}
+      <ButtonToolbar>
+        {buttons
+          .filter(
+            (btn: any) => !btn.excludeFromPage.includes(location.pathname),
+          )
+          .map((btn: any, i: number) => {
+            return (
+              <Button
+                appearance="primary"
+                key={i}
+                label={btn.name}
+                onAction={() => {
+                  btn.type === 'link'
+                    ? onRouteChange(btn.name)
+                    : getIds(
+                        selected.map((s) => s.id),
+                        btn.name,
+                      );
+                }}
+                disabled={handleDisabling(btn)}
+              />
+            );
+          })}
+      </ButtonToolbar>
     </Container>
   );
 };

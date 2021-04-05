@@ -40,6 +40,7 @@ const HeaderPanel = styled(Flexbox)`
   padding: 0;
 
   h2 {
+    line-height: normal;
     font-size: ${({ theme }) => theme.fontSize.md + 'px'};
     color: ${({ theme }) => theme.colors.warning};
     text-transform: uppercase;

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { useDispatch } from 'react-redux';
-import {v4 as uuid} from "uuid";
+import { v4 as uuid } from 'uuid';
 //components
 import Input from '../../components/common/Input';
 import Button from '../../components/common/Button';
@@ -9,15 +9,15 @@ import Divider from '../../components/common/Divider';
 //styled
 import { RegisterWrap } from './styled-components';
 //requests
-import { CREATE_USER } from "../../redux/requests/user.request";
+import { CREATE_USER } from '../../redux/requests/user.request';
 //actions
 import { saveToken } from '../../redux/slices/auth-credentials.slice';
 import { saveUser } from '../../redux/slices/user.slice';
 import { saveNetStatus } from '../../redux/slices/net-status.slice';
 
 type userData = {
-  email: string
-  password: string
+  email: string;
+  password: string;
 };
 
 type Props = {};
@@ -25,7 +25,7 @@ type Props = {};
 const initialState = {
   email: '',
   password: '',
-  clientId: uuid()
+  clientId: uuid(),
 };
 
 const Register: React.FC<Props> = () => {
@@ -37,14 +37,14 @@ const Register: React.FC<Props> = () => {
     try {
       const payload = await CreateUser({
         variables: {
-          newUser: state
-        }
+          newUser: state,
+        },
       });
       const data = payload.data.createUser;
       dispatch(saveToken(data));
       dispatch(saveUser());
-    } catch(err) {
-      dispatch(saveNetStatus(err.graphQLErrors))
+    } catch (err) {
+      dispatch(saveNetStatus(err.graphQLErrors));
     }
   }
 
@@ -68,7 +68,7 @@ const Register: React.FC<Props> = () => {
         getValue={(val: string) => setState({ ...state, password: val })}
       />
       <Divider label="Action" />
-      <Button type="success" label="SUBMIT" onAction={_onClick} />
+      <Button appearance="primary" label="SUBMIT" onAction={_onClick} />
     </RegisterWrap>
   );
 };

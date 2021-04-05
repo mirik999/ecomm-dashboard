@@ -1,41 +1,32 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 //components
 import Input from '../common/Input';
-import Select from '../common/Select';
-import FakeTable from './FakeTable';
 import Buttons from './Buttons';
-import Paginate from './Paginate';
 import DateRangePick from '../common/datePicker/DateRangePick';
+import { Checkbox, Table as RsTable } from 'rsuite';
 
 //styled
 import {
   Container,
   HeaderPanel,
   TableContainer,
-  CustomTable,
   FooterPanel,
 } from './styled-components';
 //types
 import { Props } from './props';
-import { OptionType } from '../../redux/types/common.type';
 import { RootState } from '../../redux/store';
-//handler
+import { format } from 'date-fns';
 import { tableBodyHandler } from './body.handler.';
 
 const options = [
-  { id: 10, name: '10 rows' },
-  { id: 20, name: '20 rows' },
-  { id: 50, name: '50 rows' },
-  { id: 75, name: '75 rows' },
-  { id: 100, name: '100 rows' },
+  { value: 1, label: '1' },
+  { value: 20, label: '20' },
+  { value: 50, label: '50' },
+  { value: 75, label: '75' },
+  { value: 100, label: '100' },
 ];
-
-const initialRowCountState = {
-  id: 10,
-  name: '10 rows',
-};
 
 const Table: React.FC<Props> = ({
   data,
@@ -54,15 +45,26 @@ const Table: React.FC<Props> = ({
 }) => {
   const history = useHistory();
   const { user } = useSelector((state: RootState) => state);
+  //state
   const [state, setState] = useState<any[]>([]);
-  const [selected, setSelected] = useState<any[]>([]);
   const [quickSearch, setQuickSearch] = useState<string>('');
   const [deepSearch, setDeepSearch] = useState<string>('');
-  const [rowCount, setRowCount] = useState<OptionType>(initialRowCountState);
+  const [displayLength, setDisplayLength] = useState(10);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [page, setPage] = useState<number>(1);
+  const [sortColumn, setSortColumn] = useState<string>('');
+  const [sortType, setSortType] = useState<'desc' | 'asc'>('asc');
+  const [checkedKeys, setCheckedKeys] = useState<string[]>([]);
+  //ref
+  const timer = useRef<any>();
+
+  useEffect(() => {
+    return () => clearTimeout(timer.current);
+  }, []);
 
   useEffect(() => {
     if (unSelect) {
-      setSelected([]);
+      setCheckedKeys([]);
     }
   }, [unSelect]);
 
@@ -70,23 +72,16 @@ const Table: React.FC<Props> = ({
     setState(data);
   }, [data]);
 
-  function _onSelected(elem: any): void {
-    const isExists = selected.some((s) => s.id === elem.id);
-    if (isExists) {
-      setSelected(selected.filter((s) => s.id !== elem.id));
-    } else {
-      setSelected([elem, ...selected]);
-    }
+  function handleChangePage(dataKey: any) {
+    setPage(dataKey);
+    getPage(dataKey);
   }
 
-  function _onPageChange(val: { selected: number }): void {
-    getPage(val.selected + 1);
-  }
-
-  function _onRowCountChange(val: number): void {
-    const rowCount = options.find((o) => o.id === val) || initialRowCountState;
-    setRowCount(rowCount);
-    getRowCount(rowCount.id);
+  function handleChangeLength(dataKey: any) {
+    setPage(1);
+    getPage(1);
+    setDisplayLength(dataKey);
+    getRowCount(dataKey);
   }
 
   function _onDeepSearch(val: string): void {
@@ -118,7 +113,7 @@ const Table: React.FC<Props> = ({
       pathname: `/${path}/create`,
       state: {
         mode,
-        selected,
+        selected: checkedKeys,
       },
     });
   }
@@ -131,11 +126,7 @@ const Table: React.FC<Props> = ({
     } else if (action === 'delete') {
       getIdsAndDelete(ids);
     }
-    setSelected([]);
-  }
-
-  function handleTableBody(val: any, key: string): any {
-    return tableBodyHandler(val, key);
+    setCheckedKeys([]);
   }
 
   function handleKeysAndCount() {
@@ -145,12 +136,74 @@ const Table: React.FC<Props> = ({
         keys: [],
       };
     }
-    const totalCount = allCount / rowCount.id;
+    const totalCount = allCount;
     const keys = state
       .map((d) => Object.keys(d))[0]
       .filter((k, i) => ![...exclude!].includes(k));
 
     return { totalCount, keys };
+  }
+
+  function handleDataToRender() {
+    if (sortColumn && sortType) {
+      const sorted = state
+        .filter((k, i) => ![...exclude!].includes(k))
+        .sort((a, b) => {
+          let x = a[sortColumn];
+          let y = b[sortColumn];
+          if (typeof x === 'string') {
+            x = x.charCodeAt(1);
+          }
+          if (typeof y === 'string') {
+            y = y.charCodeAt(1);
+          }
+          if (sortType === 'asc') {
+            return x - y;
+          } else {
+            return y - x;
+          }
+        });
+      return sorted.filter(_onFilter(quickSearch));
+    }
+    return state.filter(_onFilter(quickSearch));
+  }
+
+  function handleSortColumn(sortCol: string, sortTp: 'desc' | 'asc') {
+    setLoading(true);
+
+    timer.current = setTimeout(() => {
+      setSortColumn(sortCol);
+      setSortType(sortTp);
+      setLoading(false);
+    }, 500);
+  }
+
+  function handleCheck(value: any, checked: any) {
+    const nextCheckedKeys = checked
+      ? [...checkedKeys, value]
+      : checkedKeys.filter((item) => item !== value);
+
+    setCheckedKeys(nextCheckedKeys);
+  }
+
+  function handleCheckAll(value: any, checked: any) {
+    const checkedKeys = checked ? state.map((item) => item.id) : [];
+    setCheckedKeys(checkedKeys);
+  }
+
+  function handleIsCheckedAll() {
+    let checked = false;
+    let indeterminate = false;
+
+    if (checkedKeys.length === data.length) {
+      checked = true;
+    } else if (checkedKeys.length === 0) {
+      checked = false;
+    } else if (checkedKeys.length > 0 && checkedKeys.length < data.length) {
+      indeterminate = true;
+    }
+
+    return { checked, indeterminate };
   }
 
   return (
@@ -170,84 +223,100 @@ const Table: React.FC<Props> = ({
           onKeyDown={_onFilterDeep}
         />
         <DateRangePick getRangeValue={(range) => getDateRange(range)} />
-        <Select
-          label="Select row count"
-          name="select-row-size"
-          value={rowCount}
-          options={options}
-          getValue={_onRowCountChange}
-          returnType="number"
-        />
       </HeaderPanel>
-      {!state.length ? (
-        <FakeTable
-          loading={true}
-          onCreate={_onRouteChange}
-          roles={user.roles}
-        />
-      ) : (
-        <TableContainer>
-          <CustomTable>
-            {/* TABLE HEAD */}
-            <thead>
-              <tr>
-                <th />
-                {handleKeysAndCount().keys.map((key, i) => (
-                  <th key={i}>
-                    {key
-                      .replace(/([A-Z])/g, ' $1')
-                      .trim()
-                      .toUpperCase()}
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            {/* TABLE BODY */}
-            <tbody>
-              {state.filter(_onFilter(quickSearch)).map((st, i: number) => (
-                <tr key={i}>
-                  <td>
-                    <input
-                      type="checkbox"
-                      onChange={() => _onSelected(st)}
-                      disabled={
-                        st?.email === user?.email ||
-                        user.roles.every((r) => r === 'guest')
-                      }
-                      checked={selected.some((slt) => slt.id === st.id)}
-                    />
-                  </td>
-                  {handleKeysAndCount().keys.map((k, id: number) => (
-                    <td key={id}>
-                      <div
-                        dangerouslySetInnerHTML={{
-                          __html: handleTableBody(st[k], k),
-                        }}
-                      />
-                    </td>
-                  ))}
-                </tr>
-              ))}
-            </tbody>
-          </CustomTable>
-        </TableContainer>
-      )}
+      <TableContainer>
+        <RsTable
+          height={540}
+          data={handleDataToRender()}
+          loading={loading}
+          sortType={sortType}
+          sortColumn={sortColumn}
+          onSortColumn={handleSortColumn}
+        >
+          <RsTable.Column align="center" width={50}>
+            <RsTable.HeaderCell style={{ padding: 0 }}>
+              <div style={{ lineHeight: '40px' }}>
+                <Checkbox
+                  inline
+                  checked={handleIsCheckedAll().checked}
+                  indeterminate={handleIsCheckedAll().indeterminate}
+                  onChange={handleCheckAll}
+                />
+              </div>
+            </RsTable.HeaderCell>
+            <CheckCell
+              dataKey="id"
+              checkedKeys={checkedKeys}
+              onChange={handleCheck}
+            />
+          </RsTable.Column>
+          {handleKeysAndCount().keys.map((key, i) => {
+            const heading = key
+              .replace(/([A-Z])/g, ' $1')
+              .trim()
+              .toUpperCase();
+            return (
+              <RsTable.Column align="center" flexGrow={1} key={i} sortable>
+                <RsTable.HeaderCell>{heading}</RsTable.HeaderCell>
+                <HandleBody dataKey={key} />
+              </RsTable.Column>
+            );
+          })}
+        </RsTable>
+      </TableContainer>
       <FooterPanel justify="between">
         <Buttons
-          selected={selected}
+          selected={checkedKeys}
           getIds={getIds}
           roles={user.roles}
           onRouteChange={_onRouteChange}
         />
-        <Paginate
-          getPageChange={_onPageChange}
-          pageRange={5}
-          totalCount={handleKeysAndCount().totalCount}
+        <RsTable.Pagination
+          lengthMenu={options}
+          activePage={page}
+          displayLength={displayLength}
+          total={handleKeysAndCount().totalCount}
+          onChangePage={handleChangePage}
+          onChangeLength={handleChangeLength}
         />
       </FooterPanel>
     </Container>
   );
 };
+
+function HandleBody({ rowData, dataKey, ...props }: any): any {
+  const bodyHandler = tableBodyHandler(rowData[dataKey], dataKey);
+  return (
+    <RsTable.Cell {...props}>
+      <div
+        dangerouslySetInnerHTML={{
+          __html: bodyHandler,
+        }}
+      />
+    </RsTable.Cell>
+  );
+}
+
+function CheckCell({
+  rowData,
+  onChange,
+  checkedKeys,
+  dataKey,
+  ...props
+}: any): any {
+  return (
+    <RsTable.Cell {...props} style={{ padding: 0 }}>
+      <div style={{ lineHeight: '46px' }}>
+        <Checkbox
+          value={rowData[dataKey]}
+          inline
+          onChange={onChange}
+          checked={checkedKeys.some((item: any) => item === rowData[dataKey])}
+        />
+      </div>
+    </RsTable.Cell>
+  );
+}
 
 Table.defaultProps = {
   data: [],

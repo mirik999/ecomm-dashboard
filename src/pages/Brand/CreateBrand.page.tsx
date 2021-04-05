@@ -9,7 +9,7 @@ import Layout from '../../components/hoc/Layout';
 import Input from '../../components/common/Input';
 import Flexbox from '../../components/hoc/Flexbox';
 import Button from '../../components/common/Button';
-import Selectable from '../../components/common/Select';
+import Selectable from '../../components/common/selectable/SingleSelect';
 import HeaderLine from '../../components/common/HeaderLine';
 import UploadZone from '../../components/common/UploadZone';
 import BorderedBox from '../../components/hoc/BorderedBox';
@@ -60,14 +60,14 @@ const CreateBrand: React.FC<Props> = (props) => {
       let options = [];
       for (let i = 0; i < payload.length; i++) {
         options.push({
-          id: payload[i]?.id,
-          name: payload[i]?.name,
+          value: payload[i]?.id,
+          label: payload[i]?.name,
         });
         if (payload[i]?.subCategories) {
           for (let j = 0; j < payload[i].subCategories.length; j++) {
             options.push({
-              id: payload[i].subCategories[j].id,
-              name: payload[i].subCategories[j].name,
+              value: payload[i].subCategories[j].id,
+              label: payload[i].subCategories[j].name,
             });
           }
         }
@@ -180,7 +180,7 @@ const CreateBrand: React.FC<Props> = (props) => {
 
   function handleSelectableValue() {
     if (state.category.length) {
-      return categories.filter((cat) => state.category.includes(cat.id));
+      return categories.filter((cat) => state.category.includes(cat.value));
     } else {
       return null;
     }
@@ -224,12 +224,12 @@ const CreateBrand: React.FC<Props> = (props) => {
         </Body>
         <FooterPanel>
           {mode === 'create' ? (
-            <Button type="success" label="Create" onAction={_onSave} />
+            <Button appearance="primary" label="Create" onAction={_onSave} />
           ) : (
-            <Button type="success" label="Update" onAction={_onUpdate} />
+            <Button appearance="primary" label="Update" onAction={_onUpdate} />
           )}
           <Button
-            type="success"
+            appearance="primary"
             label="Reset fields"
             onAction={() => setState(initialState)}
           />

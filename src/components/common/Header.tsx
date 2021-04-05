@@ -48,12 +48,19 @@ const Header: React.FC<Props> = memo(
         <div>{/*<span>path: {path}</span>*/}</div>
         <Flexbox justify="end">
           <div>
-            <span className="hoverable" onClick={() => dispatch(themeToDark())}>
+            <span
+              className="hoverable"
+              onClick={() => {
+                dispatch(themeToDark());
+              }}
+            >
               DARK
             </span>
             <span
               className="hoverable"
-              onClick={() => dispatch(themeToLight())}
+              onClick={() => {
+                dispatch(themeToLight());
+              }}
             >
               LIGHT
             </span>

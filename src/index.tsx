@@ -17,6 +17,9 @@ import 'react-datepicker/dist/react-datepicker.css';
 import 'react-image-lightbox/style.css';
 import 'react-quill/dist/quill.snow.css';
 
+require('rsuite/dist/styles/rsuite-default.css');
+// require('rsuite/dist/styles/rsuite-dark.css');
+
 //load theme
 store.dispatch(loadTheme());
 //save token in redux

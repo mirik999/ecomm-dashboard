@@ -25,64 +25,6 @@ export const TableContainer = styled.div`
   overflow: auto;
 `;
 
-export const CustomTable = styled.table`
-  width: 100%;
-  border-collapse: separate;
-  background-color: ${({ theme }) => theme.colors.shadow};
-  overflow: auto;
-  white-space: nowrap;
-  border-radius: 3px;
-
-  th,
-  td {
-    border-radius: 3px;
-  }
-
-  th:first-child {
-    border-width: 1px;
-    border-style: solid;
-    border-color: ${({ theme }) => theme.colors.border};
-    background-color: ${({ theme }) => theme.colors.thirdBackground};
-    color: ${({ theme }) => theme.colors.color};
-    width: 34px;
-  }
-
-  th:not(:first-child) {
-    font-size: ${({ theme }) => theme.fontSize.sm + 'px'};
-    border-width: 1px;
-    border-style: solid;
-    border-color: ${({ theme }) => theme.colors.border};
-    background-color: ${({ theme }) => theme.colors.thirdBackground};
-    color: ${({ theme }) => theme.colors.color};
-    padding: 10px 8px;
-    white-space: nowrap;
-  }
-
-  tr {
-    background-color: ${({ theme }) => theme.colors.thirdBackground};
-  }
-
-  td:first-child {
-    border-width: 1px;
-    border-style: solid;
-    border-color: ${({ theme }) => theme.colors.border};
-    padding: 3px;
-
-    input {
-      zoom: 1.9;
-    }
-  }
-
-  td:not(:first-child) {
-    font-size: ${({ theme }) => theme.fontSize.md + 'px'};
-    border-width: 1px;
-    border-style: solid;
-    border-color: ${({ theme }) => theme.colors.border};
-    color: ${({ theme }) => theme.colors.color};
-    padding: 8px;
-  }
-`;
-
 export const FooterPanel = styled(Flexbox)`
   padding: 0;
 

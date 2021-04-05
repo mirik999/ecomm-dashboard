@@ -6,7 +6,7 @@ export function tableBodyHandler(val: any, key: string): any {
   }
 
   if (key === 'createdAt') {
-    return format(new Date(val), 'dd MMMM yyyy');
+    return format(new Date(val), 'dd MMMM yyyy HH:mm');
   }
 
   if (key === 'endDate') {
@@ -22,8 +22,9 @@ export function tableBodyHandler(val: any, key: string): any {
     return `<div
       class="w-full rounded"
       style="
-        height: 10px;
+        height: 20px;
         background-color: ${val};
+        border-radius: 3px;
       "
     />`;
   }

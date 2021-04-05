@@ -7,7 +7,7 @@ import styled from 'styled-components';
 import Layout from '../../components/hoc/Layout';
 import Input from '../../components/common/Input';
 import Button from '../../components/common/Button';
-import Selectable from '../../components/common/Select';
+import Selectable from '../../components/common/selectable/SingleSelect';
 import Flexbox from '../../components/hoc/Flexbox';
 import HeaderLine from '../../components/common/HeaderLine';
 //types
@@ -116,8 +116,8 @@ const CreatUser: React.FC<Props> = (props) => {
             label="Role"
             name="role"
             returnType="string"
-            value={state.roles!.map((r, i) => ({ id: r, name: r }))}
-            options={roles.map((r, i) => ({ id: r, name: r }))}
+            value={state.roles!.map((r, i) => ({ value: r, label: r }))}
+            options={roles.map((r, i) => ({ value: r, label: r }))}
             getValue={(val: string | string[], action = '') =>
               _onRoleSelect(val, action)
             }
@@ -127,13 +127,13 @@ const CreatUser: React.FC<Props> = (props) => {
         </Body>
         <FooterPanel>
           <Button
-            type="success"
+            appearance="primary"
             label="Update"
             onAction={_onUpdate}
             cls="m-0 mr-3"
           />
           <Button
-            type="success"
+            appearance="primary"
             label="Reset fields"
             onAction={() => setState(initialState)}
             cls="m-0 mr-3"

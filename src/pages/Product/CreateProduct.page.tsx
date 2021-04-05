@@ -9,7 +9,7 @@ import Layout from '../../components/hoc/Layout';
 import Input from '../../components/common/Input';
 import Button from '../../components/common/Button';
 import UploadZone from '../../components/common/UploadZone';
-import Selectable from '../../components/common/Select';
+import Selectable from '../../components/common/selectable/SingleSelect';
 import ColorPicker from '../../components/common/ColorPicker';
 import Checkbox from '../../components/common/Checkbox';
 import TinyEditor from '../../components/richTextEditor/TinyEditor';
@@ -124,9 +124,9 @@ const CreateProduct: React.FC<Props> = (props) => {
         if (payload[i].type.includes('product')) {
           const modifiedPayload = Object.assign(
             {},
-            { id: payload[i].id },
+            { value: payload[i].id },
             {
-              name: `
+              label: `
               ${payload[i].name} -
               ${payload[i].value} price -
               ${differenceInDays(new Date(payload[i].endDate), new Date())} days
@@ -470,21 +470,21 @@ const CreateProduct: React.FC<Props> = (props) => {
               <Flexbox cls="gap np">
                 {mode === 'create' ? (
                   <Button
-                    type="success"
+                    appearance="primary"
                     label="Create"
                     onAction={_onSave}
                     cls="m-0 mr-3"
                   />
                 ) : (
                   <Button
-                    type="success"
+                    appearance="primary"
                     label="Update"
                     onAction={_onUpdate}
                     cls="m-0 mr-3"
                   />
                 )}
                 <Button
-                  type="success"
+                  appearance="primary"
                   label="Reset fields"
                   onAction={() => setState(initialState)}
                   cls="m-0 mr-3"

@@ -12,7 +12,7 @@ import Flexbox from '../../components/hoc/Flexbox';
 import HeaderLine from '../../components/common/HeaderLine';
 import BorderedBox from '../../components/hoc/BorderedBox';
 import DatePick from '../../components/common/datePicker/DatePick';
-import Selectable from '../../components/common/Select';
+import Selectable from '../../components/common/selectable/SingleSelect';
 //types
 import { CreateCouponType } from '../../redux/types/coupon.type';
 //request
@@ -185,8 +185,8 @@ const CreateCoupon: React.FC<Props> = (props) => {
               label="Target"
               name="type"
               returnType="string"
-              value={state.type!.map((t, i) => ({ id: t, name: t }))}
-              options={types.map((t, i) => ({ id: t, name: t }))}
+              value={state.type!.map((t, i) => ({ value: t, label: t }))}
+              options={types.map((t, i) => ({ value: t, label: t }))}
               getValue={(val: string | string[], action = '') =>
                 _onTypeSelect(val, action)
               }
@@ -244,21 +244,21 @@ const CreateCoupon: React.FC<Props> = (props) => {
         <FooterPanel>
           {mode === 'create' ? (
             <Button
-              type="success"
+              appearance="primary"
               label="Create"
               onAction={_onSave}
               cls="m-0 mr-3"
             />
           ) : (
             <Button
-              type="success"
+              appearance="primary"
               label="Update"
               onAction={_onUpdate}
               cls="m-0 mr-3"
             />
           )}
           <Button
-            type="success"
+            appearance="primary"
             label="Reset fields"
             onAction={() =>
               setState({
@@ -269,7 +269,7 @@ const CreateCoupon: React.FC<Props> = (props) => {
             cls="m-0 mr-3"
           />
           <Button
-            type="success"
+            appearance="primary"
             label="Generate Coupons"
             onAction={_onGenerate}
             cls="m-0 mr-3"

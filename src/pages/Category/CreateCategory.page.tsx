@@ -122,21 +122,21 @@ const CreateCategory: React.FC<Props> = (props) => {
         <FooterPanel>
           {mode === 'create' ? (
             <Button
-              type="success"
+              appearance="primary"
               label="Create"
               onAction={_onSave}
               cls="m-0 mr-3"
             />
           ) : (
             <Button
-              type="success"
+              appearance="primary"
               label="Update"
               onAction={_onUpdate}
               cls="m-0 mr-3"
             />
           )}
           <Button
-            type="success"
+            appearance="primary"
             label="Reset fields"
             onAction={() => setState(initialState)}
             cls="m-0 mr-3"
