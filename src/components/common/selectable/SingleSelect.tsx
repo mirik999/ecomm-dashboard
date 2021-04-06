@@ -5,51 +5,39 @@ import styled from 'styled-components';
 import { OptionType } from '../../../redux/types/common.type';
 
 type Props = {
-  type?: string;
   label?: string;
-  name: string;
-  returnType?: 'string' | 'boolean' | 'number';
   value: any;
   cls?: string;
   options: OptionType[];
   getValue: (val: any, action?: string) => void;
-  [key: string]: any;
 };
 
 const SingleSelect: React.FC<Props> = memo(
-  ({ type, name, value, cls, options, getValue, ...rest }) => {
+  ({ label, value, cls, options, getValue }) => {
     const [innerState, setInnerState] = useState<OptionType>({
-      value: '',
-      label: '',
+      id: '',
+      name: '',
     });
 
     useEffect(() => {
-      if (typeof value === 'string') {
-        const initialValue = options.find((opt) => opt.value === value)!;
-        setInnerState(initialValue);
-      } else {
-        setInnerState(value);
-      }
+      setInnerState(value);
     }, [value]);
 
-    function _onChange(value: any): void {
-      try {
-        if (value === null) {
-          getValue([], 'remove-value');
-        } else {
-          getValue(value);
-        }
-      } catch (err) {
-        console.log(err);
+    function _onChange(val: any): void {
+      if (val === null) {
+        return getValue([], 'remove-value');
       }
+      getValue(val);
     }
 
     return (
-      <Label htmlFor={type + name} className={cls}>
+      <Label className={cls}>
         <SelectPicker
           data={options}
           onChange={_onChange}
-          value={innerState?.value}
+          value={innerState?.id}
+          labelKey="name"
+          valueKey="id"
           block
         />
       </Label>
@@ -64,11 +52,8 @@ const SingleSelect: React.FC<Props> = memo(
 );
 
 SingleSelect.defaultProps = {
-  type: 'text',
   label: 'Label',
-  name: 'selectable',
-  returnType: 'string',
-  cls: 'm-4',
+  cls: '',
   options: [],
   value: '',
 };

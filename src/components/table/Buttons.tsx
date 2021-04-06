@@ -54,17 +54,11 @@ const buttons: any = [
 
 type Props = {
   selected: any[];
-  roles: string[];
   getIds: (id: string[], action: string) => void;
   onRouteChange: (route: string) => void;
 };
 
-const Buttons: React.FC<Props> = ({
-  selected,
-  getIds,
-  roles,
-  onRouteChange,
-}) => {
+const Buttons: React.FC<Props> = ({ selected, getIds, onRouteChange }) => {
   const location = useLocation();
 
   function handleDisabling(btn: any): boolean {
@@ -91,10 +85,7 @@ const Buttons: React.FC<Props> = ({
                 onAction={() => {
                   btn.type === 'link'
                     ? onRouteChange(btn.name)
-                    : getIds(
-                        selected.map((s) => s.id),
-                        btn.name,
-                      );
+                    : getIds(selected, btn.name);
                 }}
                 disabled={handleDisabling(btn)}
               />
@@ -115,11 +106,15 @@ const Container = styled(Flexbox)`
   padding: 8px 0;
   grid-gap: 10px;
 
-  @media screen and (max-width: 501px) {
-    div {
-      width: 100% !important;
+  @media screen and (max-width: 660px) {
+    .rs-btn-toolbar {
+      display: flex;
+      flex-direction: column;
+      grid-gap: 10px;
+      width: 100%;
+
       button {
-        width: 100% !important;
+        margin: 0 !important;
       }
     }
   }

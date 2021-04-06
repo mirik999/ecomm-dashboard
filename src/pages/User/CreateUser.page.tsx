@@ -1,23 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useHistory, RouteComponentProps } from 'react-router-dom';
-import { useMutation } from '@apollo/client';
+import { useLazyQuery, useMutation } from '@apollo/client';
 import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
 //components
 import Layout from '../../components/hoc/Layout';
 import Input from '../../components/common/Input';
 import Button from '../../components/common/Button';
-import Selectable from '../../components/common/selectable/SingleSelect';
 import Flexbox from '../../components/hoc/Flexbox';
 import HeaderLine from '../../components/common/HeaderLine';
+import BorderedBox from '../../components/hoc/BorderedBox';
+import MultiSelect from '../../components/common/selectable/MultiSelect';
 //types
 import { UserType } from '../../redux/types/user.types';
 import { RootState } from '../../redux/store';
 //request
-import { UPDATE_USER } from '../../redux/requests/user.request';
+import { UPDATE_USER, GET_USER_BY_ID } from '../../redux/requests/user.request';
 //actions
 import { saveNetStatus } from '../../redux/slices/net-status.slice';
-import BorderedBox from '../../components/hoc/BorderedBox';
 
 const initialState = {
   id: '',
@@ -41,23 +41,44 @@ const CreatUser: React.FC<Props> = (props) => {
   const location = useLocation<QueryState>();
   const history = useHistory();
   const dispatch = useDispatch();
+  //graphql
+  const [UpdateUser, updateResponse] = useMutation(UPDATE_USER);
+  const [GetUserById, getResponse] = useLazyQuery(GET_USER_BY_ID);
   //state
   const { roles } = useSelector((state: RootState) => state);
-  const [UpdateUser, updateResponse] = useMutation(UPDATE_USER);
   const [state, setState] = useState<Partial<UserType>>(initialState);
 
   useEffect(() => {
-    const selected: any = location.state?.selected;
-    if (selected) {
-      setState(selected[0]);
-    }
+    (async function () {
+      const selected: any = location.state?.selected;
+      if (selected) {
+        await getUser(selected[0]);
+      }
+    })();
   }, []);
+
+  useEffect(() => {
+    if (getResponse.data) {
+      const payload = getResponse.data.getUserById;
+      setState(payload);
+    }
+  }, [getResponse.data]);
 
   useEffect(() => {
     if (updateResponse.data) {
       history.push('/users');
     }
   }, [updateResponse.data]);
+
+  async function getUser(id: string): Promise<void> {
+    try {
+      await GetUserById({
+        variables: { id },
+      });
+    } catch (err) {
+      dispatch(saveNetStatus(err.graphQLErrors));
+    }
+  }
 
   async function _onUpdate(): Promise<void> {
     try {
@@ -71,24 +92,8 @@ const CreatUser: React.FC<Props> = (props) => {
     }
   }
 
-  function _onRoleSelect(role: string | string[], action: string): void {
-    if (action === 'remove-value') {
-      if (Array.isArray(role)) {
-        setState((prevState) => ({ ...prevState, roles: role }));
-      }
-    } else {
-      if (Array.isArray(role)) {
-        setState((prevState) => ({
-          ...prevState,
-          roles: Array.from(new Set([...role, ...prevState.roles!])),
-        }));
-      } else {
-        setState((prevState) => ({
-          ...prevState,
-          roles: Array.from(new Set([role, ...prevState.roles!])),
-        }));
-      }
-    }
+  function _onRoleSelect(key: string, val: string | string[]): void {
+    setState((prevState: any) => ({ ...prevState, [key]: val }));
   }
 
   return (
@@ -112,17 +117,11 @@ const CreatUser: React.FC<Props> = (props) => {
             getValue={(val: string) => false}
             readOnly
           />
-          <Selectable
+          <MultiSelect
             label="Role"
-            name="role"
-            returnType="string"
-            value={state.roles!.map((r, i) => ({ value: r, label: r }))}
-            options={roles.map((r, i) => ({ value: r, label: r }))}
-            getValue={(val: string | string[], action = '') =>
-              _onRoleSelect(val, action)
-            }
-            cls="m-4"
-            isMulti
+            value={state.roles!.map((r, i) => ({ id: r, name: r }))}
+            options={roles.map((r, i) => ({ id: r, name: r }))}
+            getValue={(val: string[]) => _onRoleSelect('roles', val)}
           />
         </Body>
         <FooterPanel>

@@ -9,15 +9,19 @@ import Layout from '../../components/hoc/Layout';
 import Input from '../../components/common/Input';
 import Flexbox from '../../components/hoc/Flexbox';
 import Button from '../../components/common/Button';
-import Selectable from '../../components/common/selectable/SingleSelect';
 import HeaderLine from '../../components/common/HeaderLine';
 import UploadZone from '../../components/common/UploadZone';
 import BorderedBox from '../../components/hoc/BorderedBox';
+import MultiSelect from '../../components/common/selectable/MultiSelect';
 //types
 import { BrandType } from '../../redux/types/brand.type';
 import { OptionType } from '../../redux/types/common.type';
 //request
-import { CREATE_BRAND, UPDATE_BRAND } from '../../redux/requests/brand.request';
+import {
+  CREATE_BRAND,
+  UPDATE_BRAND,
+  GET_BRAND_BY_ID,
+} from '../../redux/requests/brand.request';
 import { GET_CATEGORIES_FOR_SELECT } from '../../redux/requests/category.request';
 //actions
 import { saveNetStatus } from '../../redux/slices/net-status.slice';
@@ -35,12 +39,9 @@ const CreateBrand: React.FC<Props> = (props) => {
   const dispatch = useDispatch();
   //state
   const [CreateBrand, createResponse] = useMutation(CREATE_BRAND);
-  const [UpdateBrand, updateResponse] = useMutation(UPDATE_BRAND, {
-    errorPolicy: 'all',
-  });
-  const [GetCategories, categoriesResponse] = useLazyQuery(
-    GET_CATEGORIES_FOR_SELECT,
-  );
+  const [UpdateBrand, updateResponse] = useMutation(UPDATE_BRAND);
+  const [GetCategories, ctgResponse] = useLazyQuery(GET_CATEGORIES_FOR_SELECT);
+  const [GetBrandById, getResponse] = useLazyQuery(GET_BRAND_BY_ID);
   const [categories, setCategories] = useState<OptionType[]>([]);
   const [mode, setMode] = useState<string>('create');
   const [state, setState] = useState<BrandType>({
@@ -55,50 +56,49 @@ const CreateBrand: React.FC<Props> = (props) => {
   }, []);
 
   useEffect(() => {
-    if (categoriesResponse.data) {
-      const payload = categoriesResponse.data.getCategories.payload;
+    if (ctgResponse.data) {
+      const payload = ctgResponse.data.getCategories.payload;
       let options = [];
       for (let i = 0; i < payload.length; i++) {
-        options.push({
-          value: payload[i]?.id,
-          label: payload[i]?.name,
-        });
+        options.push(payload[i]);
         if (payload[i]?.subCategories) {
           for (let j = 0; j < payload[i].subCategories.length; j++) {
-            options.push({
-              value: payload[i].subCategories[j].id,
-              label: payload[i].subCategories[j].name,
-            });
+            options.push(payload[i].subCategories[j]);
           }
         }
       }
       setCategories(options);
     }
-  }, [categoriesResponse.data]);
+  }, [ctgResponse.data]);
 
   useEffect(() => {
-    const { mode, selected }: any = history.location.state;
-    if (mode === 'update') {
+    (async function () {
+      const { mode, selected }: any = history.location.state;
+      if (mode === 'update') {
+        await getBrandById(selected[0]);
+        setMode(mode);
+      }
+    })();
+  }, []);
+
+  useEffect(() => {
+    if (getResponse.data) {
+      const payload = getResponse.data.getBrandById;
       let categoryIds = [];
-      for (let i = 0; i < selected[0].category.length; i++) {
-        categoryIds.push(selected[0].category[i].id);
-        if (selected[0].category[i].subCategories) {
-          for (
-            let j = 0;
-            j < selected[0].category[i].subCategories.length;
-            j++
-          ) {
-            categoryIds.push(selected[0].category[i].subCategories[j].id);
+      for (let i = 0; i < payload.category.length; i++) {
+        categoryIds.push(payload.category[i].id);
+        if (payload.category[i].subCategories) {
+          for (let j = 0; j < payload.category[i].subCategories.length; j++) {
+            categoryIds.push(payload.category[i].subCategories[j].id);
           }
         }
       }
       setState({
-        ...selected[0],
+        ...payload,
         category: categoryIds,
       });
-      setMode(mode);
     }
-  }, []);
+  }, [getResponse.data]);
 
   useEffect(() => {
     if (createResponse.data) {
@@ -111,6 +111,16 @@ const CreateBrand: React.FC<Props> = (props) => {
       history.push('/brands');
     }
   }, [updateResponse.data]);
+
+  async function getBrandById(id: string): Promise<void> {
+    try {
+      await GetBrandById({
+        variables: { id },
+      });
+    } catch (err) {
+      dispatch(saveNetStatus(err.graphQLErrors));
+    }
+  }
 
   async function getCategories(): Promise<void> {
     try {
@@ -152,38 +162,8 @@ const CreateBrand: React.FC<Props> = (props) => {
     }
   }
 
-  function _onCategorySelect(
-    category: string | string[],
-    action: string,
-  ): void {
-    if (action === 'remove-value') {
-      if (Array.isArray(category)) {
-        setState((prevState) => ({
-          ...prevState,
-          category: category.filter(Boolean),
-        }));
-      }
-    } else {
-      if (Array.isArray(category)) {
-        setState((prevState) => ({
-          ...prevState,
-          category: Array.from(new Set([...category, ...prevState.category])),
-        }));
-      } else {
-        setState((prevState) => ({
-          ...prevState,
-          category: Array.from(new Set([category, ...prevState.category])),
-        }));
-      }
-    }
-  }
-
-  function handleSelectableValue() {
-    if (state.category.length) {
-      return categories.filter((cat) => state.category.includes(cat.value));
-    } else {
-      return null;
-    }
+  function _onCategorySelect(key: string, val: string | string[]): void {
+    setState((prevState: any) => ({ ...prevState, [key]: val }));
   }
 
   function getBrandsImage(val: string[]): void {
@@ -203,16 +183,11 @@ const CreateBrand: React.FC<Props> = (props) => {
             value={state.name}
             getValue={(val: string) => setState({ ...state, name: val })}
           />
-          <Selectable
+          <MultiSelect
             label="Category"
-            name="category"
-            returnType="string"
-            value={handleSelectableValue()}
+            value={state.category}
             options={categories}
-            getValue={(val: string | string[], action = '') =>
-              _onCategorySelect(val, action)
-            }
-            isMulti
+            getValue={(val: string[]) => _onCategorySelect('category', val)}
           />
           <UploadZone
             multiple={false}

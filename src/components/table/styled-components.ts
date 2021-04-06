@@ -28,12 +28,14 @@ export const TableContainer = styled.div`
 export const FooterPanel = styled(Flexbox)`
   padding: 0;
 
-  @media screen and (max-width: 800px) {
+  @media screen and (max-width: 1025px) {
     flex-direction: column;
     align-items: flex-start;
 
-    .pagination-wrap {
+    .rs-table-pagination-toolbar {
       order: -1;
+      padding-left: 0;
+      padding-right: 0;
     }
   }
 `;

@@ -16,6 +16,24 @@ export const UPDATE_CATEGORY = gql`
   }
 `;
 
+export const GET_CATEGORY_BY_ID = gql`
+  query GetCategoryById($id: String!) {
+    getCategoryById(id: $id) {
+      id
+      name
+      tabName
+      createdAt
+      isDisabled
+      subCategories {
+        id
+        parentId
+        name
+        tabName
+      }
+    }
+  }
+`;
+
 export const GET_CATEGORIES = gql`
   query GetCategories($controls: GetElementsInput!) {
     getCategories(controls: $controls) {

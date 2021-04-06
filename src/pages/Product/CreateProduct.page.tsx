@@ -24,12 +24,14 @@ import { CategoryType } from '../../redux/types/category.type';
 import {
   CREATE_PRODUCT,
   UPDATE_PRODUCT,
+  GET_PRODUCT_BY_ID,
 } from '../../redux/requests/product.request';
 import { GET_CATEGORIES_FOR_SELECT } from '../../redux/requests/category.request';
 import { GET_BRANDS_FOR_SELECT } from '../../redux/requests/brand.request';
 import { GET_COUPONS_FOR_SELECT } from '../../redux/requests/coupon.request';
 //actions
 import { saveNetStatus } from '../../redux/slices/net-status.slice';
+import { CouponType } from '../../redux/types/coupon.type';
 
 const initialState: any = {
   name: '',
@@ -60,9 +62,8 @@ const CreateProduct: React.FC<Props> = (props) => {
   //state
   const [CreateProduct, createResponse] = useMutation(CREATE_PRODUCT);
   const [UpdateProduct, updateResponse] = useMutation(UPDATE_PRODUCT);
-  const [GetCategories, categoriesResponse] = useLazyQuery(
-    GET_CATEGORIES_FOR_SELECT,
-  );
+  const [GetCategories, ctgResponse] = useLazyQuery(GET_CATEGORIES_FOR_SELECT);
+  const [GetProduct, productResponse] = useLazyQuery(GET_PRODUCT_BY_ID);
   const [GetCoupons, couponsResponse] = useLazyQuery(GET_COUPONS_FOR_SELECT);
   const [GetBrands, brandsResponse] = useLazyQuery(GET_BRANDS_FOR_SELECT);
   const [state, setState] = useState<any>(initialState);
@@ -73,52 +74,49 @@ const CreateProduct: React.FC<Props> = (props) => {
 
   useEffect(() => {
     (async function () {
+      const { mode, selected }: any = history.location.state;
+
       await getCategories();
       await getBrands();
       await getCoupons();
+
+      if (mode === 'update') {
+        await getProductById(selected[0]);
+        setMode(mode);
+      }
     })();
   }, []);
 
   useEffect(() => {
-    const { mode, selected }: any = history.location.state;
-    if (mode === 'update') {
-      setState(selected[0]);
-      setMode(mode);
+    if (productResponse.data) {
+      const payload = productResponse.data.getProduct;
+      setState(payload);
     }
-  }, []);
+  }, [productResponse.data]);
 
   useEffect(() => {
-    if (categoriesResponse.data) {
-      const payload = categoriesResponse.data.getCategories.payload;
+    if (ctgResponse.data) {
+      const payload = ctgResponse.data.getCategories.payload;
       let options = [];
       for (let i = 0; i < payload.length; i++) {
-        options.push({
-          value: payload[i].id,
-          label: payload[i].name,
-        });
+        options.push(payload[i]);
         if (payload[i]?.subCategories) {
           for (let j = 0; j < payload[i].subCategories.length; j++) {
-            options.push({
-              value: payload[i].subCategories[j].id,
-              label: payload[i].subCategories[j].name,
-            });
+            options.push(payload[i].subCategories[j]);
           }
         }
       }
 
       setCategories(options);
     }
-  }, [categoriesResponse.data]);
+  }, [ctgResponse.data]);
 
   useEffect(() => {
     if (brandsResponse.data) {
       const payload = brandsResponse.data.getBrands.payload;
       let options = [];
       for (let i = 0; i < payload.length; i++) {
-        options.push({
-          value: payload[i].id,
-          label: payload[i].name,
-        });
+        options.push(payload[i]);
       }
 
       setBrands(options);
@@ -131,18 +129,7 @@ const CreateProduct: React.FC<Props> = (props) => {
       let options = [];
       for (let i = 0; i < payload.length; i++) {
         if (payload[i].type.includes('product')) {
-          const modifiedPayload = Object.assign(
-            {},
-            { value: payload[i].id },
-            {
-              label: `
-              ${payload[i].name} -
-              ${payload[i].value} price -
-              ${differenceInDays(new Date(payload[i].endDate), new Date())} days
-            `,
-            },
-          );
-          options.push(modifiedPayload);
+          options.push(payload[i]);
         }
       }
 
@@ -161,6 +148,16 @@ const CreateProduct: React.FC<Props> = (props) => {
       history.push('/products');
     }
   }, [updateResponse.data]);
+
+  async function getProductById(id: string): Promise<void> {
+    try {
+      await GetProduct({
+        variables: { id },
+      });
+    } catch (err) {
+      dispatch(saveNetStatus(err.graphQLErrors));
+    }
+  }
 
   async function getCategories(): Promise<void> {
     try {
@@ -244,23 +241,8 @@ const CreateProduct: React.FC<Props> = (props) => {
     }
   }
 
-  function _onComboSelect(
-    key: string,
-    val: string,
-    multi: boolean = false,
-  ): void {
-    if (val === 'not-selected') {
-      setState((prevState: any) => ({
-        ...prevState,
-        [key]: initialState[key],
-      }));
-      return;
-    }
-    if (multi) {
-      setState((prevState: any) => ({ ...prevState, [key]: [val] }));
-    } else {
-      setState((prevState: any) => ({ ...prevState, [key]: val }));
-    }
+  function _onComboSelect(key: string, val: string | string[]): void {
+    setState((prevState: any) => ({ ...prevState, [key]: val }));
   }
 
   function getCoverImage(val: string[]): void {
@@ -278,10 +260,12 @@ const CreateProduct: React.FC<Props> = (props) => {
 
   function handleState(st: any): any {
     const category = st.category.map((cat: CategoryType) => cat?.id || cat);
+    const coupon = st.coupon?.id || st.coupon;
     const brand = st.brand?.id || st.brand;
     return {
       ...st,
       category,
+      coupon,
       brand,
     };
   }
@@ -322,17 +306,13 @@ const CreateProduct: React.FC<Props> = (props) => {
             />
             <MultiSelect
               label="Category"
-              name="category"
-              returnType="string"
-              value={state.category[0]} // { id, name } or 'id-string'
+              value={state.category}
               options={categories}
-              getValue={(val: string) => _onComboSelect('category', val, true)}
+              getValue={(val: string[]) => _onComboSelect('category', val)}
             />
             <SingleSelect
               label="Brand"
-              name="brand"
-              returnType="string"
-              value={state.brand} // { id, name } or 'id-string'
+              value={state.brand}
               options={brands}
               getValue={(val: string) => _onComboSelect('brand', val)}
             />
@@ -354,9 +334,7 @@ const CreateProduct: React.FC<Props> = (props) => {
                   {state.hasCoupon ? (
                     <SingleSelect
                       label="Coupon"
-                      name="coupon"
-                      returnType="string"
-                      value={state.coupon} // { id, name } or 'id-string'
+                      value={state.coupon}
                       options={coupons}
                       getValue={(val: string) => _onComboSelect('coupon', val)}
                     />

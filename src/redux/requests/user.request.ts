@@ -22,7 +22,6 @@ export const LOGIN_USER = gql`
   }
 `;
 
-
 export const LOGOUT_USER = gql`
   query LogoutUser($clientId: String!) {
     logoutUser(clientId: $clientId) {
@@ -42,6 +41,18 @@ export const REFRESH_TOKEN = gql`
   }
 `;
 
+export const GET_USER_BY_ID = gql`
+  query GetUserById($id: String!) {
+    getUserById(id: $id) {
+      id
+      email
+      roles
+      isDisabled
+      createdAt
+    }
+  }
+`;
+
 export const GET_USERS = gql`
   query GetUsers($controls: GetElementsInput!) {
     getUsers(controls: $controls) {
@@ -56,7 +67,6 @@ export const GET_USERS = gql`
     }
   }
 `;
-
 
 export const DISABLE_USERS = gql`
   mutation DisableUsers($disabledUsers: GetByIdsInput!) {

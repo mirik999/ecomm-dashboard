@@ -16,6 +16,47 @@ export const UPDATE_PRODUCT = gql`
   }
 `;
 
+export const GET_PRODUCT_BY_ID = gql`
+  query GetProduct($id: String!) {
+    getProduct(id: $id) {
+      id
+      name
+      code
+      images
+      cover
+      color
+      sold
+      description
+      category {
+        id
+      }
+      brand {
+        id
+        name
+      }
+      coupon {
+        id
+      }
+      stars
+      price
+      viewCount
+      sale
+      saleCount
+      new
+      hasCoupon
+      used
+      defective
+      freeDelivery
+      guarantee
+      best
+      isDisabled
+      createdAt
+      createdBy
+      modifiedBy
+    }
+  }
+`;
+
 export const GET_PRODUCTS = gql`
   query GetProducts($controls: GetElementsInput!) {
     getProducts(controls: $controls) {

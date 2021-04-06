@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { useMutation } from '@apollo/client';
+import { useLazyQuery, useMutation } from '@apollo/client';
 import { v4 as uuid } from 'uuid';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
@@ -21,6 +21,7 @@ import { CategoryType, SubCategoryType } from '../../redux/types/category.type';
 import {
   CREATE_CATEGORY,
   UPDATE_CATEGORY,
+  GET_CATEGORY_BY_ID,
 } from '../../redux/requests/category.request';
 //actions
 import { saveNetStatus } from '../../redux/slices/net-status.slice';
@@ -39,6 +40,7 @@ const CreateCategory: React.FC<Props> = (props) => {
   //requests
   const [CreateCategory, createResponse] = useMutation(CREATE_CATEGORY);
   const [UpdateCategory, updateResponse] = useMutation(UPDATE_CATEGORY);
+  const [GetCategoryById, getResponse] = useLazyQuery(GET_CATEGORY_BY_ID);
   //state
   const [state, setState] = useState<Partial<CategoryType>>({
     id: uuid(),
@@ -47,12 +49,21 @@ const CreateCategory: React.FC<Props> = (props) => {
   const [mode, setMode] = useState<string>('create');
 
   useEffect(() => {
-    const { mode, selected }: any = history.location.state;
-    if (mode === 'update') {
-      setState(selected[0]);
-      setMode(mode);
-    }
+    (async function () {
+      const { mode, selected }: any = history.location.state;
+      if (mode === 'update') {
+        await getCategoryById(selected[0]);
+        setMode(mode);
+      }
+    })();
   }, []);
+
+  useEffect(() => {
+    if (getResponse.data) {
+      const payload = getResponse.data.getCategoryById;
+      setState(payload);
+    }
+  }, [getResponse.data]);
 
   useEffect(() => {
     if (createResponse.data) {
@@ -68,6 +79,16 @@ const CreateCategory: React.FC<Props> = (props) => {
 
   function _onSubCategoryChange(val: SubCategoryType[]): void {
     setState({ ...state, subCategories: val });
+  }
+
+  async function getCategoryById(id: string): Promise<void> {
+    try {
+      await GetCategoryById({
+        variables: { id },
+      });
+    } catch (err) {
+      dispatch(saveNetStatus(err.graphQLErrors));
+    }
   }
 
   async function _onSave(): Promise<void> {

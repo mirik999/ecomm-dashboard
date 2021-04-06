@@ -16,6 +16,21 @@ export const UPDATE_BRAND = gql`
   }
 `;
 
+export const GET_BRAND_BY_ID = gql`
+  query GetBrandById($id: String!) {
+    getBrandById(id: $id) {
+      id
+      name
+      imageUrl
+      category {
+        id
+      }
+      createdAt
+      isDisabled
+    }
+  }
+`;
+
 export const GET_BRANDS = gql`
   query GetBrands($controls: GetElementsInput!) {
     getBrands(controls: $controls) {

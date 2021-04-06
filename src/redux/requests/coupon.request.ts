@@ -16,6 +16,28 @@ export const UPDATE_COUPON = gql`
   }
 `;
 
+export const GET_COUPON_BY_ID = gql`
+  query GetCouponById($id: String!) {
+    getCouponById(id: $id) {
+      id
+      name
+      description
+      type
+      value
+      used
+      couponList {
+        used
+        key
+      }
+      createdAt
+      createdBy
+      modifiedBy
+      endDate
+      isDisabled
+    }
+  }
+`;
+
 export const GET_COUPONS = gql`
   query GetCoupons($controls: GetElementsInput!) {
     getCoupons(controls: $controls) {

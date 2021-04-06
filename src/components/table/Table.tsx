@@ -118,15 +118,14 @@ const Table: React.FC<Props> = ({
   }
 
   function getIds(ids: string[], action: string): void {
-    console.log(ids, action);
-    // if (action === 'disable') {
-    //   getIdsAndDisable(ids);
-    // } else if (action === 'activate') {
-    //   getIdsAndActivate(ids);
-    // } else if (action === 'delete') {
-    //   getIdsAndDelete(ids);
-    // }
-    // setCheckedKeys([]);
+    if (action === 'disable') {
+      getIdsAndDisable(ids);
+    } else if (action === 'activate') {
+      getIdsAndActivate(ids);
+    } else if (action === 'delete') {
+      getIdsAndDelete(ids);
+    }
+    setCheckedKeys([]);
   }
 
   function handleKeysAndCount() {
@@ -256,7 +255,13 @@ const Table: React.FC<Props> = ({
               .trim()
               .toUpperCase();
             return (
-              <RsTable.Column align="center" flexGrow={1} key={i} sortable>
+              <RsTable.Column
+                align="center"
+                minWidth={120}
+                flexGrow={1}
+                key={i}
+                sortable
+              >
                 <RsTable.HeaderCell>{heading}</RsTable.HeaderCell>
                 <HandleBody dataKey={key} />
               </RsTable.Column>
@@ -268,7 +273,6 @@ const Table: React.FC<Props> = ({
         <Buttons
           selected={checkedKeys}
           getIds={getIds}
-          roles={user.roles}
           onRouteChange={_onRouteChange}
         />
         <RsTable.Pagination

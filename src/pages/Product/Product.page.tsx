@@ -170,7 +170,16 @@ export default ProductPage;
 
 const excludeList = [
   'id',
+  'code',
+  'color',
+  'defective',
+  'modifiedBy',
+  'createdBy',
+  'used',
   'cover',
+  'hasCoupon',
+  'saleCount',
+  'sold',
   'description',
   'images',
   'freeDelivery',

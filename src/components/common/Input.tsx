@@ -25,6 +25,7 @@ const Input: React.FC<Props> = ({
   return (
     <Label htmlFor={type + label! + randomNumber} className={cls}>
       <RsInput
+        type={type}
         id={type + label! + randomNumber}
         placeholder={label}
         name={type}

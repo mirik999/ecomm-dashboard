@@ -5,69 +5,38 @@ import styled from 'styled-components';
 import { OptionType } from '../../../redux/types/common.type';
 
 type Props = {
-  type?: string;
   label?: string;
-  name: string;
-  returnType?: 'string' | 'boolean' | 'number';
   value: any;
   cls?: string;
   options: OptionType[];
-  getValue: (val: any, action?: string) => void;
-  [key: string]: any;
+  getValue: (val: string[]) => void;
 };
 
 const MultiSelect: React.FC<Props> = memo(
-  ({ type, label, name, value, cls, options, getValue, ...rest }) => {
-    const [innerState, setInnerState] = useState<OptionType[]>([
-      {
-        value: '',
-        label: '',
-      },
-    ]);
+  ({ label, value, cls, options, getValue }) => {
+    const [innerState, setInnerState] = useState<string[]>([]);
 
     useEffect(() => {
-      console.log(value);
-      // if (typeof value === 'string') {
-      //   const initialValue = options.find((opt) => opt.value === value)!;
-      //   setInnerState(initialValue);
-      // } else {
-      //   setInnerState(value);
-      // }
+      if (typeof value[0] === 'object') {
+        setInnerState(value.map((v: any) => v.id));
+      } else {
+        setInnerState(value);
+      }
     }, [value]);
 
-    function _onChange(selectedOption: any, { action }: any): void {
-      console.log(selectedOption);
-      // try {
-      //   if (action === 'remove-value') {
-      //     const options = selectedOption || [{ value: '', label: '' }];
-      //     const restAfterRemoving = options.flatMap(
-      //       (s: OptionType) => s.value || [],
-      //     );
-      //     getValue(restAfterRemoving, action);
-      //   }
-      //   if (action === 'clear') {
-      //     getValue([], 'remove-value');
-      //   }
-      //   if (rest.isMulti) {
-      //     const options = selectedOption || [];
-      //     const multiple = options.map((s: OptionType) => s.value);
-      //     getValue(multiple);
-      //   } else {
-      //     getValue(selectedOption.value);
-      //   }
-      // } catch (err) {
-      //   console.log(err);
-      // }
+    function _onChange(selectedOption: string[]): void {
+      setInnerState(selectedOption);
+      getValue(selectedOption);
     }
 
-    console.log(options);
-
     return (
-      <Label htmlFor={type + name} className={cls}>
+      <Label className={cls}>
         <CheckPicker
           value={innerState}
           data={options}
           onChange={_onChange}
+          labelKey="name"
+          valueKey="id"
           block
         />
       </Label>
@@ -82,13 +51,11 @@ const MultiSelect: React.FC<Props> = memo(
 );
 
 MultiSelect.defaultProps = {
-  type: 'text',
   label: 'Label',
-  name: 'selectable',
-  returnType: 'string',
-  cls: 'm-4',
+  cls: '',
   options: [],
   value: '',
+  getValue: () => false,
 };
 
 export default MultiSelect;

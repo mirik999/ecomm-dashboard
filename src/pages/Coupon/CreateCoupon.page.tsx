@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { useMutation } from '@apollo/client';
+import { useLazyQuery, useMutation } from '@apollo/client';
 import { v4 as uuid } from 'uuid';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
@@ -12,13 +12,14 @@ import Flexbox from '../../components/hoc/Flexbox';
 import HeaderLine from '../../components/common/HeaderLine';
 import BorderedBox from '../../components/hoc/BorderedBox';
 import DatePick from '../../components/common/datePicker/DatePick';
-import Selectable from '../../components/common/selectable/SingleSelect';
+import MultiSelect from '../../components/common/selectable/MultiSelect';
 //types
 import { CreateCouponType } from '../../redux/types/coupon.type';
 //request
 import {
   CREATE_COUPON,
   UPDATE_COUPON,
+  GET_COUPON_BY_ID,
 } from '../../redux/requests/coupon.request';
 //actions
 import { saveNetStatus } from '../../redux/slices/net-status.slice';
@@ -48,6 +49,7 @@ const CreateCoupon: React.FC<Props> = (props) => {
   //requests
   const [CreateCoupon, createResponse] = useMutation(CREATE_COUPON);
   const [UpdateCoupon, updateResponse] = useMutation(UPDATE_COUPON);
+  const [GetCouponById, getResponse] = useLazyQuery(GET_COUPON_BY_ID);
   //state
   const [state, setState] = useState<CreateCouponType>({
     id: uuid(),
@@ -61,18 +63,24 @@ const CreateCoupon: React.FC<Props> = (props) => {
   const [mode, setMode] = useState<string>('create');
 
   useEffect(() => {
-    const { mode, selected }: any = history.location.state;
-    if (mode === 'update') {
-      setState(selected[0]);
-      console.log(selected);
-      setCoupon({
-        length: selected[0].couponList[0].key.length,
-        count: selected[0].couponList.length,
-        list: selected[0].couponList,
-      });
+    (async function () {
+      const { mode, selected }: any = history.location.state;
+      await getCouponById(selected[0]);
       setMode(mode);
-    }
+    })();
   }, []);
+
+  useEffect(() => {
+    if (getResponse.data) {
+      const payload = getResponse.data.getCouponById;
+      setState(payload);
+      setCoupon({
+        length: payload.couponList[0].key.length,
+        count: payload.couponList.length,
+        list: payload.couponList,
+      });
+    }
+  }, [getResponse.data]);
 
   useEffect(() => {
     if (createResponse.data) {
@@ -85,6 +93,16 @@ const CreateCoupon: React.FC<Props> = (props) => {
       history.push('/coupons');
     }
   }, [updateResponse.data]);
+
+  async function getCouponById(id: string): Promise<void> {
+    try {
+      await GetCouponById({
+        variables: { id },
+      });
+    } catch (err) {
+      dispatch(saveNetStatus(err.graphQLErrors));
+    }
+  }
 
   async function _onSave(): Promise<void> {
     try {
@@ -113,24 +131,8 @@ const CreateCoupon: React.FC<Props> = (props) => {
     }
   }
 
-  function _onTypeSelect(type: string | string[], action: string): void {
-    if (action === 'remove-value') {
-      if (Array.isArray(type)) {
-        setState((prevState) => ({ ...prevState, type }));
-      }
-    } else {
-      if (Array.isArray(type)) {
-        setState((prevState) => ({
-          ...prevState,
-          type: Array.from(new Set([...type, ...prevState.type!])),
-        }));
-      } else {
-        setState((prevState) => ({
-          ...prevState,
-          type: Array.from(new Set([type, ...prevState.type!])),
-        }));
-      }
-    }
+  function _onTypeSelect(key: string, val: string | string[]): void {
+    setState((prevState: any) => ({ ...prevState, [key]: val }));
   }
 
   function _onGenerate(): void {
@@ -181,16 +183,11 @@ const CreateCoupon: React.FC<Props> = (props) => {
               value={state.value}
               getValue={(val: number) => setState({ ...state, value: +val })}
             />
-            <Selectable
+            <MultiSelect
               label="Target"
-              name="type"
-              returnType="string"
-              value={state.type!.map((t, i) => ({ value: t, label: t }))}
-              options={types.map((t, i) => ({ value: t, label: t }))}
-              getValue={(val: string | string[], action = '') =>
-                _onTypeSelect(val, action)
-              }
-              isMulti
+              value={state.type!.map((t, i) => ({ id: t, name: t }))}
+              options={types.map((t, i) => ({ id: t, name: t }))}
+              getValue={(val: string[]) => _onTypeSelect('type', val)}
             />
           </Flexbox>
           <Flexbox cls="np" align="start">
