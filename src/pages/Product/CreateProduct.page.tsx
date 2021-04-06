@@ -9,7 +9,8 @@ import Layout from '../../components/hoc/Layout';
 import Input from '../../components/common/Input';
 import Button from '../../components/common/Button';
 import UploadZone from '../../components/common/UploadZone';
-import Selectable from '../../components/common/selectable/SingleSelect';
+import SingleSelect from '../../components/common/selectable/SingleSelect';
+import MultiSelect from '../../components/common/selectable/MultiSelect';
 import ColorPicker from '../../components/common/ColorPicker';
 import Checkbox from '../../components/common/Checkbox';
 import TinyEditor from '../../components/richTextEditor/TinyEditor';
@@ -91,10 +92,16 @@ const CreateProduct: React.FC<Props> = (props) => {
       const payload = categoriesResponse.data.getCategories.payload;
       let options = [];
       for (let i = 0; i < payload.length; i++) {
-        options.push(payload[i]);
+        options.push({
+          value: payload[i].id,
+          label: payload[i].name,
+        });
         if (payload[i]?.subCategories) {
           for (let j = 0; j < payload[i].subCategories.length; j++) {
-            options.push(payload[i].subCategories[j]);
+            options.push({
+              value: payload[i].subCategories[j].id,
+              label: payload[i].subCategories[j].name,
+            });
           }
         }
       }
@@ -108,7 +115,10 @@ const CreateProduct: React.FC<Props> = (props) => {
       const payload = brandsResponse.data.getBrands.payload;
       let options = [];
       for (let i = 0; i < payload.length; i++) {
-        options.push(payload[i]);
+        options.push({
+          value: payload[i].id,
+          label: payload[i].name,
+        });
       }
 
       setBrands(options);
@@ -118,7 +128,6 @@ const CreateProduct: React.FC<Props> = (props) => {
   useEffect(() => {
     if (couponsResponse.data) {
       const payload = couponsResponse.data.getCoupons.payload;
-      console.log(payload);
       let options = [];
       for (let i = 0; i < payload.length; i++) {
         if (payload[i].type.includes('product')) {
@@ -311,7 +320,7 @@ const CreateProduct: React.FC<Props> = (props) => {
               value={state.saleCount}
               getValue={(val: string) => _onChange(+val, 'saleCount')}
             />
-            <Selectable
+            <MultiSelect
               label="Category"
               name="category"
               returnType="string"
@@ -319,7 +328,7 @@ const CreateProduct: React.FC<Props> = (props) => {
               options={categories}
               getValue={(val: string) => _onComboSelect('category', val, true)}
             />
-            <Selectable
+            <SingleSelect
               label="Brand"
               name="brand"
               returnType="string"
@@ -343,7 +352,7 @@ const CreateProduct: React.FC<Props> = (props) => {
                     editable={true}
                   />
                   {state.hasCoupon ? (
-                    <Selectable
+                    <SingleSelect
                       label="Coupon"
                       name="coupon"
                       returnType="string"

@@ -1,5 +1,5 @@
 import React, { memo, useEffect, useState } from 'react';
-import { SelectPicker } from 'rsuite';
+import { CheckPicker } from 'rsuite';
 import styled from 'styled-components';
 //types
 import { OptionType } from '../../../redux/types/common.type';
@@ -18,18 +18,21 @@ type Props = {
 
 const MultiSelect: React.FC<Props> = memo(
   ({ type, label, name, value, cls, options, getValue, ...rest }) => {
-    const [innerState, setInnerState] = useState<OptionType>({
-      value: '',
-      label: '',
-    });
+    const [innerState, setInnerState] = useState<OptionType[]>([
+      {
+        value: '',
+        label: '',
+      },
+    ]);
 
     useEffect(() => {
-      if (typeof value === 'string') {
-        const initialValue = options.find((opt) => opt.value === value)!;
-        setInnerState(initialValue);
-      } else {
-        setInnerState(value);
-      }
+      console.log(value);
+      // if (typeof value === 'string') {
+      //   const initialValue = options.find((opt) => opt.value === value)!;
+      //   setInnerState(initialValue);
+      // } else {
+      //   setInnerState(value);
+      // }
     }, [value]);
 
     function _onChange(selectedOption: any, { action }: any): void {
@@ -57,9 +60,16 @@ const MultiSelect: React.FC<Props> = memo(
       // }
     }
 
+    console.log(options);
+
     return (
       <Label htmlFor={type + name} className={cls}>
-        <SelectPicker data={options} onChange={_onChange} block />
+        <CheckPicker
+          value={innerState}
+          data={options}
+          onChange={_onChange}
+          block
+        />
       </Label>
     );
   },

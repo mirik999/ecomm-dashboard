@@ -6,7 +6,6 @@ import Input from '../common/Input';
 import Buttons from './Buttons';
 import DateRangePick from '../common/datePicker/DateRangePick';
 import { Checkbox, Table as RsTable } from 'rsuite';
-
 //styled
 import {
   Container,
@@ -17,7 +16,7 @@ import {
 //types
 import { Props } from './props';
 import { RootState } from '../../redux/store';
-import { format } from 'date-fns';
+//utils
 import { tableBodyHandler } from './body.handler.';
 
 const options = [
@@ -119,14 +118,15 @@ const Table: React.FC<Props> = ({
   }
 
   function getIds(ids: string[], action: string): void {
-    if (action === 'disable') {
-      getIdsAndDisable(ids);
-    } else if (action === 'activate') {
-      getIdsAndActivate(ids);
-    } else if (action === 'delete') {
-      getIdsAndDelete(ids);
-    }
-    setCheckedKeys([]);
+    console.log(ids, action);
+    // if (action === 'disable') {
+    //   getIdsAndDisable(ids);
+    // } else if (action === 'activate') {
+    //   getIdsAndActivate(ids);
+    // } else if (action === 'delete') {
+    //   getIdsAndDelete(ids);
+    // }
+    // setCheckedKeys([]);
   }
 
   function handleKeysAndCount() {

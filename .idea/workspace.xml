@@ -20,34 +20,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e021988f-3eda-4fed-af49-63e1e5ec9f51" name="Default Changelist" comment="users done">
-      <change afterPath="$PROJECT_DIR$/src/components/common/selectable/MultiSelect.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/common/selectable/SingleSelect.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.eslintcache" beforeDir="false" afterPath="$PROJECT_DIR$/.eslintcache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/common/Button.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/Button.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/common/Header.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/Header.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/common/HeaderLine.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/HeaderLine.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/common/Input.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/Input.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/common/Select.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/common/datePicker/DateRangePick.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/datePicker/DateRangePick.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/hoc/WithToken.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/hoc/WithToken.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/table/Buttons.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/table/Buttons.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/table/FakeTable.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/table/Paginate.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/common/selectable/MultiSelect.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/selectable/MultiSelect.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/common/selectable/SingleSelect.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/selectable/SingleSelect.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/table/Table.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/table/Table.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/table/body.handler..ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/table/body.handler..ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/table/styled-components.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/table/styled-components.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Auth/Login.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Auth/Login.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Auth/Register.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Auth/Register.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Brand/CreateBrand.page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Brand/CreateBrand.page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Category/CreateCategory.page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Category/CreateCategory.page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Coupon/CreateCoupon.page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Coupon/CreateCoupon.page.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/Product/CreateProduct.page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Product/CreateProduct.page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/User/CreateUser.page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/User/CreateUser.page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/redux/types/common.type.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/types/common.type.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,7 +35,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="grid_view_with_table" />
+        <entry key="$PROJECT_DIR$" value="roles-with-navigation" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -81,11 +59,7 @@
                 <list>
                   <RecentBranch>
                     <option name="branchName" value="master" />
-                    <option name="lastUsedInstant" value="1612213004" />
-                  </RecentBranch>
-                  <RecentBranch>
-                    <option name="branchName" value="grid_view_with_table" />
-                    <option name="lastUsedInstant" value="1612213000" />
+                    <option name="lastUsedInstant" value="1617693762" />
                   </RecentBranch>
                 </list>
               </option>

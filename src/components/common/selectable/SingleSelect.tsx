@@ -49,7 +49,7 @@ const SingleSelect: React.FC<Props> = memo(
         <SelectPicker
           data={options}
           onChange={_onChange}
-          value={innerState.value}
+          value={innerState?.value}
           block
         />
       </Label>
