@@ -11094,6 +11094,13 @@ rollup@^1.31.1:
     "@types/node" "*"
     acorn "^7.1.0"
 
+rsuite-color-picker@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/rsuite-color-picker/-/rsuite-color-picker-0.2.0.tgz#51d2b62060e4bfd0cd49b963990f5f3ac03abfef"
+  integrity sha512-t+M9tJ/gpKdb9Y3TWKkDcHfKjll6sfkVCfJvEjFJaxXijdc1BUdanQBzwS0oP1vvMOihdhWS/OP0csv+2gvwHg==
+  dependencies:
+    react-color "^2.19.3"
+
 rsuite-table@^3.14.4:
   version "3.14.5"
   resolved "https://registry.yarnpkg.com/rsuite-table/-/rsuite-table-3.14.5.tgz#75110d1ad7c0e39f502af1d51abcb0613a474a26"

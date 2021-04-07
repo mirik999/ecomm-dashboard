@@ -1,6 +1,7 @@
 import React, { FormEvent, useEffect, useState, memo } from 'react';
 import Lightbox from 'react-image-lightbox';
 import styled from 'styled-components';
+import { Input } from 'rsuite';
 //components
 import Flexbox from '../hoc/Flexbox';
 //utils
@@ -35,8 +36,8 @@ const UploadZone: React.FC<Props> = memo(
       }
     }, [value]);
 
-    async function handleImage({ currentTarget }: FormEvent<HTMLInputElement>) {
-      const files = currentTarget.files!;
+    async function handleImage(value: any, e: any) {
+      const files = e.currentTarget.files!;
       const newPreviewList: string[] = [];
 
       if (files.length >= 5 || preview.length >= 5) {
@@ -95,16 +96,20 @@ const UploadZone: React.FC<Props> = memo(
       getValue(newPreviewState);
     }
 
+    const placeholder = multiple
+      ? 'Click to select an images 🏞️'
+      : 'Click to select an image 🏞️';
+
     return (
       <Container cls={cls} flex="column" justify="start" align="start">
         <Flexbox cls="np" flex="column" align="start">
-          <Flexbox cls="np" justify="between">
-            <span className={warning ? 'text-red' : 'text-black'}>{label}</span>
-            {uploadPercent ? <span>{uploadPercent}%</span> : null}
-          </Flexbox>
+          {/*<Flexbox cls="np" justify="between">*/}
+          {/*  <span className={warning ? 'text-red' : 'text-black'}>{label}</span>*/}
+          {/*  {uploadPercent ? <span>{uploadPercent}%</span> : null}*/}
+          {/*</Flexbox>*/}
           <label htmlFor="file-upload">
             <Flexbox cls="input-wrap gap np">
-              <input
+              <Input
                 type="file"
                 id="file-upload"
                 name="file-upload"
@@ -114,37 +119,39 @@ const UploadZone: React.FC<Props> = memo(
                 accept="image/*"
                 disabled={upLoading}
               />
-              <input
+              <Input
                 type="text"
                 value=""
                 readOnly={true}
-                placeholder={warning ? warning : 'Click to select'}
+                placeholder={warning ? warning : placeholder}
                 {...props}
               />
+              {uploadPercent ? <span>{uploadPercent}%</span> : null}
             </Flexbox>
           </label>
         </Flexbox>
-        <Flexbox cls="preview-wrap" wrap="no-wrap">
-          {preview.length
-            ? preview.map((pre, i) => (
-                <Flexbox key={i} flex="column">
-                  <div
-                    style={{ backgroundImage: `url(${pre})` }}
-                    onClick={() => {
-                      setPhotoIndex(i);
-                      setIsOpen(true);
-                    }}
-                  />
-                  <div
-                    className="hoverable"
-                    onClick={(e) => _onDeletePreviewImage(e, pre)}
-                  >
-                    Remove
-                  </div>
-                </Flexbox>
-              ))
-            : 'Preview'}
-        </Flexbox>
+
+        {preview.length ? (
+          <Flexbox cls="preview-wrap" wrap="no-wrap">
+            {preview.map((pre, i) => (
+              <Flexbox key={i} flex="column">
+                <div
+                  style={{ backgroundImage: `url(${pre})` }}
+                  onClick={() => {
+                    setPhotoIndex(i);
+                    setIsOpen(true);
+                  }}
+                />
+                <div
+                  className="hoverable"
+                  onClick={(e) => _onDeletePreviewImage(e, pre)}
+                >
+                  Remove
+                </div>
+              </Flexbox>
+            ))}
+          </Flexbox>
+        ) : null}
 
         {isOpen && (
           <Lightbox
@@ -175,7 +182,7 @@ const UploadZone: React.FC<Props> = memo(
 
 UploadZone.defaultProps = {
   label: 'Upload an image',
-  cls: 'm-4',
+  cls: '',
   value: [],
   multiple: false,
 };
@@ -215,6 +222,8 @@ const Container = styled(Flexbox)`
   }
 
   .input-wrap {
+    position: relative;
+
     input:first-child {
       flex: 1;
       position: absolute;
@@ -223,22 +232,11 @@ const Container = styled(Flexbox)`
       opacity: 0;
     }
 
-    input:last-child {
-      flex: 1;
-      padding: 9px 12px;
-      border-radius: 5px;
-      border-width: 2px 4px 2px 2px;
-      border-style: solid;
-      border-color: ${({ theme }) => theme.colors.border};
-      background-color: ${({ theme }) => theme.colors.thirdBackground};
+    span {
+      position: absolute;
+      top: 10px;
+      right: 10px;
       color: ${({ theme }) => theme.colors.color};
-
-      &:focus {
-        outline: none;
-        border-bottom-color: ${({ theme }) => theme.colors.success};
-        border-right-color: ${({ theme }) => theme.colors.success};
-        border-width: 2px 4px 2px 2px;
-      }
     }
   }
 
@@ -247,10 +245,11 @@ const Container = styled(Flexbox)`
     padding: 10px;
     margin-top: 10px;
     border-radius: 5px;
-    border-width: 2px 4px 2px 2px;
-    border-style: dashed;
-    border-color: ${({ theme }) => theme.colors.border};
+    border-width: 1px;
+    border-style: solid;
+    border-color: #e5e5ea;
     color: ${({ theme }) => theme.colors.color};
+    background-color: ${({ theme }) => theme.colors.background};
     overflow: auto;
 
     & > div {

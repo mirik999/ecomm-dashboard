@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useLazyQuery, useMutation } from '@apollo/client';
 import { useDispatch } from 'react-redux';
-import { differenceInDays } from 'date-fns';
 import styled from 'styled-components';
 //components
 import Layout from '../../components/hoc/Layout';
@@ -11,7 +10,7 @@ import Button from '../../components/common/Button';
 import UploadZone from '../../components/common/UploadZone';
 import SingleSelect from '../../components/common/selectable/SingleSelect';
 import MultiSelect from '../../components/common/selectable/MultiSelect';
-import ColorPicker from '../../components/common/ColorPicker';
+import ColorPick from '../../components/common/ColorPick';
 import Checkbox from '../../components/common/Checkbox';
 import TinyEditor from '../../components/richTextEditor/TinyEditor';
 import Flexbox from '../../components/hoc/Flexbox';
@@ -31,7 +30,6 @@ import { GET_BRANDS_FOR_SELECT } from '../../redux/requests/brand.request';
 import { GET_COUPONS_FOR_SELECT } from '../../redux/requests/coupon.request';
 //actions
 import { saveNetStatus } from '../../redux/slices/net-status.slice';
-import { CouponType } from '../../redux/types/coupon.type';
 
 const initialState: any = {
   name: '',
@@ -275,7 +273,7 @@ const CreateProduct: React.FC<Props> = (props) => {
       <Container>
         <HeaderLine label="Create Product" goBack={true} />
         <BorderedBox>
-          <Flexbox cls="mt gap np">
+          <Flexbox cls="gap np">
             <Input
               type="text"
               label="Product name"
@@ -316,121 +314,19 @@ const CreateProduct: React.FC<Props> = (props) => {
               options={brands}
               getValue={(val: string) => _onComboSelect('brand', val)}
             />
+            <ColorPick
+              value={state.color}
+              getValue={(val: string) => _onChange(val, 'color')}
+            />
+            <SingleSelect
+              label="Coupon"
+              value={state.coupon}
+              options={coupons}
+              getValue={(val: string) => _onComboSelect('coupon', val)}
+              disabled={!state.hasCoupon}
+            />
           </Flexbox>
           <Flexbox cls="sides-wrap mt gap np" justify="start" align="start">
-            <Flexbox
-              cls="left-side gap np"
-              flex="column"
-              justify="start"
-              align="start"
-            >
-              <Flexbox cls="color-and-checkbox-wrap np gap" align="start">
-                <Flexbox cls="np gap" align="start">
-                  <ColorPicker
-                    value={state.color}
-                    getValue={(val: string) => _onChange(val, 'color')}
-                    editable={true}
-                  />
-                  {state.hasCoupon ? (
-                    <SingleSelect
-                      label="Coupon"
-                      value={state.coupon}
-                      options={coupons}
-                      getValue={(val: string) => _onComboSelect('coupon', val)}
-                    />
-                  ) : null}
-                </Flexbox>
-                <Flexbox
-                  cls="checkbox-wrap gap np"
-                  flex="column"
-                  justify="start"
-                  align="start"
-                >
-                  <span>Services</span>
-                  <Flexbox
-                    cls="checkbox-child-wrap gap np"
-                    flex="column"
-                    justify="start"
-                    align="start"
-                  >
-                    <Checkbox
-                      label="Sale"
-                      name="sale"
-                      value={state.sale}
-                      getValue={(val: boolean) => _onChange(val, 'sale')}
-                    />
-                    <Checkbox
-                      label="New"
-                      name="new"
-                      value={state.new}
-                      getValue={(val: boolean) => _onChange(val, 'new')}
-                    />
-                    <Checkbox
-                      label="Free Delivery"
-                      name="freeDelivery"
-                      value={state.freeDelivery}
-                      getValue={(val: boolean) =>
-                        _onChange(val, 'freeDelivery')
-                      }
-                    />
-                    <Checkbox
-                      label="Guarantee"
-                      name="guarantee"
-                      value={state.guarantee}
-                      getValue={(val: boolean) => _onChange(val, 'guarantee')}
-                    />
-                    <Checkbox
-                      label="Coupon"
-                      name="hasCoupon"
-                      value={state.hasCoupon}
-                      getValue={(val: boolean) => _onChange(val, 'hasCoupon')}
-                    />
-                    <Checkbox
-                      label="Used"
-                      name="used"
-                      value={state.used}
-                      getValue={(val: boolean) => _onChange(val, 'used')}
-                    />
-                    <Checkbox
-                      label="Defective"
-                      name="defective"
-                      value={state.defective}
-                      getValue={(val: boolean) => _onChange(val, 'defective')}
-                    />
-                  </Flexbox>
-                </Flexbox>
-              </Flexbox>
-              {/*<Flexbox cls="np gap mt">*/}
-              {/*  <Input*/}
-              {/*    type="text"*/}
-              {/*    label="Some field"*/}
-              {/*    name="s1"*/}
-              {/*    value={state.s1}*/}
-              {/*    getValue={(val: string) => _onChange(val, 's1')}*/}
-              {/*  />*/}
-              {/*  <Input*/}
-              {/*    type="text"*/}
-              {/*    label="Some field"*/}
-              {/*    name="s2"*/}
-              {/*    value={state.s2}*/}
-              {/*    getValue={(val: string) => _onChange(val, 's2')}*/}
-              {/*  />*/}
-              {/*  <Input*/}
-              {/*    type="number"*/}
-              {/*    label="Some field"*/}
-              {/*    name="s3"*/}
-              {/*    value={state.s3}*/}
-              {/*    getValue={(val: string) => _onChange(+val, 's3')}*/}
-              {/*  />*/}
-              {/*  <Input*/}
-              {/*    type="number"*/}
-              {/*    label="Some field"*/}
-              {/*    name="s4"*/}
-              {/*    value={state.s4}*/}
-              {/*    getValue={(val: string) => _onChange(+val, 's4')}*/}
-              {/*  />*/}
-              {/*</Flexbox>*/}
-            </Flexbox>
             <Flexbox cls="right-side gap np" flex="column" col="2">
               <Flexbox cls="gap np" align="start">
                 <UploadZone
@@ -454,6 +350,62 @@ const CreateProduct: React.FC<Props> = (props) => {
                 getValue={getDescriptionHtml}
                 cls="md:flex-2"
               />
+              <Flexbox
+                cls="checkbox-wrap gap np"
+                flex="column"
+                justify="start"
+                align="start"
+              >
+                <Flexbox
+                  cls="checkbox-child-wrap gap np"
+                  flex="column"
+                  justify="start"
+                  align="start"
+                >
+                  <Checkbox
+                    label="Sale"
+                    name="sale"
+                    value={state.sale}
+                    getValue={(val: boolean) => _onChange(val, 'sale')}
+                  />
+                  <Checkbox
+                    label="New"
+                    name="new"
+                    value={state.new}
+                    getValue={(val: boolean) => _onChange(val, 'new')}
+                  />
+                  <Checkbox
+                    label="Free Delivery"
+                    name="freeDelivery"
+                    value={state.freeDelivery}
+                    getValue={(val: boolean) => _onChange(val, 'freeDelivery')}
+                  />
+                  <Checkbox
+                    label="Guarantee"
+                    name="guarantee"
+                    value={state.guarantee}
+                    getValue={(val: boolean) => _onChange(val, 'guarantee')}
+                  />
+                  <Checkbox
+                    label="Coupon"
+                    name="hasCoupon"
+                    value={state.hasCoupon}
+                    getValue={(val: boolean) => _onChange(val, 'hasCoupon')}
+                  />
+                  <Checkbox
+                    label="Used"
+                    name="used"
+                    value={state.used}
+                    getValue={(val: boolean) => _onChange(val, 'used')}
+                  />
+                  <Checkbox
+                    label="Defective"
+                    name="defective"
+                    value={state.defective}
+                    getValue={(val: boolean) => _onChange(val, 'defective')}
+                  />
+                </Flexbox>
+              </Flexbox>
               <Flexbox cls="gap np">
                 {mode === 'create' ? (
                   <Button
@@ -500,7 +452,7 @@ const Container = styled.div`
 
     .checkbox-child-wrap {
       overflow: hidden;
-      max-height: 187px;
+      max-height: 80px;
     }
   }
 

@@ -10,10 +10,11 @@ type Props = {
   cls?: string;
   options: OptionType[];
   getValue: (val: any, action?: string) => void;
+  [key: string]: any;
 };
 
 const SingleSelect: React.FC<Props> = memo(
-  ({ label, value, cls, options, getValue }) => {
+  ({ label, value, cls, options, getValue, ...props }) => {
     const [innerState, setInnerState] = useState<OptionType>({
       id: '',
       name: '',
@@ -39,6 +40,8 @@ const SingleSelect: React.FC<Props> = memo(
           labelKey="name"
           valueKey="id"
           block
+          placeholder={props.label}
+          disabled={props.disabled}
         />
       </Label>
     );
@@ -46,6 +49,8 @@ const SingleSelect: React.FC<Props> = memo(
   (prevProps, nextProps) => {
     return (
       prevProps.value === nextProps.value &&
+      prevProps.disabled === nextProps.disabled &&
+      prevProps.label === nextProps.label &&
       prevProps.options.length === nextProps.options.length
     );
   },
