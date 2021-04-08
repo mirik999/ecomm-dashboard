@@ -43,4 +43,11 @@ const Container = styled.div`
     border: ${({ theme }) => `1px solid ${theme.colors.lightBorder}`};
     box-shadow: none;
   }
+
+  @media (max-width: 436px) {
+    width: 100%;
+    & > div {
+      width: 100%;
+    }
+  }
 `;

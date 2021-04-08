@@ -40,8 +40,9 @@ const SingleSelect: React.FC<Props> = memo(
           labelKey="name"
           valueKey="id"
           block
-          placeholder={props.label}
+          placeholder={label}
           disabled={props.disabled}
+          {...props}
         />
       </Label>
     );

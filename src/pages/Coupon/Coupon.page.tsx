@@ -205,7 +205,7 @@ export default CouponPage;
 const excludeList = [
   'id',
   'type',
-  'modifiedBy',
+  'value',
   'createdBy',
   'cover',
   'used',

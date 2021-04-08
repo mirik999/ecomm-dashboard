@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { FormEvent, useRef } from 'react';
 import { Input as RsInput } from 'rsuite';
 import styled from 'styled-components';
 
@@ -22,16 +22,23 @@ const Input: React.FC<Props> = ({
   ...props
 }) => {
   const randomNumber = useRef(Math.floor(Math.random() * 1000)).current;
+
+  const isNumberType = type === 'number';
+
+  function _onChange(val: string) {
+    getValue(val);
+  }
+
   return (
     <Label htmlFor={type + label! + randomNumber} className={cls}>
       <RsInput
-        type={type}
+        type={isNumberType ? 'text' : type}
         id={type + label! + randomNumber}
         placeholder={label}
         name={type}
         autoComplete="off"
-        value={value}
-        onChange={(val) => getValue(val)}
+        value={isNumberType ? value || '' : value}
+        onChange={_onChange}
         {...props}
       />
     </Label>

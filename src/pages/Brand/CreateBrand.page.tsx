@@ -37,11 +37,12 @@ type Props = {};
 const CreateBrand: React.FC<Props> = (props) => {
   const history = useHistory();
   const dispatch = useDispatch();
-  //state
+  //graphql
   const [CreateBrand, createResponse] = useMutation(CREATE_BRAND);
   const [UpdateBrand, updateResponse] = useMutation(UPDATE_BRAND);
   const [GetCategories, ctgResponse] = useLazyQuery(GET_CATEGORIES_FOR_SELECT);
   const [GetBrandById, getResponse] = useLazyQuery(GET_BRAND_BY_ID);
+  //state
   const [categories, setCategories] = useState<OptionType[]>([]);
   const [mode, setMode] = useState<string>('create');
   const [state, setState] = useState<BrandType>({

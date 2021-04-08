@@ -326,30 +326,24 @@ const CreateProduct: React.FC<Props> = (props) => {
               disabled={!state.hasCoupon}
             />
           </Flexbox>
+          <Flexbox cls="mt gap np" align="start">
+            <UploadZone
+              multiple={false}
+              value={state.cover}
+              label="Maximum 1 image and Size less than 500KB"
+              getValue={getCoverImage}
+              folderInCloud="product_images"
+            />
+            <UploadZone
+              multiple={true}
+              value={state.images}
+              label="Maximum 5 images and Each size less than 500KB"
+              getValue={getImages}
+              folderInCloud="product_images"
+            />
+          </Flexbox>
           <Flexbox cls="sides-wrap mt gap np" justify="start" align="start">
-            <Flexbox cls="right-side gap np" flex="column" col="2">
-              <Flexbox cls="gap np" align="start">
-                <UploadZone
-                  multiple={false}
-                  value={state.cover}
-                  label="Maximum 1 image and Size less than 500KB"
-                  getValue={getCoverImage}
-                  folderInCloud="product_images"
-                />
-                <UploadZone
-                  multiple={true}
-                  value={state.images}
-                  label="Maximum 5 images and Each size less than 500KB"
-                  getValue={getImages}
-                  folderInCloud="product_images"
-                />
-              </Flexbox>
-              <TinyEditor
-                label="Description"
-                value={state.description}
-                getValue={getDescriptionHtml}
-                cls="md:flex-2"
-              />
+            <Flexbox cls="right-side gap np" flex="column" align="start">
               <Flexbox
                 cls="checkbox-wrap gap np"
                 flex="column"
@@ -406,6 +400,14 @@ const CreateProduct: React.FC<Props> = (props) => {
                   />
                 </Flexbox>
               </Flexbox>
+              <Flexbox cls="np" flex="column" align="start">
+                <TinyEditor
+                  label="Description"
+                  value={state.description}
+                  getValue={getDescriptionHtml}
+                  cls="md:flex-2"
+                />
+              </Flexbox>
               <Flexbox cls="gap np">
                 {mode === 'create' ? (
                   <Button
@@ -442,17 +444,17 @@ CreateProduct.defaultProps = {};
 export default CreateProduct;
 
 const Container = styled.div`
-  .checkbox-wrap {
-    & > span {
-      font-size: ${({ theme }) => theme.fontSize.sm + 'px'};
-      font-weight: bold;
-      margin-bottom: 5px;
-      color: ${({ theme }) => theme.colors.color};
-    }
+  .heading {
+    font-size: ${({ theme }) => theme.fontSize.sm + 'px'};
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: ${({ theme }) => theme.colors.color};
+  }
 
+  .checkbox-wrap {
     .checkbox-child-wrap {
       overflow: hidden;
-      max-height: 80px;
+      max-height: 70px;
     }
   }
 

@@ -1,4 +1,4 @@
-import React, { FormEvent, useEffect, useState, memo } from 'react';
+import React, { useEffect, useState, memo } from 'react';
 import Lightbox from 'react-image-lightbox';
 import styled from 'styled-components';
 import { Input } from 'rsuite';

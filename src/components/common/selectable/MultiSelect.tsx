@@ -1,5 +1,5 @@
 import React, { memo, useEffect, useState } from 'react';
-import { CheckPicker } from 'rsuite';
+import { CheckPicker, SelectPicker } from 'rsuite';
 import styled from 'styled-components';
 //types
 import { OptionType } from '../../../redux/types/common.type';
@@ -10,10 +10,11 @@ type Props = {
   cls?: string;
   options: OptionType[];
   getValue: (val: string[]) => void;
+  [key: string]: any;
 };
 
 const MultiSelect: React.FC<Props> = memo(
-  ({ label, value, cls, options, getValue }) => {
+  ({ label, value, cls, options, getValue, ...props }) => {
     const [innerState, setInnerState] = useState<string[]>([]);
 
     useEffect(() => {
@@ -38,6 +39,8 @@ const MultiSelect: React.FC<Props> = memo(
           labelKey="name"
           valueKey="id"
           block
+          placeholder={label}
+          disabled={props.isDisabled}
         />
       </Label>
     );

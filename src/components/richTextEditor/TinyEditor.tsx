@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 import { Editor } from '@tinymce/tinymce-react';
 import styled from 'styled-components';
 //components
@@ -60,8 +60,7 @@ const TinyEditor: React.FC<Props> = ({ label, value, getValue, cls }) => {
   const isDark = getFromLocalStorage('theme') === 'dark';
 
   return (
-    <Container cls={cls} flex="column" justify="start" align="start">
-      <span>{label}</span>
+    <Container cls={cls}>
       <Editor
         apiKey="ujhxkgc5qcu6syhl2b7qv1n2ydnqwtl1vwyy8ndwnl650f0t"
         initialValue={value}
@@ -101,13 +100,6 @@ export default TinyEditor;
 
 const Container = styled(Flexbox)`
   padding: 0;
-
-  & > span {
-    font-size: ${({ theme }) => theme.fontSize.sm + 'px'};
-    color: ${({ theme }) => theme.colors.color};
-    font-weight: bold;
-    margin-bottom: 5px;
-  }
 
   & > div {
     width: 100%;

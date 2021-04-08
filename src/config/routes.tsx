@@ -8,11 +8,12 @@ import ProductPage from '../pages/Product/Product.page';
 import CreateProduct from '../pages/Product/CreateProduct.page';
 import UserPage from '../pages/User/User.page';
 import CreateUser from '../pages/User/CreateUser.page';
+import CouponPage from '../pages/Coupon/Coupon.page';
+import CreateCoupon from '../pages/Coupon/CreateCoupon.page';
+import SliderPage from '../pages/Slider/Slider.page';
 import NotFoundPage from '../pages/Rest/NotFound.page';
 //types
 import { RoutesType } from '../redux/types/routes.types';
-import CouponPage from '../pages/Coupon/Coupon.page';
-import CreateCoupon from '../pages/Coupon/CreateCoupon.page';
 
 export const routes: RoutesType[] = [
   {
@@ -139,7 +140,17 @@ export const routes: RoutesType[] = [
     ],
   },
   {
-    id: 8,
+    id: 9,
+    name: 'Sliders',
+    path: '/sliders',
+    exact: true,
+    visible: true,
+    component: () => <SliderPage />,
+    accessRoles: ['guest', 'admin', 'sudo'],
+    editableRoles: ['admin', 'sudo'],
+  },
+  {
+    id: 10,
     name: 'Not Found',
     path: '*',
     exact: true,
