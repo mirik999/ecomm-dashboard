@@ -24,9 +24,7 @@ const Modal: React.FC<Props> = memo(
         </RsModal.Header>
         <RsModal.Body>{body}</RsModal.Body>
         <RsModal.Footer>
-          <Button onAction={_onClose} appearance="primary">
-            Close modal
-          </Button>
+          <Button label="Close" onAction={_onClose} appearance="primary" />
         </RsModal.Footer>
       </Container>
     );

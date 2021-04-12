@@ -20,22 +20,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e021988f-3eda-4fed-af49-63e1e5ec9f51" name="Default Changelist" comment="users done">
-      <change afterPath="$PROJECT_DIR$/src/components/common/Carousel.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/common/Modal.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/Slider/ModalBody.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/Slider/Slider.page.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.eslintcache" beforeDir="false" afterPath="$PROJECT_DIR$/.eslintcache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/common/ColorPick.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/ColorPick.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/common/Input.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/Input.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/common/UploadZone.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/UploadZone.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/common/selectable/MultiSelect.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/selectable/MultiSelect.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/common/selectable/SingleSelect.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/selectable/SingleSelect.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/richTextEditor/TinyEditor.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/richTextEditor/TinyEditor.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/config/routes.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/config/routes.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Brand/CreateBrand.page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Brand/CreateBrand.page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Coupon/Coupon.page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Coupon/Coupon.page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Product/CreateProduct.page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Product/CreateProduct.page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/common/Button.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/Button.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/common/Modal.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/Modal.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Slider/Slider.page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Slider/Slider.page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -182,7 +173,8 @@
       <workItem from="1617551404368" duration="14648000" />
       <workItem from="1617638207959" duration="17444000" />
       <workItem from="1617792492513" duration="6305000" />
-      <workItem from="1617861839702" duration="11077000" />
+      <workItem from="1617861839702" duration="11126000" />
+      <workItem from="1618208336358" duration="4835000" />
     </task>
     <task id="LOCAL-00001" summary="users done">
       <created>1612213179093</created>

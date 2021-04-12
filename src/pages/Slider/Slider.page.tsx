@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { Schema, Form } from 'rsuite';
 //components
 import Layout from '../../components/hoc/Layout';
 import BorderedBox from '../../components/hoc/BorderedBox';
@@ -8,10 +9,17 @@ import Flexbox from '../../components/hoc/Flexbox';
 import SingleSelect from '../../components/common/selectable/SingleSelect';
 import Carousel from '../../components/common/Carousel';
 import Modal from '../../components/common/Modal';
+import ModalBody from './ModalBody';
+import Button from '../../components/common/Button';
 //types
 import { OptionType } from '../../redux/types/common.type';
-import Button from '../../components/common/Button';
-import ModalBody from './ModalBody';
+
+const { StringType, NumberType } = Schema.Types;
+
+const model = Schema.Model({
+  name: StringType().isRequired('This field is required.'),
+  email: StringType().isRequired('This field is required.'),
+});
 
 type Props = {};
 
@@ -66,6 +74,7 @@ const initialState = {
 const SliderPage: React.FC<Props> = (props) => {
   const [state, setState] = useState<any>(initialState);
   const [showModal, setShowModal] = useState<boolean>(false);
+  const [images, setImages] = useState<string[]>([]);
 
   function _onSlideOptionsSelect(
     val: string,
@@ -86,6 +95,14 @@ const SliderPage: React.FC<Props> = (props) => {
     setShowModal(false);
   }
 
+  function _onImagesUpload(images: string[]): void {
+    setImages(images);
+  }
+
+  function _onSaveSlider(data: any): void {
+    console.log(data);
+  }
+
   return (
     <Layout>
       <HeaderLine label="sliders" />
@@ -94,38 +111,42 @@ const SliderPage: React.FC<Props> = (props) => {
         <Flexbox cls="np gap" align="start">
           <Flexbox cls="np" flex="column" align="stretch">
             <Flexbox cls="np gap">
-              <SingleSelect
-                label="Slider shape"
-                value={state.best.shape}
-                options={shapes}
-                cleanable={false}
-                getValue={(val: string) =>
-                  _onSlideOptionsSelect(val, 'best', 'shape')
-                }
-              />
-              <SingleSelect
-                label="Slider placement"
-                value={state.best.placement}
-                options={placements}
-                cleanable={false}
-                getValue={(val: string) =>
-                  _onSlideOptionsSelect(val, 'best', 'placement')
-                }
-              />
-              <Button
-                label="Handle images"
-                appearance="ghost"
-                onAction={_onOpenModal}
-              />
+              <Form model={model} onSubmit={_onSaveSlider}>
+                <SingleSelect
+                  label="Slider shape"
+                  value={state.best.shape}
+                  options={shapes}
+                  cleanable={false}
+                  getValue={(val: string) =>
+                    _onSlideOptionsSelect(val, 'best', 'shape')
+                  }
+                />
+                <SingleSelect
+                  label="Slider placement"
+                  value={state.best.placement}
+                  options={placements}
+                  cleanable={false}
+                  getValue={(val: string) =>
+                    _onSlideOptionsSelect(val, 'best', 'placement')
+                  }
+                />
+                <Button
+                  label="Handle images"
+                  appearance="ghost"
+                  onAction={_onOpenModal}
+                />
+                <Button
+                  type="submit"
+                  label="Save"
+                  appearance="primary"
+                  onAction={() => false}
+                />
+              </Form>
             </Flexbox>
             <Carousel
               shape={state.best.shape}
               placement={state.best.placement}
-              images={[
-                'https://res.cloudinary.com/electroshop-cmrs-project/image/upload/v1617877166/sliders/gsmarena_008_wwspr0.jpg',
-                'https://res.cloudinary.com/electroshop-cmrs-project/image/upload/v1617877166/sliders/71E5zB1qbIL._SL1500__ueoajv.jpg',
-                'https://res.cloudinary.com/electroshop-cmrs-project/image/upload/v1617877167/sliders/MotleyFool-TMOT-886ef453-apple-iphone-12-pro_urve7s.jpg',
-              ]}
+              images={images}
               cls="mt"
             />
           </Flexbox>
@@ -146,7 +167,7 @@ const SliderPage: React.FC<Props> = (props) => {
         showModal={showModal}
         getCloseEvent={_onCloseModal}
         title="Handle images"
-        body={<ModalBody images={} />}
+        body={<ModalBody images={images} getImages={_onImagesUpload} />}
       />
     </Layout>
   );

@@ -7,16 +7,18 @@ type Props = {
   cls?: string;
   appearance: 'primary' | 'default' | 'link' | 'subtle' | 'ghost';
   onAction: () => void;
+  [key: string]: any;
 };
 
 const Button: React.FC<Props> = memo(
-  ({ label, disabled, cls, appearance, onAction }) => {
+  ({ label, disabled, cls, appearance, onAction, ...props }) => {
     return (
       <RsButton
         className={cls}
         appearance={appearance}
         onClick={onAction}
         disabled={disabled}
+        {...props}
       >
         {label}
       </RsButton>
