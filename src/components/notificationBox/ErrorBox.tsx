@@ -14,7 +14,7 @@ const ErrorBox: React.FC<Props> = ({ message, details, getEvent }) => {
   const statusCode = details?.extensions?.exception?.response?.statusCode;
 
   return (
-    <Container>
+    <Container data-testid={'error-box'}>
       <div>
         <span>{statusCode}</span>
         <span>

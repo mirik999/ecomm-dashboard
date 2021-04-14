@@ -7,12 +7,12 @@ import userSlice from './slices/user.slice';
 import authCredentialsSlice from './slices/auth-credentials.slice';
 import netStatusSlice from './slices/net-status.slice';
 
-const rootReducer = combineReducers({
+export const rootReducer = combineReducers({
   theme: themeSlice,
   roles: rolesSlice,
   user: userSlice,
   authCredentials: authCredentialsSlice,
-  netStatus: netStatusSlice
+  netStatus: netStatusSlice,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;
