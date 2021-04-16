@@ -54,7 +54,7 @@ const Register: React.FC<Props> = () => {
         <h3>Create an account</h3>
       </header>
       <Input
-        type="email"
+        type="text"
         label="E-mail"
         name="email"
         value={state.email}

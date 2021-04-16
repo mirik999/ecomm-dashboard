@@ -23,20 +23,24 @@ const Input: React.FC<Props> = ({
 }) => {
   const randomNumber = useRef(Math.floor(Math.random() * 1000)).current;
 
-  const isNumberType = type === 'number';
+  const isNumberType = type === 'number' || type === 'password';
 
   function _onChange(val: string) {
     getValue(val);
   }
 
   return (
-    <Label htmlFor={type + label! + randomNumber} className={cls}>
+    <Label
+      htmlFor={type + label! + randomNumber}
+      className={cls}
+      isPassword={type === 'password'}
+    >
       <RsInput
         type={isNumberType ? 'text' : type}
         id={type + label! + randomNumber}
         placeholder={label}
         name={type}
-        autoComplete="off"
+        autoComplete="current-password"
         value={isNumberType ? value || '' : value}
         onChange={_onChange}
         {...props}
@@ -55,9 +59,10 @@ Input.defaultProps = {
 
 export default Input;
 
-const Label = styled.label`
+const Label = styled.label<any>`
   display: flex;
   flex-direction: column;
   min-width: 220px;
   flex: 1;
+  -webkit-text-security: ${({ isPassword }) => (isPassword ? 'disc' : 'auto')};
 `;

@@ -1,19 +1,22 @@
 import { createSlice } from '@reduxjs/toolkit';
 //type
-import { Theme } from '../types/theme.type';
+import { FontSize, Theme } from '../types/theme.type';
 //utils
 import {
   getFromLocalStorage,
   saveToLocalStorage,
 } from '../../utils/storage.utils';
 
+const fontSize: FontSize = {
+  small: { xs: 10, sm: 10, md: 12, lg: 14, xl: 18 },
+  medium: { xs: 10, sm: 11, md: 13, lg: 16, xl: 20 },
+  hd: { xs: 10, sm: 12, md: 14, lg: 16, xl: 22 },
+  fhd: { xs: 12, sm: 14, md: 16, lg: 18, xl: 26 },
+};
+
 const light: Theme = {
-  fontSize: {
-    small: { xs: 10, sm: 10, md: 12, lg: 14, xl: 18 },
-    medium: { xs: 10, sm: 11, md: 13, lg: 16, xl: 20 },
-    hd: { xs: 10, sm: 12, md: 14, lg: 16, xl: 22 },
-    fhd: { xs: 12, sm: 14, md: 16, lg: 18, xl: 26 },
-  },
+  fontSize: fontSize,
+  name: 'light',
   colors: {
     color: '#474A5A',
     background: '#FFFFFF',
@@ -29,12 +32,8 @@ const light: Theme = {
 };
 
 const dark: Theme = {
-  fontSize: {
-    small: { xs: 10, sm: 10, md: 12, lg: 14, xl: 18 },
-    medium: { xs: 10, sm: 11, md: 13, lg: 16, xl: 20 },
-    hd: { xs: 10, sm: 12, md: 14, lg: 16, xl: 22 },
-    fhd: { xs: 12, sm: 14, md: 16, lg: 18, xl: 26 },
-  },
+  fontSize: fontSize,
+  name: 'dark',
   colors: {
     color: '#C0C1C7',
     background: '#121417',

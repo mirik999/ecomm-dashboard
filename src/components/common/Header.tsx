@@ -41,6 +41,18 @@ const Header: React.FC<Props> = memo(
       }
     }
 
+    function _onThemeChange(mode: 'dark' | 'light'): void {
+      if (mode === 'dark') {
+        require('rsuite/dist/styles/rsuite-dark.min.css');
+        dispatch(themeToDark());
+      }
+
+      if (mode === 'light') {
+        require('rsuite/dist/styles/rsuite-default.min.css');
+        dispatch(themeToLight());
+      }
+    }
+
     const path = history.location.pathname;
 
     return (
@@ -48,20 +60,10 @@ const Header: React.FC<Props> = memo(
         <div>{/*<span>path: {path}</span>*/}</div>
         <Flexbox justify="end">
           <div>
-            <span
-              className="hoverable"
-              onClick={() => {
-                dispatch(themeToDark());
-              }}
-            >
+            <span className="hoverable" onClick={() => _onThemeChange('dark')}>
               DARK
             </span>
-            <span
-              className="hoverable"
-              onClick={() => {
-                dispatch(themeToLight());
-              }}
-            >
+            <span className="hoverable" onClick={() => _onThemeChange('light')}>
               LIGHT
             </span>
           </div>

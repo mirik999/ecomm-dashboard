@@ -23,7 +23,7 @@ import { REFRESH_TOKEN } from './redux/requests/user.request';
 //action
 import { saveToken } from './redux/slices/auth-credentials.slice';
 import { removeNetStatus } from './redux/slices/net-status.slice';
-import { themeToDark } from './redux/slices/theme.slice';
+import { themeToDark, themeToLight } from './redux/slices/theme.slice';
 //utils
 import {
   getFromCookies,
@@ -51,6 +51,7 @@ function App() {
     ) {
       const theme = getFromLocalStorage('theme');
       if (!theme) {
+        require('rsuite/dist/styles/rsuite-dark.min.css');
         dispatch(themeToDark());
       }
     }
