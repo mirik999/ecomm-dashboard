@@ -44,7 +44,6 @@ Carousel.defaultProps = {
 };
 
 const Container = styled(RsCarousel)`
-  height: 192px;
   img {
     background-color: ${({ theme }) => theme.colors.thirdBackground};
     object-fit: contain;

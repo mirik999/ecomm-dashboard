@@ -97,8 +97,8 @@ const UploadZone: React.FC<Props> = memo(
     }
 
     const placeholder = multiple
-      ? 'Click to select an images 🏞️'
-      : 'Click to select an image 🏞️';
+      ? 'Click to select an images'
+      : 'Click to select an image';
 
     return (
       <Container cls={cls} flex="column" justify="start" align="start">
@@ -107,11 +107,11 @@ const UploadZone: React.FC<Props> = memo(
           {/*  <span className={warning ? 'text-red' : 'text-black'}>{label}</span>*/}
           {/*  {uploadPercent ? <span>{uploadPercent}%</span> : null}*/}
           {/*</Flexbox>*/}
-          <label htmlFor="file-upload">
+          <label htmlFor={'file-upload' + placeholder}>
             <Flexbox cls="input-wrap gap np">
               <Input
                 type="file"
-                id="file-upload"
+                id={'file-upload' + placeholder}
                 name="file-upload"
                 autoComplete="off"
                 onChange={handleImage}
@@ -224,12 +224,20 @@ const Container = styled(Flexbox)`
   .input-wrap {
     position: relative;
 
+    input {
+      cursor: pointer;
+    }
+
     input:first-child {
       flex: 1;
       position: absolute;
       width: 100%;
       padding: 5px;
       opacity: 0;
+    }
+
+    input[type='file']:hover + input[type='text'] {
+      border-color: #169de0;
     }
 
     span {

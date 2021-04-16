@@ -23,13 +23,8 @@ import { REFRESH_TOKEN } from './redux/requests/user.request';
 //action
 import { saveToken } from './redux/slices/auth-credentials.slice';
 import { removeNetStatus } from './redux/slices/net-status.slice';
-import { themeToDark, themeToLight } from './redux/slices/theme.slice';
 //utils
-import {
-  getFromCookies,
-  getFromLocalStorage,
-  removeFromCookies,
-} from './utils/storage.utils';
+import { getFromCookies, removeFromCookies } from './utils/storage.utils';
 //types
 import { RootState } from './redux/store';
 import { RoutesType } from './redux/types/routes.types';
@@ -43,19 +38,6 @@ function App() {
   const history = useHistory();
   const dispatch = useDispatch();
   const { theme } = useSelector((state: RootState) => state);
-
-  useEffect(() => {
-    if (
-      window.matchMedia &&
-      window.matchMedia('(prefers-color-scheme: dark)').matches
-    ) {
-      const theme = getFromLocalStorage('theme');
-      if (!theme) {
-        require('rsuite/dist/styles/rsuite-dark.min.css');
-        dispatch(themeToDark());
-      }
-    }
-  }, []);
 
   useEffect(() => {
     history.listen((loc, act) => {

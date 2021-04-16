@@ -1,5 +1,6 @@
 import React, { FormEvent, memo } from 'react';
 import styled from 'styled-components';
+import { Checkbox as RsCheckbox } from 'rsuite';
 
 type Props = {
   value: boolean;
@@ -20,8 +21,7 @@ const Checkbox: React.FC<Props> = memo(({ value, label, name, getValue }) => {
   return (
     <Container>
       <label htmlFor={name}>
-        <input
-          type="checkbox"
+        <RsCheckbox
           id={name}
           onChange={_onChange}
           name={name}

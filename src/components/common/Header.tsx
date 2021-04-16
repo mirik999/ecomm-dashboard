@@ -1,7 +1,6 @@
 import React, { memo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { MdExitToApp } from 'react-icons/md';
-import { useHistory } from 'react-router-dom';
 import { useLazyQuery } from '@apollo/client';
 import styled from 'styled-components';
 //components
@@ -21,7 +20,6 @@ type Props = {};
 const Header: React.FC<Props> = memo(
   (props) => {
     const dispatch = useDispatch();
-    const history = useHistory();
     //graphql
     const [Logout] = useLazyQuery(LOGOUT_USER);
     //state
@@ -43,17 +41,13 @@ const Header: React.FC<Props> = memo(
 
     function _onThemeChange(mode: 'dark' | 'light'): void {
       if (mode === 'dark') {
-        require('rsuite/dist/styles/rsuite-dark.min.css');
         dispatch(themeToDark());
       }
 
       if (mode === 'light') {
-        require('rsuite/dist/styles/rsuite-default.min.css');
         dispatch(themeToLight());
       }
     }
-
-    const path = history.location.pathname;
 
     return (
       <Container justify="between">

@@ -6,6 +6,7 @@ import BorderedBox from '../../components/hoc/BorderedBox';
 import HeaderLine from '../../components/common/HeaderLine';
 import Flexbox from '../../components/hoc/Flexbox';
 import SliderBest from './slider-best/SliderBest';
+import SliderAdv from './slider-adv/SliderAdv';
 //types
 import { OptionType } from '../../redux/types/common.type';
 
@@ -47,9 +48,9 @@ const SliderPage: React.FC<Props> = (props) => {
       <HeaderLine label="sliders" />
       {/* dashboard */}
       <Container>
-        <Flexbox cls="np gap" align="start">
+        <Flexbox cls="np gap slides-wrap" align="start">
           <SliderBest shapes={shapes} placements={placements} />
-          <Flexbox cls="np">second</Flexbox>
+          <SliderAdv shapes={shapes} placements={placements} />
         </Flexbox>
       </Container>
     </Layout>

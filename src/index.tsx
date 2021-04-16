@@ -15,33 +15,7 @@ import 'normalize.css';
 import './index.css';
 import 'react-datepicker/dist/react-datepicker.css';
 import 'react-image-lightbox/style.css';
-import 'react-quill/dist/quill.snow.css';
 import 'rsuite-color-picker/lib/styles.css';
-
-function clearRequireCache(path: string) {
-  Object.keys(require.cache).forEach(function (key) {
-    if (key === path) {
-      delete require.cache[key];
-    }
-  });
-}
-
-store.subscribe(() => {
-  const theme = store.getState().theme;
-  // console.log(theme.name);
-  // let cssFile = String(`./rsuite.${theme.name}.css`);
-  // require(`./rsuite.${theme.name}.css`);
-
-  if (theme.name === 'dark') {
-    require('./rsuite.dark.css');
-    clearRequireCache('./src/rsuite.light.css');
-    // delete require.cache[require.resolve('./rsuite.light.css')];
-  } else {
-    require('./rsuite.light.css');
-    clearRequireCache('./src/rsuite.dark.css');
-    // delete require.cache[require.resolve('./rsuite.dark.css')];
-  }
-});
 
 //load theme
 store.dispatch(loadTheme());

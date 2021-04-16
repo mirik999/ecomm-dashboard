@@ -39,7 +39,7 @@ export default ColorPick;
 const Container = styled.div`
   height: 36px;
   .rsuite-color-picker {
-    background-color: ${({ theme }) => theme.colors.background};
+    background-color: ${({ theme }) => theme.colors.secondBackground};
     border: ${({ theme }) => `1px solid ${theme.colors.lightBorder}`};
     box-shadow: none;
   }
