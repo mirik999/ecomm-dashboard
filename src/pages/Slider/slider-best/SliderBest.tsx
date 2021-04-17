@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import styled from 'styled-components';
 //components
 import Flexbox from '../../../components/hoc/Flexbox';
 import SingleSelect from '../../../components/common/selectable/SingleSelect';
@@ -10,20 +11,19 @@ import ModalBody from '../ModalBody';
 import { OptionType } from '../../../redux/types/common.type';
 
 const initialState = {
-  shape: 'dot',
-  placement: 'bottom',
+  vertical: false,
+  fade: false,
   images: [],
 };
 
 type Props = {
-  shapes: OptionType[];
-  placements: OptionType[];
+  direction: OptionType[];
+  effect: OptionType[];
 };
 
-const SliderBest: React.FC<Props> = ({ shapes, placements }) => {
+const SliderBest: React.FC<Props> = ({ direction, effect }) => {
   const [state, setState] = useState<any>(initialState);
   const [showModal, setShowModal] = useState<boolean>(false);
-  const [images, setImages] = useState<string[]>([]);
 
   function _onSlideOptionsSelect(val: string, opt: string): void {
     setState((prevState: any) => ({
@@ -41,7 +41,6 @@ const SliderBest: React.FC<Props> = ({ shapes, placements }) => {
   }
 
   function _onImagesUpload(images: string[]): void {
-    setImages(images);
     setState((prevState: any) => ({ ...prevState, images }));
   }
 
@@ -49,52 +48,84 @@ const SliderBest: React.FC<Props> = ({ shapes, placements }) => {
     console.log(state);
   }
 
+  function _onReset() {
+    setState((prevState: any) => ({ ...prevState, images: [] }));
+  }
+
   return (
-    <Flexbox cls="np" flex="column" align="stretch">
-      <Flexbox cls="np gap">
+    <Container cls="np" flex="column" align="stretch">
+      <h5>Most popular products</h5>
+      <Flexbox cls="np gap mt">
         <SingleSelect
-          label="Slider shape"
-          value={state.shape}
-          options={shapes}
+          label="Slider direction"
+          value={state.direction}
+          options={direction}
           cleanable={false}
-          getValue={(val: string) => _onSlideOptionsSelect(val, 'shape')}
+          getValue={(val: string) => _onSlideOptionsSelect(val, 'direction')}
+          disabled={!Boolean(state.images.length)}
         />
         <SingleSelect
-          label="Slider placement"
-          value={state.placement}
-          options={placements}
+          label="Slider effect"
+          value={state.effect}
+          options={effect}
           cleanable={false}
-          getValue={(val: string) => _onSlideOptionsSelect(val, 'placement')}
+          getValue={(val: string) => _onSlideOptionsSelect(val, 'effect')}
+          disabled={!Boolean(state.images.length)}
         />
       </Flexbox>
       <Carousel
-        shape={state.shape}
-        placement={state.placement}
-        images={images}
+        fade={state.effect}
+        vertical={state.direction}
+        images={state.images}
         cls="mt"
       />
-      <Flexbox cls="np gap mt">
+      <Flexbox cls="np gap buttons-wrap">
         <Button
           label="Handle images"
           appearance="ghost"
           onAction={_onOpenModal}
         />
-        <Button label="Save" appearance="primary" onAction={_onSaveSlider} />
+        <Button
+          label="Reset"
+          appearance="default"
+          onAction={_onReset}
+          disabled={!Boolean(state.images.length)}
+        />
+        <Button
+          label="Save"
+          appearance="primary"
+          onAction={_onSaveSlider}
+          disabled={!Boolean(state.images.length)}
+        />
       </Flexbox>
 
       <Modal
         showModal={showModal}
         getCloseEvent={_onCloseModal}
         title="Handle images"
-        body={<ModalBody images={images} getImages={_onImagesUpload} />}
+        body={<ModalBody images={state.images} getImages={_onImagesUpload} />}
       />
-    </Flexbox>
+    </Container>
   );
 };
 
 SliderBest.defaultProps = {
-  shapes: [],
-  placements: [],
+  direction: [],
+  effect: [],
 };
 
 export default SliderBest;
+
+const Container = styled(Flexbox)`
+  max-width: calc(50% - 10px);
+  overflow: hidden;
+
+  .buttons-wrap {
+    margin-top: 30px;
+  }
+
+  @media (max-width: 1199px) {
+    max-width: 100%;
+    min-width: 100%;
+  }
+`;

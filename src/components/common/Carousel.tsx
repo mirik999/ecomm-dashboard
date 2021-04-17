@@ -1,35 +1,40 @@
-import React from 'react';
-import { Carousel as RsCarousel } from 'rsuite';
+import React, { useState } from 'react';
 import styled from 'styled-components';
+import Slider from 'react-slick';
 
-const placeholders = [
-  'https://via.placeholder.com/600x250/8f8e94/FFFFFF?text=1',
-  'https://via.placeholder.com/600x250/8f8e94/FFFFFF?text=2',
-  'https://via.placeholder.com/600x250/8f8e94/FFFFFF?text=3',
-];
+const settings = {
+  dots: true,
+  infinite: true,
+  speed: 500,
+  slidesToShow: 1,
+  slidesToScroll: 1,
+  arrows: false,
+};
 
 type Props = {
-  placement: 'bottom' | 'top' | 'left' | 'right';
-  shape: 'bar' | 'dot';
+  bgColor?: string;
+  vertical: boolean;
+  fade: boolean;
   cls?: string;
   images: string[];
 };
 
-const Carousel: React.FC<Props> = ({ placement, shape, cls, images }) => {
+// const prc = [
+//   'https://res.cloudinary.com/electroshop-cmrs-project/image/upload/v1618667801/sliders/landscape-1499968892-back-to-school-tech_c8fjvu.jpg',
+//   'https://res.cloudinary.com/electroshop-cmrs-project/image/upload/v1618667804/sliders/photo-1515940175183-6798529cb860_lqws53.jpg',
+// ];
+
+const Carousel: React.FC<Props> = ({ vertical, fade, bgColor, images }) => {
+  if (!images.length) {
+    return null;
+  }
   return (
-    <Container
-      key={`${placement}.${shape}`}
-      placement={placement}
-      shape={shape}
-      className={cls}
-    >
-      {images.length
-        ? images.map((url: string, i: number) => (
-            <img key={i} src={url} alt="carousel-image" height="250" />
-          ))
-        : placeholders.map((url: string, i: number) => (
-            <img key={i} src={url} alt="carousel-image" height="250" />
-          ))}
+    <Container>
+      <Slider {...settings} fade={fade} vertical={vertical}>
+        {images.map((url: string, i: number) => (
+          <Image key={i} url={url} bgColor={bgColor} />
+        ))}
+      </Slider>
     </Container>
   );
 };
@@ -37,15 +42,44 @@ const Carousel: React.FC<Props> = ({ placement, shape, cls, images }) => {
 export default Carousel;
 
 Carousel.defaultProps = {
-  placement: 'bottom',
-  shape: 'bar',
+  bgColor: 'transparent',
+  vertical: false,
+  fade: false,
   cls: 'custom-slider',
   images: [],
 };
 
-const Container = styled(RsCarousel)`
-  img {
+const Container = styled.div`
+  max-width: 100%;
+  margin: 10px 0;
+
+  .slick-dots {
     background-color: ${({ theme }) => theme.colors.thirdBackground};
-    object-fit: contain;
+    li {
+      button {
+        border-radius: 50%;
+        width: 10px;
+        height: 10px;
+        background-color: grey;
+        &::before {
+          content: '';
+        }
+      }
+    }
+    .slick-active {
+      button {
+        background-color: ${({ theme }) => theme.colors.main};
+      }
+    }
   }
+`;
+
+const Image = styled.div<any>`
+  width: 100%;
+  height: 250px;
+  background-color: ${({ theme }) => theme.colors.thirdBackground};
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-image: ${(props) => `url(${props.url})`};
 `;

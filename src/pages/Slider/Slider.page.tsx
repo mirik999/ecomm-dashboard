@@ -12,33 +12,25 @@ import { OptionType } from '../../redux/types/common.type';
 
 type Props = {};
 
-const shapes: OptionType[] = [
+const direction: OptionType[] = [
   {
-    id: 'dot',
-    name: 'Dot',
+    id: true,
+    name: 'Horizontal',
   },
   {
-    id: 'bar',
-    name: 'Bar',
+    id: false,
+    name: 'Vertical',
   },
 ];
 
-const placements: OptionType[] = [
+const effect: OptionType[] = [
   {
-    id: 'top',
-    name: 'Top',
+    id: false,
+    name: 'Slide',
   },
   {
-    id: 'right',
-    name: 'Right',
-  },
-  {
-    id: 'bottom',
-    name: 'Bottom',
-  },
-  {
-    id: 'left',
-    name: 'Left',
+    id: true,
+    name: 'Fade',
   },
 ];
 
@@ -49,8 +41,8 @@ const SliderPage: React.FC<Props> = (props) => {
       {/* dashboard */}
       <Container>
         <Flexbox cls="np gap slides-wrap" align="start">
-          <SliderBest shapes={shapes} placements={placements} />
-          <SliderAdv shapes={shapes} placements={placements} />
+          <SliderBest direction={direction} effect={effect} />
+          <SliderAdv direction={direction} effect={effect} />
         </Flexbox>
       </Container>
     </Layout>

@@ -15,6 +15,8 @@ import 'normalize.css';
 import './index.css';
 import 'react-datepicker/dist/react-datepicker.css';
 import 'react-image-lightbox/style.css';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 import 'rsuite-color-picker/lib/styles.css';
 
 //load theme

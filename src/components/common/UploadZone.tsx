@@ -288,6 +288,12 @@ const Container = styled(Flexbox)`
     min-width: 300px !important;
   }
 
+  @media screen and (max-width: 620px) {
+    .preview-wrap {
+      flex-wrap: wrap !important;
+    }
+  }
+
   @media screen and (max-width: 500px) {
     min-width: 200px !important;
   }

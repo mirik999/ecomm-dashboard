@@ -45,4 +45,8 @@ Modal.defaultProps = {
   getCloseEvent: () => false,
 };
 
-const Container = styled(RsModal)``;
+const Container = styled(RsModal)`
+  @media (max-width: 650px) {
+    width: 100% !important;
+  }
+`;
