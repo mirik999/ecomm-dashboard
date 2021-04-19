@@ -1,125 +1,133 @@
 import React, { useEffect, useRef, memo } from 'react';
 import styled from 'styled-components';
-import Highcharts from 'highcharts';
-import HC_exporting from 'highcharts/modules/exporting';
-import HighchartsReact from 'highcharts-react-official';
+import { ResponsiveBar } from '@nivo/bar';
+// import Highcharts from 'highcharts';
+// import HC_exporting from 'highcharts/modules/exporting';
+// import HighchartsReact from 'highcharts-react-official';
 //components
 import Flexbox from '../../components/hoc/Flexbox';
 import LoadingCard from './LoadingCard';
 //utils
 import { isEmpty } from '../../utils/functions.utils';
 
-HC_exporting(Highcharts);
+// HC_exporting(Highcharts);
 
 type Props = {
+  theme: string;
   header: string;
   stats: any;
   status?: boolean;
 };
 
-const StatisticCard: React.FC<Props> = memo(({ header, stats, status }) => {
-  const chart: any = useRef(null);
-
-  useEffect(() => {
-    if (chart.current) {
-      chart.current.chart.reflow();
+const StatisticCard: React.FC<Props> = memo(
+  ({ header, stats, status, theme }) => {
+    if (isEmpty(stats)) {
+      return <LoadingCard status={status} />;
     }
-  }, [chart]);
 
-  if (isEmpty(stats)) {
-    return <LoadingCard status={status} />;
-  }
-
-  const cleanData = stats.filter(Boolean);
-  const keys = Object.keys(cleanData[0]);
-  const data = keys.map((key, i) => {
-    return {
-      name: key,
-      y: cleanData[0][key],
-      drilldown: key,
-    };
-  });
-
-  const options = {
-    chart: {
-      type: 'column',
-      events: {
-        load: function () {
-          chart.current = this;
-        },
-      },
-    },
-    exporting: {
-      enabled: true,
-      buttons: {
-        contextButton: {
-          enabled: false,
-        },
-        exportButton: {
-          text: 'Download',
-          menuItems: [
-            'downloadPNG',
-            'downloadJPEG',
-            'downloadPDF',
-            'downloadSVG',
-          ],
-        },
-      },
-    },
-    title: {
-      text: header,
-      style: {
-        fontSize: '14px',
-        fontWeight: 'bold',
-      },
-    },
-    accessibility: {
-      announceNewData: {
-        enabled: true,
-      },
-    },
-    xAxis: {
-      title: true,
-      categories: data.map((d) => d.name),
-    },
-    yAxis: {
-      title: false,
-    },
-    legend: {
-      enabled: false,
-    },
-    credits: {
-      enabled: false,
-    },
-    plotOptions: {
-      series: {
-        borderWidth: 0,
-        dataLabels: {
-          enabled: true,
-          format: '{point.y}',
-        },
-      },
-    },
-    tooltip: {
-      headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
-      pointFormat: '<span>value </span>: <b>{point.y}</b><br/>',
-    },
-    series: [
-      {
-        colorByPoint: true,
-        data: data,
-      },
-    ],
-  };
-
-  return (
-    <Container>
-      <HighchartsReact highcharts={Highcharts} options={options} ref={chart} />
-    </Container>
-  );
-});
+    return (
+      <Container>
+        <ResponsiveBar
+          data={[stats]}
+          keys={Object.keys(stats)}
+          indexBy="country"
+          margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
+          padding={0.3}
+          groupMode="grouped"
+          valueScale={{ type: 'linear' }}
+          indexScale={{ type: 'band', round: true }}
+          colors={{ scheme: 'nivo' }}
+          defs={[
+            {
+              id: 'dots',
+              type: 'patternDots',
+              background: 'inherit',
+              color: '#38bcb2',
+              size: 4,
+              padding: 1,
+              stagger: true,
+            },
+            {
+              id: 'lines',
+              type: 'patternLines',
+              background: 'inherit',
+              color: '#eed312',
+              rotation: -45,
+              lineWidth: 6,
+              spacing: 10,
+            },
+          ]}
+          fill={[
+            {
+              match: {
+                id: 'fries',
+              },
+              id: 'dots',
+            },
+            {
+              match: {
+                id: 'sandwich',
+              },
+              id: 'lines',
+            },
+          ]}
+          borderColor={{ from: 'color', modifiers: [['darker', 1.6]] }}
+          axisTop={null}
+          axisRight={null}
+          axisBottom={{
+            tickSize: 5,
+            tickPadding: 5,
+            tickRotation: 0,
+            legend: 'country',
+            legendPosition: 'middle',
+            legendOffset: 32,
+          }}
+          axisLeft={{
+            tickSize: 5,
+            tickPadding: 5,
+            tickRotation: 0,
+            legend: 'food',
+            legendPosition: 'middle',
+            legendOffset: -40,
+          }}
+          labelSkipWidth={12}
+          labelSkipHeight={12}
+          labelTextColor={{ from: 'color', modifiers: [['darker', 1.6]] }}
+          legends={[
+            {
+              dataFrom: 'keys',
+              anchor: 'bottom-right',
+              direction: 'column',
+              justify: false,
+              translateX: 120,
+              translateY: 0,
+              itemsSpacing: 2,
+              itemWidth: 100,
+              itemHeight: 20,
+              itemDirection: 'left-to-right',
+              itemOpacity: 0.85,
+              symbolSize: 20,
+              effects: [
+                {
+                  on: 'hover',
+                  style: {
+                    itemOpacity: 1,
+                  },
+                },
+              ],
+            },
+          ]}
+          animate={true}
+          motionStiffness={90}
+          motionDamping={15}
+        />
+      </Container>
+    );
+  },
+);
 
 StatisticCard.defaultProps = {
+  theme: 'light',
   stats: null,
   header: 'Header',
   status: false,
@@ -133,6 +141,7 @@ const Container = styled(Flexbox)`
   padding: 10px;
   min-width: 300px;
   width: 100%;
+  height: 210px;
 
   & > div {
     position: relative;
@@ -145,3 +154,56 @@ const Container = styled(Flexbox)`
     }
   }
 `;
+
+const chartTheme = {
+  light: {
+    background: '#ffffff',
+    textColor: '#333333',
+    fontSize: 11,
+    axis: {
+      domain: {
+        line: {
+          stroke: '#777777',
+          strokeWidth: 1,
+        },
+      },
+      ticks: {
+        line: {
+          stroke: '#777777',
+          strokeWidth: 1,
+        },
+      },
+    },
+    grid: {
+      line: {
+        stroke: '#dddddd',
+        strokeWidth: 1,
+      },
+    },
+  },
+  dark: {
+    background: '#292929',
+    textColor: '#c2c2c2',
+    fontSize: 12,
+    axis: {
+      domain: {
+        line: {
+          stroke: '#777777',
+          strokeWidth: 1,
+        },
+      },
+      ticks: {
+        line: {
+          stroke: '#e6e6e6',
+          strokeWidth: 1,
+        },
+      },
+    },
+    grid: {
+      line: {
+        stroke: '#4f4f4f',
+        strokeWidth: 1,
+      },
+    },
+  },
+};

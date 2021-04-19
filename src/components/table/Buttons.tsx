@@ -104,13 +104,13 @@ export default Buttons;
 
 const Container = styled(Flexbox)`
   padding: 8px 0;
-  grid-gap: 10px;
+  gap: 10px;
 
   @media screen and (max-width: 660px) {
     .rs-btn-toolbar {
       display: flex;
       flex-direction: column;
-      grid-gap: 10px;
+      gap: 10px;
       width: 100%;
 
       button {

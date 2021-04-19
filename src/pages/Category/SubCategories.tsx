@@ -114,14 +114,14 @@ const HeaderPanel = styled(Flexbox)`
 const Body = styled(Flexbox)`
   padding: 0;
   margin: 10px 0;
-  grid-gap: 10px;
+  gap: 10px;
 `;
 
 const InputsWrap = styled(Flexbox)`
   padding: 0;
   width: 100%;
   position: relative;
-  grid-gap: 10px;
+  gap: 10px;
 
   label {
     margin-bottom: 15px;

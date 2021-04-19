@@ -11,7 +11,6 @@ import { RootState } from '../../redux/store';
 import { removeToken } from '../../redux/slices/auth-credentials.slice';
 import { removeUser } from '../../redux/slices/user.slice';
 import { saveNetStatus } from '../../redux/slices/net-status.slice';
-import { themeToDark, themeToLight } from '../../redux/slices/theme.slice';
 //request
 import { LOGOUT_USER } from '../../redux/requests/user.request';
 
@@ -39,28 +38,10 @@ const Header: React.FC<Props> = memo(
       }
     }
 
-    function _onThemeChange(mode: 'dark' | 'light'): void {
-      if (mode === 'dark') {
-        dispatch(themeToDark());
-      }
-
-      if (mode === 'light') {
-        dispatch(themeToLight());
-      }
-    }
-
     return (
       <Container justify="between">
         <div>{/*<span>path: {path}</span>*/}</div>
         <Flexbox justify="end">
-          <div>
-            <span className="hoverable" onClick={() => _onThemeChange('dark')}>
-              DARK
-            </span>
-            <span className="hoverable" onClick={() => _onThemeChange('light')}>
-              LIGHT
-            </span>
-          </div>
           <span>{user.email}</span>
           <MdExitToApp
             size={20}

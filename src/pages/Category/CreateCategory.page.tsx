@@ -184,17 +184,17 @@ export default CreateCategory;
 const Body = styled(Flexbox)`
   padding: 0;
   margin: 10px 0 20px 0;
-  grid-gap: 10px;
+  gap: 10px;
 `;
 
 const FooterPanel = styled(Flexbox)`
   margin-top: 10px;
   padding: 0;
-  grid-gap: 10px;
+  gap: 10px;
 `;
 
 const InfoCardsWrap = styled.div`
   div {
-    grid-gap: 10px;
+    gap: 10px;
   }
 `;

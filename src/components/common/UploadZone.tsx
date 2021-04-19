@@ -249,7 +249,7 @@ const Container = styled(Flexbox)`
   }
 
   .preview-wrap {
-    grid-gap: 10px;
+    gap: 10px;
     padding: 10px;
     margin-top: 10px;
     border-radius: 5px;

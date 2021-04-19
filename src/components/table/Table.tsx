@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 //components
 import Input from '../common/Input';
 import Buttons from './Buttons';
@@ -15,7 +14,6 @@ import {
 } from './styled-components';
 //types
 import { Props } from './props';
-import { RootState } from '../../redux/store';
 //utils
 import { tableBodyHandler } from './body.handler.';
 
@@ -43,7 +41,6 @@ const Table: React.FC<Props> = ({
   getDateRange,
 }) => {
   const history = useHistory();
-  const { user } = useSelector((state: RootState) => state);
   //state
   const [state, setState] = useState<any[]>([]);
   const [quickSearch, setQuickSearch] = useState<string>('');

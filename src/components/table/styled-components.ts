@@ -14,9 +14,10 @@ export const Container = styled.div`
   border-color: ${({ theme }) => theme.colors.border};
 `;
 
-export const HeaderPanel = styled(Flexbox)`
+export const HeaderPanel = styled(Flexbox).attrs(() => ({
+  className: 'gap',
+}))`
   padding: 8px 0;
-  grid-gap: 10px;
   margin: 0 0 10px 0;
 `;
 

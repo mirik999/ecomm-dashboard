@@ -12,6 +12,8 @@ import CouponPage from '../pages/Coupon/Coupon.page';
 import CreateCoupon from '../pages/Coupon/CreateCoupon.page';
 import SliderPage from '../pages/Slider/Slider.page';
 import NotFoundPage from '../pages/Rest/NotFound.page';
+import PermissionDenied from '../pages/Rest/PermissionDenied.page';
+import SettingsPage from '../pages/Settings/Settings.page';
 //types
 import { RoutesType } from '../redux/types/routes.types';
 
@@ -151,6 +153,25 @@ export const routes: RoutesType[] = [
   },
   {
     id: 10,
+    name: 'Settings',
+    path: '/settings',
+    exact: true,
+    visible: true,
+    component: () => <SettingsPage />,
+    accessRoles: ['guest', 'admin', 'sudo'],
+    editableRoles: [],
+  },
+  {
+    id: 11,
+    name: 'Permission Denied',
+    path: '/permission-denied',
+    exact: true,
+    visible: false,
+    component: () => <PermissionDenied />,
+    accessRoles: ['guest', 'admin', 'sudo'],
+  },
+  {
+    id: 12,
     name: 'Not Found',
     path: '*',
     exact: true,

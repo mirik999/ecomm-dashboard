@@ -6,13 +6,13 @@ import Flexbox from '../../components/hoc/Flexbox';
 
 type Props = {};
 
-const NotFoundPage: React.FC<Props> = (props) => {
+const PermissionDenied: React.FC<Props> = (props) => {
   const history = useHistory();
 
   return (
     <Container>
       <Flexbox flex="column">
-        <h3>Page not found</h3>
+        <h3>You dont have required permission</h3>
         <h4 className="hoverable" onClick={() => history.goBack()}>
           Go Back
         </h4>
@@ -21,7 +21,7 @@ const NotFoundPage: React.FC<Props> = (props) => {
   );
 };
 
-export default NotFoundPage;
+export default PermissionDenied;
 
 const Container = styled(Flexbox)`
   width: 100%;

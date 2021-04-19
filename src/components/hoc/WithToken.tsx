@@ -12,12 +12,16 @@ type Props = {
 const WithToken: React.FC<Props> = ({ component: Component, ...rest }) => {
   const { authCredentials, user } = useSelector((state: RootState) => state);
 
+  if (!user.id) {
+    return null;
+  }
+
   const hasAccess = rest.accessRoles.some((er: string) =>
     user.roles.includes(er),
   );
 
   if (authCredentials.accessToken && !hasAccess) {
-    return <Redirect to="/404" />;
+    return <Redirect to="/permission-denied" />;
   }
 
   if (rest.computedMatch.url === '/') {
