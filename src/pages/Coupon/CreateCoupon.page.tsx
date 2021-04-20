@@ -4,6 +4,7 @@ import { useLazyQuery, useMutation } from '@apollo/client';
 import { v4 as uuid } from 'uuid';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
+import { Slider } from 'rsuite';
 //components
 import Layout from '../../components/hoc/Layout';
 import Input from '../../components/common/Input';
@@ -65,8 +66,10 @@ const CreateCoupon: React.FC<Props> = (props) => {
   useEffect(() => {
     (async function () {
       const { mode, selected }: any = history.location.state;
-      await getCouponById(selected[0]);
-      setMode(mode);
+      if (mode === 'update') {
+        await getCouponById(selected[0]);
+        setMode(mode);
+      }
     })();
   }, []);
 
@@ -172,9 +175,9 @@ const CreateCoupon: React.FC<Props> = (props) => {
               }
             />
             <DatePick
-              value={state.endDate}
+              label="Expire date"
+              value={new Date(state.endDate)}
               getValue={(val: Date) => setState({ ...state, endDate: val })}
-              time={true}
             />
             <Input
               type="number"
@@ -190,37 +193,30 @@ const CreateCoupon: React.FC<Props> = (props) => {
               getValue={(val: string[]) => _onTypeSelect('type', val)}
             />
           </Flexbox>
-          <Flexbox cls="np" align="start">
-            <Flexbox cls="np gap range-wrap" flex="column" align="start">
-              <Input
-                type="range"
-                label={`Length of coupon ${coupon.length}`}
-                name="length"
+          <Flexbox cls="np gap" align="start">
+            <Flexbox cls="gap range-wrap" flex="column" align="start">
+              <Slider
+                progress
                 value={coupon.length}
-                getValue={(val: number) =>
-                  setCoupon({ ...coupon, length: +val })
-                }
+                onChange={(value) => {
+                  setCoupon({ ...coupon, length: +value });
+                }}
                 min={5}
                 max={10}
               />
-              <Input
-                type="range"
-                label={`Count of coupon ${coupon.count}`}
-                name="count"
+              <Slider
+                progress
                 value={coupon.count}
-                getValue={(val: number) =>
-                  setCoupon({ ...coupon, count: +val })
-                }
+                onChange={(value) => {
+                  setCoupon({ ...coupon, count: +value });
+                }}
                 min={1}
                 max={99}
               />
+              <span>Coupon length: {coupon.length}</span>
+              <span>Coupon count: {coupon.count}</span>
             </Flexbox>
-            <Flexbox
-              cls="np coupon-list-wrap"
-              col="4"
-              flex="column"
-              align="start"
-            >
+            <Flexbox cls="coupon-list-wrap" col="4" flex="column" align="start">
               <span>List of coupon keys</span>
               <ul>
                 {coupon.list.length ? (
@@ -287,15 +283,26 @@ const Body = styled(Flexbox)`
   gap: 10px;
 
   .range-wrap {
-    label {
+    background-color: ${({ theme }) => theme.colors.background};
+    min-height: 110px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: ${({ theme }) => theme.colors.lightBorder};
+    border-radius: 6px;
+    & > div {
+      margin: 10px auto 0 auto;
       width: 100%;
-      input[type='range'] {
-        max-width: 325px;
-      }
     }
   }
 
   .coupon-list-wrap {
+    background-color: ${({ theme }) => theme.colors.background};
+    border-width: 1px;
+    border-style: solid;
+    border-color: ${({ theme }) => theme.colors.lightBorder};
+    border-radius: 6px;
+    padding: 10px !important;
+
     span {
       font-size: ${({ theme }) => theme.fontSize.sm + 'px'};
       color: ${({ theme }) => theme.colors.color};
@@ -306,14 +313,9 @@ const Body = styled(Flexbox)`
     ul {
       display: flex;
       flex-wrap: wrap;
-      background-color: ${({ theme }) => theme.colors.thirdBackground};
-      border-radius: 5px;
-      border-width: 2px 4px 2px 2px;
-      border-style: solid;
-      border-color: ${({ theme }) => theme.colors.border};
+      gap: 10px;
 
       li {
-        padding: 5px;
         font-size: ${({ theme }) => theme.fontSize.xs + 'px'};
         color: ${({ theme }) => theme.colors.color};
       }

@@ -64,7 +64,7 @@ export default Header;
 
 const Container = styled(Flexbox)`
   width: 100%;
-  min-height: 45px;
+  min-height: 47px;
   padding: 7px 30px 7px 10px;
   background-color: ${({ theme }) => theme.colors.secondBackground};
   border-bottom: ${({ theme }) => `2px solid ${theme.colors.border}`};

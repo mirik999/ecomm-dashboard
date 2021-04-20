@@ -40,7 +40,7 @@ const dark: Theme = {
     secondBackground: '#1B1E25',
     thirdBackground: '#3C3F4C',
     border: '#393939',
-    lightBorder: '#292929',
+    lightBorder: '#3c3f43',
     main: '#169de0',
     success: '#89C791',
     warning: '#FFD095',
