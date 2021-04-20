@@ -59,7 +59,7 @@ const Layout: React.FC<Props> = ({ children }) => {
           },
         ]}
       />
-      <Container>
+      <Container align="start">
         <Navigation />
         <Flexbox cls="np" justify="start" align="start" flex="column" col="1">
           <Header />
@@ -85,7 +85,7 @@ const Container = styled(Flexbox)`
     padding: 30px;
     width: 100%;
     background-color: ${({ theme }) => theme.colors.background};
-    height: calc(100vh - 45px);
+    height: calc(100vh - 47px);
     max-width: calc(100vw - 160px);
     overflow: auto;
 

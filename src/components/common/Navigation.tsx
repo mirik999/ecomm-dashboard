@@ -63,8 +63,8 @@ const Container = styled.nav`
   border-right-color: ${({ theme }) => theme.colors.border};
 
   .nav-header {
-    padding: 8.5px 10px;
-    min-height: 45px;
+    padding: 10px;
+    height: 47px;
     background-color: ${({ theme }) => theme.colors.background};
     border-bottom: ${({ theme }) => `2px solid ${theme.colors.border}`};
 

@@ -22,10 +22,10 @@
     <list default="true" id="e021988f-3eda-4fed-af49-63e1e5ec9f51" name="Default Changelist" comment="users done">
       <change beforePath="$PROJECT_DIR$/.eslintcache" beforeDir="false" afterPath="$PROJECT_DIR$/.eslintcache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/common/Header.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/Header.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/common/datePicker/DatePick.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/datePicker/DatePick.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Coupon/CreateCoupon.page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Coupon/CreateCoupon.page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/redux/slices/theme.slice.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/slices/theme.slice.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/common/Navigation.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/Navigation.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/hoc/Layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/hoc/Layout.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Main/Chart.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Main/Chart.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Main/Main.page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Main/Main.page.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -181,7 +181,7 @@
       <workItem from="1618585164024" duration="4704000" />
       <workItem from="1618651823824" duration="12753000" />
       <workItem from="1618820469065" duration="13304000" />
-      <workItem from="1618925200348" duration="17918000" />
+      <workItem from="1618925200348" duration="18647000" />
     </task>
     <task id="LOCAL-00001" summary="users done">
       <created>1612213179093</created>

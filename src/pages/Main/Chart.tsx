@@ -13,6 +13,7 @@ import { isEmpty } from '../../utils/functions.utils';
 HC_exporting(Highcharts);
 
 type Props = {
+  type?: 'column' | 'pie' | 'area';
   theme: 'dark' | 'light';
   header: string;
   data: any;
@@ -21,13 +22,13 @@ type Props = {
 };
 
 const Chart: React.FC<Props> = memo(
-  ({ header, data, status, theme, getDateRange }) => {
+  ({ type, header, data, status, theme, getDateRange }) => {
     const chartRef: any = useRef(null);
     const [range, setRange] = useState<any>({});
 
     const [state, setState] = useState({
       chart: {
-        type: 'column',
+        type,
       },
       title: {
         text: header,
@@ -66,11 +67,7 @@ const Chart: React.FC<Props> = memo(
         setState((prevState: any) => ({
           ...prevState,
           xAxis: {
-            categories: [
-              monthNames[new Date(range.from).getMonth()] +
-                ' - ' +
-                monthNames[new Date(range.to).getMonth()],
-            ],
+            categories: [handleChartRangeText(range)],
           },
         }));
       } else {
@@ -126,6 +123,7 @@ const Chart: React.FC<Props> = memo(
 );
 
 Chart.defaultProps = {
+  type: 'column',
   theme: 'light',
   data: null,
   header: 'Header',
@@ -245,4 +243,14 @@ function toLight() {
       },
     },
   };
+}
+
+function handleChartRangeText(range: { [key: string]: Date }): string {
+  return `${new Date(range.from).getDate()}/${
+    monthNames[new Date(range.from).getMonth()]
+  }/${new Date(range.from).getFullYear()}
+    - ${new Date(range.to).getDate()}/${
+    monthNames[new Date(range.to).getMonth()]
+  }/${new Date(range.from).getFullYear()}
+  `;
 }

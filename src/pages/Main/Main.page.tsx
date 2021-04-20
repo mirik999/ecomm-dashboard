@@ -61,6 +61,7 @@ const MainPage: React.FC<Props> = (props) => {
       <BorderedBox>
         <Flexbox cls="np gap">
           <Chart
+            type="column"
             theme={theme.name as 'dark' | 'light'}
             header="Products data counting"
             data={stats.product}
@@ -68,6 +69,7 @@ const MainPage: React.FC<Props> = (props) => {
             getDateRange={_onDateRangeSelect}
           />
           <Chart
+            type="column"
             theme={theme.name as 'dark' | 'light'}
             header="Payments data counting"
             data={stats.product}
@@ -75,6 +77,7 @@ const MainPage: React.FC<Props> = (props) => {
             getDateRange={_onDateRangeSelect}
           />
           <Chart
+            type="area"
             theme={theme.name as 'dark' | 'light'}
             header="Users data counting"
             data={stats.product}
@@ -82,6 +85,7 @@ const MainPage: React.FC<Props> = (props) => {
             getDateRange={_onDateRangeSelect}
           />
           <Chart
+            type="pie"
             theme={theme.name as 'dark' | 'light'}
             header="Coupons data counting"
             data={stats.product}
