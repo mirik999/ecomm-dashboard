@@ -26,9 +26,9 @@ const Container = styled(Flexbox)`
   background-color: ${({ theme }) => theme.colors.thirdBackground};
   border-radius: 5px;
   padding: 10px;
-  min-width: 250px;
+  min-width: 480px;
   width: 100%;
-  height: 230px;
+  height: 480px;
 
   span {
     color: ${({ theme }) => theme.colors.color};

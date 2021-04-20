@@ -41,6 +41,7 @@ const DateRangePick: React.FC<Props> = ({ getRangeValue }) => {
         onChange={_onRangeChange}
         placement="bottomEnd"
         showOneCalendar={medium}
+        placeholder="All time"
       />
     </Container>
   );

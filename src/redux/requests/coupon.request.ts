@@ -39,7 +39,7 @@ export const GET_COUPON_BY_ID = gql`
 `;
 
 export const GET_COUPONS = gql`
-  query GetCoupons($controls: GetElementsInput!) {
+  query GetCoupons($controls: GetReq!) {
     getCoupons(controls: $controls) {
       count
       payload {
@@ -88,7 +88,7 @@ export const DELETE_COUPONS = gql`
 `;
 
 export const GET_COUPONS_FOR_SELECT = gql`
-  query GetCoupons($controls: GetElementsInput!) {
+  query GetCoupons($controls: GetReq!) {
     getCoupons(controls: $controls) {
       count
       payload {

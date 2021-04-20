@@ -32,7 +32,7 @@ export const GET_BRAND_BY_ID = gql`
 `;
 
 export const GET_BRANDS = gql`
-  query GetBrands($controls: GetElementsInput!) {
+  query GetBrands($controls: GetReq!) {
     getBrands(controls: $controls) {
       count
       payload {
@@ -79,7 +79,7 @@ export const DELETE_BRANDS = gql`
 `;
 
 export const GET_BRANDS_FOR_SELECT = gql`
-  query GetBrands($controls: GetElementsInput!) {
+  query GetBrands($controls: GetReq!) {
     getBrands(controls: $controls) {
       count
       payload {

@@ -58,7 +58,7 @@ export const GET_PRODUCT_BY_ID = gql`
 `;
 
 export const GET_PRODUCTS = gql`
-  query GetProducts($controls: GetElementsInput!) {
+  query GetProducts($controls: GetReq!) {
     getProducts(controls: $controls) {
       count
       payload {

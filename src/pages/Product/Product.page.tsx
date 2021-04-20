@@ -32,6 +32,7 @@ const ProductPage: React.FC<Props> = (props) => {
   const [rowCount, setRowCount] = useState<number>(10);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [deepSearch, setDeepSearch] = useState<string>('');
+  const [dateRange, setDateRange] = useState<{ [key: string]: Date }>({});
   const [unSelect, setUnSelect] = useState<boolean>(false);
 
   useEffect(() => {
@@ -44,7 +45,13 @@ const ProductPage: React.FC<Props> = (props) => {
 
   useEffect(() => {
     (async function () {
-      await getProducts(currentPage, rowCount, deepSearch);
+      await getProducts(
+        currentPage,
+        rowCount,
+        deepSearch,
+        dateRange.from,
+        dateRange.to,
+      );
     })();
   }, []);
 
@@ -52,6 +59,8 @@ const ProductPage: React.FC<Props> = (props) => {
     pg: number,
     rc: number,
     kw: string,
+    from: Date | null,
+    to: Date | null,
   ): Promise<void> {
     try {
       await GetProducts({
@@ -60,6 +69,8 @@ const ProductPage: React.FC<Props> = (props) => {
             offset: (pg - 1) * rc,
             limit: rc,
             keyword: kw,
+            from: to === null ? null : from,
+            to: to,
           },
         },
       });
@@ -70,17 +81,35 @@ const ProductPage: React.FC<Props> = (props) => {
 
   async function getPageFromTable(pageNumber: number): Promise<void> {
     setCurrentPage(pageNumber);
-    await getProducts(pageNumber, rowCount, deepSearch);
+    await getProducts(
+      pageNumber,
+      rowCount,
+      deepSearch,
+      dateRange.from,
+      dateRange.to,
+    );
   }
 
   async function getRowCountFromTable(rc: number): Promise<void> {
     setRowCount(rc);
-    await getProducts(currentPage, rc, deepSearch);
+    await getProducts(
+      currentPage,
+      rc,
+      deepSearch,
+      dateRange.from,
+      dateRange.to,
+    );
   }
 
   async function getDeepSearchFromTable(keyword: string): Promise<void> {
     setDeepSearch(keyword);
-    await getProducts(currentPage, rowCount, keyword);
+    await getProducts(
+      currentPage,
+      rowCount,
+      keyword,
+      dateRange.from,
+      dateRange.to,
+    );
   }
 
   async function getIdsAndDisable(ids: string[]): Promise<void> {
@@ -122,6 +151,23 @@ const ProductPage: React.FC<Props> = (props) => {
     }
   }
 
+  async function getDateRange(range: { [key: string]: Date }): Promise<void> {
+    setDateRange({ ...dateRange, ...range });
+    if (range.to === null) {
+      await getProducts(currentPage, rowCount, deepSearch, null, null);
+    } else if (range.from.toString() === range.to.toString()) {
+      await getProducts(currentPage, rowCount, deepSearch, null, null);
+    } else {
+      await getProducts(
+        currentPage,
+        rowCount,
+        deepSearch,
+        range.from,
+        range.to,
+      );
+    }
+  }
+
   function handleProductsState(ids: string[], isDisabled: boolean) {
     const updatedProducts = products.map((product) => {
       if (ids.includes(product.id)) {
@@ -156,7 +202,7 @@ const ProductPage: React.FC<Props> = (props) => {
         getIdsAndDisable={getIdsAndDisable}
         getIdsAndActivate={getIdsAndActivate}
         getIdsAndDelete={getIdsAndDelete}
-        getDateRange={(val) => false}
+        getDateRange={getDateRange}
         path="products"
         exclude={excludeList}
         error={!!getResponse.error}

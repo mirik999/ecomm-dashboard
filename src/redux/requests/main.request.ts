@@ -1,21 +1,14 @@
 import { gql } from '@apollo/client';
 
 export const GET_STATISTICS = gql`
-  query {
-    getAll {
+  query GetAll($dateRange: DateRangeReq!) {
+    getAll(dateRange: $dateRange) {
       product {
         count
-        isDisabled
-        sold
         sale
-      }
-      category {
-        count
-        isDisabled
-      }
-      brand {
-        count
-        isDisabled
+        new
+        used
+        defective
       }
     }
   }

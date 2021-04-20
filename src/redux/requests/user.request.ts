@@ -54,7 +54,7 @@ export const GET_USER_BY_ID = gql`
 `;
 
 export const GET_USERS = gql`
-  query GetUsers($controls: GetElementsInput!) {
+  query GetUsers($controls: GetReq!) {
     getUsers(controls: $controls) {
       count
       payload {

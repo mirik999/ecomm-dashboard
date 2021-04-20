@@ -35,7 +35,7 @@ export const GET_CATEGORY_BY_ID = gql`
 `;
 
 export const GET_CATEGORIES = gql`
-  query GetCategories($controls: GetElementsInput!) {
+  query GetCategories($controls: GetReq!) {
     getCategories(controls: $controls) {
       count
       payload {
@@ -80,7 +80,7 @@ export const DELETE_CATEGORIES = gql`
 `;
 
 export const GET_CATEGORIES_FOR_SELECT = gql`
-  query GetCategories($controls: GetElementsInput!) {
+  query GetCategories($controls: GetReq!) {
     getCategories(controls: $controls) {
       count
       payload {
