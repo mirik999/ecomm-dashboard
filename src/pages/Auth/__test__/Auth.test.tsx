@@ -5,7 +5,7 @@ import 'jest-styled-components';
 //components
 import AuthPage from '../Auth.page';
 import Login from '../Login';
-import NotificationBox from '../../../components/notificationBox';
+import NotificationBox from '../../../components/common/notificationBox';
 
 describe('Auth page tests', () => {
   it('should render component without crash', () => {

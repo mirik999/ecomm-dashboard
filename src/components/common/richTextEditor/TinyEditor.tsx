@@ -2,12 +2,12 @@ import React from 'react';
 import { Editor } from '@tinymce/tinymce-react';
 import styled from 'styled-components';
 //components
-import Flexbox from '../hoc/Flexbox';
+import Flexbox from '../../hoc/Flexbox';
 //templates
 import { templates } from './templates';
 //utils
-import { imageUploadAndGetUrl } from '../../utils/cloudinary.utils';
-import { getFromLocalStorage } from '../../utils/storage.utils';
+import { imageUploadAndGetUrl } from '../../../utils/cloudinary.utils';
+import { getFromLocalStorage } from '../../../utils/storage.utils';
 
 type Props = {
   label: string;

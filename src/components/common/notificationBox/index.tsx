@@ -2,11 +2,11 @@ import React, { memo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 //components
 import ErrorBox from './ErrorBox';
-import Flexbox from '../hoc/Flexbox';
+import Flexbox from '../../hoc/Flexbox';
 //types
-import { RootState } from '../../redux/store';
+import { RootState } from '../../../redux/store';
 //actions
-import { removeNetStatus } from '../../redux/slices/net-status.slice';
+import { removeNetStatus } from '../../../redux/slices/net-status.slice';
 
 type Props = {};
 

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 //components
-import Flexbox from '../hoc/Flexbox';
+import Flexbox from '../../hoc/Flexbox';
 
 export const Container = styled.div`
   overflow: auto;

@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import { useLocation } from 'react-router-dom';
 import { ButtonToolbar } from 'rsuite';
 //components
-import Flexbox from '../hoc/Flexbox';
-import Button from '../common/Button';
+import Flexbox from '../../hoc/Flexbox';
+import Button from '../Button';
 
 const buttons: any = [
   {

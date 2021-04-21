@@ -17,7 +17,7 @@ import { useHistory } from 'react-router-dom';
 //components
 import WithToken from './components/hoc/WithToken';
 import WithoutToken from './components/hoc/WithoutToken';
-import NotificationBox from './components/notificationBox';
+import NotificationBox from './components/common/notificationBox';
 //request
 import { REFRESH_TOKEN } from './redux/requests/user.request';
 //action

@@ -12,7 +12,7 @@ import SingleSelect from '../../components/common/selectable/SingleSelect';
 import MultiSelect from '../../components/common/selectable/MultiSelect';
 import ColorPick from '../../components/common/ColorPick';
 import Checkbox from '../../components/common/Checkbox';
-import TinyEditor from '../../components/richTextEditor/TinyEditor';
+import TinyEditor from '../../components/common/richTextEditor/TinyEditor';
 import Flexbox from '../../components/hoc/Flexbox';
 import HeaderLine from '../../components/common/HeaderLine';
 import BorderedBox from '../../components/hoc/BorderedBox';

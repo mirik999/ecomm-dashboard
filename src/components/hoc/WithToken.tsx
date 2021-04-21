@@ -3,6 +3,8 @@ import { useSelector } from 'react-redux';
 import { Route, Redirect } from 'react-router-dom';
 //types
 import { RootState } from '../../redux/store';
+//utils
+import { getFromCookies } from '../../utils/storage.utils';
 
 type Props = {
   component: React.FunctionComponent<any>;
@@ -11,8 +13,13 @@ type Props = {
 
 const WithToken: React.FC<Props> = ({ component: Component, ...rest }) => {
   const { authCredentials, user } = useSelector((state: RootState) => state);
+  const isLoggedIn = getFromCookies('authCredentials');
 
-  if (!user.id) {
+  if (!user.id && !isLoggedIn) {
+    return <Redirect to="/auth" />;
+  }
+
+  if (!user.id && isLoggedIn) {
     return null;
   }
 
