@@ -30,3 +30,6 @@ yarn-error.log*
 debug.log
 *.log
 *.eslintcache
+
+#settings
+/settings.txt

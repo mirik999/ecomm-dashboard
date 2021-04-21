@@ -1,4 +1,4 @@
-# General Information
+# Bootstrap
 This project was created and maintained by [Mirik999](https://github.com/mirik999)  
 Package manager (preferable to use ```yarn```)
 
@@ -34,7 +34,5 @@ Some common components and layers styled with
 |-.editorconfig ( for single coding rule )
 |-.prettierrc ( for single coding rule / must have )
 ```
-
-
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app)
