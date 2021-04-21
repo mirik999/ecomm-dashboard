@@ -13,24 +13,24 @@ Some common components and layers styled with
 ## Folder structure
 ```angular2html
 |-src  
-&nbsp;&nbsp;|--assets (static files, images ...)  
-  |--components  
-&nbsp;&nbsp;|----common ( reusable components )  
-&nbsp;&nbsp;|----hoc ( layers and wrappers )  
-&nbsp;&nbsp;|--config  
-&nbsp;&nbsp;|--hooks  
-&nbsp;&nbsp;|--pages  
-&nbsp;&nbsp;|----each folder one exact route with own components 
-&nbsp;&nbsp;|----except Rest, this folder contains rest routes  
-&nbsp;&nbsp;|--redux  
-&nbsp;&nbsp;|----requests (graphql schemas)  
-&nbsp;&nbsp;|----slices ( redux actions and reducers )  
-&nbsp;&nbsp;|----types  
-&nbsp;&nbsp;|----store.ts ( redux global store )  
-  |--utils ( contains all third party helpers )
-  |--App.tsx ( entry component )
-  |--index.tsx ( entry file )
-  |--index.css ( for some common rewrite rules )
+|--assets (static files, images ...)  
+|--components  
+|----common ( reusable components )  
+|----hoc ( layers and wrappers )  
+|--config  
+|--hooks  
+|--pages  
+|----each folder one exact route with own components 
+|----except Rest, this folder contains rest routes  
+|--redux  
+|----requests (graphql schemas)  
+|----slices ( redux actions and reducers )  
+|----types
+|----store.ts ( redux global store )  
+|--utils ( contains all third party helpers )
+|--App.tsx ( entry component )
+|--index.tsx ( entry file )
+|--index.css ( for some common rewrite rules )
 |-.editorconfig ( for single coding rule )
 |-.prettierrc ( for single coding rule / must have )
 ```
