@@ -11,7 +11,7 @@ Some common components and layers styled with
 [rsuite ui components](https://rsuitejs.com/)
 
 ## Folder structure
-```html
+```angular2html
 |-src  
 &nbsp;&nbsp;|--assets (static files, images ...)  
   |--components  
