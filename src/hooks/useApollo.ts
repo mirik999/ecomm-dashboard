@@ -67,7 +67,6 @@ function useApollo() {
               )
                 .filter((value) => Boolean(value))
                 .flatMap((accessToken) => {
-                  console.log('accessToken', accessToken);
                   const oldHeaders = operation.getContext().headers;
                   // modify the operation context with a new token
                   operation.setContext({
@@ -78,9 +77,7 @@ function useApollo() {
                   });
 
                   // retry the request, returning the new observable
-                  console.log('get context after set', operation.getContext());
                   return forward(operation).map((res) => {
-                    console.log('after forwards', res);
                     return res;
                   });
                 });
