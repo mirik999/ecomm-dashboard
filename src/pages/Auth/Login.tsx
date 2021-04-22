@@ -28,52 +28,49 @@ const initialState = {
   clientId: uuid(),
 };
 
-const Login: React.FC<Props> = memo(
-  () => {
-    const dispatch = useDispatch();
-    const [LoginUser] = useMutation(LOGIN_USER);
-    const [state, setState] = useState<userData>(initialState);
+const Login: React.FC<Props> = () => {
+  const dispatch = useDispatch();
+  const [LoginUser] = useMutation(LOGIN_USER);
+  const [state, setState] = useState<userData>(initialState);
 
-    async function _onClick(): Promise<void> {
-      try {
-        const payload = await LoginUser({
-          variables: {
-            user: state,
-          },
-        });
-        const data = payload.data.loginUser;
-        dispatch(saveToken(data));
-        dispatch(saveUser());
-      } catch (err) {
-        dispatch(saveNetStatus(err.graphQLErrors));
-      }
+  async function _onClick(): Promise<void> {
+    try {
+      const payload = await LoginUser({
+        variables: {
+          user: state,
+        },
+      });
+      const data = payload.data.loginUser;
+      dispatch(saveToken(data));
+      dispatch(saveUser());
+    } catch (err) {
+      dispatch(saveNetStatus(err.graphQLErrors));
     }
+  }
 
-    return (
-      <LoginWrap flex="column" justify="start" align="start">
-        <header>
-          <h3>Authorization</h3>
-        </header>
-        <Input
-          type="email"
-          label="E-mail"
-          name="email"
-          value={state.email}
-          getValue={(val: string) => setState({ ...state, email: val })}
-        />
-        <Input
-          type="password"
-          label="Password"
-          name="password"
-          value={state.password}
-          getValue={(val: string) => setState({ ...state, password: val })}
-        />
-        <Divider label="Action" />
-        <Button appearance="primary" label="ENTER" onAction={_onClick} />
-      </LoginWrap>
-    );
-  },
-  () => true,
-);
+  return (
+    <LoginWrap flex="column" justify="start" align="start">
+      <header>
+        <h3>Authorization</h3>
+      </header>
+      <Input
+        type="email"
+        label="E-mail"
+        name="email"
+        value={state.email}
+        getValue={(val: string) => setState({ ...state, email: val })}
+      />
+      <Input
+        type="password"
+        label="Password"
+        name="password"
+        value={state.password}
+        getValue={(val: string) => setState({ ...state, password: val })}
+      />
+      <Divider label="Action" />
+      <Button appearance="primary" label="ENTER" onAction={_onClick} />
+    </LoginWrap>
+  );
+};
 
 export default Login;

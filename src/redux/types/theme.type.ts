@@ -45,3 +45,5 @@ export type Theme = {
     error?: string;
   };
 };
+
+export type fontSizeEnum = 'small' | 'medium' | 'hd' | 'fhd';
