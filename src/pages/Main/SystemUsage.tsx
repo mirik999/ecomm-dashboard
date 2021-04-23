@@ -6,24 +6,18 @@ import LoadingCard from './LoadingCard';
 import Flexbox from '../../components/hoc/Flexbox';
 //types
 import { SystemInfo } from '../../redux/types/systemInfo.type';
-//utils
-import io from '../../utils/socket.utils';
 //hooks
 import { useInterval } from '../../hooks/useInterval';
-//socket
-const socket = io('statistic');
+import useSocket from '../../hooks/useSocket';
 
 type Props = {};
 
 const SystemUsage: React.FC<Props> = (props) => {
   const [systemInfo, setSystemInfo] = useState<Partial<SystemInfo>>({});
+  const socket = useSocket('statistic');
 
   useEffect(() => {
-    socket.connect();
     socket.on('sendSystemInfo', handleSystemInfo);
-    return () => {
-      socket.disconnect();
-    };
   }, [socket]);
 
   useInterval(() => {

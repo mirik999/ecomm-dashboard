@@ -11,7 +11,9 @@ import BorderedBox from '../../components/hoc/BorderedBox';
 import { GET_STATISTICS } from '../../redux/requests/main.request';
 //actions
 import { saveNetStatus } from '../../redux/slices/net-status.slice';
+//types
 import { RootState } from '../../redux/store';
+import SystemUsage from './SystemUsage';
 
 type Props = {};
 

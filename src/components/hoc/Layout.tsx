@@ -1,12 +1,23 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import styled from 'styled-components';
 import Helmet from 'react-helmet';
+import { useLazyQuery } from '@apollo/client';
+import { useDispatch, useSelector } from 'react-redux';
 //components
 import Header from '../common/Header';
 import Navigation from '../common/Navigation';
 import Flexbox from './Flexbox';
 //types
+import { RootState } from '../../redux/store';
+//actions
+import { removeToken } from '../../redux/slices/auth-credentials.slice';
+import { removeUser } from '../../redux/slices/user.slice';
+import { saveNetStatus } from '../../redux/slices/net-status.slice';
+//request
+import { LOGOUT_USER } from '../../redux/requests/user.request';
+//hooks
 import useTheme from '../../hooks/useTheme';
+import useSocket from '../../hooks/useSocket';
 
 type Props = {
   children: React.ReactNode;
@@ -14,6 +25,33 @@ type Props = {
 
 const Layout: React.FC<Props> = ({ children }) => {
   const themeCss = useTheme();
+  const dispatch = useDispatch();
+  const socket = useSocket('user');
+  const [Logout] = useLazyQuery(LOGOUT_USER);
+  const { user, authCredentials } = useSelector((state: RootState) => state);
+
+  useEffect(() => {
+    socket.on('logoutUser', async (id: string) => {
+      if (user.id === id) {
+        console.log('im logout');
+        await _onLogout();
+      }
+    });
+  }, []);
+
+  async function _onLogout(): Promise<void> {
+    try {
+      await Logout({
+        variables: {
+          clientId: authCredentials.clientId,
+        },
+      });
+      dispatch(removeToken());
+      dispatch(removeUser());
+    } catch (err) {
+      dispatch(saveNetStatus(err.graphQLErrors));
+    }
+  }
 
   return (
     <Fragment>
