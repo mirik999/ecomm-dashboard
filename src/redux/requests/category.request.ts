@@ -56,7 +56,7 @@ export const GET_CATEGORIES = gql`
 `;
 
 export const DISABLE_CATEGORIES = gql`
-  mutation DisableCategories($disabledCategories: GetByIdsInput!) {
+  mutation DisableCategories($disabledCategories: GetByIdsReq!) {
     disableCategories(disabledCategories: $disabledCategories) {
       id
     }
@@ -64,7 +64,7 @@ export const DISABLE_CATEGORIES = gql`
 `;
 
 export const ACTIVATE_CATEGORIES = gql`
-  mutation ActivateCategories($activateCategories: GetByIdsInput!) {
+  mutation ActivateCategories($activateCategories: GetByIdsReq!) {
     activateCategories(activateCategories: $activateCategories) {
       id
     }
@@ -72,7 +72,7 @@ export const ACTIVATE_CATEGORIES = gql`
 `;
 
 export const DELETE_CATEGORIES = gql`
-  mutation DeleteCategories($deleteCategories: GetByIdsInput!) {
+  mutation DeleteCategories($deleteCategories: GetByIdsReq!) {
     deleteCategories(deleteCategories: $deleteCategories) {
       ids
     }

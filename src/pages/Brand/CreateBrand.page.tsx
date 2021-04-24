@@ -5,7 +5,6 @@ import { useDispatch } from 'react-redux';
 import { v4 as uuid } from 'uuid';
 import styled from 'styled-components';
 //components
-import Layout from '../../components/hoc/Layout';
 import Input from '../../components/common/Input';
 import Flexbox from '../../components/hoc/Flexbox';
 import Button from '../../components/common/Button';
@@ -173,7 +172,7 @@ const CreateBrand: React.FC<Props> = (props) => {
   }
 
   return (
-    <Layout>
+    <>
       <HeaderLine label="Create brand" goBack={true} />
       <BorderedBox>
         <Body align="start">
@@ -211,7 +210,7 @@ const CreateBrand: React.FC<Props> = (props) => {
           />
         </FooterPanel>
       </BorderedBox>
-    </Layout>
+    </>
   );
 };
 

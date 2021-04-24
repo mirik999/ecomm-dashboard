@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 //components
-import Layout from '../../components/hoc/Layout';
 import BorderedBox from '../../components/hoc/BorderedBox';
 import HeaderLine from '../../components/common/HeaderLine';
 import Flexbox from '../../components/hoc/Flexbox';
@@ -36,7 +35,7 @@ const effect: OptionType[] = [
 
 const SliderPage: React.FC<Props> = (props) => {
   return (
-    <Layout>
+    <>
       <HeaderLine label="sliders" />
       {/* dashboard */}
       <Container>
@@ -45,7 +44,7 @@ const SliderPage: React.FC<Props> = (props) => {
           <SliderAdv direction={direction} effect={effect} />
         </Flexbox>
       </Container>
-    </Layout>
+    </>
   );
 };
 

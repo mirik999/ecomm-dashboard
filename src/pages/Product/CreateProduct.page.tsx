@@ -4,7 +4,6 @@ import { useLazyQuery, useMutation } from '@apollo/client';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 //components
-import Layout from '../../components/hoc/Layout';
 import Input from '../../components/common/Input';
 import Button from '../../components/common/Button';
 import UploadZone from '../../components/common/UploadZone';
@@ -269,7 +268,7 @@ const CreateProduct: React.FC<Props> = (props) => {
   }
 
   return (
-    <Layout>
+    <>
       <Container>
         <HeaderLine label="Create Product" goBack={true} />
         <BorderedBox>
@@ -435,7 +434,7 @@ const CreateProduct: React.FC<Props> = (props) => {
           </Flexbox>
         </BorderedBox>
       </Container>
-    </Layout>
+    </>
   );
 };
 

@@ -69,7 +69,7 @@ export const GET_USERS = gql`
 `;
 
 export const DISABLE_USERS = gql`
-  mutation DisableUsers($disabledUsers: GetByIdsInput!) {
+  mutation DisableUsers($disabledUsers: GetByIdsReq!) {
     disableUsers(disabledUsers: $disabledUsers) {
       ids
     }
@@ -77,7 +77,7 @@ export const DISABLE_USERS = gql`
 `;
 
 export const ACTIVATE_USERS = gql`
-  mutation ActivateUsers($activateUsers: GetByIdsInput!) {
+  mutation ActivateUsers($activateUsers: GetByIdsReq!) {
     activateUsers(activateUsers: $activateUsers) {
       ids
     }
@@ -85,7 +85,7 @@ export const ACTIVATE_USERS = gql`
 `;
 
 export const DELETE_USERS = gql`
-  mutation DeleteUsers($deleteUsers: GetByIdsInput!) {
+  mutation DeleteUsers($deleteUsers: GetByIdsReq!) {
     deleteUsers(deleteUsers: $deleteUsers) {
       ids
     }

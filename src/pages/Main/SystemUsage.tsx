@@ -8,13 +8,15 @@ import Flexbox from '../../components/hoc/Flexbox';
 import { SystemInfo } from '../../redux/types/systemInfo.type';
 //hooks
 import { useInterval } from '../../hooks/useInterval';
-import useSocket from '../../hooks/useSocket';
+//socket
+import io from '../../utils/socket.utils';
+
+const socket = io('statistic');
 
 type Props = {};
 
 const SystemUsage: React.FC<Props> = (props) => {
   const [systemInfo, setSystemInfo] = useState<Partial<SystemInfo>>({});
-  const socket = useSocket('statistic');
 
   useEffect(() => {
     socket.on('sendSystemInfo', handleSystemInfo);

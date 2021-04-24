@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import { useSelector } from 'react-redux';
 import { HiMenuAlt1 } from 'react-icons/hi';
@@ -15,6 +15,11 @@ type Props = {};
 
 const Navigation: React.FC<Props> = (props) => {
   const { user } = useSelector((state: RootState) => state);
+  const location = useLocation();
+
+  if (location.pathname === '/auth') {
+    return null;
+  }
 
   return (
     <Container>

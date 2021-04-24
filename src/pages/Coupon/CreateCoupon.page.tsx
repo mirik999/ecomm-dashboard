@@ -6,7 +6,6 @@ import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import { Slider } from 'rsuite';
 //components
-import Layout from '../../components/hoc/Layout';
 import Input from '../../components/common/Input';
 import Button from '../../components/common/Button';
 import Flexbox from '../../components/hoc/Flexbox';
@@ -153,7 +152,7 @@ const CreateCoupon: React.FC<Props> = (props) => {
   }
 
   return (
-    <Layout>
+    <>
       <HeaderLine label="Create coupon" goBack={true} />
       <BorderedBox>
         <Body flex="column" align="start">
@@ -269,7 +268,7 @@ const CreateCoupon: React.FC<Props> = (props) => {
           />
         </FooterPanel>
       </BorderedBox>
-    </Layout>
+    </>
   );
 };
 

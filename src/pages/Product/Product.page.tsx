@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useLazyQuery, useMutation } from '@apollo/client';
 import { useDispatch } from 'react-redux';
 //components
-import Layout from '../../components/hoc/Layout';
 import Table from '../../components/common/table/Table';
 import HeaderLine from '../../components/common/HeaderLine';
 //types
@@ -190,7 +189,7 @@ const ProductPage: React.FC<Props> = (props) => {
   }
 
   return (
-    <Layout>
+    <>
       <HeaderLine label="Products" />
       {/*  table */}
       <Table
@@ -208,7 +207,7 @@ const ProductPage: React.FC<Props> = (props) => {
         error={!!getResponse.error}
         unSelect={unSelect}
       />
-    </Layout>
+    </>
   );
 };
 

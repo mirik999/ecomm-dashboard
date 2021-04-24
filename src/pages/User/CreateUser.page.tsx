@@ -4,7 +4,6 @@ import { useLazyQuery, useMutation } from '@apollo/client';
 import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
 //components
-import Layout from '../../components/hoc/Layout';
 import Input from '../../components/common/Input';
 import Button from '../../components/common/Button';
 import Flexbox from '../../components/hoc/Flexbox';
@@ -18,8 +17,10 @@ import { RootState } from '../../redux/store';
 import { UPDATE_USER, GET_USER_BY_ID } from '../../redux/requests/user.request';
 //actions
 import { saveNetStatus } from '../../redux/slices/net-status.slice';
-//hooks
-import useSocket from '../../hooks/useSocket';
+//socket
+import io from '../../utils/socket.utils';
+
+const socket = io('user');
 
 const initialState = {
   id: '',
@@ -43,7 +44,6 @@ const CreatUser: React.FC<Props> = (props) => {
   const location = useLocation<QueryState>();
   const history = useHistory();
   const dispatch = useDispatch();
-  const socket = useSocket();
   //graphql
   const [UpdateUser, updateResponse] = useMutation(UPDATE_USER);
   const [GetUserById, getResponse] = useLazyQuery(GET_USER_BY_ID);
@@ -101,7 +101,7 @@ const CreatUser: React.FC<Props> = (props) => {
   }
 
   return (
-    <Layout>
+    <>
       <HeaderLine label="Update user" goBack={true} />
       <BorderedBox>
         <Body>
@@ -143,7 +143,7 @@ const CreatUser: React.FC<Props> = (props) => {
           />
         </FooterPanel>
       </BorderedBox>
-    </Layout>
+    </>
   );
 };
 

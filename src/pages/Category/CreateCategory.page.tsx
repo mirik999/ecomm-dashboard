@@ -5,7 +5,6 @@ import { v4 as uuid } from 'uuid';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 //components
-import Layout from '../../components/hoc/Layout';
 import Input from '../../components/common/Input';
 import Button from '../../components/common/Button';
 import Divider from '../../components/common/Divider';
@@ -116,7 +115,7 @@ const CreateCategory: React.FC<Props> = (props) => {
   }
 
   return (
-    <Layout>
+    <>
       <HeaderLine label="Create category" goBack={true} />
       <BorderedBox>
         <Body>
@@ -173,7 +172,7 @@ const CreateCategory: React.FC<Props> = (props) => {
           </InfoCardsWrap>
         ) : null}
       </BorderedBox>
-    </Layout>
+    </>
   );
 };
 

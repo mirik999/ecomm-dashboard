@@ -64,7 +64,7 @@ export const GET_COUPONS = gql`
 `;
 
 export const DISABLE_COUPONS = gql`
-  mutation DisableCoupons($disabledCoupons: GetByIdsInput!) {
+  mutation DisableCoupons($disabledCoupons: GetByIdsReq!) {
     disableCoupons(disabledCoupons: $disabledCoupons) {
       ids
     }
@@ -72,7 +72,7 @@ export const DISABLE_COUPONS = gql`
 `;
 
 export const ACTIVATE_COUPONS = gql`
-  mutation ActivateCoupons($activateCoupons: GetByIdsInput!) {
+  mutation ActivateCoupons($activateCoupons: GetByIdsReq!) {
     activateCoupons(activateCoupons: $activateCoupons) {
       ids
     }
@@ -80,7 +80,7 @@ export const ACTIVATE_COUPONS = gql`
 `;
 
 export const DELETE_COUPONS = gql`
-  mutation DeleteCoupon($deleteCoupons: GetByIdsInput!) {
+  mutation DeleteCoupon($deleteCoupons: GetByIdsReq!) {
     deleteCoupons(deleteCoupons: $deleteCoupons) {
       ids
     }

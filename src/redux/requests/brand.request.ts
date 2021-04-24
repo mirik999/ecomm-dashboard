@@ -55,7 +55,7 @@ export const GET_BRANDS = gql`
 `;
 
 export const DISABLE_BRANDS = gql`
-  mutation DisableBrands($disabledBrands: GetByIdsInput!) {
+  mutation DisableBrands($disabledBrands: GetByIdsReq!) {
     disableBrands(disabledBrands: $disabledBrands) {
       id
     }
@@ -63,7 +63,7 @@ export const DISABLE_BRANDS = gql`
 `;
 
 export const ACTIVATE_BRANDS = gql`
-  mutation ActivateBrands($activateBrands: GetByIdsInput!) {
+  mutation ActivateBrands($activateBrands: GetByIdsReq!) {
     activateBrands(activateBrands: $activateBrands) {
       id
     }
@@ -71,7 +71,7 @@ export const ACTIVATE_BRANDS = gql`
 `;
 
 export const DELETE_BRANDS = gql`
-  mutation DeleteBrands($deleteBrands: GetByIdsInput!) {
+  mutation DeleteBrands($deleteBrands: GetByIdsReq!) {
     deleteBrands(deleteBrands: $deleteBrands) {
       ids
     }

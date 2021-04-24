@@ -1,8 +1,9 @@
-import React, { memo } from 'react';
+import React, { memo, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { MdExitToApp } from 'react-icons/md';
 import { useLazyQuery } from '@apollo/client';
 import styled from 'styled-components';
+import { useLocation } from 'react-router-dom';
 //components
 import Flexbox from '../hoc/Flexbox';
 //types
@@ -13,16 +14,35 @@ import { removeUser } from '../../redux/slices/user.slice';
 import { saveNetStatus } from '../../redux/slices/net-status.slice';
 //request
 import { LOGOUT_USER } from '../../redux/requests/user.request';
+//socket
+import io from '../../utils/socket.utils';
+
+const socket = io('user');
 
 type Props = {};
 
 const Header: React.FC<Props> = memo(
   (props) => {
     const dispatch = useDispatch();
+    const location = useLocation();
     //graphql
     const [Logout] = useLazyQuery(LOGOUT_USER);
     //state
     const { user, authCredentials } = useSelector((state: RootState) => state);
+
+    useEffect(() => {
+      socket.on('logoutUser', async (id: string) => {
+        if (user.id === id) {
+          await _onLogout();
+        }
+      });
+
+      socket.on('logoutUsers', async (ids: string[]) => {
+        if (ids.includes(user.id)) {
+          await _onLogout();
+        }
+      });
+    }, []);
 
     async function _onLogout(): Promise<void> {
       try {
@@ -36,6 +56,10 @@ const Header: React.FC<Props> = memo(
       } catch (err) {
         dispatch(saveNetStatus(err.graphQLErrors));
       }
+    }
+
+    if (location.pathname === '/auth') {
+      return null;
     }
 
     return (

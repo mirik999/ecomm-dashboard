@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 //components
-import Layout from '../../components/hoc/Layout';
 import BorderedBox from '../../components/hoc/BorderedBox';
 import HeaderLine from '../../components/common/HeaderLine';
 import Flexbox from '../../components/hoc/Flexbox';
@@ -11,7 +10,7 @@ type Props = {};
 
 const SettingsPage: React.FC<Props> = (props) => {
   return (
-    <Layout>
+    <>
       <HeaderLine label="settings" />
       {/* dashboard */}
       <Container>
@@ -19,7 +18,7 @@ const SettingsPage: React.FC<Props> = (props) => {
           <ThemeSelecting />
         </Flexbox>
       </Container>
-    </Layout>
+    </>
   );
 };
 

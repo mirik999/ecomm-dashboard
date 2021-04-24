@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useLazyQuery, useMutation } from '@apollo/client';
 import { useDispatch } from 'react-redux';
 //components
-import Layout from '../../components/hoc/Layout';
 import Table from '../../components/common/table/Table';
+import HeaderLine from '../../components/common/HeaderLine';
 //types
 import { ProductType } from '../../redux/types/product.type';
 //request
@@ -15,7 +15,10 @@ import {
 } from '../../redux/requests/user.request';
 //actions
 import { saveNetStatus } from '../../redux/slices/net-status.slice';
-import HeaderLine from '../../components/common/HeaderLine';
+//socket
+import io from '../../utils/socket.utils';
+
+const socket = io('user');
 
 type Props = {};
 
@@ -129,16 +132,18 @@ const UserPage: React.FC<Props> = (props) => {
       return product;
     });
     setUsers(updatedUsers);
+    socket.emit('logoutUsers', ids);
   }
 
   function handleUsersList(ids: string[]) {
     const deletedUsers = users.filter((user) => !ids.includes(user.id));
     setUsers(deletedUsers);
     setUnSelect(true);
+    socket.emit('logoutUsers', ids);
   }
 
   return (
-    <Layout>
+    <>
       <HeaderLine label="Users and roles" />
       {/*  table */}
       <Table
@@ -156,7 +161,7 @@ const UserPage: React.FC<Props> = (props) => {
         path="users"
         unSelect={unSelect}
       />
-    </Layout>
+    </>
   );
 };
 

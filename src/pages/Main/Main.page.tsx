@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useLazyQuery } from '@apollo/client';
 import { useDispatch, useSelector } from 'react-redux';
 //components
-import Layout from '../../components/hoc/Layout';
 import Chart from './Chart';
 import Flexbox from '../../components/hoc/Flexbox';
 import HeaderLine from '../../components/common/HeaderLine';
@@ -58,9 +57,10 @@ const MainPage: React.FC<Props> = (props) => {
   }
 
   return (
-    <Layout>
+    <>
       <HeaderLine label="Common Statistics" />
       <BorderedBox>
+        {/*<SystemUsage />*/}
         <Flexbox cls="np gap">
           <Chart
             type="column"
@@ -96,7 +96,7 @@ const MainPage: React.FC<Props> = (props) => {
           />
         </Flexbox>
       </BorderedBox>
-    </Layout>
+    </>
   );
 };
 

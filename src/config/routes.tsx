@@ -1,21 +1,27 @@
-import AuthPage from '../pages/Auth/Auth.page';
-import MainPage from '../pages/Main/Main.page';
-import CategoryPage from '../pages/Category/Category.page';
-import CreateCategory from '../pages/Category/CreateCategory.page';
-import BrandPage from '../pages/Brand/Brand.page';
-import CreateBrand from '../pages/Brand/CreateBrand.page';
-import ProductPage from '../pages/Product/Product.page';
-import CreateProduct from '../pages/Product/CreateProduct.page';
-import UserPage from '../pages/User/User.page';
-import CreateUser from '../pages/User/CreateUser.page';
-import CouponPage from '../pages/Coupon/Coupon.page';
-import CreateCoupon from '../pages/Coupon/CreateCoupon.page';
-import SliderPage from '../pages/Slider/Slider.page';
-import NotFoundPage from '../pages/Rest/NotFound.page';
-import PermissionDenied from '../pages/Rest/PermissionDenied.page';
-import SettingsPage from '../pages/Settings/Settings.page';
+import { lazy } from 'react';
 //types
 import { RoutesType } from '../redux/types/routes.types';
+//lazy routes
+const AuthPage = lazy(() => import('../pages/Auth/Auth.page'));
+const MainPage = lazy(() => import('../pages/Main/Main.page'));
+const CategoryPage = lazy(() => import('../pages/Category/Category.page'));
+const CreateCategory = lazy(
+  () => import('../pages/Category/CreateCategory.page'),
+);
+const BrandPage = lazy(() => import('../pages/Brand/Brand.page'));
+const CreateBrand = lazy(() => import('../pages/Brand/CreateBrand.page'));
+const ProductPage = lazy(() => import('../pages/Product/Product.page'));
+const CreateProduct = lazy(() => import('../pages/Product/CreateProduct.page'));
+const UserPage = lazy(() => import('../pages/User/User.page'));
+const CreateUser = lazy(() => import('../pages/User/CreateUser.page'));
+const CouponPage = lazy(() => import('../pages/Coupon/Coupon.page'));
+const CreateCoupon = lazy(() => import('../pages/Coupon/CreateCoupon.page'));
+const SliderPage = lazy(() => import('../pages/Slider/Slider.page'));
+const NotFoundPage = lazy(() => import('../pages/Rest/NotFound.page'));
+const PermissionDenied = lazy(
+  () => import('../pages/Rest/PermissionDenied.page'),
+);
+const SettingsPage = lazy(() => import('../pages/Settings/Settings.page'));
 
 export const routes: RoutesType[] = [
   {

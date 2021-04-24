@@ -108,7 +108,7 @@ export const GET_PRODUCTS = gql`
 `;
 
 export const DISABLE_PRODUCTS = gql`
-  mutation DisableProducts($disabledProducts: GetByIdsInput!) {
+  mutation DisableProducts($disabledProducts: GetByIdsReq!) {
     disableProducts(disabledProducts: $disabledProducts) {
       ids
     }
@@ -116,7 +116,7 @@ export const DISABLE_PRODUCTS = gql`
 `;
 
 export const ACTIVATE_PRODUCTS = gql`
-  mutation ActivateProducts($activateProducts: GetByIdsInput!) {
+  mutation ActivateProducts($activateProducts: GetByIdsReq!) {
     activateProducts(activateProducts: $activateProducts) {
       ids
     }
@@ -124,7 +124,7 @@ export const ACTIVATE_PRODUCTS = gql`
 `;
 
 export const DELETE_PRODUCTS = gql`
-  mutation DeleteProducts($deleteProducts: GetByIdsInput!) {
+  mutation DeleteProducts($deleteProducts: GetByIdsReq!) {
     deleteProducts(deleteProducts: $deleteProducts) {
       ids
     }
