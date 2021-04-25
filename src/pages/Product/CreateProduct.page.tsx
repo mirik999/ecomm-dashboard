@@ -56,13 +56,14 @@ type Props = {};
 const CreateProduct: React.FC<Props> = (props) => {
   const history = useHistory();
   const dispatch = useDispatch();
-  //state
+  //queries
   const [CreateProduct, createResponse] = useMutation(CREATE_PRODUCT);
   const [UpdateProduct, updateResponse] = useMutation(UPDATE_PRODUCT);
   const [GetCategories, ctgResponse] = useLazyQuery(GET_CATEGORIES_FOR_SELECT);
   const [GetProduct, productResponse] = useLazyQuery(GET_PRODUCT_BY_ID);
   const [GetCoupons, couponsResponse] = useLazyQuery(GET_COUPONS_FOR_SELECT);
   const [GetBrands, brandsResponse] = useLazyQuery(GET_BRANDS_FOR_SELECT);
+  //state
   const [state, setState] = useState<any>(initialState);
   const [mode, setMode] = useState<string>('create');
   const [categories, setCategories] = useState<OptionType[]>([]);
