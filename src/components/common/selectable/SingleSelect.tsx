@@ -1,5 +1,5 @@
 import React, { memo, useEffect, useState } from 'react';
-import { SelectPicker } from 'rsuite';
+import { SelectPicker, Tooltip, Whisper } from 'rsuite';
 import styled from 'styled-components';
 //types
 import { OptionType } from '../../../redux/types/common.type';
@@ -8,17 +8,20 @@ type Props = {
   label?: string;
   value: any;
   cls?: string;
+  required?: boolean;
   options: OptionType[];
   getValue: (val: any, action?: string) => void;
   [key: string]: any;
 };
 
 const SingleSelect: React.FC<Props> = memo(
-  ({ label, value, cls, options, getValue, ...props }) => {
+  ({ label, value, cls, required, options, getValue, ...props }) => {
     const [innerState, setInnerState] = useState<OptionType>({
       id: '',
       name: '',
     });
+
+    const placeholder = required ? `${label} *` : label;
 
     useEffect(() => {
       setInnerState(value);
@@ -33,17 +36,23 @@ const SingleSelect: React.FC<Props> = memo(
 
     return (
       <Label className={cls}>
-        <SelectPicker
-          data={options}
-          onChange={_onChange}
-          value={innerState?.id}
-          labelKey="name"
-          valueKey="id"
-          block
-          placeholder={label}
-          disabled={props.disabled}
-          {...props}
-        />
+        <Whisper
+          trigger={required ? 'hover' : 'none'}
+          speaker={<Tooltip>Required</Tooltip>}
+          placement="topStart"
+        >
+          <SelectPicker
+            data={options}
+            onChange={_onChange}
+            value={innerState?.id}
+            labelKey="name"
+            valueKey="id"
+            block
+            placeholder={placeholder}
+            disabled={props.disabled}
+            {...props}
+          />
+        </Whisper>
       </Label>
     );
   },
@@ -52,6 +61,7 @@ const SingleSelect: React.FC<Props> = memo(
       prevProps.value === nextProps.value &&
       prevProps.disabled === nextProps.disabled &&
       prevProps.label === nextProps.label &&
+      prevProps.required === nextProps.required &&
       prevProps.options.length === nextProps.options.length
     );
   },
@@ -60,6 +70,7 @@ const SingleSelect: React.FC<Props> = memo(
 SingleSelect.defaultProps = {
   label: 'Label',
   cls: '',
+  required: false,
   options: [],
   value: '',
 };

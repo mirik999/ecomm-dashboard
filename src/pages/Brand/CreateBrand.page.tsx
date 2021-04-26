@@ -43,11 +43,11 @@ const CreateBrand: React.FC<Props> = (props) => {
   const [GetBrandById, getResponse] = useLazyQuery(GET_BRAND_BY_ID);
   //state
   const [categories, setCategories] = useState<OptionType[]>([]);
-  const [mode, setMode] = useState<string>('create');
   const [state, setState] = useState<BrandType>({
     id: uuid(),
     ...initialState,
   });
+  const { mode, selected: id }: any = history.location.state;
 
   useEffect(() => {
     (async function () {
@@ -73,10 +73,8 @@ const CreateBrand: React.FC<Props> = (props) => {
 
   useEffect(() => {
     (async function () {
-      const { mode, selected }: any = history.location.state;
       if (mode === 'update') {
-        await getBrandById(selected[0]);
-        setMode(mode);
+        await getBrandById(id[0]);
       }
     })();
   }, []);
@@ -182,12 +180,14 @@ const CreateBrand: React.FC<Props> = (props) => {
             name="name"
             value={state.name}
             getValue={(val: string) => setState({ ...state, name: val })}
+            required={true}
           />
           <MultiSelect
             label="Category"
             value={state.category}
             options={categories}
             getValue={(val: string[]) => _onCategorySelect('category', val)}
+            required={true}
           />
           <UploadZone
             multiple={false}
@@ -207,6 +207,7 @@ const CreateBrand: React.FC<Props> = (props) => {
             appearance="primary"
             label="Reset fields"
             onAction={() => setState(initialState)}
+            disabled={mode === 'update'}
           />
         </FooterPanel>
       </BorderedBox>

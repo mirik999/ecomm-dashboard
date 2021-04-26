@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { RouteComponentProps, useHistory } from 'react-router-dom';
 import { useLazyQuery, useMutation } from '@apollo/client';
 import { v4 as uuid } from 'uuid';
 import { useDispatch } from 'react-redux';
@@ -16,6 +16,7 @@ import HeaderLine from '../../components/common/HeaderLine';
 import BorderedBox from '../../components/hoc/BorderedBox';
 //types
 import { CategoryType, SubCategoryType } from '../../redux/types/category.type';
+import { CreatePageMode } from '../../redux/types/common.type';
 //request
 import {
   CREATE_CATEGORY,
@@ -31,10 +32,20 @@ const initialState = {
   subCategories: [],
 };
 
+interface QueryState
+  extends RouteComponentProps<
+    any, // { myParamProp?: string } params
+    any, // history
+    { selected?: string[]; mode: CreatePageMode } // state
+  > {
+  selected: string[];
+  mode: CreatePageMode;
+}
+
 type Props = {};
 
 const CreateCategory: React.FC<Props> = (props) => {
-  const history = useHistory();
+  const history = useHistory<QueryState>();
   const dispatch = useDispatch();
   //requests
   const [CreateCategory, createResponse] = useMutation(CREATE_CATEGORY);
@@ -45,14 +56,12 @@ const CreateCategory: React.FC<Props> = (props) => {
     id: uuid(),
     ...initialState,
   });
-  const [mode, setMode] = useState<string>('create');
+  const { mode, selected: id } = history.location.state;
 
   useEffect(() => {
     (async function () {
-      const { mode, selected }: any = history.location.state;
       if (mode === 'update') {
-        await getCategoryById(selected[0]);
-        setMode(mode);
+        await getCategoryById(id[0]);
       }
     })();
   }, []);
@@ -125,6 +134,7 @@ const CreateCategory: React.FC<Props> = (props) => {
             name="name"
             value={state.name}
             getValue={(val: string) => setState({ ...state, name: val })}
+            required={true}
           />
           <Input
             type="text"
@@ -132,6 +142,7 @@ const CreateCategory: React.FC<Props> = (props) => {
             name="tabName"
             value={state.tabName}
             getValue={(val: string) => setState({ ...state, tabName: val })}
+            required={true}
           />
         </Body>
         <SubCategories
@@ -159,15 +170,15 @@ const CreateCategory: React.FC<Props> = (props) => {
             appearance="primary"
             label="Reset fields"
             onAction={() => setState(initialState)}
-            cls="m-0 mr-3"
+            disabled={mode === 'update'}
           />
         </FooterPanel>
         {mode === 'update' ? (
           <InfoCardsWrap>
             <Divider label="Connections" />
             <Flexbox cls="np" align="start">
-              <Brands id={state.id!} />
-              <Products id={state.id!} />
+              <Brands id={id[0]} />
+              <Products id={id[0]} />
             </Flexbox>
           </InfoCardsWrap>
         ) : null}

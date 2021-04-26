@@ -1,9 +1,10 @@
 import React, { memo, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { MdExitToApp } from 'react-icons/md';
+import { MdExitToApp, MdNotifications } from 'react-icons/md';
 import { useLazyQuery } from '@apollo/client';
 import styled from 'styled-components';
 import { useLocation } from 'react-router-dom';
+import { Badge } from 'rsuite';
 //components
 import Flexbox from '../hoc/Flexbox';
 //types
@@ -16,6 +17,7 @@ import { saveNetStatus } from '../../redux/slices/net-status.slice';
 import { LOGOUT_USER } from '../../redux/requests/user.request';
 //socket
 import io from '../../utils/socket.utils';
+import Notifications from '../Notifications';
 
 const socket = io('user');
 
@@ -64,15 +66,17 @@ const Header: React.FC<Props> = memo(
 
     return (
       <Container justify="between">
-        <div>{/*<span>path: {path}</span>*/}</div>
-        <Flexbox justify="end">
-          <span>{user.email}</span>
-          <MdExitToApp
-            size={20}
-            color="black"
-            className="hoverable"
-            onClick={_onLogout}
-          />
+        <Flexbox cls="gap" justify="end">
+          <Notifications />
+          <div className="user-email">
+            <span className="user-email">{user.email}</span>
+            <MdExitToApp
+              size={20}
+              color="black"
+              className="hoverable"
+              onClick={_onLogout}
+            />
+          </div>
         </Flexbox>
       </Container>
     );
@@ -93,21 +97,12 @@ const Container = styled(Flexbox)`
   background-color: ${({ theme }) => theme.colors.secondBackground};
   border-bottom: ${({ theme }) => `2px solid ${theme.colors.border}`};
 
-  div:first-child {
-    span {
-      font-size: ${({ theme }) => theme.fontSize.sm + 'px'};
-    }
-  }
+  .user-email {
+    display: flex;
+    align-items: center;
 
-  div:last-child {
-    padding-right: 0;
     span {
-      font-size: ${({ theme }) => theme.fontSize.sm + 'px'};
-    }
-
-    svg {
-      margin-left: 5px;
-      cursor: pointer;
+      margin-right: 5px;
     }
   }
 
@@ -121,6 +116,10 @@ const Container = styled(Flexbox)`
 
   @media screen and (max-width: 767px) {
     padding: 7px 10px;
+
+    & > div {
+      justify-content: space-between;
+    }
   }
 
   @media screen and (max-width: 600px) {

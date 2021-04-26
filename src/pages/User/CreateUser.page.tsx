@@ -31,11 +31,11 @@ const initialState = {
 
 interface QueryState
   extends RouteComponentProps<
-    { myParamProp?: string }, //params
-    any, //history
-    { selected?: any } //state
+    any, // { myParamProp?: string } params
+    any, // history
+    { selected?: string[] } //state
   > {
-  selected: any;
+  selected: string[];
 }
 
 type Props = {};
@@ -129,18 +129,7 @@ const CreatUser: React.FC<Props> = (props) => {
           />
         </Body>
         <FooterPanel>
-          <Button
-            appearance="primary"
-            label="Update"
-            onAction={_onUpdate}
-            cls="m-0 mr-3"
-          />
-          <Button
-            appearance="primary"
-            label="Reset fields"
-            onAction={() => setState(initialState)}
-            cls="m-0 mr-3"
-          />
+          <Button appearance="primary" label="Update" onAction={_onUpdate} />
         </FooterPanel>
       </BorderedBox>
     </>

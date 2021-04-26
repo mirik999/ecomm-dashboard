@@ -67,6 +67,7 @@ const SubCategories: React.FC<Props> = memo(
                 name="name"
                 value={scat.name}
                 getValue={(val: string) => _onChange(i, 'name', val)}
+                required={true}
               />
               <Input
                 type="text"
@@ -74,6 +75,7 @@ const SubCategories: React.FC<Props> = memo(
                 name="tabName"
                 value={scat.tabName}
                 getValue={(val: string) => _onChange(i, 'tabName', val)}
+                required={true}
               />
               <Flexbox
                 className="np remove-btn hoverable"

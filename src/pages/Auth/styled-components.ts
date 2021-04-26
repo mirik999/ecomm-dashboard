@@ -11,7 +11,7 @@ export const Container = styled(Flexbox)`
     position: relative;
     width: 100%;
     max-width: 420px;
-    background-color: ${({ theme }) => theme.colors.white};
+    background-color: ${({ theme }) => theme.colors.secondBackground};
     border: ${({ theme }) => `1px solid ${theme.colors.lightBorder}`};
     padding: 10px;
 

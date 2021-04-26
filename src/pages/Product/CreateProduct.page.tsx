@@ -280,6 +280,7 @@ const CreateProduct: React.FC<Props> = (props) => {
               name="productName"
               value={state.name}
               getValue={(val: string) => _onChange(val, 'name')}
+              required={true}
             />
             <Input
               type="text"
@@ -294,6 +295,7 @@ const CreateProduct: React.FC<Props> = (props) => {
               name="price"
               value={state.price}
               getValue={(val: string) => _onChange(+val, 'price')}
+              required={true}
             />
             <Input
               type="number"
@@ -307,6 +309,7 @@ const CreateProduct: React.FC<Props> = (props) => {
               value={state.category}
               options={categories}
               getValue={(val: string[]) => _onComboSelect('category', val)}
+              required={true}
             />
             <SingleSelect
               label="Brand"
@@ -333,6 +336,7 @@ const CreateProduct: React.FC<Props> = (props) => {
               label="Maximum 1 image and Size less than 500KB"
               getValue={getCoverImage}
               folderInCloud="product_images"
+              required={true}
             />
             <UploadZone
               multiple={true}
@@ -428,7 +432,7 @@ const CreateProduct: React.FC<Props> = (props) => {
                   appearance="primary"
                   label="Reset fields"
                   onAction={() => setState(initialState)}
-                  cls="m-0 mr-3"
+                  disabled={mode === 'update'}
                 />
               </Flexbox>
             </Flexbox>

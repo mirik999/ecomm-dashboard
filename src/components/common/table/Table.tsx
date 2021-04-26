@@ -14,6 +14,7 @@ import {
 } from './styled-components';
 //types
 import { Props } from './props';
+import { CreatePageMode } from '../../../redux/types/common.type';
 //utils
 import { tableBodyHandler } from './body.handler.';
 
@@ -104,7 +105,7 @@ const Table: React.FC<Props> = ({
     }
   }
 
-  function _onRouteChange(mode: string): void {
+  function _onRouteChange(mode: CreatePageMode): void {
     history.push({
       pathname: `/${path}/create`,
       state: {
