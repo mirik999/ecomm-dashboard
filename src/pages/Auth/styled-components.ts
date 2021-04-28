@@ -7,13 +7,13 @@ export const Container = styled(Flexbox)`
   min-height: 100%;
   background-color: ${({ theme }) => theme.colors.background};
 
-  form {
+  .form-wrapper {
     position: relative;
     width: 100%;
     max-width: 420px;
     background-color: ${({ theme }) => theme.colors.secondBackground};
     border: ${({ theme }) => `1px solid ${theme.colors.lightBorder}`};
-    padding: 10px;
+    padding: 20px 10px;
 
     & > span {
       position: absolute;
@@ -31,11 +31,14 @@ export const LoginWrap = styled(Flexbox)`
     width: 100%;
     font-size: ${({ theme }) => theme.fontSize.lg + 'px'};
     color: ${({ theme }) => theme.colors.color};
+    margin-bottom: 10px;
   }
 
-  label {
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
     width: 100%;
-    margin: 10px 0;
   }
 `;
 
@@ -44,10 +47,13 @@ export const RegisterWrap = styled(Flexbox)`
     width: 100%;
     font-size: ${({ theme }) => theme.fontSize.lg + 'px'};
     color: ${({ theme }) => theme.colors.color};
+    margin-bottom: 10px;
   }
 
-  label {
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
     width: 100%;
-    margin: 10px 0;
   }
 `;

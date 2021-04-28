@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 //components
-import Login from './Login';
-import Register from './Register';
+import SignIn from './SignIn';
+import SignUp from './SignUp';
 //styled
 import { Container } from './styled-components';
 //hooks
@@ -19,12 +19,12 @@ const AuthPage: React.FC<Props> = () => {
 
   return (
     <Container justify="center" align="center">
-      <form>
+      <div className="form-wrapper">
         <span className="hoverable" onClick={_onChangeType}>
           {type ? 'Create an account' : 'Already have an account?'}
         </span>
-        {type ? <Login /> : <Register />}
-      </form>
+        {type ? <SignIn /> : <SignUp />}
+      </div>
     </Container>
   );
 };

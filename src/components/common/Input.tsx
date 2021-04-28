@@ -1,78 +1,54 @@
-import React, { useRef } from 'react';
-import { Input as RsInput, Whisper, Tooltip } from 'rsuite';
+import React, { forwardRef } from 'react';
+import { Input as RsInput, InputGroup, Icon, Whisper, Tooltip } from 'rsuite';
 import styled from 'styled-components';
+//types
+import { FieldError } from 'react-hook-form';
 
 type Props = {
-  type?: 'text' | 'number' | 'email' | 'password' | 'phone' | 'range';
-  label?: string;
-  value: any;
-  name: string;
-  cls?: string;
-  required?: boolean;
-  getValue: (val: any) => void;
+  type?: string;
+  value?: any;
+  errorMessage?: FieldError;
   [key: string]: any;
 };
 
-const Input: React.FC<Props> = ({
-  type,
-  label,
-  value,
-  name,
-  cls,
-  required,
-  getValue,
-  ...props
-}) => {
-  const randomNumber = useRef(Math.floor(Math.random() * 1000)).current;
-
-  const isNumberType = type === 'number' || type === 'password';
-  const placeholder = required ? `${label} *` : label;
-
-  function _onChange(val: string) {
-    getValue(val);
-  }
-
-  return (
-    <Label
-      htmlFor={type + label! + randomNumber}
-      className={cls}
-      isPassword={type === 'password'}
-    >
-      <Whisper
-        trigger={required ? 'hover' : 'none'}
-        speaker={<Tooltip>Required</Tooltip>}
-        placement="topStart"
-      >
-        <RsInput
-          type={isNumberType ? 'text' : type}
-          id={type + label! + randomNumber}
-          placeholder={placeholder}
-          name={type}
-          autoComplete="off"
-          value={isNumberType ? value || '' : value}
-          onChange={_onChange}
-          {...props}
-        />
-      </Whisper>
-    </Label>
-  );
-};
+const Input: React.FC<Props> = forwardRef(
+  ({ value, errorMessage, ...props }, ref) => {
+    return (
+      <Container>
+        <InputGroup inside>
+          <RsInput {...props} ref={ref} autoComplete="off" />
+          {errorMessage ? (
+            <Whisper
+              trigger="hover"
+              speaker={<Tooltip>{errorMessage?.message}</Tooltip>}
+              placement="topEnd"
+            >
+              <InputGroup.Addon>
+                <Icon icon="exclamation" size="lg" />
+              </InputGroup.Addon>
+            </Whisper>
+          ) : null}
+        </InputGroup>
+      </Container>
+    );
+  },
+);
 
 Input.defaultProps = {
   type: 'text',
-  label: 'Label',
-  name: 'input-name',
-  cls: '',
-  required: false,
   value: '',
 };
 
 export default Input;
 
-const Label = styled.label<any>`
+const Container = styled.div`
   display: flex;
   flex-direction: column;
+  width: 100%;
   min-width: 220px;
   flex: 1;
-  -webkit-text-security: ${({ isPassword }) => (isPassword ? 'disc' : 'auto')};
+
+  span i {
+    color: ${({ theme }) => theme.colors.error};
+  }
 `;

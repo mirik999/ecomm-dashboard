@@ -82,6 +82,7 @@ const Table: React.FC<Props> = ({
   }
 
   function _onDeepSearch(val: string): void {
+    console.log(val);
     setDeepSearch(val);
   }
 
@@ -207,16 +208,16 @@ const Table: React.FC<Props> = ({
     <Container>
       <HeaderPanel justify="between">
         <Input
-          label="Quick search"
+          placeholder="Quick search"
           name="search"
           value={quickSearch}
-          getValue={_onQuickSearch}
+          onChange={_onQuickSearch}
         />
         <Input
-          label="Deep search"
+          placeholder="Deep search"
           name="deepSearch"
           value={deepSearch}
-          getValue={_onDeepSearch}
+          onChange={_onDeepSearch}
           onKeyDown={_onFilterDeep}
         />
         <DateRangePick getRangeValue={(range) => getDateRange(range)} />

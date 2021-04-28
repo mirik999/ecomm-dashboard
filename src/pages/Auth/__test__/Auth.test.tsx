@@ -4,7 +4,7 @@ import '@testing-library/jest-dom';
 import 'jest-styled-components';
 //components
 import AuthPage from '../Auth.page';
-import Login from '../Login';
+import SignIn from '../SignIn';
 import NotificationBox from '../../../components/common/notificationBox';
 
 describe('Auth page tests', () => {
@@ -14,7 +14,7 @@ describe('Auth page tests', () => {
   });
 
   it('should check the email input', () => {
-    render(<Login />);
+    render(<SignIn />);
     const emailInput = screen.getByPlaceholderText(
       'Password',
     ) as HTMLInputElement;
@@ -22,7 +22,7 @@ describe('Auth page tests', () => {
   });
 
   it('should check the password input', () => {
-    render(<Login />);
+    render(<SignIn />);
     const passwordInput = screen.getByPlaceholderText(
       'E-mail',
     ) as HTMLInputElement;
@@ -30,7 +30,7 @@ describe('Auth page tests', () => {
   });
 
   it('should click the button and redirect', async () => {
-    render(<Login />);
+    render(<SignIn />);
     const enterBtn = screen.getByRole('button', { name: /Enter/i });
     expect(enterBtn).toBeInTheDocument();
   });
