@@ -1,5 +1,6 @@
 import React, { memo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Portal } from 'rsuite';
 //components
 import ErrorBox from './ErrorBox';
 import Flexbox from '../../hoc/Flexbox';
@@ -24,13 +25,15 @@ const NotificationBox: React.FC<Props> = memo(
     }
 
     return (
-      <Flexbox justify="between">
-        <ErrorBox
-          message={netStatus?.message}
-          details={netStatus}
-          getEvent={_onCloseNetStatus}
-        />
-      </Flexbox>
+      <Portal>
+        <Flexbox justify="between">
+          <ErrorBox
+            message={netStatus?.message}
+            details={netStatus}
+            getEvent={_onCloseNetStatus}
+          />
+        </Flexbox>
+      </Portal>
     );
   },
   () => true,

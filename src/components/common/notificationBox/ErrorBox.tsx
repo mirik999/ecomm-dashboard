@@ -14,22 +14,32 @@ const ErrorBox: React.FC<Props> = ({ message, details, getEvent }) => {
   const statusCode = details?.extensions?.exception?.response?.statusCode;
 
   return (
-    <Container data-testid={'error-box'}>
-      <div>
-        <span>{statusCode}</span>
-        <span>
-          <u>{message}</u>
-        </span>
-        <span>
-          {typeof details?.extensions?.exception?.response?.message === 'object'
-            ? details?.extensions.exception.response.message.map(
-                (dm: string, idx: number) => (
-                  <strong key={idx}>[ {dm} ]</strong>
-                ),
-              )
-            : null}
-        </span>
-      </div>
+    <Container>
+      <Flexbox flex="column" align="start">
+        <ul>
+          <li>
+            <span>Code: </span>
+            <span>{statusCode}</span>
+          </li>
+          <li>
+            <span>Exception: </span>
+            <span>{message}</span>
+          </li>
+          <li>
+            <span>Details: </span>
+            <span>
+              {typeof details?.extensions?.exception?.response?.message ===
+              'object'
+                ? details?.extensions.exception.response.message.map(
+                    (dm: string, idx: number) => (
+                      <strong key={idx}>[ {dm} ]</strong>
+                    ),
+                  )
+                : null}
+            </span>
+          </li>
+        </ul>
+      </Flexbox>
 
       <FaRegWindowClose size={20} onClick={getEvent} />
     </Container>
@@ -47,19 +57,24 @@ export default ErrorBox;
 const Container = styled(Flexbox)`
   padding: 20px;
   border-radius: 5px;
-  border-width: 4px 8px 4px 4px;
-  border-style: solid;
-  border-color: ${({ theme }) => theme.colors.error};
+  border-top: ${({ theme }) => `4px solid ${theme.colors.lightBorder}`};
   position: fixed;
-  bottom: 20px;
-  left: 20px;
-  width: calc(100% - 40px);
+  bottom: 0;
+  left: 0;
+  z-index: 8;
+  width: 100%;
   min-width: calc(100% - 40px);
-  height: 80px;
-  background-color: ${({ theme }) => theme.colors.secondBackground};
+  height: 200px;
+  background-color: ${({ theme }) => theme.colors.background};
 
   & > div {
     flex: 1;
+
+    li span:first-child {
+      display: inline-block;
+      color: ${({ theme }) => theme.colors.color};
+      min-width: 77px;
+    }
 
     span,
     strong {
@@ -72,7 +87,7 @@ const Container = styled(Flexbox)`
   svg {
     cursor: pointer;
     path {
-      fill: ${({ theme }) => theme.colors.error};
+      fill: ${({ theme }) => theme.colors.color};
     }
   }
 `;

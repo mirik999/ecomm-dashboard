@@ -4,6 +4,7 @@ import styled from 'styled-components';
 //components
 import Input from '../../components/common/Input';
 import Flexbox from '../../components/hoc/Flexbox';
+import Button from '../../components/common/Button';
 //types
 import { SubCategoryType } from '../../redux/types/category.type';
 
@@ -62,27 +63,24 @@ const SubCategories: React.FC<Props> = memo(
           {list.map((scat: SubCategoryType, i) => (
             <InputsWrap key={i} items="center">
               <Input
-                type="text"
-                label="Name"
+                placeholder="Name*"
                 name="name"
                 value={scat.name}
-                getValue={(val: string) => _onChange(i, 'name', val)}
+                onChange={(val: string) => _onChange(i, 'name', val)}
                 required={true}
               />
               <Input
-                type="text"
-                label="Tab Name"
+                placeholder="Tab Name*"
                 name="tabName"
                 value={scat.tabName}
-                getValue={(val: string) => _onChange(i, 'tabName', val)}
+                onChange={(val: string) => _onChange(i, 'tabName', val)}
                 required={true}
               />
-              <Flexbox
-                className="np remove-btn hoverable"
-                onClick={() => _onRemoveSubCategory(i)}
-              >
-                <small>REMOVE</small>
-              </Flexbox>
+              <Button
+                label="Remove"
+                appearance="subtle"
+                onAction={() => _onRemoveSubCategory(i)}
+              />
             </InputsWrap>
           ))}
         </Body>
@@ -127,19 +125,5 @@ const InputsWrap = styled(Flexbox)`
 
   label {
     margin-bottom: 15px;
-  }
-
-  .remove-btn {
-    width: 60px;
-    position: absolute;
-    bottom: -7px;
-    right: 0;
-    cursor: pointer;
-    user-select: none;
-
-    small {
-      font-size: ${({ theme }) => theme.fontSize.sm + 'px'};
-      color: ${({ theme }) => theme.colors.color};
-    }
   }
 `;

@@ -4,3 +4,10 @@ export type OptionType = {
 };
 
 export type CreatePageMode = 'create' | 'update';
+
+export type CustomErrorType = {
+  [key: string]: {
+    type: string;
+    message: string;
+  };
+};

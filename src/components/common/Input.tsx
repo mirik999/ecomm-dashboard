@@ -5,39 +5,32 @@ import styled from 'styled-components';
 import { FieldError } from 'react-hook-form';
 
 type Props = {
-  type?: string;
-  value?: any;
   errorMessage?: FieldError;
   [key: string]: any;
 };
 
-const Input: React.FC<Props> = forwardRef(
-  ({ value, errorMessage, ...props }, ref) => {
-    return (
-      <Container>
-        <InputGroup inside>
-          <RsInput {...props} ref={ref} autoComplete="off" />
-          {errorMessage ? (
-            <Whisper
-              trigger="hover"
-              speaker={<Tooltip>{errorMessage?.message}</Tooltip>}
-              placement="topEnd"
-            >
-              <InputGroup.Addon>
-                <Icon icon="exclamation" size="lg" />
-              </InputGroup.Addon>
-            </Whisper>
-          ) : null}
-        </InputGroup>
-      </Container>
-    );
-  },
-);
+const Input: React.FC<Props> = forwardRef(({ errorMessage, ...props }, ref) => {
+  return (
+    <Container>
+      <InputGroup inside>
+        <RsInput {...props} ref={ref} autoComplete="off" />
+        {errorMessage ? (
+          <Whisper
+            trigger="hover"
+            speaker={<Tooltip>{errorMessage?.message}</Tooltip>}
+            placement="topEnd"
+          >
+            <InputGroup.Addon>
+              <Icon icon="exclamation" size="lg" />
+            </InputGroup.Addon>
+          </Whisper>
+        ) : null}
+      </InputGroup>
+    </Container>
+  );
+});
 
-Input.defaultProps = {
-  type: 'text',
-  value: '',
-};
+Input.defaultProps = {};
 
 export default Input;
 

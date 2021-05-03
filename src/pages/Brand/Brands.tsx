@@ -58,7 +58,7 @@ const Brands: React.FC<Props> = memo(({ id }) => {
           <thead>
             <tr>
               <th>Brand name</th>
-              <th>Other brands</th>
+              <th>Also connected</th>
             </tr>
           </thead>
           <tbody>
