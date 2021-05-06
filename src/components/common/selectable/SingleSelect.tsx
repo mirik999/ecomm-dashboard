@@ -1,6 +1,7 @@
 import React, { memo, useEffect, useState } from 'react';
-import { SelectPicker, Tooltip, Whisper } from 'rsuite';
+import { Icon, InputGroup, SelectPicker, Tooltip, Whisper } from 'rsuite';
 import styled from 'styled-components';
+import { FieldError } from 'react-hook-form';
 //types
 import { OptionType } from '../../../redux/types/common.type';
 
@@ -11,11 +12,21 @@ type Props = {
   required?: boolean;
   options: OptionType[];
   getValue: (val: any, action?: string) => void;
+  errorMessage?: FieldError;
   [key: string]: any;
 };
 
 const SingleSelect: React.FC<Props> = memo(
-  ({ label, value, cls, required, options, getValue, ...props }) => {
+  ({
+    label,
+    value,
+    cls,
+    required,
+    options,
+    getValue,
+    errorMessage,
+    ...props
+  }) => {
     const [innerState, setInnerState] = useState<OptionType>({
       id: '',
       name: '',
@@ -36,23 +47,28 @@ const SingleSelect: React.FC<Props> = memo(
 
     return (
       <Label className={cls}>
-        <Whisper
-          trigger={required ? 'hover' : 'none'}
-          speaker={<Tooltip>Required</Tooltip>}
-          placement="topStart"
-        >
-          <SelectPicker
-            data={options}
-            onChange={_onChange}
-            value={innerState?.id}
-            labelKey="name"
-            valueKey="id"
-            block
-            placeholder={placeholder}
-            disabled={props.disabled}
-            {...props}
-          />
-        </Whisper>
+        <SelectPicker
+          data={options}
+          onChange={_onChange}
+          value={innerState?.id}
+          labelKey="name"
+          valueKey="id"
+          block
+          placeholder={placeholder}
+          disabled={props.disabled}
+          {...props}
+        />
+        {!innerState.id && errorMessage ? (
+          <Whisper
+            trigger="hover"
+            speaker={<Tooltip>{errorMessage?.message}</Tooltip>}
+            placement="topEnd"
+          >
+            <InputGroup.Addon>
+              <Icon icon="exclamation" size="lg" />
+            </InputGroup.Addon>
+          </Whisper>
+        ) : null}
       </Label>
     );
   },
@@ -62,6 +78,7 @@ const SingleSelect: React.FC<Props> = memo(
       prevProps.disabled === nextProps.disabled &&
       prevProps.label === nextProps.label &&
       prevProps.required === nextProps.required &&
+      prevProps.errorMessage?.type === nextProps.errorMessage?.type &&
       prevProps.options.length === nextProps.options.length
     );
   },

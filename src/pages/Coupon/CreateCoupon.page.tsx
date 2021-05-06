@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import { Slider } from 'rsuite';
 //components
-import Input from '../../components/common/Input';
+import Input from '../../components/common/input/Input';
 import Button from '../../components/common/Button';
 import Flexbox from '../../components/hoc/Flexbox';
 import HeaderLine from '../../components/common/HeaderLine';

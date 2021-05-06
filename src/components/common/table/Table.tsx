@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 //components
-import Input from '../Input';
+import Input from '../input/Input';
 import Buttons from './Buttons';
 import DateRangePick from '../datePicker/DateRangePick';
 import { Checkbox, Table as RsTable } from 'rsuite';

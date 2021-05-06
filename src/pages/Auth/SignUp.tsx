@@ -6,7 +6,7 @@ import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 //components
-import Input from '../../components/common/Input';
+import Input from '../../components/common/input/Input';
 import Button from '../../components/common/Button';
 import Divider from '../../components/common/Divider';
 //styled

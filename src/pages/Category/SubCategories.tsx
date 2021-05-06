@@ -2,7 +2,7 @@ import React, { memo, useEffect, useState } from 'react';
 import { v4 as uuid } from 'uuid';
 import styled from 'styled-components';
 //components
-import Input from '../../components/common/Input';
+import Input from '../../components/common/input/Input';
 import Flexbox from '../../components/hoc/Flexbox';
 import Button from '../../components/common/Button';
 //types

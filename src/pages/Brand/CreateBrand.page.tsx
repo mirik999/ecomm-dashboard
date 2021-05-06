@@ -6,7 +6,7 @@ import { v4 as uuid } from 'uuid';
 import styled from 'styled-components';
 import * as yup from 'yup';
 //components
-import Input from '../../components/common/Input';
+import Input from '../../components/common/input/Input';
 import Flexbox from '../../components/hoc/Flexbox';
 import Button from '../../components/common/Button';
 import HeaderLine from '../../components/common/HeaderLine';
@@ -28,7 +28,7 @@ import { saveNetStatus } from '../../redux/slices/net-status.slice';
 //utils
 import validator from '../../utils/validator.utils';
 //repository
-import { validateSchema, YupValidateTypes, initialState } from './repo';
+import { validateSchema, YupValidateTypes, initialState } from './repository';
 
 type Props = {};
 
