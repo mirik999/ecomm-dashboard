@@ -19,26 +19,7 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e021988f-3eda-4fed-af49-63e1e5ec9f51" name="Default Changelist" comment="users done">
-      <change afterPath="$PROJECT_DIR$/src/components/common/input/InputNumber.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/Product/repository.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.eslintcache" beforeDir="false" afterPath="$PROJECT_DIR$/.eslintcache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/common/Input.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/input/Input.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/common/selectable/SingleSelect.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/selectable/SingleSelect.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/common/table/Table.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/table/Table.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Auth/SignIn.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Auth/SignIn.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Auth/SignUp.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Auth/SignUp.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Brand/CreateBrand.page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Brand/CreateBrand.page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Brand/repo.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Brand/repository.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Category/CreateCategory.page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Category/CreateCategory.page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Category/SubCategories.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Category/SubCategories.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Category/repo.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Category/repository.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Coupon/CreateCoupon.page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Coupon/CreateCoupon.page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Product/CreateProduct.page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Product/CreateProduct.page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/User/CreateUser.page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/User/CreateUser.page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/redux/types/product.type.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/types/product.type.ts" afterDir="false" />
-    </list>
+    <list default="true" id="e021988f-3eda-4fed-af49-63e1e5ec9f51" name="Default Changelist" comment="users done" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
