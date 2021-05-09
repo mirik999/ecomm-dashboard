@@ -73,6 +73,7 @@ const Label = styled.label<any>`
   display: flex;
   flex-direction: column;
   min-width: 220px;
+  width: 100%;
   flex: 1;
   -webkit-text-security: ${({ isPassword }) => (isPassword ? 'disc' : 'auto')};
 `;

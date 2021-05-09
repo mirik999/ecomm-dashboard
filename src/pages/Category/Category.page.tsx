@@ -31,6 +31,7 @@ const CategoryPage: React.FC<Props> = (props) => {
   const [rowCount, setRowCount] = useState<number>(10);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [deepSearch, setDeepSearch] = useState<string>('');
+  const [dateRange, setDateRange] = useState<{ [key: string]: Date }>({});
   const [unSelect, setUnSelect] = useState<boolean>(false);
 
   useEffect(() => {
@@ -43,7 +44,13 @@ const CategoryPage: React.FC<Props> = (props) => {
 
   useEffect(() => {
     (async function () {
-      await getCategories(currentPage, rowCount, deepSearch);
+      await getCategories(
+        currentPage,
+        rowCount,
+        deepSearch,
+        dateRange.from,
+        dateRange.to,
+      );
     })();
   }, []);
 
@@ -51,6 +58,8 @@ const CategoryPage: React.FC<Props> = (props) => {
     pg: number,
     rc: number,
     kw: string,
+    from: Date | null,
+    to: Date | null,
   ): Promise<void> {
     try {
       await GetCategories({
@@ -59,6 +68,8 @@ const CategoryPage: React.FC<Props> = (props) => {
             offset: (pg - 1) * rc,
             limit: rc,
             keyword: kw,
+            from: to === null ? null : from,
+            to: to,
           },
         },
       });
@@ -69,17 +80,35 @@ const CategoryPage: React.FC<Props> = (props) => {
 
   async function getPageFromTable(pageNumber: number): Promise<void> {
     setCurrentPage(pageNumber);
-    await getCategories(pageNumber, rowCount, deepSearch);
+    await getCategories(
+      pageNumber,
+      rowCount,
+      deepSearch,
+      dateRange.from,
+      dateRange.to,
+    );
   }
 
   async function getRowCountFromTable(rc: number): Promise<void> {
     setRowCount(rc);
-    await getCategories(currentPage, rc, deepSearch);
+    await getCategories(
+      currentPage,
+      rc,
+      deepSearch,
+      dateRange.from,
+      dateRange.to,
+    );
   }
 
   async function getDeepSearchFromTable(kw: string): Promise<void> {
     setDeepSearch(kw);
-    await getCategories(currentPage, rowCount, kw);
+    await getCategories(
+      currentPage,
+      rowCount,
+      kw,
+      dateRange.from,
+      dateRange.to,
+    );
   }
 
   async function getIdsAndDisable(ids: string[]): Promise<void> {
@@ -121,6 +150,23 @@ const CategoryPage: React.FC<Props> = (props) => {
     }
   }
 
+  async function getDateRange(range: { [key: string]: Date }): Promise<void> {
+    setDateRange({ ...dateRange, ...range });
+    if (range.to === null) {
+      await getCategories(currentPage, rowCount, deepSearch, null, null);
+    } else if (range.from.toString() === range.to.toString()) {
+      await getCategories(currentPage, rowCount, deepSearch, null, null);
+    } else {
+      await getCategories(
+        currentPage,
+        rowCount,
+        deepSearch,
+        range.from,
+        range.to,
+      );
+    }
+  }
+
   function handleCategoriesState(ids: string[], isDisabled: boolean) {
     const updatedCategories = categories.map((cat) => {
       if (ids.includes(cat.id!)) {
@@ -155,7 +201,7 @@ const CategoryPage: React.FC<Props> = (props) => {
         getIdsAndDisable={getIdsAndDisable}
         getIdsAndActivate={getIdsAndActivate}
         getIdsAndDelete={getIdsAndDelete}
-        getDateRange={(val) => false}
+        getDateRange={getDateRange}
         path="categories"
         error={!!getResponse.error}
         exclude={['id']}

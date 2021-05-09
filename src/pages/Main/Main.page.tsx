@@ -12,7 +12,6 @@ import { GET_STATISTICS } from '../../redux/requests/main.request';
 import { saveNetStatus } from '../../redux/slices/net-status.slice';
 //types
 import { RootState } from '../../redux/store';
-import SystemUsage from './SystemUsage';
 
 type Props = {};
 
@@ -52,6 +51,7 @@ const MainPage: React.FC<Props> = (props) => {
     }
   }
 
+  //must be fixed for each chart
   async function _onDateRangeSelect(range: { [key: string]: Date }) {
     await getStatistics(range.from, range.to);
   }

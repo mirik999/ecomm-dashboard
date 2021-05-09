@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { FormEvent, useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { useDispatch } from 'react-redux';
 import { v4 as uuid } from 'uuid';
@@ -33,7 +33,8 @@ const SignUp: React.FC<Props> = () => {
   const [CreateUser] = useMutation(CREATE_USER);
   const [state, setState] = useState<userData>(initialState);
 
-  async function _onClick(): Promise<void> {
+  async function _onSubmit(e: FormEvent<HTMLFormElement>): Promise<void> {
+    e.preventDefault();
     try {
       const payload = await CreateUser({
         variables: {
@@ -53,22 +54,24 @@ const SignUp: React.FC<Props> = () => {
       <header>
         <h3>Create an account</h3>
       </header>
-      <Input
-        type="text"
-        label="E-mail"
-        name="email"
-        value={state.email}
-        getValue={(val: string) => setState({ ...state, email: val })}
-      />
-      <Input
-        type="password"
-        label="Password"
-        name="password"
-        value={state.password}
-        getValue={(val: string) => setState({ ...state, password: val })}
-      />
-      <Divider label="Action" />
-      <Button appearance="primary" label="SUBMIT" onAction={_onClick} />
+      <form onSubmit={_onSubmit} className="gap">
+        <Input
+          type="text"
+          label="E-mail"
+          name="email"
+          value={state.email}
+          getValue={(val: string) => setState({ ...state, email: val })}
+        />
+        <Input
+          type="password"
+          label="Password"
+          name="password"
+          value={state.password}
+          getValue={(val: string) => setState({ ...state, password: val })}
+        />
+        <Divider label="Action" />
+        <Button type="submit" appearance="primary" label="SUBMIT" />
+      </form>
     </RegisterWrap>
   );
 };

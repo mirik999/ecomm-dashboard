@@ -31,6 +31,7 @@ const BrandPage: React.FC<Props> = (props) => {
   const [rowCount, setRowCount] = useState<number>(10);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [deepSearch, setDeepSearch] = useState<string>('');
+  const [dateRange, setDateRange] = useState<{ [key: string]: Date }>({});
   const [unSelect, setUnSelect] = useState<boolean>(false);
 
   useEffect(() => {
@@ -43,11 +44,23 @@ const BrandPage: React.FC<Props> = (props) => {
 
   useEffect(() => {
     (async function () {
-      await getBrands(currentPage, rowCount, deepSearch);
+      await getBrands(
+        currentPage,
+        rowCount,
+        deepSearch,
+        dateRange.from,
+        dateRange.to,
+      );
     })();
   }, []);
 
-  async function getBrands(pg: number, rc: number, kw: string): Promise<void> {
+  async function getBrands(
+    pg: number,
+    rc: number,
+    kw: string,
+    from: Date | null,
+    to: Date | null,
+  ): Promise<void> {
     try {
       await GetBrands({
         variables: {
@@ -55,6 +68,8 @@ const BrandPage: React.FC<Props> = (props) => {
             offset: (pg - 1) * rc,
             limit: rc,
             keyword: kw,
+            from: to === null ? null : from,
+            to: to,
           },
         },
       });
@@ -65,17 +80,23 @@ const BrandPage: React.FC<Props> = (props) => {
 
   async function getPageFromTable(pageNumber: number): Promise<void> {
     setCurrentPage(pageNumber);
-    await getBrands(pageNumber, rowCount, deepSearch);
+    await getBrands(
+      pageNumber,
+      rowCount,
+      deepSearch,
+      dateRange.from,
+      dateRange.to,
+    );
   }
 
   async function getRowCountFromTable(rc: number): Promise<void> {
     setRowCount(rc);
-    await getBrands(currentPage, rc, deepSearch);
+    await getBrands(currentPage, rc, deepSearch, dateRange.from, dateRange.to);
   }
 
   async function getDeepSearchFromTable(kw: string): Promise<void> {
     setDeepSearch(kw);
-    await getBrands(currentPage, rowCount, kw);
+    await getBrands(currentPage, rowCount, kw, dateRange.from, dateRange.to);
   }
 
   async function getIdsAndDisable(ids: string[]): Promise<void> {
@@ -117,6 +138,17 @@ const BrandPage: React.FC<Props> = (props) => {
     }
   }
 
+  async function getDateRange(range: { [key: string]: Date }): Promise<void> {
+    setDateRange({ ...dateRange, ...range });
+    if (range.to === null) {
+      await getBrands(currentPage, rowCount, deepSearch, null, null);
+    } else if (range.from.toString() === range.to.toString()) {
+      await getBrands(currentPage, rowCount, deepSearch, null, null);
+    } else {
+      await getBrands(currentPage, rowCount, deepSearch, range.from, range.to);
+    }
+  }
+
   function handleBrandsState(ids: string[], isDisabled: boolean) {
     const updatedBrands = brands.map((cat) => {
       if (ids.includes(cat.id!)) {
@@ -149,7 +181,7 @@ const BrandPage: React.FC<Props> = (props) => {
         getIdsAndDisable={getIdsAndDisable}
         getIdsAndActivate={getIdsAndActivate}
         getIdsAndDelete={getIdsAndDelete}
-        getDateRange={(val) => false}
+        getDateRange={getDateRange}
         path="brands"
         error={!!getResponse.error}
         exclude={['id', 'imageUrl']}

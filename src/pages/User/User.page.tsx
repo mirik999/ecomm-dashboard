@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useLazyQuery, useMutation } from '@apollo/client';
 import { useDispatch } from 'react-redux';
 //components
@@ -35,6 +35,7 @@ const UserPage: React.FC<Props> = (props) => {
   const [rowCount, setRowCount] = useState<number>(10);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [deepSearch, setDeepSearch] = useState<string>('');
+  const [dateRange, setDateRange] = useState<{ [key: string]: Date }>({});
   const [unSelect, setUnSelect] = useState<boolean>(false);
 
   useEffect(() => {
@@ -47,11 +48,23 @@ const UserPage: React.FC<Props> = (props) => {
 
   useEffect(() => {
     (async function () {
-      await getUsers(currentPage, rowCount, deepSearch);
+      await getUsers(
+        currentPage,
+        rowCount,
+        deepSearch,
+        dateRange.from,
+        dateRange.to,
+      );
     })();
   }, []);
 
-  async function getUsers(pg: number, rc: number, kw: string): Promise<void> {
+  async function getUsers(
+    pg: number,
+    rc: number,
+    kw: string,
+    from: Date | null,
+    to: Date | null,
+  ): Promise<void> {
     try {
       await GetUsers({
         variables: {
@@ -59,6 +72,8 @@ const UserPage: React.FC<Props> = (props) => {
             offset: (pg - 1) * rc,
             limit: rc,
             keyword: kw,
+            from: to === null ? null : from,
+            to: to,
           },
         },
       });
@@ -69,17 +84,29 @@ const UserPage: React.FC<Props> = (props) => {
 
   async function getPageFromTable(pageNumber: number): Promise<void> {
     setCurrentPage(pageNumber);
-    await getUsers(pageNumber, rowCount, deepSearch);
+    await getUsers(
+      pageNumber,
+      rowCount,
+      deepSearch,
+      dateRange.from,
+      dateRange.to,
+    );
   }
 
   async function getRowCountFromTable(rc: number): Promise<void> {
     setRowCount(rc);
-    await getUsers(currentPage, rc, deepSearch);
+    await getUsers(currentPage, rc, deepSearch, dateRange.from, dateRange.to);
   }
 
   async function getDeepSearchFromTable(keyword: string): Promise<void> {
     setDeepSearch(keyword);
-    await getUsers(currentPage, rowCount, keyword);
+    await getUsers(
+      currentPage,
+      rowCount,
+      keyword,
+      dateRange.from,
+      dateRange.to,
+    );
   }
 
   async function getIdsAndDisable(ids: string[]): Promise<void> {
@@ -121,6 +148,17 @@ const UserPage: React.FC<Props> = (props) => {
     }
   }
 
+  async function getDateRange(range: { [key: string]: Date }): Promise<void> {
+    setDateRange({ ...dateRange, ...range });
+    if (range.to === null) {
+      await getUsers(currentPage, rowCount, deepSearch, null, null);
+    } else if (range.from.toString() === range.to.toString()) {
+      await getUsers(currentPage, rowCount, deepSearch, null, null);
+    } else {
+      await getUsers(currentPage, rowCount, deepSearch, range.from, range.to);
+    }
+  }
+
   function handleUsersState(ids: string[], isDisabled: boolean) {
     const updatedUsers = users.map((product) => {
       if (ids.includes(product.id)) {
@@ -155,7 +193,7 @@ const UserPage: React.FC<Props> = (props) => {
         getIdsAndDisable={getIdsAndDisable}
         getIdsAndActivate={getIdsAndActivate}
         getIdsAndDelete={getIdsAndDelete}
-        getDateRange={(val) => false}
+        getDateRange={getDateRange}
         exclude={['id']}
         error={!!getResponse.error}
         path="users"

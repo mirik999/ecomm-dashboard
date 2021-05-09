@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { FormEvent, useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { useDispatch } from 'react-redux';
 import { v4 as uuid } from 'uuid';
@@ -33,7 +33,8 @@ const Login: React.FC<Props> = () => {
   const [LoginUser] = useMutation(LOGIN_USER);
   const [state, setState] = useState<userData>(initialState);
 
-  async function _onClick(): Promise<void> {
+  async function _onSubmit(e: FormEvent<HTMLFormElement>): Promise<void> {
+    e.preventDefault();
     try {
       const payload = await LoginUser({
         variables: {
@@ -53,7 +54,7 @@ const Login: React.FC<Props> = () => {
       <header>
         <h3>Authorization</h3>
       </header>
-      <form>
+      <form onSubmit={_onSubmit} className="gap">
         <Input
           type="email"
           label="E-mail"
@@ -68,9 +69,9 @@ const Login: React.FC<Props> = () => {
           value={state.password}
           getValue={(val: string) => setState({ ...state, password: val })}
         />
+        <Divider label="Action" />
+        <Button type="submit" appearance="primary" label="ENTER" />
       </form>
-      <Divider label="Action" />
-      <Button appearance="primary" label="ENTER" onAction={_onClick} />
     </LoginWrap>
   );
 };
