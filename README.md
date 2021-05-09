@@ -29,7 +29,7 @@ Some common components and layers styled with
 |----store.ts ( redux global store )  
 |--utils ( contains all third party helpers )
 |--App.tsx ( entry component )
-|--index.tsx ( entry file )
+|--SubCategory.tsx ( entry file )
 |--index.css ( for some common rewrite rules )
 |-.editorconfig ( for single coding rule )
 |-.prettierrc ( for single coding rule / must have )

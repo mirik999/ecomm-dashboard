@@ -14,7 +14,6 @@ import {
 } from './styled-components';
 //types
 import { Props } from './props';
-import { CreatePageMode } from '../../../redux/types/common.type';
 //utils
 import { tableBodyHandler } from './body.handler.';
 
@@ -106,7 +105,7 @@ const Table: React.FC<Props> = ({
     }
   }
 
-  function _onRouteChange(mode: CreatePageMode): void {
+  function _onRouteChange(mode: string): void {
     history.push({
       pathname: `/${path}/create`,
       state: {
@@ -211,13 +210,13 @@ const Table: React.FC<Props> = ({
           placeholder="Quick search"
           name="search"
           value={quickSearch}
-          onChange={_onQuickSearch}
+          getValue={_onQuickSearch}
         />
         <Input
           placeholder="Deep search"
           name="deepSearch"
           value={deepSearch}
-          onChange={_onDeepSearch}
+          getValue={_onDeepSearch}
           onKeyDown={_onFilterDeep}
         />
         <DateRangePick getRangeValue={(range) => getDateRange(range)} />

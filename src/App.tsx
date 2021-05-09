@@ -26,7 +26,7 @@ import useMedia from './hooks/useMedia';
 import useTheme from './hooks/useTheme';
 
 function App() {
-  const { fontSize } = useMedia();
+  const fontSize = useMedia();
   const history = useHistory();
   const dispatch = useDispatch();
   const client = useApollo();

@@ -2,11 +2,10 @@ import React, { memo, useEffect, useState } from 'react';
 import { v4 as uuid } from 'uuid';
 import styled from 'styled-components';
 //components
-import Input from '../../components/common/input/Input';
-import Flexbox from '../../components/hoc/Flexbox';
-import Button from '../../components/common/Button';
+import Input from '../../../components/common/input/Input';
+import Flexbox from '../../../components/hoc/Flexbox';
 //types
-import { SubCategoryType } from '../../redux/types/category.type';
+import { SubCategoryType } from '../../../redux/types/category.type';
 
 type Props = {
   parentId: string;
@@ -14,7 +13,7 @@ type Props = {
   getValue: (val: SubCategoryType[]) => void;
 };
 
-const SubCategories: React.FC<Props> = memo(
+const SubCategory: React.FC<Props> = memo(
   ({ parentId, subCategories, getValue }) => {
     const [list, setList] = useState<SubCategoryType[]>([]);
 
@@ -63,24 +62,25 @@ const SubCategories: React.FC<Props> = memo(
           {list.map((scat: SubCategoryType, i) => (
             <InputsWrap key={i} items="center">
               <Input
-                placeholder="Name*"
+                type="text"
+                label="Name"
                 name="name"
                 value={scat.name}
-                onChange={(val: string) => _onChange(i, 'name', val)}
-                required={true}
+                getValue={(val: string) => _onChange(i, 'name', val)}
               />
               <Input
-                placeholder="Tab Name*"
+                type="text"
+                label="Tab Name"
                 name="tabName"
                 value={scat.tabName}
-                onChange={(val: string) => _onChange(i, 'tabName', val)}
-                required={true}
+                getValue={(val: string) => _onChange(i, 'tabName', val)}
               />
-              <Button
-                label="Remove"
-                appearance="subtle"
-                onAction={() => _onRemoveSubCategory(i)}
-              />
+              <Flexbox
+                className="np remove-btn hoverable"
+                onClick={() => _onRemoveSubCategory(i)}
+              >
+                <small>REMOVE</small>
+              </Flexbox>
             </InputsWrap>
           ))}
         </Body>
@@ -89,11 +89,11 @@ const SubCategories: React.FC<Props> = memo(
   },
 );
 
-SubCategories.defaultProps = {
+SubCategory.defaultProps = {
   subCategories: [],
 };
 
-export default SubCategories;
+export default SubCategory;
 
 const HeaderPanel = styled(Flexbox)`
   margin-top: 10px;
@@ -125,5 +125,19 @@ const InputsWrap = styled(Flexbox)`
 
   label {
     margin-bottom: 15px;
+  }
+
+  .remove-btn {
+    width: 60px;
+    position: absolute;
+    bottom: -7px;
+    right: 0;
+    cursor: pointer;
+    user-select: none;
+
+    small {
+      font-size: ${({ theme }) => theme.fontSize.sm + 'px'};
+      color: ${({ theme }) => theme.colors.color};
+    }
   }
 `;

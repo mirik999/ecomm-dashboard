@@ -4,7 +4,6 @@ import { useLazyQuery, useMutation } from '@apollo/client';
 import { useDispatch } from 'react-redux';
 import { v4 as uuid } from 'uuid';
 import styled from 'styled-components';
-import * as yup from 'yup';
 //components
 import Input from '../../components/common/input/Input';
 import Flexbox from '../../components/hoc/Flexbox';
@@ -15,7 +14,7 @@ import BorderedBox from '../../components/hoc/BorderedBox';
 import MultiSelect from '../../components/common/selectable/MultiSelect';
 //types
 import { BrandType } from '../../redux/types/brand.type';
-import { CustomErrorType, OptionType } from '../../redux/types/common.type';
+import { OptionType } from '../../redux/types/common.type';
 //request
 import {
   CREATE_BRAND,
@@ -25,10 +24,12 @@ import {
 import { GET_CATEGORIES_FOR_SELECT } from '../../redux/requests/category.request';
 //actions
 import { saveNetStatus } from '../../redux/slices/net-status.slice';
-//utils
-import validator from '../../utils/validator.utils';
-//repository
-import { validateSchema, YupValidateTypes, initialState } from './repository';
+
+const initialState = {
+  name: '',
+  imageUrl: '',
+  category: [],
+};
 
 type Props = {};
 
@@ -40,15 +41,13 @@ const CreateBrand: React.FC<Props> = (props) => {
   const [UpdateBrand, updateResponse] = useMutation(UPDATE_BRAND);
   const [GetCategories, ctgResponse] = useLazyQuery(GET_CATEGORIES_FOR_SELECT);
   const [GetBrandById, getResponse] = useLazyQuery(GET_BRAND_BY_ID);
-  //history
-  const { mode, selected: id }: any = history.location.state;
   //state
-  const [errors, setErrors] = useState<CustomErrorType>({});
   const [categories, setCategories] = useState<OptionType[]>([]);
   const [state, setState] = useState<BrandType>({
     id: uuid(),
     ...initialState,
   });
+  const { mode, selected: id }: any = history.location.state;
 
   useEffect(() => {
     (async function () {
@@ -138,42 +137,26 @@ const CreateBrand: React.FC<Props> = (props) => {
   }
 
   async function _onSave(): Promise<void> {
-    const { isValid, errorObject } = await validator<
-      Partial<BrandType>,
-      yup.SchemaOf<YupValidateTypes>
-    >(state, validateSchema);
-    if (isValid) {
-      try {
-        await CreateBrand({
-          variables: {
-            newBrand: state,
-          },
-        });
-      } catch (err) {
-        dispatch(saveNetStatus(err.graphQLErrors));
-      }
-    } else {
-      setErrors(errorObject);
+    try {
+      await CreateBrand({
+        variables: {
+          newBrand: state,
+        },
+      });
+    } catch (err) {
+      dispatch(saveNetStatus(err.graphQLErrors));
     }
   }
 
   async function _onUpdate(): Promise<void> {
-    const { isValid, errorObject } = await validator<
-      Partial<BrandType>,
-      yup.SchemaOf<YupValidateTypes>
-    >(state, validateSchema);
-    if (isValid) {
-      try {
-        await UpdateBrand({
-          variables: {
-            updatedBrand: state,
-          },
-        });
-      } catch (err) {
-        dispatch(saveNetStatus(err.graphQLErrors));
-      }
-    } else {
-      setErrors(errorObject);
+    try {
+      await UpdateBrand({
+        variables: {
+          updatedBrand: state,
+        },
+      });
+    } catch (err) {
+      dispatch(saveNetStatus(err.graphQLErrors));
     }
   }
 
@@ -193,18 +176,18 @@ const CreateBrand: React.FC<Props> = (props) => {
         <Body align="start">
           <Input
             type="text"
-            placeholder="Brand name*"
+            label="Name"
             name="name"
             value={state.name}
-            onChange={(val: string) => setState({ ...state, name: val })}
-            errorMessage={errors.name}
+            getValue={(val: string) => setState({ ...state, name: val })}
+            required={true}
           />
           <MultiSelect
-            label="Category*"
+            label="Category"
             value={state.category}
             options={categories}
             getValue={(val: string[]) => _onCategorySelect('category', val)}
-            errorMessage={errors.category}
+            required={true}
           />
           <UploadZone
             multiple={false}
@@ -224,7 +207,6 @@ const CreateBrand: React.FC<Props> = (props) => {
             appearance="primary"
             label="Reset fields"
             onAction={() => setState(initialState)}
-            disabled={mode === 'update'}
           />
         </FooterPanel>
       </BorderedBox>

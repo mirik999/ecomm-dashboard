@@ -23,17 +23,8 @@ import {
 } from '../../redux/requests/coupon.request';
 //actions
 import { saveNetStatus } from '../../redux/slices/net-status.slice';
-
-const types = ['product', 'brand', 'category', 'all'];
-
-const initialState = {
-  name: '',
-  type: [],
-  value: 0,
-  description: '',
-  couponList: [],
-  endDate: new Date(),
-};
+//repository
+import { initialState, types } from './repository';
 
 type CouponGeneratorType = {
   length: number;
@@ -60,12 +51,14 @@ const CreateCoupon: React.FC<Props> = (props) => {
     count: 30,
     list: [],
   });
-  const { mode, selected: id }: any = history.location.state;
+  const [mode, setMode] = useState<string>('create');
 
   useEffect(() => {
     (async function () {
+      const { mode, selected }: any = history.location.state;
       if (mode === 'update') {
-        await getCouponById(id[0]);
+        await getCouponById(selected[0]);
+        setMode(mode);
       }
     })();
   }, []);
@@ -161,7 +154,6 @@ const CreateCoupon: React.FC<Props> = (props) => {
               name="name"
               value={state.name}
               getValue={(val: string) => setState({ ...state, name: val })}
-              required={true}
             />
             <Input
               type="text"
@@ -176,7 +168,6 @@ const CreateCoupon: React.FC<Props> = (props) => {
               label="Expire date"
               value={new Date(state.endDate)}
               getValue={(val: Date) => setState({ ...state, endDate: val })}
-              required={true}
             />
             <Input
               type="number"
@@ -184,14 +175,12 @@ const CreateCoupon: React.FC<Props> = (props) => {
               name="value"
               value={state.value}
               getValue={(val: number) => setState({ ...state, value: +val })}
-              required={true}
             />
             <MultiSelect
               label="Target"
               value={state.type!.map((t, i) => ({ id: t, name: t }))}
               options={types.map((t, i) => ({ id: t, name: t }))}
               getValue={(val: string[]) => _onTypeSelect('type', val)}
-              required={true}
             />
           </Flexbox>
           <Flexbox cls="np gap" align="start">
@@ -260,13 +249,13 @@ const CreateCoupon: React.FC<Props> = (props) => {
                 ...initialState,
               })
             }
-            disabled={mode === 'update'}
+            cls="m-0 mr-3"
           />
           <Button
             appearance="primary"
             label="Generate Coupons"
             onAction={_onGenerate}
-            disabled={Boolean(coupon.list.length)}
+            cls="m-0 mr-3"
           />
         </FooterPanel>
       </BorderedBox>

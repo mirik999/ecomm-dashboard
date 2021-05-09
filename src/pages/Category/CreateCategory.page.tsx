@@ -4,12 +4,11 @@ import { useLazyQuery, useMutation } from '@apollo/client';
 import { v4 as uuid } from 'uuid';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
-import * as yup from 'yup';
 //components
 import Input from '../../components/common/input/Input';
 import Button from '../../components/common/Button';
 import Divider from '../../components/common/Divider';
-import SubCategories from './SubCategories';
+import SubCategory from './SubCategory/SubCategory';
 import Brands from '../Brand/Brands';
 import Products from '../Product/Products';
 import Flexbox from '../../components/hoc/Flexbox';
@@ -17,7 +16,6 @@ import HeaderLine from '../../components/common/HeaderLine';
 import BorderedBox from '../../components/hoc/BorderedBox';
 //types
 import { CategoryType, SubCategoryType } from '../../redux/types/category.type';
-import { CustomErrorType } from '../../redux/types/common.type';
 //request
 import {
   CREATE_CATEGORY,
@@ -26,15 +24,8 @@ import {
 } from '../../redux/requests/category.request';
 //actions
 import { saveNetStatus } from '../../redux/slices/net-status.slice';
-//utils
-import validator from '../../utils/validator.utils';
 //repository
-import {
-  QueryState,
-  categoryInitialState,
-  YupValidateTypes,
-  validateSchema,
-} from './repository';
+import { QueryState, initialState } from './repository';
 
 type Props = {};
 
@@ -45,14 +36,12 @@ const CreateCategory: React.FC<Props> = (props) => {
   const [CreateCategory, createResponse] = useMutation(CREATE_CATEGORY);
   const [UpdateCategory, updateResponse] = useMutation(UPDATE_CATEGORY);
   const [GetCategoryById, getResponse] = useLazyQuery(GET_CATEGORY_BY_ID);
-  //history
-  const { mode, selected: id } = history.location.state;
   //state
-  const [errors, setErrors] = useState<CustomErrorType>({});
   const [state, setState] = useState<Partial<CategoryType>>({
     id: uuid(),
-    ...categoryInitialState,
+    ...initialState,
   });
+  const { mode, selected: id } = history.location.state;
 
   useEffect(() => {
     (async function () {
@@ -96,42 +85,26 @@ const CreateCategory: React.FC<Props> = (props) => {
   }
 
   async function _onSave(): Promise<void> {
-    const { isValid, errorObject } = await validator<
-      Partial<CategoryType>,
-      yup.SchemaOf<YupValidateTypes>
-    >(state, validateSchema);
-    if (isValid) {
-      try {
-        await CreateCategory({
-          variables: {
-            newCategory: state,
-          },
-        });
-      } catch (err) {
-        dispatch(saveNetStatus(err.graphQLErrors));
-      }
-    } else {
-      setErrors(errorObject);
+    try {
+      await CreateCategory({
+        variables: {
+          newCategory: state,
+        },
+      });
+    } catch (err) {
+      dispatch(saveNetStatus(err.graphQLErrors));
     }
   }
 
   async function _onUpdate(): Promise<void> {
-    const { isValid, errorObject } = await validator<
-      Partial<CategoryType>,
-      yup.SchemaOf<YupValidateTypes>
-    >(state, validateSchema);
-    if (isValid) {
-      try {
-        await UpdateCategory({
-          variables: {
-            updatedCategory: state,
-          },
-        });
-      } catch (err) {
-        dispatch(saveNetStatus(err.graphQLErrors));
-      }
-    } else {
-      setErrors(errorObject);
+    try {
+      await UpdateCategory({
+        variables: {
+          updatedCategory: state,
+        },
+      });
+    } catch (err) {
+      dispatch(saveNetStatus(err.graphQLErrors));
     }
   }
 
@@ -141,21 +114,23 @@ const CreateCategory: React.FC<Props> = (props) => {
       <BorderedBox>
         <Body>
           <Input
-            placeholder="Name*"
+            type="text"
+            label="Name"
             name="name"
             value={state.name}
-            onChange={(val: string) => setState({ ...state, name: val })}
-            errorMessage={errors.name}
+            getValue={(val: string) => setState({ ...state, name: val })}
+            required={true}
           />
           <Input
-            placeholder="Tab Name*"
+            type="text"
+            label="Tab Name"
             name="tabName"
             value={state.tabName}
-            onChange={(val: string) => setState({ ...state, tabName: val })}
-            errorMessage={errors.tabName}
+            getValue={(val: string) => setState({ ...state, tabName: val })}
+            required={true}
           />
         </Body>
-        <SubCategories
+        <SubCategory
           parentId={state.id!}
           subCategories={state.subCategories!}
           getValue={_onSubCategoryChange}
@@ -179,8 +154,8 @@ const CreateCategory: React.FC<Props> = (props) => {
           <Button
             appearance="primary"
             label="Reset fields"
-            onAction={() => setState(categoryInitialState)}
-            disabled={mode === 'update'}
+            onAction={() => setState(initialState)}
+            cls="m-0 mr-3"
           />
         </FooterPanel>
         {mode === 'update' ? (

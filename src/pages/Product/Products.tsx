@@ -69,7 +69,7 @@ const Products: React.FC<Props> = memo(({ id }) => {
           </tbody>
         </table>
       ) : (
-        <span className="no-data">No products added</span>
+        <span className="no-data">No products</span>
       )}
     </Container>
   );
@@ -82,20 +82,20 @@ Products.defaultProps = {
 export default Products;
 
 const Container = styled(Flexbox)`
-  background-color: ${({ theme }) => theme.colors.background};
-  border-radius: 6px;
-  border-width: 1px;
+  background-color: ${({ theme }) => theme.colors.white};
+  border-radius: 4px;
+  border-width: 2px 4px 2px 2px;
   border-style: solid;
-  border-color: ${({ theme }) => theme.colors.lightBorder};
+  border-color: ${({ theme }) => theme.colors.border};
   padding: 10px;
   min-width: 300px;
-  flex: 1;
+  max-width: 500px;
 
   .header {
     min-height: 40px !important;
-    border-width: 0 0 1px 0;
+    border-width: 0 0 2px 0;
     border-style: solid;
-    border-color: ${({ theme }) => theme.colors.lightBorder};
+    border-color: ${({ theme }) => theme.colors.border};
 
     h3 {
       font-weight: bold;
@@ -107,10 +107,11 @@ const Container = styled(Flexbox)`
         display: flex;
         align-items: center;
         justify-content: center;
-        background-color: ${({ theme }) => theme.colors.warning};
-        color: white;
+        background-color: ${({ theme }) => theme.colors.errorLight};
+        border-right: ${({ theme }) => `4px solid ${theme.colors.error}`};
+        color: ${({ theme }) => theme.colors.white};
         border-radius: 5px;
-        width: 20px;
+        width: 40px;
         height: 20px;
         text-align: center;
         font-weight: bold;
@@ -131,7 +132,7 @@ const Container = styled(Flexbox)`
       text-align: left;
       border-width: 1px;
       border-style: solid;
-      border-color: transparent;
+      border-color: ${({ theme }) => theme.colors.border};
       padding: 3px;
     }
   }

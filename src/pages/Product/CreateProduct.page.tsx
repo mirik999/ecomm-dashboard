@@ -3,7 +3,6 @@ import { useHistory } from 'react-router-dom';
 import { useLazyQuery, useMutation } from '@apollo/client';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
-import * as yup from 'yup';
 //components
 import Input from '../../components/common/input/Input';
 import Button from '../../components/common/Button';
@@ -17,9 +16,8 @@ import Flexbox from '../../components/hoc/Flexbox';
 import HeaderLine from '../../components/common/HeaderLine';
 import BorderedBox from '../../components/hoc/BorderedBox';
 //types
-import { CustomErrorType, OptionType } from '../../redux/types/common.type';
+import { OptionType } from '../../redux/types/common.type';
 import { CategoryType } from '../../redux/types/category.type';
-import { ProductType } from '../../redux/types/product.type';
 //request
 import {
   CREATE_PRODUCT,
@@ -31,11 +29,8 @@ import { GET_BRANDS_FOR_SELECT } from '../../redux/requests/brand.request';
 import { GET_COUPONS_FOR_SELECT } from '../../redux/requests/coupon.request';
 //actions
 import { saveNetStatus } from '../../redux/slices/net-status.slice';
-//utils
-import validator from '../../utils/validator.utils';
 //repository
-import { initialState, YupValidateTypes, validateSchema } from './repository';
-import InputNumber from '../../components/common/input/InputNumber';
+import { initialState } from './repository';
 
 type Props = {};
 
@@ -51,7 +46,6 @@ const CreateProduct: React.FC<Props> = (props) => {
   const [GetBrands, brandsResponse] = useLazyQuery(GET_BRANDS_FOR_SELECT);
   //state
   const [state, setState] = useState<any>(initialState);
-  const [errors, setErrors] = useState<CustomErrorType>({});
   const [mode, setMode] = useState<string>('create');
   const [categories, setCategories] = useState<OptionType[]>([]);
   const [brands, setBrands] = useState<OptionType[]>([]);
@@ -203,42 +197,26 @@ const CreateProduct: React.FC<Props> = (props) => {
   }
 
   async function _onSave(): Promise<void> {
-    const { isValid, errorObject } = await validator<Partial<ProductType>, any>(
-      state,
-      validateSchema,
-    );
-    if (isValid) {
-      try {
-        await CreateProduct({
-          variables: {
-            newProduct: state,
-          },
-        });
-      } catch (err) {
-        dispatch(saveNetStatus(err.graphQLErrors));
-      }
-    } else {
-      setErrors(errorObject);
+    try {
+      await CreateProduct({
+        variables: {
+          newProduct: state,
+        },
+      });
+    } catch (err) {
+      dispatch(saveNetStatus(err.graphQLErrors));
     }
   }
 
   async function _onUpdate(): Promise<void> {
-    const { isValid, errorObject } = await validator<Partial<ProductType>, any>(
-      state,
-      validateSchema,
-    );
-    if (isValid) {
-      try {
-        await UpdateProduct({
-          variables: {
-            updatedProduct: handleState(state),
-          },
-        });
-      } catch (err) {
-        dispatch(saveNetStatus(err.graphQLErrors));
-      }
-    } else {
-      setErrors(errorObject);
+    try {
+      await UpdateProduct({
+        variables: {
+          updatedProduct: handleState(state),
+        },
+      });
+    } catch (err) {
+      dispatch(saveNetStatus(err.graphQLErrors));
     }
   }
 
@@ -278,32 +256,34 @@ const CreateProduct: React.FC<Props> = (props) => {
         <BorderedBox>
           <Flexbox cls="gap np">
             <Input
-              placeholder="Product name*"
+              type="text"
+              label="Product name"
               name="productName"
               value={state.name}
-              onChange={(val: string) => _onChange(val, 'name')}
-              errorMessage={errors.name}
+              getValue={(val: string) => _onChange(val, 'name')}
+              required={true}
             />
             <Input
-              placeholder="Code"
+              type="text"
+              label="Code"
               name="code"
               value={state.code}
-              onChange={(val: string) => _onChange(val, 'code')}
-              errorMessage={errors.code}
+              getValue={(val: string) => _onChange(val, 'code')}
             />
-            <InputNumber
-              placeholder="Price"
+            <Input
+              type="number"
+              label="Price"
               name="price"
               value={state.price}
-              onChange={(val: string) => _onChange(+val, 'price')}
-              errorMessage={errors.price}
+              getValue={(val: string) => _onChange(+val, 'price')}
+              required={true}
             />
-            <InputNumber
-              placeholder="Sale percent"
+            <Input
+              type="number"
+              label="Sale percent"
               name="salePercent"
               value={state.saleCount}
-              onChange={(val: string) => _onChange(+val, 'saleCount')}
-              errorMessage={errors.saleCount}
+              getValue={(val: string) => _onChange(+val, 'saleCount')}
             />
             <MultiSelect
               label="Category"
@@ -433,7 +413,7 @@ const CreateProduct: React.FC<Props> = (props) => {
                   appearance="primary"
                   label="Reset fields"
                   onAction={() => setState(initialState)}
-                  disabled={mode === 'update'}
+                  cls="m-0 mr-3"
                 />
               </Flexbox>
             </Flexbox>

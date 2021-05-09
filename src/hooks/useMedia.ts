@@ -6,7 +6,6 @@ function useMedia() {
   const small = useMediaLayout({ maxWidth: '360px' });
   const medium = useMediaLayout({ maxWidth: '767px' });
   const hd = useMediaLayout({ maxWidth: '1376px' });
-
   const fontSize: fontSizeEnum = small
     ? 'small'
     : medium
@@ -15,7 +14,7 @@ function useMedia() {
     ? 'hd'
     : 'fhd';
 
-  return { fontSize, small, medium, hd };
+  return fontSize;
 }
 
 export default useMedia;

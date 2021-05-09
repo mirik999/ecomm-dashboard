@@ -42,20 +42,6 @@ const Container = styled.div`
     background-color: ${({ theme }) => theme.colors.secondBackground};
     border: ${({ theme }) => `1px solid ${theme.colors.lightBorder}`};
     box-shadow: none;
-
-    .chrome-picker {
-      background-color: ${({ theme }) => theme.colors.background} !important;
-      input {
-        background-color: ${({ theme }) =>
-          theme.colors.secondBackground} !important;
-        color: ${({ theme }) => theme.colors.color} !important;
-        border-color: ${({ theme }) => theme.colors.lightBorder} !important;
-        box-shadow: none !important;
-        &:focus {
-          outline: 0 !important;
-        }
-      }
-    }
   }
 
   @media (max-width: 436px) {

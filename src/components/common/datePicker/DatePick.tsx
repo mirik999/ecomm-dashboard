@@ -1,40 +1,30 @@
 import React from 'react';
 import styled from 'styled-components';
-import { DatePicker, Tooltip, Whisper } from 'rsuite';
+import { DatePicker } from 'rsuite';
 
 type Props = {
   label: string;
   value: Date;
-  required?: boolean;
   getValue?: (val: Date) => void;
 };
 
-const DatePick: React.FC<Props> = ({ getValue, value, label, required }) => {
-  const placeholder = required ? `${label} *` : label;
-
+const DatePick: React.FC<Props> = ({ getValue, value, label }) => {
   function _onChange(date: Date): void {
     getValue!(date);
   }
 
   return (
     <Container>
-      <Whisper
-        trigger={required ? 'hover' : 'none'}
-        speaker={<Tooltip>Required</Tooltip>}
-        placement="topStart"
-      >
-        <DatePicker
-          ranges={[]}
-          format="DD MMM YYYY HH:mm"
-          placeholder={placeholder}
-          onChange={_onChange}
-          value={value}
-          defaultValue={value}
-          placement="bottomEnd"
-          hideMinutes={(minute) => minute % 30 !== 0}
-          block
-        />
-      </Whisper>
+      <DatePicker
+        ranges={[]}
+        format="DD MMM YYYY HH:mm"
+        placeholder={label}
+        onChange={_onChange}
+        defaultValue={value}
+        placement="bottomEnd"
+        hideMinutes={(minute) => minute % 30 !== 0}
+        block
+      />
     </Container>
   );
 };
@@ -42,7 +32,6 @@ const DatePick: React.FC<Props> = ({ getValue, value, label, required }) => {
 DatePick.defaultProps = {
   label: 'Date',
   value: new Date(),
-  required: false,
   getValue: () => false,
 };
 

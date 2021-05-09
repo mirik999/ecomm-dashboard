@@ -2,9 +2,6 @@ import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { useDispatch } from 'react-redux';
 import { v4 as uuid } from 'uuid';
-import { useForm, Controller } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
 //components
 import Input from '../../components/common/input/Input';
 import Button from '../../components/common/Button';
@@ -16,95 +13,64 @@ import { CREATE_USER } from '../../redux/requests/user.request';
 //actions
 import { saveToken } from '../../redux/slices/auth-credentials.slice';
 import { saveUser } from '../../redux/slices/user.slice';
+import { saveNetStatus } from '../../redux/slices/net-status.slice';
 
-const schema = yup.object().shape({
-  email: yup.string().email().required(),
-  password: yup.string().min(6).required(),
-});
-
-type Inputs = {
+type userData = {
   email: string;
   password: string;
 };
 
 type Props = {};
 
-const Login: React.FC<Props> = () => {
+const initialState = {
+  email: '',
+  password: '',
+  clientId: uuid(),
+};
+
+const SignUp: React.FC<Props> = () => {
   const dispatch = useDispatch();
   const [CreateUser] = useMutation(CREATE_USER);
-  //form events
-  const {
-    handleSubmit,
-    control,
-    setError,
-    formState: { errors },
-  } = useForm<Inputs>({
-    resolver: yupResolver(schema),
-  });
+  const [state, setState] = useState<userData>(initialState);
 
-  async function _onSubmit(inputData: Inputs): Promise<void> {
+  async function _onClick(): Promise<void> {
     try {
       const payload = await CreateUser({
         variables: {
-          newUser: {
-            ...inputData,
-            clientId: uuid(),
-          },
+          newUser: state,
         },
       });
       const data = payload.data.createUser;
       dispatch(saveToken(data));
       dispatch(saveUser());
     } catch (err) {
-      const response = err.graphQLErrors[0]?.extensions?.exception?.response;
-      if (
-        response instanceof Object &&
-        response.hasOwnProperty('key') &&
-        response.hasOwnProperty('message')
-      ) {
-        setError(response.key, {
-          type: 'server',
-          message: response.message,
-        });
-      }
+      dispatch(saveNetStatus(err.graphQLErrors));
     }
   }
 
   return (
     <RegisterWrap flex="column" justify="start" align="start">
       <header>
-        <h3>Sign up</h3>
+        <h3>Create an account</h3>
       </header>
-      <form onSubmit={handleSubmit(_onSubmit)} className="gap">
-        <Controller
-          name="email"
-          control={control}
-          defaultValue=""
-          render={({ field }) => (
-            <Input
-              {...field}
-              placeholder="E-mail"
-              errorMessage={errors?.email}
-            />
-          )}
-        />
-        <Controller
-          name="password"
-          control={control}
-          defaultValue=""
-          render={({ field }) => (
-            <Input
-              {...field}
-              placeholder="Password"
-              errorMessage={errors?.password}
-            />
-          )}
-        />
-        <Divider label="Action" />
-        <Button type="submit" appearance="primary" label="Sign up" />
-      </form>
+      <Input
+        type="text"
+        label="E-mail"
+        name="email"
+        value={state.email}
+        getValue={(val: string) => setState({ ...state, email: val })}
+      />
+      <Input
+        type="password"
+        label="Password"
+        name="password"
+        value={state.password}
+        getValue={(val: string) => setState({ ...state, password: val })}
+      />
+      <Divider label="Action" />
+      <Button appearance="primary" label="SUBMIT" onAction={_onClick} />
     </RegisterWrap>
   );
 };
 
-export default Login;
+export default SignUp;

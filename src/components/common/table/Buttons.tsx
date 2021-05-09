@@ -5,8 +5,6 @@ import { ButtonToolbar } from 'rsuite';
 //components
 import Flexbox from '../../hoc/Flexbox';
 import Button from '../Button';
-//types
-import { CreatePageMode } from '../../../redux/types/common.type';
 
 const buttons: any = [
   {
@@ -57,7 +55,7 @@ const buttons: any = [
 type Props = {
   selected: any[];
   getIds: (id: string[], action: string) => void;
-  onRouteChange: (mode: CreatePageMode) => void;
+  onRouteChange: (route: string) => void;
 };
 
 const Buttons: React.FC<Props> = ({ selected, getIds, onRouteChange }) => {

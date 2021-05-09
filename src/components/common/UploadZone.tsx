@@ -1,7 +1,7 @@
 import React, { useEffect, useState, memo } from 'react';
 import Lightbox from 'react-image-lightbox';
 import styled from 'styled-components';
-import { Input, Tooltip, Whisper } from 'rsuite';
+import { Input } from 'rsuite';
 //components
 import Flexbox from '../hoc/Flexbox';
 //utils
@@ -12,23 +12,13 @@ type Props = {
   value: string[] | string;
   multiple: boolean;
   cls?: string;
-  required?: boolean;
   getValue: (val: string[]) => void;
   folderInCloud: string;
   [key: string]: any;
 };
 
 const UploadZone: React.FC<Props> = memo(
-  ({
-    label,
-    value,
-    multiple,
-    cls,
-    required,
-    getValue,
-    folderInCloud,
-    ...props
-  }) => {
+  ({ label, value, multiple, cls, getValue, folderInCloud, ...props }) => {
     const [preview, setPreview] = useState<string[]>([]);
     const [upLoading, setUpLoading] = useState<boolean>(false);
     const [warning, setWarning] = useState<string>('');
@@ -106,13 +96,9 @@ const UploadZone: React.FC<Props> = memo(
       getValue(newPreviewState);
     }
 
-    function handlePlaceholder() {
-      const isMultiple = multiple
-        ? 'Click to select an images'
-        : 'Click to select an image';
-      const isUploaded = preview.length ? '✓' : '*';
-      return required ? `${isMultiple} ${isUploaded}` : isMultiple;
-    }
+    const placeholder = multiple
+      ? 'Click to select an images'
+      : 'Click to select an image';
 
     return (
       <Container cls={cls} flex="column" justify="start" align="start">
@@ -121,34 +107,27 @@ const UploadZone: React.FC<Props> = memo(
           {/*  <span className={warning ? 'text-red' : 'text-black'}>{label}</span>*/}
           {/*  {uploadPercent ? <span>{uploadPercent}%</span> : null}*/}
           {/*</Flexbox>*/}
-          <label htmlFor={'file-upload' + handlePlaceholder()}>
-            <Whisper
-              trigger={required ? 'hover' : 'none'}
-              speaker={<Tooltip>Required</Tooltip>}
-              placement="topStart"
-            >
-              <Flexbox cls="input-wrap gap np">
-                <Input
-                  type="file"
-                  id={'file-upload' + handlePlaceholder()}
-                  name="file-upload"
-                  autoComplete="off"
-                  onChange={handleImage}
-                  multiple={multiple}
-                  accept="image/*"
-                  disabled={upLoading}
-                />
-
-                <Input
-                  type="text"
-                  value=""
-                  readOnly={true}
-                  placeholder={warning ? warning : handlePlaceholder()}
-                  {...props}
-                />
-                {uploadPercent ? <span>{uploadPercent}%</span> : null}
-              </Flexbox>
-            </Whisper>
+          <label htmlFor={'file-upload' + placeholder}>
+            <Flexbox cls="input-wrap gap np">
+              <Input
+                type="file"
+                id={'file-upload' + placeholder}
+                name="file-upload"
+                autoComplete="off"
+                onChange={handleImage}
+                multiple={multiple}
+                accept="image/*"
+                disabled={upLoading}
+              />
+              <Input
+                type="text"
+                value=""
+                readOnly={true}
+                placeholder={warning ? warning : placeholder}
+                {...props}
+              />
+              {uploadPercent ? <span>{uploadPercent}%</span> : null}
+            </Flexbox>
           </label>
         </Flexbox>
 
@@ -204,7 +183,6 @@ const UploadZone: React.FC<Props> = memo(
 UploadZone.defaultProps = {
   label: 'Upload an image',
   cls: '',
-  required: false,
   value: [],
   multiple: false,
 };

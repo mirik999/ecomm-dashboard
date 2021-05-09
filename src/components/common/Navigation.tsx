@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import { useSelector } from 'react-redux';
 import { HiMenuAlt1 } from 'react-icons/hi';
@@ -41,9 +41,7 @@ const Navigation: React.FC<Props> = (props) => {
             ) {
               return (
                 <li key={i} className="hoverable">
-                  <NavLink activeClassName="active-link" to={n.path}>
-                    {n.name}
-                  </NavLink>
+                  <Link to={n.path}>{n.name}</Link>
                 </li>
               );
             }
@@ -107,19 +105,10 @@ const Container = styled.nav`
         cursor: pointer;
 
         a {
-          position: relative;
           display: block;
           padding: 10px 0;
           color: ${({ theme }) => theme.colors.color};
           font-size: ${({ theme }) => theme.fontSize.sm + 'px'};
-        }
-
-        a.active-link::after {
-          content: '+';
-          position: absolute;
-          top: 10px;
-          right: -15px;
-          font-size: 14px;
         }
       }
     }
