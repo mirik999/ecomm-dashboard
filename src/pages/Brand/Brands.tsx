@@ -3,6 +3,7 @@ import { useLazyQuery } from '@apollo/client';
 import styled from 'styled-components';
 //components
 import Flexbox from '../../components/hoc/Flexbox';
+import TableForView from '../../components/common/table/TableForView';
 //request
 import { GET_BRANDS_BY_CATEGORY_ID } from '../../redux/requests/brand.request';
 //types
@@ -46,40 +47,14 @@ const Brands: React.FC<Props> = memo(({ id }) => {
   }
 
   return (
-    <Container flex="column" align="start">
+    <Container flex="column" justify="start">
       <Flexbox cls="header np" justify="between">
         <h3>Brands</h3>
         <Flexbox cls="np count-wrap" justify="end">
           <small>{brands.length}</small>
         </Flexbox>
       </Flexbox>
-      {brands.length ? (
-        <table>
-          <thead>
-            <tr>
-              <th>Brand name</th>
-              <th>Also connected</th>
-            </tr>
-          </thead>
-          <tbody>
-            {brands.map((brand, i) => (
-              <tr key={i}>
-                <td>{brand.name}</td>
-                <td>
-                  {brand.category.map((cat: any, idx) => {
-                    if (cat.id !== id) {
-                      return <span key={idx}>{cat.name}</span>;
-                    }
-                    return '';
-                  })}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      ) : (
-        <span className="no-data">No brands</span>
-      )}
+      <TableForView data={brands} allCount={brands.length} height={200} />
     </Container>
   );
 });
@@ -89,11 +64,11 @@ Brands.defaultProps = {};
 export default Brands;
 
 const Container = styled(Flexbox)`
-  background-color: ${({ theme }) => theme.colors.white};
+  background-color: ${({ theme }) => theme.colors.background};
   border-radius: 4px;
   border-width: 2px 4px 2px 2px;
   border-style: solid;
-  border-color: ${({ theme }) => theme.colors.border};
+  border-color: ${({ theme }) => theme.colors.lightBorder};
   padding: 10px;
   min-width: 300px;
   max-width: 500px;
@@ -102,7 +77,7 @@ const Container = styled(Flexbox)`
     min-height: 40px !important;
     border-width: 0 0 2px 0;
     border-style: solid;
-    border-color: ${({ theme }) => theme.colors.border};
+    border-color: ${({ theme }) => theme.colors.lightBorder};
 
     h3 {
       font-weight: bold;
@@ -114,9 +89,7 @@ const Container = styled(Flexbox)`
         display: flex;
         align-items: center;
         justify-content: center;
-        background-color: ${({ theme }) => theme.colors.errorLight};
-        border-right: ${({ theme }) => `4px solid ${theme.colors.error}`};
-        color: ${({ theme }) => theme.colors.white};
+        color: ${({ theme }) => theme.colors.color};
         border-radius: 5px;
         width: 40px;
         height: 20px;
@@ -139,7 +112,7 @@ const Container = styled(Flexbox)`
       text-align: left;
       border-width: 1px;
       border-style: solid;
-      border-color: ${({ theme }) => theme.colors.border};
+      border-color: ${({ theme }) => theme.colors.lightBorder};
       padding: 3px;
     }
   }

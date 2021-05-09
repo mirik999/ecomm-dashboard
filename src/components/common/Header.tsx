@@ -16,6 +16,7 @@ import { saveNetStatus } from '../../redux/slices/net-status.slice';
 import { LOGOUT_USER } from '../../redux/requests/user.request';
 //socket
 import io from '../../utils/socket.utils';
+import Notification from './Notification';
 
 const socket = io('user');
 
@@ -66,6 +67,7 @@ const Header: React.FC<Props> = memo(
       <Container justify="between">
         <div>{/*<span>path: {path}</span>*/}</div>
         <Flexbox justify="end">
+          <Notification />
           <span>{user.email}</span>
           <MdExitToApp
             size={20}

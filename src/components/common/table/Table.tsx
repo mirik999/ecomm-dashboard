@@ -13,17 +13,9 @@ import {
   FooterPanel,
 } from './styled-components';
 //types
-import { Props } from './props';
+import { Props, options } from './repository';
 //utils
 import { tableBodyHandler } from './body.handler.';
-
-const options = [
-  { value: 1, label: '1' },
-  { value: 20, label: '20' },
-  { value: 50, label: '50' },
-  { value: 75, label: '75' },
-  { value: 100, label: '100' },
-];
 
 const Table: React.FC<Props> = ({
   data,
@@ -81,7 +73,6 @@ const Table: React.FC<Props> = ({
   }
 
   function _onDeepSearch(val: string): void {
-    console.log(val);
     setDeepSearch(val);
   }
 

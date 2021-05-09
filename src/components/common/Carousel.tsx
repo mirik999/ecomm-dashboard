@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import Slider from 'react-slick';
 
@@ -6,9 +6,10 @@ const settings = {
   dots: true,
   infinite: true,
   speed: 500,
-  slidesToShow: 1,
   slidesToScroll: 1,
+  slidesToShow: 1,
   arrows: false,
+  center: true,
 };
 
 type Props = {
@@ -30,7 +31,7 @@ const Carousel: React.FC<Props> = ({ vertical, fade, bgColor, images }) => {
   }
   return (
     <Container>
-      <Slider {...settings} fade={fade} vertical={vertical}>
+      <Slider {...settings} fade={fade} vertical={!vertical}>
         {images.map((url: string, i: number) => (
           <Image key={i} url={url} bgColor={bgColor} />
         ))}
@@ -53,8 +54,12 @@ const Container = styled.div`
   max-width: 100%;
   margin: 10px 0;
 
+  .slick-track {
+    background-color: ${({ theme }) => theme.colors.background};
+  }
+
   .slick-dots {
-    background-color: ${({ theme }) => theme.colors.thirdBackground};
+    background-color: ${({ theme }) => theme.colors.background};
     li {
       button {
         border-radius: 50%;
@@ -72,12 +77,16 @@ const Container = styled.div`
       }
     }
   }
+
+  .slick-slide {
+    border: none;
+  }
 `;
 
 const Image = styled.div<any>`
   width: 100%;
   height: 250px;
-  background-color: ${({ theme }) => theme.colors.thirdBackground};
+  background-color: ${({ theme }) => theme.colors.background};
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;

@@ -95,11 +95,8 @@ export const GET_BRANDS_BY_CATEGORY_ID = gql`
     getBrandsByCategoryId(id: $id) {
       id
       name
-      isDisabled
       category {
-        id
         name
-        isDisabled
       }
     }
   }

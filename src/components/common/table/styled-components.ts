@@ -40,3 +40,9 @@ export const FooterPanel = styled(Flexbox)`
     }
   }
 `;
+
+// table for view
+export const ContainerView = styled.div`
+  overflow: auto;
+  max-width: 100%;
+`;
