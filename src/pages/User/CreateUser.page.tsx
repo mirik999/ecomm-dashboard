@@ -13,7 +13,7 @@ import MultiSelect from '../../components/common/selectable/MultiSelect';
 //types
 import { UserType } from '../../redux/types/user.types';
 import { RootState } from '../../redux/store';
-//request
+//graphql
 import { UPDATE_USER, GET_USER_BY_ID } from '../../redux/requests/user.request';
 //actions
 import { saveNetStatus } from '../../redux/slices/net-status.slice';

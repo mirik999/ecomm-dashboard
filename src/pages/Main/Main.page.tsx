@@ -6,7 +6,7 @@ import Chart from './Chart';
 import Flexbox from '../../components/hoc/Flexbox';
 import HeaderLine from '../../components/common/HeaderLine';
 import BorderedBox from '../../components/hoc/BorderedBox';
-//request
+//graphql
 import { GET_STATISTICS } from '../../redux/requests/main.request';
 //actions
 import { saveNetStatus } from '../../redux/slices/net-status.slice';

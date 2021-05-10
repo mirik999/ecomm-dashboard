@@ -18,7 +18,7 @@ import BorderedBox from '../../components/hoc/BorderedBox';
 //types
 import { OptionType } from '../../redux/types/common.type';
 import { CategoryType } from '../../redux/types/category.type';
-//request
+//graphql
 import {
   CREATE_PRODUCT,
   UPDATE_PRODUCT,

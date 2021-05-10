@@ -6,7 +6,7 @@ import Table from '../../components/common/table/Table';
 import HeaderLine from '../../components/common/HeaderLine';
 //types
 import { BrandType } from '../../redux/types/brand.type';
-//request
+//graphql
 import {
   GET_BRANDS,
   DISABLE_BRANDS,

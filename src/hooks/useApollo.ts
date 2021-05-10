@@ -10,7 +10,7 @@ import { onError } from '@apollo/client/link/error';
 import { useDispatch } from 'react-redux';
 //utils
 import { getFromCookies, removeFromCookies } from '../utils/storage.utils';
-//request
+//graphql
 import { REFRESH_TOKEN } from '../redux/requests/user.request';
 //actions
 import { saveToken } from '../redux/slices/auth-credentials.slice';

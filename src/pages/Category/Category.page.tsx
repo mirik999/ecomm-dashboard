@@ -6,7 +6,7 @@ import Table from '../../components/common/table/Table';
 import HeaderLine from '../../components/common/HeaderLine';
 //types
 import { CategoryType } from '../../redux/types/category.type';
-//request
+//graphql
 import {
   GET_CATEGORIES,
   DISABLE_CATEGORIES,

@@ -4,7 +4,7 @@ import styled from 'styled-components';
 //components
 import Flexbox from '../../components/hoc/Flexbox';
 import TableForView from '../../components/common/table/TableForView';
-//request
+//graphql
 import { GET_BRANDS_BY_CATEGORY_ID } from '../../redux/requests/brand.request';
 //types
 import { BrandType } from '../../redux/types/brand.type';

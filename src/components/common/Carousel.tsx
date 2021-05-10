@@ -20,11 +20,6 @@ type Props = {
   images: string[];
 };
 
-// const prc = [
-//   'https://res.cloudinary.com/electroshop-cmrs-project/image/upload/v1618667801/sliders/landscape-1499968892-back-to-school-tech_c8fjvu.jpg',
-//   'https://res.cloudinary.com/electroshop-cmrs-project/image/upload/v1618667804/sliders/photo-1515940175183-6798529cb860_lqws53.jpg',
-// ];
-
 const Carousel: React.FC<Props> = ({ vertical, fade, bgColor, images }) => {
   if (!images.length) {
     return null;
@@ -56,6 +51,7 @@ const Container = styled.div`
 
   .slick-track {
     background-color: ${({ theme }) => theme.colors.background};
+    height: 100% !important;
   }
 
   .slick-dots {

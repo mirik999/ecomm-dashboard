@@ -16,7 +16,7 @@ import HeaderLine from '../../components/common/HeaderLine';
 import BorderedBox from '../../components/hoc/BorderedBox';
 //types
 import { CategoryType, SubCategoryType } from '../../redux/types/category.type';
-//request
+//graphql
 import {
   CREATE_CATEGORY,
   UPDATE_CATEGORY,
@@ -32,7 +32,7 @@ type Props = {};
 const CreateCategory: React.FC<Props> = (props) => {
   const history = useHistory<QueryState>();
   const dispatch = useDispatch();
-  //requests
+  //graphql
   const [CreateCategory, createResponse] = useMutation(CREATE_CATEGORY);
   const [UpdateCategory, updateResponse] = useMutation(UPDATE_CATEGORY);
   const [GetCategoryById, getResponse] = useLazyQuery(GET_CATEGORY_BY_ID);

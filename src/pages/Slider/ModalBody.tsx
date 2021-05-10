@@ -11,7 +11,6 @@ type Props = {
 const ModalBody: React.FC<Props> = memo(
   ({ images, getImages }) => {
     function _onImageUpload(images: string[]): void {
-      console.log(images);
       getImages(images);
     }
 

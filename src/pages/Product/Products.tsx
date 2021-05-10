@@ -3,7 +3,7 @@ import { useLazyQuery } from '@apollo/client';
 import styled from 'styled-components';
 //components
 import Flexbox from '../../components/hoc/Flexbox';
-//request
+//graphql
 import { GET_PRODUCTS_BY_CATEGORY_ID } from '../../redux/requests/product.request';
 //types
 import { ProductType } from '../../redux/types/product.type';
@@ -13,7 +13,7 @@ type Props = {
 };
 
 const Products: React.FC<Props> = memo(({ id }) => {
-  //requests
+  //graphql
   const [GetProductsByCategoryId, productsResponse] = useLazyQuery(
     GET_PRODUCTS_BY_CATEGORY_ID,
   );

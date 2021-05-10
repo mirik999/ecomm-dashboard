@@ -8,7 +8,7 @@ import Button from '../../components/common/Button';
 import Divider from '../../components/common/Divider';
 //styled
 import { RegisterWrap } from './styled-components';
-//requests
+//graphql
 import { CREATE_USER } from '../../redux/requests/user.request';
 //actions
 import { saveToken } from '../../redux/slices/auth-credentials.slice';

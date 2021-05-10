@@ -12,7 +12,7 @@ import { RootState } from '../../redux/store';
 import { removeToken } from '../../redux/slices/auth-credentials.slice';
 import { removeUser } from '../../redux/slices/user.slice';
 import { saveNetStatus } from '../../redux/slices/net-status.slice';
-//request
+//graphql
 import { LOGOUT_USER } from '../../redux/requests/user.request';
 //socket
 import io from '../../utils/socket.utils';

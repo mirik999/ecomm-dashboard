@@ -6,7 +6,7 @@ import Table from '../../components/common/table/Table';
 import HeaderLine from '../../components/common/HeaderLine';
 //types
 import { CouponType } from '../../redux/types/coupon.type';
-//request
+//graphql
 import {
   GET_COUPONS,
   DISABLE_COUPONS,

@@ -15,7 +15,7 @@ import DatePick from '../../components/common/datePicker/DatePick';
 import MultiSelect from '../../components/common/selectable/MultiSelect';
 //types
 import { CreateCouponType } from '../../redux/types/coupon.type';
-//request
+//graphql
 import {
   CREATE_COUPON,
   UPDATE_COUPON,
@@ -37,7 +37,7 @@ type Props = {};
 const CreateCoupon: React.FC<Props> = (props) => {
   const history = useHistory();
   const dispatch = useDispatch();
-  //requests
+  //graphql
   const [CreateCoupon, createResponse] = useMutation(CREATE_COUPON);
   const [UpdateCoupon, updateResponse] = useMutation(UPDATE_COUPON);
   const [GetCouponById, getResponse] = useLazyQuery(GET_COUPON_BY_ID);

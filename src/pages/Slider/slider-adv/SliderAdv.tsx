@@ -9,20 +9,23 @@ import Modal from '../../../components/common/Modal';
 import ModalBody from '../ModalBody';
 //types
 import { OptionType } from '../../../redux/types/common.type';
+import { SliderType } from '../../../redux/types/slider.type';
 
 const initialState = {
+  name: 'popular',
   vertical: false,
   fade: false,
   images: [],
 };
 
 type Props = {
-  direction: OptionType[];
-  effect: OptionType[];
+  directions: OptionType[];
+  effects: OptionType[];
+  onSave: (slider: any) => void;
 };
 
-const SliderAdv: React.FC<Props> = ({ direction, effect }) => {
-  const [state, setState] = useState<any>(initialState);
+const SliderAdv: React.FC<Props> = ({ directions, effects, onSave }) => {
+  const [state, setState] = useState<SliderType>(initialState);
   const [showModal, setShowModal] = useState<boolean>(false);
 
   function _onSlideOptionsSelect(val: string, opt: string): void {
@@ -45,7 +48,7 @@ const SliderAdv: React.FC<Props> = ({ direction, effect }) => {
   }
 
   function _onSaveSlider(): void {
-    console.log(state);
+    onSave(state);
   }
 
   function _onReset() {
@@ -58,24 +61,24 @@ const SliderAdv: React.FC<Props> = ({ direction, effect }) => {
       <Flexbox cls="np gap mt">
         <SingleSelect
           label="Slider direction"
-          value={state.direction}
-          options={direction}
+          value={state.vertical}
+          options={directions}
           cleanable={false}
-          getValue={(val: string) => _onSlideOptionsSelect(val, 'direction')}
+          getValue={(val: string) => _onSlideOptionsSelect(val, 'vertical')}
           disabled={!Boolean(state.images.length)}
         />
         <SingleSelect
           label="Slider effect"
-          value={state.effect}
-          options={effect}
+          value={state.fade}
+          options={effects}
           cleanable={false}
-          getValue={(val: string) => _onSlideOptionsSelect(val, 'effect')}
+          getValue={(val: string) => _onSlideOptionsSelect(val, 'fade')}
           disabled={!Boolean(state.images.length)}
         />
       </Flexbox>
       <Carousel
-        fade={state.effect}
-        vertical={state.direction}
+        fade={state.fade}
+        vertical={state.vertical}
         images={state.images}
         cls="mt"
       />
@@ -110,8 +113,8 @@ const SliderAdv: React.FC<Props> = ({ direction, effect }) => {
 };
 
 SliderAdv.defaultProps = {
-  direction: [],
-  effect: [],
+  directions: [],
+  effects: [],
 };
 
 export default SliderAdv;

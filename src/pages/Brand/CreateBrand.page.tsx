@@ -15,7 +15,7 @@ import MultiSelect from '../../components/common/selectable/MultiSelect';
 //types
 import { BrandType } from '../../redux/types/brand.type';
 import { OptionType } from '../../redux/types/common.type';
-//request
+//graphql
 import {
   CREATE_BRAND,
   UPDATE_BRAND,
