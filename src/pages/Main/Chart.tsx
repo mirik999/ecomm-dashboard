@@ -96,6 +96,7 @@ const Chart: React.FC<Props> = memo(
       } else {
         toLight();
       }
+      //@ts-ignore
       Highcharts.setOptions(Highcharts.theme);
     }, [theme]);
 
@@ -166,6 +167,7 @@ const monthNames = [
 ];
 
 function toDark() {
+  //@ts-ignore
   Highcharts.theme = {
     colors: [
       '#058DC7',
@@ -206,6 +208,7 @@ function toDark() {
 }
 
 function toLight() {
+  //@ts-ignore
   Highcharts.theme = {
     colors: [
       '#058DC7',

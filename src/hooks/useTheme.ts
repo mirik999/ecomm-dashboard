@@ -23,18 +23,18 @@ function useTheme() {
       window.matchMedia('(prefers-color-scheme: dark)').matches
     ) {
       if (!locTheme) {
-        require('rsuite/dist/styles/rsuite-dark.min.css');
+        require('rsuite/dist/styles/rsuite-dark.css');
         dispatch(themeToDark());
       }
     }
 
     if (locTheme === 'dark') {
-      require('rsuite/dist/styles/rsuite-dark.min.css');
+      require('rsuite/dist/styles/rsuite-dark.css');
       dispatch(themeToDark());
     }
 
     if (locTheme === 'light') {
-      require('rsuite/dist/styles/rsuite-default.min.css');
+      require('rsuite/dist/styles/rsuite-default.css');
       dispatch(themeToLight());
     }
   }, []);

@@ -20,33 +20,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e021988f-3eda-4fed-af49-63e1e5ec9f51" name="Default Changelist" comment="users done">
-      <change afterPath="$PROJECT_DIR$/src/redux/requests/slider.request.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/redux/types/slider.type.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.eslintcache" beforeDir="false" afterPath="$PROJECT_DIR$/.eslintcache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/global.d.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/common/Carousel.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/Carousel.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/common/Header.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/Header.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hooks/useApollo.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/hooks/useApollo.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Auth/SignIn.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Auth/SignIn.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Auth/SignUp.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Auth/SignUp.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Brand/Brand.page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Brand/Brand.page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Brand/Brands.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Brand/Brands.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Brand/CreateBrand.page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Brand/CreateBrand.page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/common/table/styled-components.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/table/styled-components.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hooks/useTheme.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/hooks/useTheme.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/Category/Category.page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Category/Category.page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Category/CreateCategory.page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Category/CreateCategory.page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Coupon/Coupon.page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Coupon/Coupon.page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Coupon/CreateCoupon.page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Coupon/CreateCoupon.page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Main/Main.page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Main/Main.page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Product/CreateProduct.page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Product/CreateProduct.page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Product/Product.page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Product/Product.page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Product/Products.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Product/Products.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Slider/ModalBody.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Slider/ModalBody.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Slider/Slider.page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Slider/Slider.page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Slider/slider-adv/SliderAdv.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Slider/slider-adv/SliderAdv.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Slider/slider-best/SliderBest.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Slider/slider-best/SliderBest.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/User/CreateUser.page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/User/CreateUser.page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/User/User.page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/User/User.page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Main/Chart.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Main/Chart.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Settings/ThemeSelecting.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Settings/ThemeSelecting.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -136,11 +119,11 @@
       <recent name="$PROJECT_DIR$/src" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Projects\@ecomm\ecomm-dashboard\src" />
       <recent name="$PROJECT_DIR$/src/pages/Category/SubCategory" />
       <recent name="$PROJECT_DIR$/src/components/common/input" />
       <recent name="$PROJECT_DIR$/src/components/common" />
       <recent name="$PROJECT_DIR$/src/components/common/selectable" />
-      <recent name="$PROJECT_DIR$/src/components/common/datePicker" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -223,6 +206,7 @@
       <workItem from="1620063038673" duration="9426000" />
       <workItem from="1620324047469" duration="2946000" />
       <workItem from="1620660798865" duration="6553000" />
+      <workItem from="1622132177021" duration="4642000" />
     </task>
     <task id="LOCAL-00001" summary="users done">
       <created>1612213179093</created>

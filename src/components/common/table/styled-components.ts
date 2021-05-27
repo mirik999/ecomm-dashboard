@@ -12,6 +12,14 @@ export const Container = styled.div`
   border-width: 2px 4px 2px 2px;
   border-style: solid;
   border-color: ${({ theme }) => theme.colors.border};
+
+  //experimental
+  .rs-checkbox {
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: 0;
+  }
 `;
 
 export const HeaderPanel = styled(Flexbox).attrs(() => ({
