@@ -1,6 +1,10 @@
 import { lazy } from 'react';
 //types
 import { RoutesType } from '../redux/types/routes.types';
+import ProductPage from '../pages/Product/Product.page';
+import CreateProduct from '../pages/Product/CreateProduct.page';
+const GalleryPage = lazy(() => import('../pages/Gallery/Gallery.page'));
+const CreateGallery = lazy(() => import('../pages/Gallery/CreateGallery.page'));
 //lazy routes
 const AuthPage = lazy(() => import('../pages/Auth/Auth.page'));
 const MainPage = lazy(() => import('../pages/Main/Main.page'));
@@ -10,11 +14,18 @@ const CreateCategory = lazy(
 );
 const BrandPage = lazy(() => import('../pages/Brand/Brand.page'));
 const CreateBrand = lazy(() => import('../pages/Brand/CreateBrand.page'));
-const ProductPage = lazy(() => import('../pages/Product/Product.page'));
-const CreateProduct = lazy(() => import('../pages/Product/CreateProduct.page'));
+const BiographyPage = lazy(() => import('../pages/Biography/Biography.page'));
+const CreateBiography = lazy(
+  () => import('../pages/Biography/CreateBiography.page'),
+);
+const ArticlePage = lazy(() => import('../pages/Article/Article.page'));
+const CreateArticle = lazy(() => import('../pages/Article/CreateArticle.page'));
 const UserPage = lazy(() => import('../pages/User/User.page'));
 const CreateUser = lazy(() => import('../pages/User/CreateUser.page'));
 const CouponPage = lazy(() => import('../pages/Coupon/Coupon.page'));
+const TranslationPage = lazy(
+  () => import('../pages/Translation/Translation.page'),
+);
 const CreateCoupon = lazy(() => import('../pages/Coupon/CreateCoupon.page'));
 const SliderPage = lazy(() => import('../pages/Slider/Slider.page'));
 const NotFoundPage = lazy(() => import('../pages/Rest/NotFound.page'));
@@ -26,15 +37,6 @@ const SettingsPage = lazy(() => import('../pages/Settings/Settings.page'));
 export const routes: RoutesType[] = [
   {
     id: 1,
-    name: 'Auth',
-    path: '/auth',
-    exact: true,
-    visible: false,
-    component: () => <AuthPage />,
-    accessRoles: ['guest', 'admin', 'sudo'],
-  },
-  {
-    id: 2,
     name: 'Main',
     path: '/main',
     exact: true,
@@ -43,49 +45,37 @@ export const routes: RoutesType[] = [
     accessRoles: ['guest', 'admin', 'sudo'],
   },
   {
+    id: 2,
+    name: 'Auth',
+    path: '/auth',
+    exact: true,
+    visible: false,
+    component: () => <AuthPage />,
+    accessRoles: ['guest', 'admin', 'sudo'],
+  },
+  {
     id: 3,
-    name: 'Categories',
-    path: '/categories',
+    name: 'Articles',
+    path: '/articles',
     exact: true,
     visible: true,
-    component: () => <CategoryPage />,
+    component: () => <ArticlePage />,
     accessRoles: ['guest', 'admin', 'sudo'],
     editableRoles: ['admin', 'sudo'],
     subRoutes: [
       {
         id: 31,
-        name: 'Create Category',
-        path: '/categories/create',
+        name: 'Create Article',
+        path: '/articles/create',
         exact: false,
         visible: false,
-        component: () => <CreateCategory />,
+        component: () => <CreateArticle />,
         accessRoles: ['admin', 'sudo'],
       },
     ],
   },
   {
     id: 4,
-    name: 'Brands',
-    path: '/brands',
-    exact: true,
-    visible: true,
-    component: () => <BrandPage />,
-    accessRoles: ['guest', 'admin', 'sudo'],
-    editableRoles: ['admin', 'sudo'],
-    subRoutes: [
-      {
-        id: 41,
-        name: 'Create Brand',
-        path: '/brands/create',
-        exact: false,
-        visible: false,
-        component: () => <CreateBrand />,
-        accessRoles: ['admin', 'sudo'],
-      },
-    ],
-  },
-  {
-    id: 5,
     name: 'Products',
     path: '/products',
     exact: true,
@@ -95,7 +85,7 @@ export const routes: RoutesType[] = [
     editableRoles: ['admin', 'sudo'],
     subRoutes: [
       {
-        id: 51,
+        id: 41,
         name: 'Create Product',
         path: '/products/create',
         exact: false,
@@ -106,7 +96,101 @@ export const routes: RoutesType[] = [
     ],
   },
   {
+    id: 5,
+    name: 'Biography',
+    path: '/biography',
+    exact: true,
+    visible: true,
+    component: () => <BiographyPage />,
+    accessRoles: ['guest', 'admin', 'sudo'],
+    editableRoles: ['admin', 'sudo'],
+    subRoutes: [
+      {
+        id: 51,
+        name: 'Create Biography',
+        path: '/biography/create',
+        exact: false,
+        visible: false,
+        component: () => <CreateBiography />,
+        accessRoles: ['admin', 'sudo'],
+      },
+    ],
+  },
+  {
     id: 6,
+    name: 'Sliders',
+    path: '/sliders',
+    exact: true,
+    visible: true,
+    component: () => <SliderPage />,
+    accessRoles: ['guest', 'admin', 'sudo'],
+    editableRoles: ['admin', 'sudo'],
+  },
+  {
+    id: 7,
+    name: 'Gallery',
+    path: '/gallery',
+    exact: true,
+    visible: true,
+    component: () => <GalleryPage />,
+    accessRoles: ['guest', 'admin', 'sudo'],
+    editableRoles: ['admin', 'sudo'],
+    subRoutes: [
+      {
+        id: 71,
+        name: 'Create Gallery',
+        path: '/gallery/create',
+        exact: false,
+        visible: false,
+        component: () => <CreateGallery />,
+        accessRoles: ['admin', 'sudo'],
+      },
+    ],
+  },
+  {
+    id: 8,
+    name: 'Categories',
+    path: '/categories',
+    exact: true,
+    visible: true,
+    component: () => <CategoryPage />,
+    accessRoles: ['guest', 'admin', 'sudo'],
+    editableRoles: ['admin', 'sudo'],
+    subRoutes: [
+      {
+        id: 81,
+        name: 'Create Category',
+        path: '/categories/create',
+        exact: false,
+        visible: false,
+        component: () => <CreateCategory />,
+        accessRoles: ['admin', 'sudo'],
+      },
+    ],
+  },
+  {
+    id: 9,
+    name: 'Brands',
+    path: '/brands',
+    exact: true,
+    visible: true,
+    component: () => <BrandPage />,
+    accessRoles: ['guest', 'admin', 'sudo'],
+    editableRoles: ['admin', 'sudo'],
+    subRoutes: [
+      {
+        id: 91,
+        name: 'Create Brand',
+        path: '/brands/create',
+        exact: false,
+        visible: false,
+        component: () => <CreateBrand />,
+        accessRoles: ['admin', 'sudo'],
+      },
+    ],
+  },
+  {
+    id: 10,
     name: 'Coupons',
     path: '/coupons',
     exact: true,
@@ -116,7 +200,7 @@ export const routes: RoutesType[] = [
     editableRoles: ['admin', 'sudo'],
     subRoutes: [
       {
-        id: 61,
+        id: 101,
         name: 'Create Coupon',
         path: '/coupons/create',
         exact: false,
@@ -127,7 +211,27 @@ export const routes: RoutesType[] = [
     ],
   },
   {
-    id: 7,
+    id: 11,
+    name: 'Settings',
+    path: '/settings',
+    exact: true,
+    visible: true,
+    component: () => <SettingsPage />,
+    accessRoles: ['guest', 'admin', 'sudo'],
+    editableRoles: [],
+  },
+  {
+    id: 12,
+    name: 'Translation',
+    path: '/translation',
+    exact: true,
+    visible: true,
+    component: () => <TranslationPage />,
+    accessRoles: ['guest', 'admin', 'sudo'],
+    editableRoles: ['admin', 'sudo'],
+  },
+  {
+    id: 13,
     name: 'Users',
     path: '/users',
     exact: true,
@@ -137,7 +241,7 @@ export const routes: RoutesType[] = [
     editableRoles: ['admin', 'sudo'],
     subRoutes: [
       {
-        id: 71,
+        id: 131,
         name: 'Create User',
         path: '/users/create',
         exact: false,
@@ -148,27 +252,7 @@ export const routes: RoutesType[] = [
     ],
   },
   {
-    id: 9,
-    name: 'Sliders',
-    path: '/sliders',
-    exact: true,
-    visible: true,
-    component: () => <SliderPage />,
-    accessRoles: ['guest', 'admin', 'sudo'],
-    editableRoles: ['admin', 'sudo'],
-  },
-  {
-    id: 10,
-    name: 'Settings',
-    path: '/settings',
-    exact: true,
-    visible: true,
-    component: () => <SettingsPage />,
-    accessRoles: ['guest', 'admin', 'sudo'],
-    editableRoles: [],
-  },
-  {
-    id: 11,
+    id: 991,
     name: 'Permission Denied',
     path: '/permission-denied',
     exact: true,
@@ -177,7 +261,7 @@ export const routes: RoutesType[] = [
     accessRoles: ['guest', 'admin', 'sudo'],
   },
   {
-    id: 12,
+    id: 992,
     name: 'Not Found',
     path: '*',
     exact: true,

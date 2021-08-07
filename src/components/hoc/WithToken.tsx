@@ -32,7 +32,7 @@ const WithToken: React.FC<Props> = ({ component: Component, ...rest }) => {
   }
 
   if (rest.computedMatch.url === '/') {
-    return <Redirect to="/main" />;
+    return <Redirect to="/articles" />;
   }
 
   return (

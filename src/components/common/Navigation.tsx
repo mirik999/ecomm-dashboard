@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import { useSelector } from 'react-redux';
@@ -10,49 +10,70 @@ import { RootState } from '../../redux/store';
 import { RoutesType } from '../../redux/types/routes.types';
 //routes
 import { routes } from '../../config/routes';
+import { useMedia } from 'use-media';
 
 type Props = {};
 
 const Navigation: React.FC<Props> = (props) => {
   const { user } = useSelector((state: RootState) => state);
   const location = useLocation();
+  const isSmall = useMedia({ maxWidth: '600px' });
+  const [open, setOpen] = useState(true);
+
+  useEffect(() => {
+    if (location.pathname !== '/auth') {
+      setOpen(isSmall);
+    }
+  }, [isSmall]);
 
   if (location.pathname === '/auth') {
     return null;
   }
 
-  return (
-    <Container>
-      <Flexbox cls="nav-header" justify="between">
-        <div>
-          <h3>Electroshop</h3>
-          <span>Dashboard v. 1.0.2</span>
-        </div>
-        <div>
-          <HiMenuAlt1 size={20} color="white" className="hoverable" />
-        </div>
-      </Flexbox>
-      <Flexbox cls="nav-body">
-        <ul>
-          {routes.map((n: RoutesType, i: number) => {
-            if (
-              n.visible &&
-              n.accessRoles.some((acr, i) => user.roles.includes(acr))
-            ) {
-              return (
-                <li key={i} className="hoverable">
-                  <NavLink activeClassName="active-link" to={n.path}>
-                    {n.name}
-                  </NavLink>
-                </li>
-              );
-            }
+  function _onToggleMenu() {
+    setOpen(!open);
+  }
 
-            return null;
-          })}
-        </ul>
-      </Flexbox>
-    </Container>
+  return (
+    <>
+      {!open && isSmall ? <Overlay onClick={_onToggleMenu} /> : null}
+      <Container menu={open}>
+        <Flexbox cls="nav-header" justify="between">
+          <div>
+            <h3>Mirik Dev Group</h3>
+            <span>Dashboard v. 1.0.2</span>
+          </div>
+          <div>
+            <HiMenuAlt1
+              size={20}
+              color="white"
+              className="hoverable"
+              onClick={_onToggleMenu}
+            />
+          </div>
+        </Flexbox>
+        <Flexbox cls="nav-body">
+          <ul>
+            {routes.map((n: RoutesType, i: number) => {
+              if (
+                n.visible &&
+                n.accessRoles.some((acr, i) => user.roles.includes(acr))
+              ) {
+                return (
+                  <li key={i} className="hoverable">
+                    <NavLink activeClassName="active-link" to={n.path}>
+                      {n.name}
+                    </NavLink>
+                  </li>
+                );
+              }
+
+              return null;
+            })}
+          </ul>
+        </Flexbox>
+      </Container>
+    </>
   );
 };
 
@@ -60,9 +81,9 @@ Navigation.defaultProps = {};
 
 export default Navigation;
 
-const Container = styled.nav`
-  min-width: 160px;
-  width: 160px;
+const Container = styled.nav<any>`
+  min-width: 170px;
+  width: 170px;
   height: 100%;
   background-color: ${({ theme }) => theme.colors.secondBackground};
   border-right-width: 2px;
@@ -129,8 +150,18 @@ const Container = styled.nav`
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 2;
+    z-index: 8;
     height: 100vh;
-    transform: translateX(-127px);
+    transform: ${({ menu }) => (menu ? 'translateX(-137px)' : 'translateX(0)')};
   }
+`;
+
+const Overlay = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 7;
+  height: 100vh;
+  width: 100vw;
+  background-color: rgba(0, 0, 0, 0.2);
 `;

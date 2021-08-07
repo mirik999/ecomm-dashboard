@@ -14,7 +14,7 @@ import BorderedBox from '../../components/hoc/BorderedBox';
 import MultiSelect from '../../components/common/selectable/MultiSelect';
 //types
 import { BrandType } from '../../redux/types/brand.type';
-import { OptionType } from '../../redux/types/common.type';
+import { ImageType, OptionType } from '../../redux/types/common.type';
 //graphql
 import {
   CREATE_BRAND,
@@ -27,7 +27,10 @@ import { saveNetStatus } from '../../redux/slices/net-status.slice';
 
 const initialState = {
   name: '',
-  imageUrl: '',
+  imageUrl: {
+    src: '',
+    alt: '',
+  },
   category: [],
 };
 
@@ -164,8 +167,8 @@ const CreateBrand: React.FC<Props> = (props) => {
     setState((prevState: any) => ({ ...prevState, [key]: val }));
   }
 
-  function getBrandsImage(val: string[]): void {
-    const imageUrl = val[0] ? val[0] : '';
+  function getBrandsImage(val: ImageType[]): void {
+    const imageUrl = val[0] ? val[0] : { src: '', alt: '' };
     setState((prevState: any) => ({ ...prevState, imageUrl }));
   }
 

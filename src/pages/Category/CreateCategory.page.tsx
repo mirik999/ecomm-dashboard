@@ -7,10 +7,7 @@ import styled from 'styled-components';
 //components
 import Input from '../../components/common/input/Input';
 import Button from '../../components/common/Button';
-import Divider from '../../components/common/Divider';
 import SubCategory from './SubCategory/SubCategory';
-import Brands from '../Brand/Brands';
-import Products from '../Product/Products';
 import Flexbox from '../../components/hoc/Flexbox';
 import HeaderLine from '../../components/common/HeaderLine';
 import BorderedBox from '../../components/hoc/BorderedBox';
@@ -158,15 +155,6 @@ const CreateCategory: React.FC<Props> = (props) => {
             cls="m-0 mr-3"
           />
         </FooterPanel>
-        {/*{mode === 'update' ? (*/}
-        {/*  <InfoCardsWrap>*/}
-        {/*    <Divider label="Connections" />*/}
-        {/*    <Flexbox cls="np" align="start">*/}
-        {/*      <Brands id={id[0]} />*/}
-        {/*      <Products id={id[0]} />*/}
-        {/*    </Flexbox>*/}
-        {/*  </InfoCardsWrap>*/}
-        {/*) : null}*/}
       </BorderedBox>
     </>
   );

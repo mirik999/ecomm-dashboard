@@ -56,12 +56,21 @@ type Props = {
   selected: any[];
   getIds: (id: string[], action: string) => void;
   onRouteChange: (route: string) => void;
+  disableCreateButton: boolean; //disable create if max records gte than data.length
 };
 
-const Buttons: React.FC<Props> = ({ selected, getIds, onRouteChange }) => {
+const Buttons: React.FC<Props> = ({
+  selected,
+  getIds,
+  onRouteChange,
+  disableCreateButton,
+}) => {
   const location = useLocation();
 
   function handleDisabling(btn: any): boolean {
+    if (disableCreateButton && btn.name === 'create') {
+      return true;
+    }
     return btn.disable === 'non-multiple'
       ? selected.length !== 1
       : btn.disable === 'non-zero'

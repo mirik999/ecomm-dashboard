@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import Table from '../../components/common/table/Table';
 import HeaderLine from '../../components/common/HeaderLine';
 //types
-import { ProductType } from '../../redux/types/product.type';
+import { UserType } from '../../redux/types/user.types';
 //graphql
 import {
   GET_USERS,
@@ -30,7 +30,7 @@ const UserPage: React.FC<Props> = (props) => {
   const [ActivateUsers] = useMutation(ACTIVATE_USERS);
   const [DeleteUsers] = useMutation(DELETE_USERS);
   //state
-  const [users, setUsers] = useState<ProductType[]>([]);
+  const [users, setUsers] = useState<UserType[]>([]);
   const [allCount, setAllCount] = useState<number>(0);
   const [rowCount, setRowCount] = useState<number>(10);
   const [currentPage, setCurrentPage] = useState<number>(1);

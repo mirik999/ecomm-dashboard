@@ -1,6 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import Slider from 'react-slick';
+import { Icon, Modal } from 'rsuite';
+import YouTube from 'react-youtube';
+//types
+import { ImageType } from '../../redux/types/common.type';
+//components
+import Button from './Button';
 
 const settings = {
   dots: true,
@@ -9,7 +15,6 @@ const settings = {
   slidesToScroll: 1,
   slidesToShow: 1,
   arrows: false,
-  center: true,
 };
 
 type Props = {
@@ -17,20 +22,85 @@ type Props = {
   vertical: boolean;
   fade: boolean;
   cls?: string;
-  images: string[];
+  images: ImageType[];
+  options?: any;
+  imageWidth?: 'box' | 'fluid';
 };
 
-const Carousel: React.FC<Props> = ({ vertical, fade, bgColor, images }) => {
+const Carousel: React.FC<Props> = ({
+  vertical,
+  fade,
+  bgColor,
+  images,
+  options,
+  imageWidth = 'fluid',
+}) => {
+  const [youtubeId, setYoutubeId] = useState('');
+
   if (!images.length) {
     return null;
   }
+
+  function _onOpenVideoPlayer(videoId: string) {
+    setYoutubeId(videoId);
+  }
+
   return (
     <Container>
-      <Slider {...settings} fade={fade} vertical={!vertical}>
-        {images.map((url: string, i: number) => (
-          <Image key={i} url={url} bgColor={bgColor} />
-        ))}
+      <Slider
+        {...settings}
+        fade={fade}
+        vertical={!vertical}
+        {...options}
+        className="inner-slider-wrap"
+      >
+        {images.map((img: ImageType, i: number) => {
+          if (img.videoId) {
+            return (
+              <PosterView
+                key={i}
+                img={img.src}
+                bgColor={bgColor}
+                size={imageWidth}
+              >
+                <Icon
+                  icon="youtube-play"
+                  size="4x"
+                  onClick={() => _onOpenVideoPlayer(img.videoId!)}
+                />
+              </PosterView>
+            );
+          }
+          return (
+            <Image key={i} img={img.src} bgColor={bgColor} size={imageWidth} />
+          );
+        })}
       </Slider>
+
+      <Modal
+        backdrop="static"
+        show={Boolean(youtubeId)}
+        onHide={() => setYoutubeId('')}
+        size="xs"
+      >
+        <Modal.Body>
+          <YouTube
+            videoId={youtubeId}
+            id={youtubeId}
+            opts={{
+              width: '360px',
+              height: '200px',
+            }}
+          />
+        </Modal.Body>
+        <Modal.Footer>
+          <Button
+            appearance="default"
+            label="Cancel"
+            onAction={() => setYoutubeId('')}
+          />
+        </Modal.Footer>
+      </Modal>
     </Container>
   );
 };
@@ -76,15 +146,44 @@ const Container = styled.div`
 
   .slick-slide {
     border: none;
+    & > div {
+      display: flex;
+      justify-content: center;
+    }
   }
 `;
 
 const Image = styled.div<any>`
   width: 100%;
+  max-width: ${({ size }) => (size === 'box' ? '250px' : '100%')};
   height: 250px;
   background-color: ${({ theme }) => theme.colors.background};
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
-  background-image: ${(props) => `url(${props.url})`};
+  background-image: ${(props) => `url(${props.img})`};
+`;
+
+const PosterView = styled.div<any>`
+  width: 100%;
+  max-width: ${({ size }) => (size === 'box' ? '250px' : '100%')};
+  height: 250px;
+  background-color: ${({ theme }) => theme.colors.background};
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-image: ${(props) => `url(${props.img})`};
+  position: relative;
+
+  i {
+    position: absolute;
+    color: #c00;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+    &:hover {
+      opacity: 0.8;
+    }
+  }
 `;

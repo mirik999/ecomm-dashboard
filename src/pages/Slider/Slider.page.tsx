@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { useMutation } from '@apollo/client';
 import { useDispatch } from 'react-redux';
@@ -6,15 +6,23 @@ import { useDispatch } from 'react-redux';
 import BorderedBox from '../../components/hoc/BorderedBox';
 import HeaderLine from '../../components/common/HeaderLine';
 import Flexbox from '../../components/hoc/Flexbox';
-import SliderBest from './slider-best/SliderBest';
-import SliderAdv from './slider-adv/SliderAdv';
+import HeaderLeftSlider from './header-left-slider/HeaderLeftSlider';
+import HeaderRightSlider from './header-right-slider/HeaderRightSlider';
+import CertificateSlider from './certificate-slider/CertificateSlider';
+import InstagramSlider from './instagram-slider/InstagramSlider';
 //graphql
-import { CREATE_SLIDER } from '../../redux/requests/slider.request';
+import {
+  ACTIVATE_SLIDERS,
+  CREATE_SLIDER,
+  DISABLE_SLIDERS,
+  UPDATE_SLIDER,
+} from '../../redux/requests/slider.request';
 //types
 import { OptionType } from '../../redux/types/common.type';
 import { SliderType } from '../../redux/types/slider.type';
 //actions
 import { saveNetStatus } from '../../redux/slices/net-status.slice';
+import YoutubeSlider from './youtube-slider/YoutubeSlider';
 
 type Props = {};
 
@@ -44,18 +52,53 @@ const SliderPage: React.FC<Props> = (props) => {
   const dispatch = useDispatch();
   //graphql
   const [CreateSlider, createResponse] = useMutation(CREATE_SLIDER);
+  const [UpdateSlider, updateResponse] = useMutation(UPDATE_SLIDER);
+  const [DisableSlider, disableResponse] = useMutation(DISABLE_SLIDERS);
+  const [ActivateSlider, activateResponse] = useMutation(ACTIVATE_SLIDERS);
 
-  useEffect(() => {
-    if (createResponse.data) {
-      console.log(createResponse.data);
-    }
-  }, [createResponse.data]);
-
-  async function _onSave(slider: SliderType): Promise<void> {
+  async function _onSave(
+    slider: SliderType,
+    updateMode: boolean,
+  ): Promise<void> {
     try {
-      await CreateSlider({
+      if (updateMode) {
+        await UpdateSlider({
+          variables: {
+            updatedSlider: slider,
+          },
+        });
+      } else {
+        await CreateSlider({
+          variables: {
+            newSlider: slider,
+          },
+        });
+      }
+    } catch (err) {
+      const errorObject = err.graphQLErrors.length
+        ? err.graphQLErrors[0]
+        : err.networkError.result.errors[0];
+      dispatch(saveNetStatus(errorObject));
+    }
+  }
+
+  async function _onDisable(ids: string[]) {
+    try {
+      await DisableSlider({
         variables: {
-          newSlider: slider,
+          disabledSliders: { ids },
+        },
+      });
+    } catch (err) {
+      dispatch(saveNetStatus(err.graphQLErrors[0]));
+    }
+  }
+
+  async function _onEnable(ids: string[]) {
+    try {
+      await ActivateSlider({
+        variables: {
+          activateSliders: { ids },
         },
       });
     } catch (err) {
@@ -69,15 +112,46 @@ const SliderPage: React.FC<Props> = (props) => {
       {/* dashboard */}
       <Container>
         <Flexbox cls="np gap slides-wrap" align="start">
-          <SliderBest
+          <HeaderLeftSlider
             directions={directions}
             effects={effects}
             onSave={_onSave}
+            onDisable={_onDisable}
+            onEnable={_onEnable}
           />
-          <SliderAdv
+          <HeaderRightSlider
             directions={directions}
             effects={effects}
             onSave={_onSave}
+            onDisable={_onDisable}
+            onEnable={_onEnable}
+          />
+        </Flexbox>
+        <Flexbox cls="np">
+          <InstagramSlider
+            directions={directions}
+            effects={effects}
+            onEnable={_onEnable}
+            onSave={_onSave}
+            onDisable={_onDisable}
+          />
+        </Flexbox>
+        <Flexbox cls="np">
+          <CertificateSlider
+            directions={directions}
+            effects={effects}
+            onEnable={_onEnable}
+            onSave={_onSave}
+            onDisable={_onDisable}
+          />
+        </Flexbox>
+        <Flexbox cls="np">
+          <YoutubeSlider
+            directions={directions}
+            effects={effects}
+            onEnable={_onEnable}
+            onSave={_onSave}
+            onDisable={_onDisable}
           />
         </Flexbox>
       </Container>

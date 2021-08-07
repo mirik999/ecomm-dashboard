@@ -126,7 +126,7 @@ const Container = styled(Flexbox)`
   }
 
   @media screen and (max-width: 600px) {
-    max-width: calc(100vw - 33px) !important;
+    min-width: calc(100vw - 33px) !important;
     margin-left: 33px;
   }
 `;

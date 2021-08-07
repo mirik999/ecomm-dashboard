@@ -19,7 +19,7 @@ const WithoutToken: React.FC<Props> = ({ component: Component, ...rest }) => {
         !authCredentials.accessToken ? (
           <Component {...props} />
         ) : (
-          <Redirect to="/main" />
+          <Redirect to="/articles" />
         )
       }
     />

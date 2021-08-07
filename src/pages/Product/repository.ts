@@ -1,8 +1,10 @@
+import { imageState } from '../../constants/common.resource';
+
 export const initialState: any = {
   name: '',
   code: '',
   images: [],
-  cover: '',
+  cover: imageState,
   description: '',
   color: '',
   price: 0,

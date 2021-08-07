@@ -12,6 +12,7 @@ export type Props = {
   getIdsAndActivate: (id: string[]) => void;
   getIdsAndDelete: (id: string[]) => void;
   getDateRange: (range: { [key: string]: Date }) => void;
+  maxRecords?: number;
 };
 
 export type PropsForView = {

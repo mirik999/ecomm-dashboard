@@ -2,15 +2,20 @@ import React, { memo } from 'react';
 import styled from 'styled-components';
 //components
 import UploadZone from '../../components/common/UploadZone';
+//types
+import { ImageType } from '../../redux/types/common.type';
 
 type Props = {
-  images: string[];
-  getImages: (val: string[]) => void;
+  images: ImageType[];
+  getImages: (val: ImageType[]) => void;
+  maxImage?: number;
+  video?: boolean;
+  link?: boolean;
 };
 
 const ModalBody: React.FC<Props> = memo(
-  ({ images, getImages }) => {
-    function _onImageUpload(images: string[]): void {
+  ({ images, getImages, maxImage, video, link }) => {
+    function _onImageUpload(images: ImageType[]): void {
       getImages(images);
     }
 
@@ -21,12 +26,15 @@ const ModalBody: React.FC<Props> = memo(
           value={images}
           label="Max. 5 images and each size less than 500KB"
           getValue={_onImageUpload}
-          folderInCloud="slider_images"
+          folderInCloud="p147xiqo"
+          maxImage={maxImage}
+          video={video}
+          link={link}
         />
       </Container>
     );
   },
-  (prevProps, nexrtProps) => {
+  (prev, next) => {
     return true;
   },
 );
@@ -34,6 +42,9 @@ const ModalBody: React.FC<Props> = memo(
 ModalBody.defaultProps = {
   images: [],
   getImages: () => false,
+  maxImage: 5,
+  video: false,
+  link: false,
 };
 
 export default ModalBody;

@@ -31,6 +31,7 @@ const Table: React.FC<Props> = ({
   getIdsAndActivate,
   getIdsAndDelete,
   getDateRange,
+  maxRecords,
 }) => {
   const history = useHistory();
   //state
@@ -82,6 +83,10 @@ const Table: React.FC<Props> = ({
 
   function _onFilter(search: string) {
     return function (elem: any) {
+      if (elem.title) {
+        return elem.title.toLowerCase().includes(search.toLowerCase());
+      }
+
       if (elem.email) {
         return elem.email.toLowerCase().includes(search.toLowerCase());
       }
@@ -263,6 +268,7 @@ const Table: React.FC<Props> = ({
           selected={checkedKeys}
           getIds={getIds}
           onRouteChange={_onRouteChange}
+          disableCreateButton={maxRecords ? data.length >= maxRecords : false}
         />
         <RsTable.Pagination
           lengthMenu={options}

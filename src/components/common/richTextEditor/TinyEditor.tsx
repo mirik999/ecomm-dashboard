@@ -40,21 +40,17 @@ const TinyEditor: React.FC<Props> = ({ label, value, getValue, cls }) => {
       return false;
     }
 
-    await imageUploadAndGetUrl(
-      file,
-      'description_images',
-      (percent, error, file) => {
-        if (percent) {
-          progress(percent);
-        }
-        if (error) {
-          fail(error);
-        }
-        if (file) {
-          success(file.data.secure_url);
-        }
-      },
-    );
+    await imageUploadAndGetUrl(file, 'ww1uv787', (percent, error, file) => {
+      if (percent) {
+        progress(percent);
+      }
+      if (error) {
+        fail(error);
+      }
+      if (file) {
+        success(file.data.secure_url);
+      }
+    });
   }
 
   const isDark = getFromLocalStorage('theme') === 'dark';
@@ -62,8 +58,8 @@ const TinyEditor: React.FC<Props> = ({ label, value, getValue, cls }) => {
   return (
     <Container cls={cls}>
       <Editor
-        apiKey="ujhxkgc5qcu6syhl2b7qv1n2ydnqwtl1vwyy8ndwnl650f0t"
-        initialValue={value}
+        apiKey="jw6j2lyzhaht0kvv5r6ils2t15miwry6639tmn7kli458tl1"
+        value={value}
         init={{
           skin: isDark ? 'oxide-dark' : '',
           content_css: isDark ? 'dark' : '',
@@ -81,7 +77,7 @@ const TinyEditor: React.FC<Props> = ({ label, value, getValue, cls }) => {
           toolbar: `undo redo | fontsizeselect backcolor | alignleft aligncenter alignright alignjustify
             | bullist numlist outdent indent | template restoredraft | help`,
           autosave_interval: '10s',
-          quickbars_insert_toolbar: 'template',
+          // quickbars_insert_toolbar: '',
           autosave_prefix: 'tinymce-autosave',
         }}
         onEditorChange={handleEditorChange}

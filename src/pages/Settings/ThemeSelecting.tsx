@@ -71,6 +71,7 @@ export default ThemeSelecting;
 
 const Container = styled(Flexbox)`
   padding: 0;
+  min-width: 250px;
   max-width: 250px;
   height: 250px;
   position: relative;

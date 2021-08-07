@@ -16,7 +16,7 @@ import Flexbox from '../../components/hoc/Flexbox';
 import HeaderLine from '../../components/common/HeaderLine';
 import BorderedBox from '../../components/hoc/BorderedBox';
 //types
-import { OptionType } from '../../redux/types/common.type';
+import { ImageType, OptionType } from '../../redux/types/common.type';
 import { CategoryType } from '../../redux/types/category.type';
 //graphql
 import {
@@ -31,6 +31,7 @@ import { GET_COUPONS_FOR_SELECT } from '../../redux/requests/coupon.request';
 import { saveNetStatus } from '../../redux/slices/net-status.slice';
 //repository
 import { initialState } from './repository';
+import { imageState } from '../../constants/common.resource';
 
 type Props = {};
 
@@ -224,12 +225,12 @@ const CreateProduct: React.FC<Props> = (props) => {
     setState((prevState: any) => ({ ...prevState, [key]: val }));
   }
 
-  function getCoverImage(val: string[]): void {
-    const cover = val[0] ? val[0] : '';
+  function getCoverImage(val: ImageType[]): void {
+    const cover = val[0] ? val[0] : imageState;
     setState((prevState: any) => ({ ...prevState, cover }));
   }
 
-  function getImages(images: string[]): void {
+  function getImages(images: ImageType[]): void {
     setState((prevState: any) => ({ ...prevState, images }));
   }
 

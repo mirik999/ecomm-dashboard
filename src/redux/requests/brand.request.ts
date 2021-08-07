@@ -21,7 +21,9 @@ export const GET_BRAND_BY_ID = gql`
     getBrandById(id: $id) {
       id
       name
-      imageUrl
+      imageUrl {
+        src
+      }
       category {
         id
       }
@@ -38,7 +40,12 @@ export const GET_BRANDS = gql`
       payload {
         id
         name
-        imageUrl
+        imageUrl {
+          src
+          alt
+          videoId
+          link
+        }
         category {
           id
           name

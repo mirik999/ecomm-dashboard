@@ -8,13 +8,14 @@ import Flexbox from '../hoc/Flexbox';
 type Props = {
   label: string;
   goBack?: boolean;
+  [key: string]: any;
 };
 
-const HeaderLine: React.FC<Props> = ({ label, goBack }) => {
+const HeaderLine: React.FC<Props> = ({ label, goBack, ...props }) => {
   const history = useHistory();
 
   return (
-    <BorderedBox>
+    <BorderedBox {...props}>
       <HeaderPanel justify="between">
         <h2>{label}</h2>
         {goBack ? (

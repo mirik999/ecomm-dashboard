@@ -20,7 +20,7 @@ const table = `
 
 export const templates = [
   {
-    title: 'Table for products',
+    title: 'Table',
     description: 'Adds a ready to edit table',
     content: table,
   },

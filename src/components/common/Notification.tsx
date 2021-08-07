@@ -50,4 +50,14 @@ const Container = styled(Flexbox)`
   .rs-dropdown-menu {
     width: 250px !important;
   }
+
+  @media (max-width: 766px) {
+    .rs-dropdown-menu {
+      width: 205px !important;
+
+      * {
+        font-size: 12px;
+      }
+    }
+  }
 `;

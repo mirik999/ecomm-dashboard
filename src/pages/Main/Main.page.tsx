@@ -65,7 +65,7 @@ const MainPage: React.FC<Props> = (props) => {
           <Chart
             type="column"
             theme={theme.name as 'dark' | 'light'}
-            header="Products data counting"
+            header="Articles data counting"
             data={stats.product}
             status={statsResponse.loading}
             getDateRange={_onDateRangeSelect}

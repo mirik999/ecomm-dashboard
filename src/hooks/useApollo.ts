@@ -27,8 +27,8 @@ function useApollo() {
           context: {
             headers: {
               authorization: 'Bearer ' + authCredentials.accessToken,
-              refresh_token: 'Refresh ' + authCredentials.refreshToken,
-              client_id: 'Client ' + authCredentials.clientId,
+              refreshtoken: 'Refresh ' + authCredentials.refreshToken,
+              clientid: 'Client ' + authCredentials.clientId,
             },
           },
         });

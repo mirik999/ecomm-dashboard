@@ -23,7 +23,7 @@ const AuthPage: React.FC<Props> = () => {
         <span className="hoverable" onClick={_onChangeType}>
           {type ? 'Create an account' : 'Already have an account?'}
         </span>
-        {type ? <SignIn /> : <SignUp />}
+        {type ? <SignUp /> : <SignIn />}
       </div>
     </Container>
   );
