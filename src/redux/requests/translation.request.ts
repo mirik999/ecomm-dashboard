@@ -21,8 +21,15 @@ export const GET_TRANSLATION_BY_ID = gql`
     getTranslationById(id: $id) {
       id
       keyword
-      langCode
-      translation
+      translation {
+        AZ
+        RU
+        TR
+        EN
+        FR
+        SP
+        DE
+      }
     }
   }
 `;
@@ -34,8 +41,15 @@ export const GET_TRANSLATIONS = gql`
       payload {
         id
         keyword
-        langCode
-        translation
+        translation {
+          AZ
+          RU
+          TR
+          EN
+          FR
+          SP
+          DE
+        }
       }
     }
   }

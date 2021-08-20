@@ -64,7 +64,7 @@ function App() {
       />
       <ApolloProvider client={client}>
         <ThemeProvider theme={{ ...theme, fontSize: theme.fontSize[fontSize] }}>
-          <Container align="start">
+          <Container align="start" wrap="no-wrap">
             <Navigation />
             <Flexbox
               cls="np fh"
@@ -129,6 +129,12 @@ const Container = styled(Flexbox)`
     @media screen and (max-width: 600px) {
       max-width: calc(100vw - 33px) !important;
       margin-left: 33px;
+    }
+  }
+
+  @media screen and (max-width: 600px) {
+    .fh {
+      max-width: calc(100vw - 33px) !important;
     }
   }
 `;

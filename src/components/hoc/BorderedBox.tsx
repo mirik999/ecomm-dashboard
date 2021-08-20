@@ -23,4 +23,5 @@ const Container = styled.div`
   border-width: 2px 4px 2px 2px;
   border-style: solid;
   border-color: ${({ theme }) => theme.colors.border};
+  overflow-x: auto;
 `;
