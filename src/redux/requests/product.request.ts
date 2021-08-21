@@ -22,8 +22,18 @@ export const GET_PRODUCT_BY_ID = gql`
       id
       name
       code
-      images
-      cover
+      images {
+        src
+        alt
+        videoId
+        link
+      }
+      cover {
+        src
+        alt
+        videoId
+        link
+      }
       color
       sold
       description
@@ -65,8 +75,14 @@ export const GET_PRODUCTS = gql`
         id
         name
         code
-        images
-        cover
+        images {
+          src
+          alt
+        }
+        cover {
+          src
+          alt
+        }
         color
         sold
         description

@@ -20,18 +20,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e021988f-3eda-4fed-af49-63e1e5ec9f51" name="Default Changelist" comment="users done">
-      <change afterPath="$PROJECT_DIR$/react-table-config.d.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/Translation/TranslationList.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/hoc/BorderedBox.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/hoc/BorderedBox.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/config/countries.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/config/countries.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Translation/Translation.page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Translation/Translation.page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/redux/requests/translation.request.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/requests/translation.request.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/redux/types/translation.type.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/types/translation.type.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/common/table/styled-components.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/table/styled-components.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/config/routes.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/config/routes.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Article/CreateArticle.page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Article/CreateArticle.page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Biography/CreateBiography.page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Biography/CreateBiography.page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Gallery/CreateGallery.page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Gallery/CreateGallery.page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Slider/ModalBody.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Slider/ModalBody.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Slider/Slider.page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Slider/Slider.page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Slider/header-left-slider/HeaderLeftSlider.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Slider/header-left-slider/HeaderLeftSlider.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Slider/header-right-slider/HeaderRightSlider.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Slider/header-right-slider/HeaderRightSlider.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Slider/instagram-slider/InstagramSlider.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Slider/instagram-slider/InstagramSlider.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Translation/TranslationList.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Translation/TranslationList.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/requests/coupon.request.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/requests/coupon.request.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/requests/product.request.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/requests/product.request.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/requests/slider.request.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/requests/slider.request.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -103,7 +106,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../@Rexshende/rexshende-dashboard" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -112,7 +115,7 @@
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="yarn" />
     <property name="prettierjs.PrettierConfiguration.Package" value="$PROJECT_DIR$/node_modules/prettier" />
-    <property name="settings.editor.selected.configurable" value="settings.javascript.prettier" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
     <property name="ts.external.directory.path" value="D:\Projects\@ecomm\ecomm-dash\node_modules\typescript\lib" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
@@ -220,7 +223,9 @@
       <workItem from="1626014361483" duration="1867000" />
       <workItem from="1628328523864" duration="12331000" />
       <workItem from="1628492904209" duration="27000" />
-      <workItem from="1629449987392" duration="23433000" />
+      <workItem from="1629449987392" duration="23586000" />
+      <workItem from="1629540981751" duration="3718000" />
+      <workItem from="1629544712271" duration="5384000" />
     </task>
     <task id="LOCAL-00001" summary="users done">
       <created>1612213179093</created>

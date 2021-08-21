@@ -2,12 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
 import { useLazyQuery } from '@apollo/client';
 import { useDispatch } from 'react-redux';
-import {
-  useTable,
-  useFilters,
-  useGlobalFilter,
-  usePagination,
-} from 'react-table';
+import { useTable, useFilters, useGlobalFilter } from 'react-table';
 //components
 import Flexbox from '../../components/hoc/Flexbox';
 import { HeaderPanel } from '../../components/common/table/styled-components';
@@ -50,6 +45,7 @@ const TranslationList = ({ getObjectToUpdate, refetch }: Props) => {
   useEffect(() => {
     (async function () {
       if (refetch) {
+        console.log(refetch);
         await getTranslations(currentPage, rowCount, deepSearch);
       }
     })();
@@ -86,23 +82,7 @@ const TranslationList = ({ getObjectToUpdate, refetch }: Props) => {
     }
   }
 
-  function _onDeepSearch(val: string): void {
-    setDeepSearch(val);
-  }
-
-  async function _onFilterDeep(e: KeyboardEvent) {
-    if (e.key === 'Enter') {
-      try {
-        await getTranslations(currentPage, rowCount, deepSearch);
-      } catch (err) {
-        console.error(err);
-      }
-    }
-  }
-
   const tableInitialState: any = {
-    pageSize: 50,
-    pageCount: totalCount,
     hiddenColumns: ['id'],
   };
 
@@ -207,25 +187,16 @@ const TranslationList = ({ getObjectToUpdate, refetch }: Props) => {
     },
     useFilters,
     useGlobalFilter,
-    usePagination,
   );
 
   const {
     getTableProps,
     getTableBodyProps,
     headerGroups,
-    page,
+    rows,
     prepareRow,
     setGlobalFilter,
-    canPreviousPage,
-    canNextPage,
-    pageOptions,
-    pageCount,
-    gotoPage,
-    nextPage,
-    previousPage,
-    setPageSize,
-    state: { globalFilter, pageIndex, pageSize },
+    state: { globalFilter },
   } = tableInstance;
 
   return (
@@ -234,6 +205,7 @@ const TranslationList = ({ getObjectToUpdate, refetch }: Props) => {
       flex="column"
       align="start"
       justify="start"
+      wrap="no-wrap"
       col="2"
     >
       <HeaderPanel className="np" justify="between">
@@ -243,89 +215,65 @@ const TranslationList = ({ getObjectToUpdate, refetch }: Props) => {
           value={globalFilter}
           getValue={(val: string) => setGlobalFilter(val)}
         />
-        {/*<Input*/}
-        {/*  placeholder="Deep search"*/}
-        {/*  name="deepSearch"*/}
-        {/*  value={deepSearch}*/}
-        {/*  getValue={_onDeepSearch}*/}
-        {/*  onKeyDown={_onFilterDeep}*/}
         {/*/>*/}
       </HeaderPanel>
-      <table {...getTableProps()}>
-        <thead>
-          {
-            // Loop over the header rows
-            headerGroups.map((headerGroup: any) => (
-              // Apply the header row props
-              <tr {...headerGroup.getHeaderGroupProps()}>
-                {
-                  // Loop over the headers in each row
-                  headerGroup.headers.map((column: any) => {
-                    return (
-                      // Apply the header cell props
-                      <th {...column.getHeaderProps()}>
-                        {
-                          // Render the header
-                          column.render('Header')
-                        }
-                      </th>
-                    );
-                  })
-                }
-              </tr>
-            ))
-          }
-        </thead>
-        {/* Apply the table body props */}
-        <tbody {...getTableBodyProps()}>
-          {
-            // Loop over the table rows
-            page.map((row: any) => {
-              // Prepare the row for display
-              prepareRow(row);
-              return (
-                // Apply the row props
-                <tr {...row.getRowProps()}>
+      <div className="table-container">
+        <table {...getTableProps()}>
+          <thead>
+            {
+              // Loop over the header rows
+              headerGroups.map((headerGroup: any) => (
+                // Apply the header row props
+                <tr {...headerGroup.getHeaderGroupProps()}>
                   {
-                    // Loop over the rows cells
-                    row.cells.map((cell: any) => {
-                      // Apply the cell props
+                    // Loop over the headers in each row
+                    headerGroup.headers.map((column: any) => {
                       return (
-                        <td {...cell.getCellProps()}>
+                        // Apply the header cell props
+                        <th {...column.getHeaderProps()}>
                           {
-                            // Render the cell contents
-                            cell.render('Cell')
+                            // Render the header
+                            column.render('Header')
                           }
-                        </td>
+                        </th>
                       );
                     })
                   }
                 </tr>
-              );
-            })
-          }
-        </tbody>
-      </table>
-      <Flexbox cls="np gap" justify="end">
-        <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
-          {'<<'}
-        </button>
-        <button onClick={() => previousPage()} disabled={!canPreviousPage}>
-          {'<'}
-        </button>
-        <button onClick={() => nextPage()} disabled={!canNextPage}>
-          {'>'}
-        </button>
-        <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
-          {'>>'}
-        </button>
-        <span>
-          Page{' '}
-          <strong>
-            {pageIndex + 1} of {pageOptions.length}
-          </strong>
-        </span>
-      </Flexbox>
+              ))
+            }
+          </thead>
+          {/* Apply the table body props */}
+          <tbody {...getTableBodyProps()}>
+            {
+              // Loop over the table rows
+              rows.map((row: any) => {
+                // Prepare the row for display
+                prepareRow(row);
+                return (
+                  // Apply the row props
+                  <tr {...row.getRowProps()}>
+                    {
+                      // Loop over the rows cells
+                      row.cells.map((cell: any) => {
+                        // Apply the cell props
+                        return (
+                          <td {...cell.getCellProps()}>
+                            {
+                              // Render the cell contents
+                              cell.render('Cell')
+                            }
+                          </td>
+                        );
+                      })
+                    }
+                  </tr>
+                );
+              })
+            }
+          </tbody>
+        </table>
+      </div>
     </Container>
   );
 };
@@ -335,8 +283,13 @@ export default TranslationList;
 const Container = styled(Flexbox)`
   min-width: 700px;
 
+  .table-container {
+    width: 100%;
+    max-height: calc(100vh - 240px);
+    overflow: auto;
+  }
+
   table {
-    margin-bottom: 10px;
     width: 100%;
     background-color: ${({ theme }) => theme.colors.background};
 
@@ -354,6 +307,10 @@ const Container = styled(Flexbox)`
       white-space: nowrap;
       text-overflow: ellipsis;
       overflow: hidden;
+    }
+
+    &:last-child {
+      margin-bottom: 10px;
     }
   }
 

@@ -146,7 +146,7 @@ const CreateArticle: React.FC<Props> = (props) => {
             value={state.cover}
             label="Maximum 1 image and size less than 500KB"
             getValue={getCoverImage}
-            folderInCloud="p147xiqo"
+            folderInCloud="product_images"
             required={true}
           />
           <UploadZone
@@ -154,7 +154,7 @@ const CreateArticle: React.FC<Props> = (props) => {
             value={state.images}
             label="Maximum 5 images and each size less than 500KB"
             getValue={getImages}
-            folderInCloud="p147xiqo"
+            folderInCloud="product_images"
           />
         </Flexbox>
         <Flexbox cls="sides-wrap mt gap np" justify="start" align="start">

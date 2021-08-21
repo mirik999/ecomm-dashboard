@@ -133,7 +133,7 @@ const CreateBiography: React.FC<Props> = (props) => {
               value={state.images}
               label="Maximum 1 image and Size less than 500KB"
               getValue={getBiographyImages}
-              folderInCloud="p147xiqo"
+              folderInCloud="product_images"
             />
           </Flexbox>
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { useMutation } from '@apollo/client';
 import { useDispatch } from 'react-redux';
@@ -51,10 +51,10 @@ const effects: OptionType[] = [
 const SliderPage: React.FC<Props> = (props) => {
   const dispatch = useDispatch();
   //graphql
-  const [CreateSlider, createResponse] = useMutation(CREATE_SLIDER);
-  const [UpdateSlider, updateResponse] = useMutation(UPDATE_SLIDER);
-  const [DisableSlider, disableResponse] = useMutation(DISABLE_SLIDERS);
-  const [ActivateSlider, activateResponse] = useMutation(ACTIVATE_SLIDERS);
+  const [CreateSlider] = useMutation(CREATE_SLIDER);
+  const [UpdateSlider] = useMutation(UPDATE_SLIDER);
+  const [DisableSlider] = useMutation(DISABLE_SLIDERS);
+  const [ActivateSlider] = useMutation(ACTIVATE_SLIDERS);
 
   async function _onSave(
     slider: SliderType,
@@ -111,7 +111,7 @@ const SliderPage: React.FC<Props> = (props) => {
       <HeaderLine label="sliders" />
       {/* dashboard */}
       <Container>
-        <Flexbox cls="np gap slides-wrap" align="start">
+        <Flexbox cls="np">
           <HeaderLeftSlider
             directions={directions}
             effects={effects}
@@ -119,6 +119,8 @@ const SliderPage: React.FC<Props> = (props) => {
             onDisable={_onDisable}
             onEnable={_onEnable}
           />
+        </Flexbox>
+        <Flexbox cls="np">
           <HeaderRightSlider
             directions={directions}
             effects={effects}

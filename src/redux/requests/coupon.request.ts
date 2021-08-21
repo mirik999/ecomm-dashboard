@@ -29,10 +29,10 @@ export const GET_COUPON_BY_ID = gql`
         used
         key
       }
+      endDate
       createdAt
       createdBy
       modifiedBy
-      endDate
       isDisabled
     }
   }
@@ -53,10 +53,10 @@ export const GET_COUPONS = gql`
           used
           key
         }
+        endDate
         createdAt
         createdBy
         modifiedBy
-        endDate
         isDisabled
       }
     }

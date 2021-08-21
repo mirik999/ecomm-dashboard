@@ -21,10 +21,17 @@ export const GET_SLIDER_BY_ID = gql`
     getSliderById(id: $id) {
       id
       name
-      images
+      images {
+        src
+        alt
+        videoId
+        link
+      }
       vertical
-      effect
+      fade
       createdAt
+      createdBy
+      modifiedBy
       isDisabled
     }
   }
@@ -37,10 +44,17 @@ export const GET_SLIDERS = gql`
       payload {
         id
         name
-        images
+        images {
+          src
+          alt
+          videoId
+          link
+        }
         vertical
-        effect
+        fade
         createdAt
+        createdBy
+        modifiedBy
         isDisabled
       }
     }

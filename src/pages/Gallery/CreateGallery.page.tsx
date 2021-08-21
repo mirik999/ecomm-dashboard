@@ -126,7 +126,7 @@ const CreateGallery: React.FC<Props> = (props) => {
             value={state.images}
             label="Maximum 100 image and size less than 500KB"
             getValue={getGalleryImages}
-            folderInCloud="p147xiqo"
+            folderInCloud="product_images"
             maxImage={100}
           />
           <h4>SEO</h4>

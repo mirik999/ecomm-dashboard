@@ -20,6 +20,10 @@ export const Container = styled.div`
     left: 0;
     margin: 0;
   }
+
+  .rs-table {
+    height: 100% !important;
+  }
 `;
 
 export const HeaderPanel = styled(Flexbox).attrs(() => ({

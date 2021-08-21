@@ -213,7 +213,7 @@ HeaderRightSlider.defaultProps = {
 export default HeaderRightSlider;
 
 const Container = styled(Flexbox)`
-  max-width: calc(50% - 10px);
+  margin-top: 50px;
   overflow: hidden;
 
   .buttons-wrap {

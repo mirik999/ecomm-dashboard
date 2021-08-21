@@ -207,7 +207,6 @@ HeaderLeftSlider.defaultProps = {
 export default HeaderLeftSlider;
 
 const Container = styled(Flexbox)`
-  max-width: calc(50% - 10px);
   overflow: hidden;
 
   .buttons-wrap {

@@ -230,7 +230,7 @@ const Container = styled(Flexbox)`
   }
 
   .check-class {
-    color: limegreen;
+    color: ${({ theme }) => theme.colors.success};
   }
 
   @media (max-width: 1199px) {
