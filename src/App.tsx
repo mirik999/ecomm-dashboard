@@ -113,7 +113,7 @@ const Container = styled(Flexbox)`
     min-width: 100%;
     background-color: ${({ theme }) => theme.colors.background};
     height: calc(100vh - 47px);
-    max-width: calc(100vw - 160px);
+    max-width: calc(100vw - 170px);
     overflow: auto;
 
     & > h2 {
