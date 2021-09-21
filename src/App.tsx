@@ -24,6 +24,7 @@ import { routes } from './config/routes';
 import useApollo from './hooks/useApollo';
 import useMedia from './hooks/useMedia';
 import useTheme from './hooks/useTheme';
+import { GET_TRANSLATIONS } from "./redux/requests/translation.request";
 
 function App() {
   const fontSize = useMedia();
@@ -32,6 +33,20 @@ function App() {
   const client = useApollo();
   const themeCss = useTheme();
   const { theme, netStatus } = useSelector((state: RootState) => state);
+
+  useEffect(() => {
+    client.query({
+      variables: {
+        controls: {
+          limit: 999,
+          offset: 0,
+          keyword: ''
+        }
+      },
+      query: GET_TRANSLATIONS
+    })
+      .then(res => console.log(res.data));
+  }, []);
 
   useEffect(() => {
     history.listen((loc, act) => {

@@ -30,3 +30,11 @@ export type CountryTypes = {
   };
   flag: string;
 };
+
+export type TranslationReduxType = {
+  lang: 'az' | 'ru' | 'en' | 'tr' | 'sp' | 'de' | 'fr';
+  i18: {
+    kw: string;
+    msg: string;
+  }[];
+};

@@ -5,6 +5,13 @@ Package manager (preferable to use ```yarn```)
 ```yarn``` installation packages  
 ```yarn start``` start
 
+##Defining environment variables in .env file
+```bash
+CLOUDINARY_API_KEY
+CLOUDINARY_SECRET_KEY
+CLOUDINARY_CLOUD_NAME
+```
+
 ## Styling
 Some common components and layers styled with
 [styled-components](https://styled-components.com/) and for rest used
@@ -33,6 +40,7 @@ Some common components and layers styled with
 |--index.css ( for some common rewrite rules )
 |-.editorconfig ( for single coding rule )
 |-.prettierrc ( for single coding rule / must have )
+|-.env ( create )
 ```
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app)
