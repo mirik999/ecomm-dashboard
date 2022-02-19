@@ -20,7 +20,9 @@ type Props = {
 const TranslationList = ({ getObjectToUpdate, refetch }: Props) => {
   const dispatch = useDispatch();
   //graphql
-  const [GetTranslations, getResponse] = useLazyQuery(GET_TRANSLATIONS);
+  const [GetTranslations, getResponse] = useLazyQuery(GET_TRANSLATIONS, {
+    fetchPolicy: 'network-only', // disable cache for updating list
+  });
   //state
   const [deepSearch, setDeepSearch] = useState('');
   const [rowCount, setRowCount] = useState(1000);
@@ -45,7 +47,6 @@ const TranslationList = ({ getObjectToUpdate, refetch }: Props) => {
   useEffect(() => {
     (async function () {
       if (refetch) {
-        console.log(refetch);
         await getTranslations(currentPage, rowCount, deepSearch);
       }
     })();
@@ -230,7 +231,14 @@ const TranslationList = ({ getObjectToUpdate, refetch }: Props) => {
                     headerGroup.headers.map((column: any) => {
                       return (
                         // Apply the header cell props
-                        <th {...column.getHeaderProps()}>
+                        <th
+                          {...column.getHeaderProps()}
+                          style={{
+                            color: ['№', 'Keyword'].includes(column.Header)
+                              ? 'orange'
+                              : 'auto',
+                          }}
+                        >
                           {
                             // Render the header
                             column.render('Header')
@@ -258,7 +266,16 @@ const TranslationList = ({ getObjectToUpdate, refetch }: Props) => {
                       row.cells.map((cell: any) => {
                         // Apply the cell props
                         return (
-                          <td {...cell.getCellProps()}>
+                          <td
+                            {...cell.getCellProps()}
+                            style={{
+                              color: ['№', 'Keyword'].includes(
+                                cell.column.Header,
+                              )
+                                ? 'orange'
+                                : 'auto',
+                            }}
+                          >
                             {
                               // Render the cell contents
                               cell.render('Cell')

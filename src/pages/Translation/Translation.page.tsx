@@ -144,7 +144,7 @@ const Translation: React.FC<Props> = (props) => {
             <Form className="np gap" flex="column" align="start">
               <Flexbox cls="np gap" flex="column">
                 <Flexbox cls="np gap">
-                  <span className="country-name" style={{ marginLeft: 34 }}>
+                  <span className="country-name">
                     Keyword
                   </span>
                   <Input
@@ -156,7 +156,7 @@ const Translation: React.FC<Props> = (props) => {
                 </Flexbox>
                 {countries.map((country, i) => (
                   <Flexbox cls="np gap" key={i}>
-                    <img src={country.flag} alt={country.name} width={24} />
+                    {/*<img src={country.flag} alt={country.name} width={24} />*/}
                     <span className="country-name">
                       {country.language.name}
                     </span>

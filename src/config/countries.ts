@@ -2,22 +2,6 @@ import { CountryTypes } from '../redux/types/translation.type';
 
 const countries: CountryTypes[] = [
   {
-    name: 'Azerbaijan',
-    id: 'AZ',
-    capital: 'Baku',
-    region: 'AS',
-    currency: {
-      id: 'AZN',
-      name: 'Azerbaijani manat',
-      symbol: null,
-    },
-    language: {
-      id: 'az',
-      name: 'Azerbaijani',
-    },
-    flag: 'https://restcountries.eu/data/aze.svg',
-  },
-  {
     name: 'United Kingdom',
     id: 'EN',
     capital: 'London',
@@ -48,6 +32,22 @@ const countries: CountryTypes[] = [
       name: 'Russian',
     },
     flag: 'https://restcountries.eu/data/rus.svg',
+  },
+  {
+    name: 'Azerbaijan',
+    id: 'AZ',
+    capital: 'Baku',
+    region: 'AS',
+    currency: {
+      id: 'AZN',
+      name: 'Azerbaijani manat',
+      symbol: null,
+    },
+    language: {
+      id: 'az',
+      name: 'Azerbaijani',
+    },
+    flag: 'https://restcountries.eu/data/aze.svg',
   },
   {
     name: 'Turkey',
